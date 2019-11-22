@@ -32,8 +32,8 @@ const IndexPage = () => {
 
                     <ul className="icon-list">
                         {images.map(item =>
-                            <a href={item.link} rel="noopener noreferrer" target="_blank">
-                                <img className={`icon ${item.title}`} key={`${item.title}`} src={item.src} alt={`${item.title} logo`} />
+                            <a key={`${item.title}`} href={item.link} rel="noopener noreferrer" target="_blank">
+                                <img className={`icon ${item.title}`} src={item.src} alt={`${item.title} logo`} />
                             </a>
                         )}
                     </ul>

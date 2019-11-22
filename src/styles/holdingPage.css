@@ -1,0 +1,187 @@
+@import url("https://use.typekit.net/xts8flq.css");
+
+/*  Holding page styles */
+body {
+    color: #777;
+    font-size: 18px;
+    font-family: minion-pro-caption, serif;
+}
+
+@media screen and (max-width: 1500px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: #000;
+    font-family: freight-text-pro, serif;
+    font-weight: 900;
+}
+
+/* Layout */
+
+main {
+    height: 100vh;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+main section {
+    width: 50%;
+}
+
+main h2 {
+    font-size: 1.5em;
+}
+
+/* Logo */
+
+.logo {
+    max-width: 20em;
+}
+
+@media screen and (max-width: 1500px) {
+    .logo {
+        max-width: 17.5em;
+    }
+}
+
+/* Caption */
+
+.caption {
+    max-width: 67%;
+    margin: auto;
+}
+
+@media screen and (max-width: 1200px) {
+    .caption {
+        max-width: 80%;
+    }
+}
+
+.caption img {
+    margin: 0;
+}
+
+.caption hr {
+    height: 2px;
+    width: 2.5em;
+    background: #000;
+    margin: 2em auto;
+}
+
+/* Categories */
+
+.category-list {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin: 0;
+}
+
+.category {
+    font-size: 0.8em;
+    margin: 20px 1.3em 0;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #AAA;
+}
+
+
+/* icons */
+
+.icon-list {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+    margin: 2em 0 0;
+}
+
+.icon-list a {
+    display: inline;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.icon-list a:hover,
+.icon-list a:focus {
+    opacity: 1;
+}
+
+.instagram {
+    height: 1.2em;
+    margin: 0;
+}
+
+/* Image */
+
+.gatsby-image-wrapper {
+    height: 100%;
+}
+
+/* Full screen */
+
+@media screen and (max-width: 1024px) {
+    main {
+        position: relative;
+    }
+
+    main section {
+        width: 100%;
+    }
+
+    main section {
+        position: relative;
+        z-index: 2;
+    }
+
+    main section:last-of-type {
+        z-index: 0;
+        position: absolute;
+    }
+
+    main section:last-of-type::after {
+        content: '';
+        z-index: 1;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: #fff;
+        opacity: 0.9;
+    }
+
+    .bio {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .bio,
+    .category {
+        color: #000;
+    }
+
+    .icon-list a {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    body {
+        font-size: 12px;
+    }
+}

@@ -2,7 +2,7 @@
 
 /*  Holding page styles */
 body {
-    color: #777;
+    color: #111;
     font-size: 18px;
     font-family: minion-pro-caption, serif;
 }
@@ -46,14 +46,18 @@ main h2 {
     font-size: 1.5em;
 }
 
+svg path {
+    fill: #111;
+}
+
 /* Logo */
 
-.logo {
+#logo svg {
     max-width: 20em;
 }
 
 @media screen and (max-width: 1500px) {
-    .logo {
+    #logo svg {
         max-width: 17.5em;
     }
 }
@@ -75,11 +79,11 @@ main h2 {
     margin: 0;
 }
 
-.caption hr {
+hr {
     height: 2px;
     width: 2.5em;
     background: #000;
-    margin: 2em auto;
+    margin: 1.8em auto 2em;
 }
 
 /* Categories */
@@ -121,7 +125,7 @@ main h2 {
     opacity: 1;
 }
 
-.instagram {
+#instagram svg {
     height: 1.2em;
     margin: 0;
 }
@@ -131,7 +135,7 @@ main h2 {
 .gatsby-image-wrapper {
     height: 100%;
     opacity: 0;
-    animation: fadeIn 0.5s ease 1s forwards;
+    animation: fadeIn 2s ease 0.5s forwards;
 }
 
 @keyframes fadeIn {
@@ -169,27 +173,57 @@ main h2 {
         top: 0;
         height: 100%;
         width: 100%;
-        background: #fff;
+        background: #111;
         opacity: 0.9;
     }
 
     .bio {
+        font-size: 1.3em;
+        line-height: 1.5;
         max-width: 400px;
         margin: auto;
     }
 
+    .category {
+        font-size: 1em;
+        margin: 20px 1em 0;
+    }
+
+    hr {
+        background: #fff
+    }
+
+    body,
+    h2,
     .bio,
     .category {
-        color: #000;
+        color: #fff;
+    }
+
+    svg path {
+        fill: #fff;
     }
 
     .icon-list a {
         opacity: 1;
+    }
+
+    .gatsby-image-wrapper {
+        opacity: 1;
+        animation: none;
+    }
+
+    #instagram svg {
+        height: 1.5em;
     }
 }
 
 @media screen and (max-width: 350px) {
     body {
         font-size: 12px;
+    }
+
+    .bio {
+        max-width: 300px;
     }
 }

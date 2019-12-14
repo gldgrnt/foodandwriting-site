@@ -113,14 +113,14 @@ export default {
             type: 'array',
             of: [
                 {
-                    type: 'text'
+                    type: 'text',
                 }
             ]
         },
         {
             title: 'Notes',
             name: 'notes',
-            type: 'text',
+            type: 'portableText',
             fieldset: 'mainContent'
         }
     ]

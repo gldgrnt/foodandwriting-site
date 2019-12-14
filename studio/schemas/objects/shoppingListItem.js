@@ -1,12 +1,15 @@
+import { ShoppingListItem } from "../../components"
+
 export default {
     title: 'Item',
     name: 'shoppingListItem',
     type: 'object',
     fields: [
         {
-            title: 'Ingredient',
-            name: 'ingredient',
+            title: 'Item search',
+            name: 'itemSearch',
             type: 'string',
+            inputComponent: ShoppingListItem
         },
         {
             title: 'Amount',
@@ -14,17 +17,17 @@ export default {
             type: 'string'
         }
     ],
-    preview: {
-        select: {
-            name: 'ingredient',
-            amount: 'amount'
-        },
-        prepare(select) {
-            const { name, amount } = select
+    // preview: {
+    //     select: {
+    //         name: 'ingredient',
+    //         amount: 'amount'
+    //     },
+    //     prepare(select) {
+    //         const { name, amount } = select
 
-            return {
-                title: `${name}, ${amount}`,
-            }
-        }
-    }
+    //         return {
+    //             title: `${name}, ${amount}`,
+    //         }
+    //     }
+    // }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import FormField from 'part:@sanity/components/formfields/default'
-import styled from 'styled-components'
 import PatchEvent, { set, unset } from 'part:@sanity/form-builder/patch-event'
 import styles from '../styles/shoppingListItem.css'
 

@@ -6,10 +6,11 @@ export default {
     type: 'object',
     fields: [
         {
-            title: 'Item search',
+            title: 'Ingredient',
+            // title: 'Item search',
             name: 'itemSearch',
             type: 'string',
-            inputComponent: ShoppingListItem
+            // inputComponent: ShoppingListItem
         },
         {
             title: 'Amount',
@@ -17,17 +18,17 @@ export default {
             type: 'string'
         }
     ],
-    // preview: {
-    //     select: {
-    //         name: 'ingredient',
-    //         amount: 'amount'
-    //     },
-    //     prepare(select) {
-    //         const { name, amount } = select
+    preview: {
+        select: {
+            name: 'itemSearch',
+            amount: 'amount'
+        },
+        prepare(select) {
+            const { name, amount } = select
 
-    //         return {
-    //             title: `${name}, ${amount}`,
-    //         }
-    //     }
-    // }
+            return {
+                title: `${name}, ${amount}`,
+            }
+        }
+    }
 }

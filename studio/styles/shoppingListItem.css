@@ -1,0 +1,30 @@
+/* Styles for ShoppingListItem component */
+.resultsList {
+  position: absolute;
+  width: 100%;
+  height: 75px;
+  top: 100%;
+  left: 0;
+  overflow: scroll;
+  z-index: 2;
+  padding: 0;
+  margin: 0;
+  background: white;
+  border: 1px solid #ccc;
+  list-style-type: none;
+}
+
+.resultsListLink {
+  display: block;
+  padding: 10px 15px;
+  color: #303030;
+  text-decoration: none;
+
+  @nest &:hover {
+    background: #f6f6f6;
+  }
+
+  @nest &:focus {
+    background: #f6f6f6;
+  }
+}

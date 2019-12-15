@@ -1,28 +1,30 @@
 {
-    "root": true,
-    "project": {
-        "name": "foodandwriting-studio"
-    },
-    "api": {
-        "projectId": "s1fasfasdfasdfdfc",
-        "dataset": "production"
-    },
-    "plugins": [
-        "@sanity/base",
-        "@sanity/components",
-        "@sanity/default-layout",
-        "@sanity/default-login",
-        "@sanity/desk-tool"
-    ],
-    "env": {
-        "development": {
-            "plugins": [
-                "@sanity/vision"
-            ]
-        }
-    },
-    "parts": [{
-        "name": "part:@sanity/base/schema",
-        "path": "./schemas/schema.js"
-    }]
+  "root": true,
+  "api": {
+    "projectId": "s1s9nwnc",
+    "dataset": "production"
+  },
+  "project": {
+    "name": "foodandwriting-studio"
+  },
+  "plugins": [
+    "@sanity/base",
+    "@sanity/components",
+    "@sanity/default-layout",
+    "@sanity/default-login",
+    "@sanity/desk-tool"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "@sanity/vision"
+      ]
+    }
+  },
+  "parts": [
+    {
+      "name": "part:@sanity/base/schema",
+      "path": "./schemas/schema.js"
+    }
+  ]
 }

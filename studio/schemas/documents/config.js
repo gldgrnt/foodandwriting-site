@@ -1,3 +1,5 @@
+import { MdSettings } from 'react-icons/md'
+
 export default {
     title: 'Global config',
     name: 'config',
@@ -20,5 +22,16 @@ export default {
                 Rule.max(160).error('Too many characters')
             ]
         }
-    ]
+    ],
+    preview: {
+        select: {
+            title: 'seoDescription',
+        },
+        prepare(select) {
+            return {
+                title: 'Global Config',
+                media: MdSettings
+            }
+        }
+    }
 }

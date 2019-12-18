@@ -2,10 +2,23 @@ export default {
     title: 'Global config',
     name: 'config',
     type: 'document',
-    fieldsets: ['Global SEO', 'Recie'],
+    fieldsets: [
+        {
+            title: 'SEO',
+            name: 'seo',
+        }
+    ],
     fields: [
         {
-            title: 'Seo'
+            title: 'SEO Description',
+            name: 'seoDecsription',
+            type: 'text',
+            fieldset: 'seo',
+            description: 'Max characters 160',
+            rows: 2,
+            validation: Rule => [
+                Rule.max(160).error('Too many characters')
+            ]
         }
     ]
 }

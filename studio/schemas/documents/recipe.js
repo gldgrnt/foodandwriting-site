@@ -1,6 +1,6 @@
 export default {
     title: 'Recipe',
-    name: 'post',
+    name: 'recipe',
     type: 'document',
     fieldsets: [
         { title: 'Main content', name: 'mainContent' }

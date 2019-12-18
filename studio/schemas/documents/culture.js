@@ -1,7 +1,10 @@
+import { MdColorLens } from 'react-icons/md'
+
 export default {
     title: 'Culture',
     name: 'culture',
     type: 'document',
+    icon: MdColorLens,
     fieldsets: [
         {
             title: 'Main Content',

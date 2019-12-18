@@ -1,7 +1,10 @@
+import { MdImportContacts } from 'react-icons/md'
+
 export default {
     title: 'Blog',
     name: 'blog',
     type: 'document',
+    icon: MdImportContacts,
     fieldsets: [
         {
             title: 'Main Content',

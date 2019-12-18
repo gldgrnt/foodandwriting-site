@@ -1,9 +1,10 @@
-import { MdDone } from 'react-icons/md'
+import { MdDone, MdLocalDining } from 'react-icons/md'
 
 export default {
     title: 'Recipe',
     name: 'recipe',
     type: 'document',
+    icon: MdLocalDining,
     fieldsets: [
         { title: 'Main content', name: 'mainContent' }
     ],

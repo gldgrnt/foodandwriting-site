@@ -5,6 +5,11 @@ export default [
     // ...S.defaultInitialValueTemplateItems()
     S.initialValueTemplateItem('recipe', {})
         .id('recipe')
-        .title('Recipe'),
-
+        .title('New recipe'),
+    S.initialValueTemplateItem('blog', {})
+        .id('blog')
+        .title('New blog post'),
+    S.initialValueTemplateItem('culture', {})
+        .id('culture')
+        .title('New culture post'),
 ]

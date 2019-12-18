@@ -27,7 +27,7 @@ export default {
             const { name, amount } = select
 
             return {
-                title: `${name}, ${amount}`,
+                title: `${name}, ${amount.toLowerCase()}`,
             }
         }
     }

@@ -13,7 +13,7 @@ export default function FlexImages(props) {
 
     //Set up 
     const builder = imageUrlBuilder(sanityClient({
-        projectId: "wximcxx6",
+        projectId: "s1s9nwnc",
         dataset: "production",
         useCdn: true
     }));

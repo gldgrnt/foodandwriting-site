@@ -6,7 +6,5 @@ export default [
     S.initialValueTemplateItem('recipe', {})
         .id('recipe')
         .title('Recipe'),
-    // S.initialValueTemplateItem('category', {})
-    //     .id('category')
-    //     .title('Category'),
+
 ]

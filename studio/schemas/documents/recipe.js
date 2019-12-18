@@ -1,3 +1,5 @@
+import { MdDone } from 'react-icons/md'
+
 export default {
     title: 'Recipe',
     name: 'recipe',
@@ -15,6 +17,7 @@ export default {
             title: 'Slug',
             name: 'slug',
             type: 'slug',
+            description: 'Click generate to auto generate a slug',
             options: {
                 source: 'title',
                 maxLength: 100
@@ -37,6 +40,7 @@ export default {
             title: 'Featured image',
             name: 'featuredImage',
             type: 'image',
+            description: 'Press edit to change how the image appears for different sizes.',
             options: {
                 hotspot: true
             },
@@ -96,7 +100,8 @@ export default {
             of: [
                 {
                     title: 'Item',
-                    type: 'shoppingListItem'
+                    type: 'shoppingListItem',
+                    icon: MdDone,
                 }
             ]
         },
@@ -109,11 +114,13 @@ export default {
         {
             title: 'Recipe steps',
             name: 'steps',
-            fieldset: 'mainContent',
             type: 'array',
+            description: 'Add items and rearrange them by dragging the icon on the left. No need to add numbers at the start of each item.',
+            fieldset: 'mainContent',
             of: [
                 {
                     type: 'text',
+                    rows: 3,
                 }
             ]
         },
@@ -121,8 +128,23 @@ export default {
             title: 'Notes',
             name: 'notes',
             type: 'portableText',
-            fieldset: 'mainContent'
+            fieldset: 'mainContent',
+        },
+    ],
+    preview: {
+        select: {
+            title: 'title',
+            image: 'featuredImage'
+        },
+        prepare(select) {
+            const { title, image } = select
+
+            return {
+                title: title,
+                subtitle: 'Recipe',
+                media: image
+            }
         }
-    ]
+    }
 
 }

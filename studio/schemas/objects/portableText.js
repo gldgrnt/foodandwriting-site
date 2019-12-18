@@ -27,9 +27,10 @@ export default {
                                 name: 'link',
                                 type: 'reference',
                                 to: [
-                                    { type: 'post' },
-                                    //Add categories
-                                    //Add pages
+                                    { type: 'recipe' },
+                                    { type: 'blog' },
+                                    { type: 'culture' },
+                                    { type: 'about' },
                                 ]
                             }
                         ]
@@ -46,6 +47,7 @@ export default {
                                 title: 'URL',
                                 name: 'href',
                                 type: 'url',
+                                description: 'e.g. https://google.com',
                                 validation: Rule => Rule.uri({ allowRelative: true, scheme: ['https', 'http', 'mailto', 'tel'] })
                             },
                         ]

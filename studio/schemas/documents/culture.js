@@ -18,6 +18,7 @@ export default {
             title: 'Slug',
             name: 'slug',
             type: 'slug',
+            description: 'Click generate to auto generate a slug',
             options: {
                 source: 'title',
                 maxLength: 100
@@ -40,6 +41,7 @@ export default {
             title: 'Featured image',
             name: 'featuredImage',
             type: 'image',
+            description: 'Press edit to change how the image appears for different sizes.',
             fieldsets: 'mainContent',
             options: {
                 hotspot: true
@@ -60,5 +62,27 @@ export default {
             name: 'content',
             type: 'portableText',
         }
-    ]
+    ],
+    preview: {
+        select: {
+            title: 'title',
+            createdAt: '_createdAt',
+            image: 'featuredImage',
+        },
+        prepare(select) {
+            const { title, createdAt, image } = select
+
+            //Format date
+            let date = new Date(createdAt);
+            let d = date.getDate();
+            let m = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+            let y = date.getFullYear();
+
+            return {
+                title: title,
+                subtitle: `Culture - ${d}/${m}/${y}`,
+                media: image,
+            }
+        }
+    }
 }

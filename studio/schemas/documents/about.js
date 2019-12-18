@@ -1,3 +1,5 @@
+import { MdPerson } from 'react-icons/md'
+
 export default {
     title: 'About',
     name: 'about',
@@ -63,5 +65,16 @@ export default {
             type: 'portableText',
             fieldset: 'mainContent',
         },
-    ]
+    ],
+    preview: {
+        select: {
+            title: 'smallBio',
+        },
+        prepare(select) {
+            return {
+                title: 'About page',
+                media: MdPerson
+            }
+        }
+    }
 }

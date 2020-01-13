@@ -1,7 +1,7 @@
 module.exports = {
     siteMetadata: {
         title: `Food and Writing`,
-        description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
+        description: `Making food look pretty on a bathroom tile.`,
         author: 'wadada'
     },
     plugins: [
@@ -27,13 +27,5 @@ module.exports = {
                 icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
             },
         },
-        // {
-        //     resolve: 'gatsby-plugin-web-font-loader',
-        //     options: {
-        //         typekit: {
-        //             id: `xts8flq`
-        //         }
-        //     }
-        // }
     ],
 }

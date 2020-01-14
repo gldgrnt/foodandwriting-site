@@ -1,14 +1,14 @@
 import React from "react"
 import PropTypes from "prop-types"
-
-import { Header, Footer } from '../global'
+import Header from '../header'
+import Footer from '../footer'
 
 const Layout = ({ children }) => {
     return (
         <>
-            <Header></Header>
+            <Header />
             <main>{children}</main>
-            <Footer></Footer>
+            <Footer />
         </>
     )
 }

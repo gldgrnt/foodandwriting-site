@@ -1,11 +1,32 @@
 import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import styled from 'styled-components'
 
-const Header = () => {
+
+export default () => {
+
+    const { logo, alt } = useStaticQuery(graphql`
+        query {
+            logo: file(relativePath: { eq: "fandw-std.svg" }) {
+                publicURL
+            }
+            alt: site {
+                siteMetadata {
+                    title
+                }
+            }
+        }
+    `)
+
     return (
         <header>
-            <p>This is the header</p>
+            <ImageContainer>
+                <img src={logo.publicURL} alt={alt.siteMetadata.title} />
+            </ImageContainer>
         </header>
     )
 }
 
-export default Header;
+const ImageContainer = styled.div`
+    max-width: 300px;
+`

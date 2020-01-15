@@ -11,7 +11,21 @@ Theme.propTypes = {
 }
 
 const theme = {
-    colors: {
-        black: '#111'
-    }
+    color: {
+        white: '#FFFFFF',
+        black: '#111111',
+        whiteGrey: '#F6F6F6',
+        lightGrey: '#AAAAAA',
+        mediumGrey: '#777777',
+        darkGrey: '#5A5A5A',
+        yellow: '#FFD91F',
+    },
+    font: {
+        size: {
+            small: '13px',
+        }
+    },
+    transition: {
+        fast: '0.3s ease',
+    },
 }

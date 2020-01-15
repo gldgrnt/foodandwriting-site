@@ -4,7 +4,7 @@ import Header from '../header'
 import Footer from '../footer'
 import { Reset, Global, Theme } from '../../styles'
 
-const Layout = ({ children }) => {
+export const Page = ({ children }) => {
     return (
         <Theme>
             <Reset />
@@ -18,8 +18,6 @@ const Layout = ({ children }) => {
     )
 }
 
-Layout.propTypes = {
+Page.propTypes = {
     children: PropTypes.node.isRequired,
 }
-
-export default Layout

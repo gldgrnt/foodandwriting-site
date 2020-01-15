@@ -1,50 +1,34 @@
 import React from "react"
-import { useStaticQuery, graphql, Link } from "gatsby"
 import styled from 'styled-components'
 
-import { Navigation } from './components'
+import { Navigation, Logo } from './components'
 
-const Header = () => {
-
-    const { logo, alt } = useStaticQuery(graphql`
-        query {
-            logo: file(relativePath: { eq: "fandw-std.svg" }) {
-                publicURL
-            }
-            alt: site {
-                siteMetadata {
-                    title
-                }
-            }
-        }
-    `)
+export const Header = () => {
 
     return (
         <Wrapper>
             <Container>
-                <Link to="/">
-                    <Logo src={logo.publicURL} alt={alt.siteMetadata.title} />
-                </Link>
-
-                <Navigation />
+                <Logo />
+                <StyledNavigation />
             </Container>
         </Wrapper>
     )
 }
 
-export { Header }
-
 const Wrapper = styled.header`
     padding: 35px 0;
 `
 
-const Container = styled.div`
-    max-width: 1375px;
-    margin: auto;
-`
+const StyledNavigation = styled(Navigation)``
 
-const Logo = styled.img`
-    height: 22px;
-    width: auto;
-    margin: 0;
-`;
+const Container = styled.div`
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+
+    ${StyledNavigation} {
+        text-align: right;
+        flex-grow: 1;
+    }
+`

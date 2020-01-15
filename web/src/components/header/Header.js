@@ -2,6 +2,8 @@ import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import styled from 'styled-components'
 
+import { Navigation } from './components'
+
 const Header = () => {
 
     const { logo, alt } = useStaticQuery(graphql`
@@ -23,6 +25,8 @@ const Header = () => {
                 <Link to="/">
                     <Logo src={logo.publicURL} alt={alt.siteMetadata.title} />
                 </Link>
+
+                <Navigation />
             </Container>
         </Wrapper>
     )

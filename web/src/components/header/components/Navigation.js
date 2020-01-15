@@ -22,7 +22,7 @@ const Navigation = () => {
             {pages.map(page => {
                 return (
                     <ListItem key={page.link}>
-                        <Link to={page.link} >{page.title}</Link>
+                        <ListItemLink to={page.link} >{page.title}</ListItemLink>
                     </ListItem>
                 )
             })}
@@ -43,4 +43,11 @@ const ListItem = styled.li`
     display: inline-block;
     padding: 0 45px;
     margin: 0;
+`
+
+const ListItemLink = styled(Link)`
+    text-transform: uppercase;
+    font-weight: 600;
+    text-decoration: none;
+    color: ${props => props.theme.colors.black}
 `

@@ -41,6 +41,14 @@ const ListItem = styled.li`
     display: inline-block;
     padding: 0 35px;
     margin: 0;
+
+    &:first-child {
+        padding-left: 0;
+    }
+
+    &:last-child {
+        padding-right: 0;
+    }
 `
 
 const ListItemLink = styled(Link)`
@@ -50,7 +58,7 @@ const ListItemLink = styled(Link)`
     padding: 7px 10px;
     font-size: ${props => props.theme.font.size.small};
     color: ${props => props.theme.color.mediumGrey};
-    transition: ${props => props.theme.transition.fast};
+    transition: color ${props => props.theme.transition.fast};
 
     &:hover,
     &:focus {

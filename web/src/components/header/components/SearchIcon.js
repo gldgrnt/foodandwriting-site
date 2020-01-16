@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FiSearch } from 'react-icons/fi'
 
-export const SearchIcon = () => {
+export const SearchIcon = (props) => {
     const [active, setActive] = useState(false);
 
     const handleClick = (event) => {
         event.preventDefault();
-        setActive(!active); // Toggle the active class
+        setActive(!active);
+        props.openSearch();
     }
 
     return (

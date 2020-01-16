@@ -4,14 +4,21 @@ import styled from 'styled-components'
 import { Navigation, Logo, SearchIcon } from './components'
 
 export const Header = () => {
-    const [searchOpen, setSearchOpen] = useState(false);
+    const [dropdownState, setDropdownState] = useState({ searchOpen: false, menuOpen: false });
 
-    // To add:
-    /// Header to control dropdowns w/ click elsewhere to close
+    const handleSearchClick = () => {
+        if (dropdownState.searchOpen) {
+            // Close menu if open
+            setDropdownState({ searchOpen: false });
+        } else {
+            // Open menu
+            setDropdownState({ searchOpen: true, menuOpen: false });
+        }
+    }
 
     return (
-        <div>
-            <Container>
+        <header>
+            <NavContainer>
                 <ItemWrapper>
                     <Logo />
                 </ItemWrapper>
@@ -20,17 +27,23 @@ export const Header = () => {
                     <StyledNavigation />
                 </ItemWrapper>
 
-                <IconsWrapper onClickCapture={() => setSearchOpen(!searchOpen)}>
-                    <SearchIcon />
+                <IconsWrapper >
+                    <SearchIcon openSearch={handleSearchClick} />
 
                 </IconsWrapper>
-            </Container >
-            {searchOpen && 'Search open'}
-        </div>
+            </NavContainer >
+
+            {(dropdownState.searchOpen || dropdownState.menuOpen) &&
+                <DropdownContainer>
+                    {dropdownState.searchOpen && 'Search open'}
+                </DropdownContainer>
+            }
+        </header>
     )
 }
 
-const Container = styled.div`
+// Nav
+const NavContainer = styled.div`
     max-width: 1200px;
     margin: auto;
     display: flex;
@@ -53,4 +66,10 @@ const IconsWrapper = styled.div`
 const StyledNavigation = styled(Navigation)`
     width: 100%;
     text-align: right;
+`
+
+// Dropdown
+const DropdownContainer = styled.div`
+    background: ${props => props.theme.color.whiteGrey};
+    padding: 40px;
 `

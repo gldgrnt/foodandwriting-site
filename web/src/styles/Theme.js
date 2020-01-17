@@ -28,4 +28,11 @@ const theme = {
     transition: {
         fast: '0.3s ease',
     },
+    breakpoints: {
+        xl: 1600,
+        lg: 1200,
+        md: 991,
+        sm: 768,
+        xs: 576,
+    }
 }

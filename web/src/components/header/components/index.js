@@ -1,5 +1,5 @@
 import { Navigation } from './Navigation'
 import { Logo } from './Logo'
-import { SearchIcon } from './SearchIcon'
+import { DropdownToggle } from './DropdownToggle'
 
-export { Navigation, Logo, SearchIcon }
+export { Navigation, Logo, DropdownToggle }

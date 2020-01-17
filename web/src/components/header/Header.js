@@ -1,61 +1,92 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled from 'styled-components'
-
-import { Navigation, Logo, SearchIcon } from './components'
+import { FiMenu, FiSearch } from 'react-icons/fi'
+import { Navigation, Logo, DropdownToggle } from './components'
+import { GridContainer } from '../layout'
 
 export const Header = () => {
-    const [dropdownState, setDropdownState] = useState({ searchOpen: false, menuOpen: false });
+    const [dropdownState, setDropdownState] = useState({ isSearchOpen: false, isMenuOpen: false });
+    const [dropdownInnerHeight, setDropdownInnerHeight] = useState(0);
 
-    const handleSearchClick = () => {
-        if (dropdownState.searchOpen) {
-            // Close menu if open
-            setDropdownState({ searchOpen: false });
-        } else {
-            // Open menu
-            setDropdownState({ searchOpen: true, menuOpen: false });
+    const HandleDropdownToggleClick = (toggling = null) => {
+        if (toggling === null) {
+            return;
         }
+        let closing = toggling === 'isSearchOpen' ? 'isMenuOpen' : 'isSearchOpen';
+        // Close menu if it's already open
+        if (dropdownState[toggling]) setDropdownState({ [toggling]: false });
+        // Open menu
+        else setDropdownState({ [toggling]: true, [closing]: false });
     }
 
+    // Set up click elsewhere event handler - call once via []
+    useEffect(() => {
+        document.querySelectorAll('main, footer').forEach(area => {
+            area.addEventListener('click', () => {
+                setDropdownState({ isSearchOpen: false, isMenuOpen: false });
+            })
+        });
+    }, [])
+
+    // Create ref to dropdown container to calculare child height after render
+    const dropdownInner = useRef(null);
+    useEffect(() => {
+        if (dropdownState.isSearchOpen === true || dropdownState.isMenuOpen === true) {
+            setDropdownInnerHeight(dropdownInner.current.clientHeight);
+        }
+    }, [dropdownState])
+
     return (
-        <header>
-            <NavContainer>
+        <StyledHeader>
+            <GridContainer align="stretch">
                 <ItemWrapper>
                     <Logo />
                 </ItemWrapper>
 
-                <ItemWrapper stretch>
+                <ItemWrapper grow>
                     <StyledNavigation />
                 </ItemWrapper>
 
-                <IconsWrapper >
-                    <SearchIcon openSearch={handleSearchClick} />
+                <IconsWrapper>
+                    <DropdownToggle handler={() => HandleDropdownToggleClick('isSearchOpen')} active={!!dropdownState.isSearchOpen}>
+                        <FiSearch />
+                    </DropdownToggle>
 
+                    <DropdownToggle handler={() => HandleDropdownToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
+                        <FiMenu />
+                    </DropdownToggle>
                 </IconsWrapper>
-            </NavContainer >
+            </GridContainer >
 
-            {(dropdownState.searchOpen || dropdownState.menuOpen) &&
-                <DropdownContainer>
-                    {dropdownState.searchOpen && 'Search open'}
-                </DropdownContainer>
-            }
-        </header>
+            <DropdownContainer dropdownOpen={dropdownState.isSearchOpen || dropdownState.isMenuOpen} maxHeight={dropdownInnerHeight}>
+                {(dropdownState.isSearchOpen || dropdownState.isMenuOpen) &&
+                    <div ref={dropdownInner} style={{ padding: '40px 0' }}>
+                        <GridContainer>
+                            {dropdownState.isSearchOpen && <span>Search open</span>}
+                            {dropdownState.isMenuOpen && <span>Menu open</span>}
+                        </GridContainer>
+                    </div>
+                }
+            </DropdownContainer>
+        </StyledHeader>
     )
 }
 
 // Nav
-const NavContainer = styled.div`
-    max-width: 1200px;
-    margin: auto;
-    display: flex;
-    align-items: stretch;
+const StyledHeader = styled.header`
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: white;
 `
 
 const ItemWrapper = styled.div`
     padding: 35px 0;
-    flex-grow: ${props => props.stretch ? "1" : "0"};
+    flex-grow: ${props => props.grow ? "1" : "0"};
 `
 
 const IconsWrapper = styled.div`
+    display: flex;
     padding-left: 60px;
 
     > * {
@@ -70,6 +101,10 @@ const StyledNavigation = styled(Navigation)`
 
 // Dropdown
 const DropdownContainer = styled.div`
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
     background: ${props => props.theme.color.whiteGrey};
-    padding: 40px;
+    transition: height ${props => props.theme.transition.fast};
+    height: ${props => props.dropdownOpen ? props.maxHeight + 'px' : '0'};
 `

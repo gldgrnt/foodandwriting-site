@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react"
 import styled from 'styled-components'
 import { FiMenu, FiSearch } from 'react-icons/fi'
-import { Navigation, Logo, DropdownToggle } from './components'
+import { Navigation, Logo, Toggle, Search } from './components'
 import { GridContainer } from '../layout'
 
 export const Header = () => {
     const [dropdownState, setDropdownState] = useState({ isSearchOpen: false, isMenuOpen: false });
     const [dropdownInnerHeight, setDropdownInnerHeight] = useState(0);
 
-    const HandleDropdownToggleClick = (toggling = null) => {
+    const handleToggleClick = (toggling = null) => {
         if (toggling === null) {
             return;
         }
@@ -36,6 +36,13 @@ export const Header = () => {
         }
     }, [dropdownState])
 
+    // Conditionally render dropdowns
+    const isDropdownOpen = dropdownState.isSearchOpen || dropdownState.isMenuOpen;
+    let activeDropdown = null;
+
+    if (dropdownState.isSearchOpen) activeDropdown = <Search />;
+    else if (dropdownState.isMenuOpen) activeDropdown = <span>Menu dropdown</span>;
+
     return (
         <StyledHeader>
             <GridContainer align="stretch">
@@ -47,23 +54,22 @@ export const Header = () => {
                     <StyledNavigation />
                 </ItemWrapper>
 
-                <IconsWrapper>
-                    <DropdownToggle handler={() => HandleDropdownToggleClick('isSearchOpen')} active={!!dropdownState.isSearchOpen}>
+                <TogglesWrapper>
+                    <Toggle handler={() => handleToggleClick('isSearchOpen')} active={!!dropdownState.isSearchOpen}>
                         <FiSearch />
-                    </DropdownToggle>
+                    </Toggle>
 
-                    <DropdownToggle handler={() => HandleDropdownToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
+                    <Toggle handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
                         <FiMenu />
-                    </DropdownToggle>
-                </IconsWrapper>
+                    </Toggle>
+                </TogglesWrapper>
             </GridContainer >
 
-            <DropdownContainer dropdownOpen={dropdownState.isSearchOpen || dropdownState.isMenuOpen} maxHeight={dropdownInnerHeight}>
-                {(dropdownState.isSearchOpen || dropdownState.isMenuOpen) &&
-                    <div ref={dropdownInner} style={{ padding: '40px 0' }}>
+            <DropdownContainer isDropdownOpen={isDropdownOpen} maxHeight={dropdownInnerHeight}>
+                {isDropdownOpen &&
+                    <div ref={dropdownInner}>
                         <GridContainer>
-                            {dropdownState.isSearchOpen && <span>Search open</span>}
-                            {dropdownState.isMenuOpen && <span>Menu open</span>}
+                            {activeDropdown}
                         </GridContainer>
                     </div>
                 }
@@ -85,9 +91,10 @@ const ItemWrapper = styled.div`
     flex-grow: ${props => props.grow ? "1" : "0"};
 `
 
-const IconsWrapper = styled.div`
+const TogglesWrapper = styled.div`
     display: flex;
     padding-left: 60px;
+    margin-right: -25px; /* WILL CAUSE SCREEN WIDTH TO BREAK. FIX ON SMALLER DEVICES */
 
     > * {
         height: 100%;
@@ -106,5 +113,9 @@ const DropdownContainer = styled.div`
     overflow: hidden;
     background: ${props => props.theme.color.whiteGrey};
     transition: height ${props => props.theme.transition.fast};
-    height: ${props => props.dropdownOpen ? props.maxHeight + 'px' : '0'};
+    height: ${props => props.isDropdownOpen ? props.maxHeight + 'px' : '0'};
+
+    & > * {
+        padding: 40px 0;
+    }
 `

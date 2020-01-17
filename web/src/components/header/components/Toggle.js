@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-export const DropdownToggle = ({ handler, active, children }) => {
+export const Toggle = ({ handler, active, children }) => {
     const handleClick = (event) => {
         event.preventDefault();
         handler();
@@ -23,7 +23,7 @@ export const DropdownToggle = ({ handler, active, children }) => {
     )
 }
 
-DropdownToggle.propTypes = {
+Toggle.propTypes = {
     active: PropTypes.bool.isRequired,
     handler: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,

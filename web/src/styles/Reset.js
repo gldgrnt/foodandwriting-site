@@ -160,6 +160,10 @@ select {
 button,
 html [type="button"] {
     -webkit-appearance: button;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 [type="button"]::-moz-focus-inner,

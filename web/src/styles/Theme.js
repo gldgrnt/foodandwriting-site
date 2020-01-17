@@ -3,14 +3,14 @@ import { ThemeProvider } from 'styled-components'
 import { PropTypes } from 'prop-types'
 
 export const Theme = ({ children }) => (
-    <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    <ThemeProvider theme={variables}>{children}</ThemeProvider>
 )
 
 Theme.propTypes = {
     children: PropTypes.node.isRequired,
 }
 
-const theme = {
+export const variables = {
     color: {
         white: '#FFFFFF',
         black: '#111111',
@@ -21,8 +21,17 @@ const theme = {
         yellow: '#FFD91F',
     },
     font: {
+        family: {
+            sans: 'europa, sans-serif',
+            serif: 'garvis-pro, serif',
+        },
         size: {
-            small: '13px',
+            tiny: '0.67rem',
+            small: '0.8rem',
+            regular: '1rem',
+            increased: '1.125rem',
+            medium: '1.5rem',
+            large: '2rem',
         }
     },
     transition: {

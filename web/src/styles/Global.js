@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { variables } from './Theme'
 
 export const Global = createGlobalStyle`
 html {
@@ -6,7 +7,7 @@ html {
 }
 
 body {
-  font-family: europa, sans-serif;
+  font-family: ${variables.font.family.sans};
 }
 
 h1,
@@ -14,6 +15,6 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: garvis-pro, serif;
+  font-family: ${variables.font.family.serif};
 }
 `;

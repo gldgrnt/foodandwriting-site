@@ -40,8 +40,15 @@ export const Header = () => {
     const isDropdownOpen = dropdownState.isSearchOpen || dropdownState.isMenuOpen;
     let activeDropdown = null;
 
-    if (dropdownState.isSearchOpen) activeDropdown = <Search />;
+    // Pass close menu func down as prop
+    const closeDropdown = () => {
+        setDropdownState({ isSearchOpen: false, isMenuOpen: false });
+    }
+
+    if (dropdownState.isSearchOpen) activeDropdown = <Search closeDropdown={closeDropdown} />;
     else if (dropdownState.isMenuOpen) activeDropdown = <span>Menu dropdown</span>;
+
+
 
     return (
         <StyledHeader>

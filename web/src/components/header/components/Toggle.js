@@ -29,7 +29,7 @@ Toggle.propTypes = {
     children: PropTypes.node.isRequired,
 }
 
-const IconLink = styled.a`
+const IconLink = styled.button`
     display: flex;
     align-items: center;
     padding: 0 25px;
@@ -37,6 +37,8 @@ const IconLink = styled.a`
     background: ${props => props.active ? props.theme.color.whiteGrey : 'white'};
     color: ${props => props.theme.color.black};
     transition: background ${props => props.theme.transition.fast};
+    outline-width: 0;
+    border: none;
 
     &:hover, 
     &:focus {

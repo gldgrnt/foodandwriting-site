@@ -1,3 +1,8 @@
+// In your gatsby-config.js file
+require('dotenv').config({
+    path: `.env`
+})
+
 module.exports = {
     siteMetadata: {
         title: `Food and Writing`,
@@ -25,6 +30,14 @@ module.exports = {
                 theme_color: `#111`,
                 display: `minimal-ui`,
                 // icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+            },
+        },
+        {
+            resolve: 'gatsby-source-sanity',
+            options: {
+                projectId: 's1s9nwnc',
+                dataset: 'development',
+                token: process.env.SANITY_TOKEN,
             },
         },
     ],

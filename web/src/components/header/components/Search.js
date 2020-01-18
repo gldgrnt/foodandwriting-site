@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from 'styled-components'
 import { FiSearch, FiX } from "react-icons/fi";
-import { useSearch } from "../../../api/useSearch";
+// import { useSearch } from "../../../api/useSearch";
+
+/* TODO: */
+// Focus input on mount and on icon press
+// Search on enter press
+// Make 'development' dataset
+// Rename variables
+// Make authenticated requests via lambdas
 
 export const Search = ({ closeDropdown }) => {
     const [searchValue, setSearchValue] = useState('');
     const [searchTerm, setSearchTerm] = useState({ timeout: 0, query: '' });
-    const { results, loading } = useSearch(searchTerm.query);
-    let timer = 0;
 
     /* SPECIFIC FUNCTIONS */
     // Clear search bar
@@ -22,8 +27,21 @@ export const Search = ({ closeDropdown }) => {
     }
 
     const getResults = (string) => {
-        setSearchTerm({ query: string });
+        // setSearchTerm({ query: string });
+        string &&
+            console.log(`Search for ${string}`)
     }
+
+    const closeSearchDropdown = useCallback((event) => {
+        // Ignore if wasn't a click or esc key press
+        if (event.type === 'keydown' && event.which !== 27) {
+            return;
+        }
+
+        // Close menu
+        event.preventDefault();
+        closeDropdown();
+    }, [closeDropdown]);
 
     /* HANDLERS */
     // Handle on change on input
@@ -36,34 +54,21 @@ export const Search = ({ closeDropdown }) => {
         clearTimeout(searchTerm.timeout);
         setSearchTerm({
             timeout: setTimeout(() => {
-                getResults(value);
+                getResults(value.trim());
             }, 1000)
         })
     }
 
-    // Handle closing search dropdown
-    const handleCloseSearch = useCallback((event) => {
-        // Ignore if wasn't a click or esc key press
-        if (event.type === 'keydown' && event.which !== 27) {
-            return;
-        }
-
-        // Close menu
-        event.preventDefault();
-        closeDropdown();
-    }, [closeDropdown]);
-
-
     /* EFFECTS */
     // Add window escape key event listener
     useEffect(() => {
-        window.addEventListener('keydown', handleCloseSearch);
+        window.addEventListener('keydown', closeSearchDropdown);
 
         // Clean up by removing event listener
         return () => {
-            window.removeEventListener('keydown', handleCloseSearch);
+            window.removeEventListener('keydown', closeSearchDropdown);
         }
-    }, [handleCloseSearch])
+    }, [closeSearchDropdown])
 
     // Focus input
     useEffect(() => {

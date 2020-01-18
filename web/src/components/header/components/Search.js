@@ -1,18 +1,49 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from 'styled-components'
 import { FiSearch, FiX } from "react-icons/fi";
+import { useSearch } from "../../../api/useSearch";
 
 export const Search = ({ closeDropdown }) => {
-    const [searchTerm, setSeatchTerm] = useState('');
+    const [searchValue, setSearchValue] = useState('');
+    const [searchTerm, setSearchTerm] = useState({ timeout: 0, query: '' });
+    const { results, loading } = useSearch(searchTerm.query);
+    let timer = 0;
 
+    /* SPECIFIC FUNCTIONS */
     // Clear search bar
     const clearSearchBar = () => {
-        setSeatchTerm('');
+        setSearchValue('');
+        setSearchTerm('');
+        focusInput();
+    }
+
+    const focusInput = () => {
+        console.log('Focus input!');
+    }
+
+    const getResults = (string) => {
+        setSearchTerm({ query: string });
+    }
+
+    /* HANDLERS */
+    // Handle on change on input
+    const handleInputChange = (e) => {
+        let value = e.target.value;
+        // Update input value
+        setSearchValue(value);
+
+        // Get results 
+        clearTimeout(searchTerm.timeout);
+        setSearchTerm({
+            timeout: setTimeout(() => {
+                getResults(value);
+            }, 1000)
+        })
     }
 
     // Handle closing search dropdown
     const handleCloseSearch = useCallback((event) => {
-        // Ignore if wasn't a clikc or esc key press
+        // Ignore if wasn't a click or esc key press
         if (event.type === 'keydown' && event.which !== 27) {
             return;
         }
@@ -22,6 +53,8 @@ export const Search = ({ closeDropdown }) => {
         closeDropdown();
     }, [closeDropdown]);
 
+
+    /* EFFECTS */
     // Add window escape key event listener
     useEffect(() => {
         window.addEventListener('keydown', handleCloseSearch);
@@ -32,16 +65,24 @@ export const Search = ({ closeDropdown }) => {
         }
     }, [handleCloseSearch])
 
+    // Focus input
+    useEffect(() => {
+        focusInput();
+    }, []);
+
     return (
-        <SearchWrapper>
-            <FiSearch />
+        <>
+            <SearchWrapper>
+                <FiSearch />
 
-            <SearchBar placeholder="Search here" value={searchTerm} onChange={(e) => setSeatchTerm(e.target.value)} type="text" />
+                <SearchBar placeholder="Search here" value={searchValue} onChange={handleInputChange} type="text" />
 
-            <StyledButton onClick={clearSearchBar}>
-                <FiX />
-            </StyledButton>
-        </SearchWrapper>
+                <StyledButton onClick={clearSearchBar}>
+                    <FiX />
+                </StyledButton>
+
+            </SearchWrapper>
+        </>
     )
 }
 

@@ -12,17 +12,7 @@ export default {
             layout: 'grid',
             of: [
                 {
-                    type: 'image',
-                    fields: [
-                        {
-                            type: 'string',
-                            name: 'alt',
-                            title: 'Alt',
-                            options: {
-                                isHighlighted: true
-                            }
-                        },
-                    ]
+                    type: 'imageWithAlt',
                 },
 
             ],

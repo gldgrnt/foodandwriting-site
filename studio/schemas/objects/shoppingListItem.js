@@ -7,10 +7,8 @@ export default {
     fields: [
         {
             title: 'Ingredient',
-            // title: 'Item search',
             name: 'itemSearch',
             type: 'string',
-            // inputComponent: ShoppingListItem
         },
         {
             title: 'Amount',
@@ -25,9 +23,13 @@ export default {
         },
         prepare(select) {
             const { name, amount } = select
+            let title = ''
+
+            if (!(name && amount)) title = '(Add an ingredient and amount)'
+            else title = `${name}, ${amount.toLowerCase()}`
 
             return {
-                title: `${name}, ${amount.toLowerCase()}`,
+                title: title,
             }
         }
     }

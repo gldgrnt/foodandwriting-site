@@ -18,19 +18,9 @@ export default {
         {
             title: 'Small image',
             name: 'smallImage',
-            type: 'image',
+            type: 'imageWithAlt',
             fieldset: 'smallBio',
             description: 'Image used at the end of recipes and blog posts. Size Xpx by Ypx',
-            fields: [
-                {
-                    title: 'Alt',
-                    name: 'alt',
-                    type: 'string',
-                    options: {
-                        isHighlighted: true
-                    }
-                }
-            ]
         },
         {
             title: 'Snippet',
@@ -46,18 +36,8 @@ export default {
         {
             title: 'Large Image',
             name: 'image',
-            type: 'image',
+            type: 'imageWithAlt',
             fieldset: 'mainContent',
-            fields: [
-                {
-                    title: 'Alt',
-                    name: 'alt',
-                    type: 'string',
-                    options: {
-                        isHighlighted: true
-                    }
-                }
-            ]
         },
         {
             title: 'Content',

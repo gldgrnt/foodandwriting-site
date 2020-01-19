@@ -1,42 +1,32 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from 'styled-components'
 import { FiSearch, FiX } from "react-icons/fi";
-// import { useSearch } from "../../../api/useSearch";
-
-/* TODO: */
-// Focus input on mount and on icon press
-// Search on enter press
-// Make 'development' dataset
-// Rename variables
-// Make authenticated requests via lambdas
+import { useSearch } from "../../../fetch/useSearch";
 
 export const Search = ({ closeDropdown }) => {
-    const [searchValue, setSearchValue] = useState('');
-    const [searchTerm, setSearchTerm] = useState({ timeout: 0, query: '' });
+    const [state, setState] = useState({ inputValue: '', queryValue: '', timeout: 0 });
+    const searchBarRef = React.createRef();
+    const { results, loading } = useSearch(state.queryValue);
 
     /* SPECIFIC FUNCTIONS */
-    // Clear search bar
     const clearSearchBar = () => {
-        setSearchValue('');
-        setSearchTerm('');
+        setState(oldState => ({ ...oldState, inputValue: '', queryValue: '' }));
         focusInput();
     }
 
-    const focusInput = () => {
-        console.log('Focus input!');
-    }
+    const focusInput = useCallback(() => {
+        searchBarRef.current.focus();
+    }, [searchBarRef])
 
-    const getResults = (string) => {
-        // setSearchTerm({ query: string });
-        string &&
-            console.log(`Search for ${string}`)
+    const getResults = (query) => {
+        if (!query) return;
+
+        setState(oldState => ({ ...oldState, queryValue: query }))
     }
 
     const closeSearchDropdown = useCallback((event) => {
         // Ignore if wasn't a click or esc key press
-        if (event.type === 'keydown' && event.which !== 27) {
-            return;
-        }
+        if (event.type === 'keydown' && event.which !== 27) return;
 
         // Close menu
         event.preventDefault();
@@ -44,19 +34,28 @@ export const Search = ({ closeDropdown }) => {
     }, [closeDropdown]);
 
     /* HANDLERS */
-    // Handle on change on input
-    const handleInputChange = (e) => {
-        let value = e.target.value;
+    const handleInputChange = (event) => {
+        let value = event.target.value;
         // Update input value
-        setSearchValue(value);
+        setState(oldState => ({ ...oldState, inputValue: value }))
 
         // Get results 
-        clearTimeout(searchTerm.timeout);
-        setSearchTerm({
-            timeout: setTimeout(() => {
+        clearTimeout(state.timeout);
+        setState(oldState => ({
+            ...oldState, timeout: setTimeout(() => {
                 getResults(value.trim());
             }, 1000)
-        })
+        }))
+    }
+
+    const handleEnterPress = (event) => {
+        // Only continue if Enter was pressed
+        if (event.which !== 13) return;
+
+        let value = event.target.value
+        // Get results 
+        clearTimeout(state.timeout);
+        getResults(value.trim());
     }
 
     /* EFFECTS */
@@ -73,20 +72,32 @@ export const Search = ({ closeDropdown }) => {
     // Focus input
     useEffect(() => {
         focusInput();
-    }, []);
+    }, [focusInput]);
 
     return (
         <>
             <SearchWrapper>
                 <FiSearch />
 
-                <SearchBar placeholder="Search here" value={searchValue} onChange={handleInputChange} type="text" />
+                <SearchBar
+                    placeholder="Search here"
+                    value={state.inputValue}
+                    onChange={handleInputChange}
+                    ref={searchBarRef}
+                    onKeyUp={handleEnterPress}
+                    type="text" />
 
                 <StyledButton onClick={clearSearchBar}>
                     <FiX />
                 </StyledButton>
 
             </SearchWrapper>
+
+            <ResultsWrapper>
+                {!loading && results.map(result => (
+                    <p key={result._id}>{result.title || result._id}</p>
+                ))}
+            </ResultsWrapper>
         </>
     )
 }
@@ -124,3 +135,12 @@ const StyledButton = styled.button`
     border: none;
     padding: 0;
 `;
+
+const ResultsWrapper = styled.div`
+    width: 100;
+    
+    & > * {
+        padding: 40px 0;
+        margin: 0;
+    }
+`

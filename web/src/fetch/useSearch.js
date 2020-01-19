@@ -6,23 +6,25 @@ export const useSearch = (query) => {
     const [state, setState] = useState({ results: [], loading: false });
 
     useEffect(() => {
+        console.log('Call effect query')
+
         // Cancel if search term is empty
-        if (!query) {
-            return;
-        }
+        if (!query) return;
+
+        console.log('Run query')
 
         // Set up sanity client
         const client = sanityClient({
             projectId: 's1s9nwnc',
-            dataset: 'production',
-            useCdn: true
+            dataset: 'development',
+            // useCdn: true
         })
 
         // Set state to loading
         setState(oldState => ({ results: oldState.results, loading: true }));
 
         // Make request
-        client.fetch(`*[_type == "${query}"]`)
+        client.fetch(`*[_type == "recipe" && shoppingList[].itemSearch match "*${query}*"]`)
             .then(res => {
                 console.log(res);
                 setState({ results: res, loading: false })

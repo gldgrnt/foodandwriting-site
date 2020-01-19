@@ -17,6 +17,7 @@ const StyledContainer = styled.div`
     display: flex;
     max-width: 1300px;
     margin: auto;
+    flex-wrap: wrap;
     justify-content: ${props => props.justify || 'unset'};
     align-items: ${props => props.align || 'unset'};
     

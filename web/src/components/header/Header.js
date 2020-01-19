@@ -120,7 +120,7 @@ const DropdownContainer = styled.div`
     overflow: hidden;
     background: ${props => props.theme.color.whiteGrey};
     transition: height ${props => props.theme.transition.fast};
-    height: ${props => props.isDropdownOpen ? props.maxHeight + 'px' : '0'};
+    /* min-height: ${props => props.isDropdownOpen ? props.maxHeight + 'px' : '0'}; */
 
     & > * {
         padding: 40px 0;

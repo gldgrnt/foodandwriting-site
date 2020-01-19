@@ -1,13 +1,32 @@
 import React from "react"
 import { Page, SEO } from '../components/global'
+import { GridContainer, GridRow, GridCol } from '../components/layout'
 
 const IndexPage = () => {
 
     return (
-        <Page>
+        <>
             <SEO title="Home" description="Website coming soon" />
-            This is the main section
-        </Page >
+            <Page>
+                <GridContainer>
+                    <GridRow>
+                        <GridCol>
+                            <h1>This is the homepage</h1>
+                        </GridCol>
+                    </GridRow>
+
+                    <GridRow>
+                        <GridCol cols="1">
+                            This is 4 col
+                        </GridCol>
+                        <GridCol cols="1">
+                            This col just fills up and up and up
+                        </GridCol>
+                    </GridRow>
+                </GridContainer>
+
+            </Page>
+        </>
     )
 }
 

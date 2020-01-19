@@ -1,3 +1,3 @@
-import { GridContainer } from './Grid'
+import { GridContainer, GridRow, GridCol } from './Grid'
 
-export { GridContainer }
+export { GridContainer, GridRow, GridCol }

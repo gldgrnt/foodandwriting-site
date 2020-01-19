@@ -37,11 +37,15 @@ export const variables = {
     transition: {
         fast: '0.3s ease',
     },
-    breakpoints: {
-        xl: 1600,
-        lg: 1200,
-        md: 991,
-        sm: 768,
-        xs: 576,
+    grid: {
+        columns: 8,
+        spacing: 20,
+        breakpoints: [
+            1600,
+            1300,
+            1000,
+            768,
+            576
+        ]
     }
 }

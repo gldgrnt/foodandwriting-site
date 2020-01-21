@@ -1,30 +1,44 @@
 import React from "react"
 import { Page, SEO } from '../components/global'
-import { GridContainer, GridRow, GridCol } from '../components/layout'
+import { graphql } from 'gatsby'
+import { MainPost } from '../components/posts'
 
-const IndexPage = () => {
+export const pageQuery = graphql`
+    query HomePagequery {
+        mainPost:allSanityRecipe(limit: 1, sort: {fields: _createdAt, order: DESC}) {
+            edges {
+                node {
+                    id,
+                    _type,
+                    title,
+                    slug {
+                    current
+                    },
+                    featuredImage {
+                    alt,
+                    asset {
+                        fluid {
+                                srcWebp
+                            }
+                        }   
+                    }
+                }
+            }
+        }
+    }
+    `
+
+const IndexPage = ({ data }) => {
+
+    const mainPostData = data.mainPost.edges[0].node
 
     return (
         <>
             <SEO title="Home" description="Website coming soon" />
             <Page>
-                <GridContainer>
-                    <GridRow>
-                        <GridCol>
-                            <h1>This is the homepage</h1>
-                        </GridCol>
-                    </GridRow>
 
-                    <GridRow>
-                        <GridCol cols="1">
-                            This is 4 col
-                        </GridCol>
-                        <GridCol cols="1">
-                            This col just fills up and up and up
-                        </GridCol>
-                    </GridRow>
-                </GridContainer>
-
+                {/* Main post */}
+                <MainPost post={mainPostData} />
             </Page>
         </>
     )

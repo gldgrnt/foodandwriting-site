@@ -15,7 +15,7 @@ const calculateCols = (cols, maxCols) => {
     cols = parseInt(cols)
 
     if (!cols) {
-        return 'auto'
+        return 'none'
     }
 
     if (cols > maxCols) {
@@ -29,6 +29,6 @@ const StyledCol = styled.div`
     position: relative;
     padding-left: ${props => props.theme.grid.spacing}px;
     padding-right: ${props => props.theme.grid.spacing}px;
-    flex-grow: ${props => props.cols ? 0 : 1};
+    flex: 1;
     max-width: ${props => calculateCols(props.cols, props.theme.grid.columns)}
 `

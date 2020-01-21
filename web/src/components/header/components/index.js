@@ -1,6 +1,6 @@
 import { Navigation } from './Navigation'
 import { Logo } from './Logo'
 import { Toggle } from './Toggle'
-import { Search } from './Search'
+import { SearchContainer } from './SearchContainer'
 
-export { Navigation, Logo, Toggle, Search }
+export { Navigation, Logo, Toggle, SearchContainer }

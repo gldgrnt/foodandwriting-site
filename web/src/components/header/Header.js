@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import styled from 'styled-components'
 import { FiMenu, FiSearch } from 'react-icons/fi'
-import { Navigation, Logo, Toggle, Search } from './components'
+import { Navigation, Logo, Toggle, SearchContainer } from './components'
 import { GridContainer } from '../layout'
 
 export const Header = () => {
@@ -45,7 +45,7 @@ export const Header = () => {
         setDropdownState({ isSearchOpen: false, isMenuOpen: false });
     }
 
-    if (dropdownState.isSearchOpen) activeDropdown = <Search closeDropdown={closeDropdown} />;
+    if (dropdownState.isSearchOpen) activeDropdown = <SearchContainer closeDropdown={closeDropdown} />;
     else if (dropdownState.isMenuOpen) activeDropdown = <span>Menu dropdown</span>;
 
 

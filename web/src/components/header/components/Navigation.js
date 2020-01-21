@@ -18,15 +18,17 @@ export const Navigation = ({ className }) => {
     ]
 
     return (
-        <ListWrapper className={className}>
-            {pages.map(page => {
-                return (
-                    <ListItem key={page.link}>
-                        <ListItemLink to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</ListItemLink>
-                    </ListItem>
-                )
-            })}
-        </ListWrapper>
+        <nav>
+            <ListWrapper className={className}>
+                {pages.map(page => {
+                    return (
+                        <ListItem key={page.link}>
+                            <ListItemLink to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</ListItemLink>
+                        </ListItem>
+                    )
+                })}
+            </ListWrapper>
+        </nav>
     )
 }
 

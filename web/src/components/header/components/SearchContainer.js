@@ -1,18 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import styled from 'styled-components'
-import { FiSearch, FiX } from "react-icons/fi";
 import { useSearch } from "../../../fetch/useSearch";
+import { SearchBar } from './SearchBar'
+import { SearchResults } from './SearchResults'
 
-export const Search = ({ closeDropdown }) => {
+export const SearchContainer = ({ closeDropdown }) => {
     const [state, setState] = useState({ inputValue: '', queryValue: '', timeout: 0 });
     const searchBarRef = React.createRef();
     const { results, loading } = useSearch(state.queryValue);
-
-    /* SPECIFIC FUNCTIONS */
-    const clearSearchBar = () => {
-        setState(oldState => ({ ...oldState, inputValue: '', queryValue: '' }));
-        focusInput();
-    }
 
     const focusInput = useCallback(() => {
         searchBarRef.current.focus();
@@ -76,71 +70,14 @@ export const Search = ({ closeDropdown }) => {
 
     return (
         <>
-            <SearchWrapper>
-                <FiSearch />
+            <SearchBar
+                value={state.inputValue}
+                onChange={handleInputChange}
+                ref={searchBarRef}
+                onKeyUp={handleEnterPress}
+                closeDropdown={closeDropdown} />
 
-                <SearchBar
-                    placeholder="Search here"
-                    value={state.inputValue}
-                    onChange={handleInputChange}
-                    ref={searchBarRef}
-                    onKeyUp={handleEnterPress}
-                    type="text" />
-
-                <StyledButton onClick={clearSearchBar}>
-                    <FiX />
-                </StyledButton>
-
-            </SearchWrapper>
-
-            <ResultsWrapper>
-                {!loading && results.map(result => (
-                    <p key={result._id}>{result.title || result._id}</p>
-                ))}
-            </ResultsWrapper>
+            <SearchResults loading={loading} results={results} />
         </>
     )
 }
-
-const SearchWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-
-    svg {
-        transform: scale(1.2);
-        stroke-width: 2.5px;
-        pointer-events: none;
-    }
-`
-
-const SearchBar = styled.input`
-    flex-grow: 1;
-    margin: 0 25px;
-    border: none;
-    background: none;
-    padding: 0.6rem 0;
-    border-bottom: 2px solid ${props => props.theme.color.mediumGrey};
-    transition: border-color ${props => props.theme.transition.fast};
-    outline: none;
-    font-size: ${props => props.theme.font.size.increased};
-
-    &:focus {
-        border-color: black;
-    }
-`
-
-const StyledButton = styled.button`
-    background: none;
-    border: none;
-    padding: 0;
-`;
-
-const ResultsWrapper = styled.div`
-    width: 100;
-    
-    & > * {
-        padding: 40px 0;
-        margin: 0;
-    }
-`

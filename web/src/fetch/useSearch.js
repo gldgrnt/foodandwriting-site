@@ -17,7 +17,7 @@ export const useSearch = (query) => {
         const client = sanityClient({
             projectId: 's1s9nwnc',
             dataset: 'development',
-            // useCdn: true
+            useCdn: true
         })
 
         // Set state to loading

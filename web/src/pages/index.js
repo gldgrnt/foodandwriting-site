@@ -21,7 +21,8 @@ export const pageQuery = graphql`
                                 srcWebp
                             }
                         }   
-                    }
+                    },
+                    _rawRecipeIntro
                 }
             }
         }

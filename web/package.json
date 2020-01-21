@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@sanity/block-content-to-react": "^2.0.7",
     "@sanity/client": "^0.147.3",
     "gatsby": "^2.18.22",
     "gatsby-image": "^2.2.38",

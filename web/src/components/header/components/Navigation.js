@@ -43,6 +43,7 @@ const ListItem = styled.li`
     display: inline-block;
     padding: 0 35px;
     margin: 0;
+    font-family: ${props => props.theme.font.family.sans};
 
     &:first-child {
         padding-left: 0;

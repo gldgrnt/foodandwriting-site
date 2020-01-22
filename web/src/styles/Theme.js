@@ -31,7 +31,8 @@ export const variables = {
             regular: '1rem',
             increased: '1.125rem',
             medium: '1.5rem',
-            large: '2rem',
+            large: '1.75rem',
+            huge: '2em'
         }
     },
     transition: {

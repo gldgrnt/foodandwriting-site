@@ -3,11 +3,11 @@ import { variables } from './Theme'
 
 export const Global = createGlobalStyle`
 html {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 body {
-  font-family: ${variables.font.family.sans};
+  font-family: ${variables.font.family.serif};
 }
 
 h1,
@@ -17,4 +17,19 @@ h4,
 h5 {
   font-family: ${variables.font.family.serif};
 }
-`;
+
+h1 {
+    font-size: ${variables.font.size.huge};
+}
+
+h2 {
+    font-size: ${variables.font.size.large};
+}
+
+p,li {
+    line-height: 1.67;
+}
+
+/* END */
+`
+

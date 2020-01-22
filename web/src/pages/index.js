@@ -22,7 +22,7 @@ export const pageQuery = graphql`
                             }
                         }   
                     },
-                    _rawRecipeIntro
+                    recipeIntro
                 }
             }
         }

@@ -2,12 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { GridContainer } from '../layout'
-import { Link } from 'gatsby'
-import PortableText from '@sanity/block-content-to-react'
+import { SmallTitle, Button } from '../ui'
 
 export const MainPost = ({ post }) => {
 
     // console.log(post)
+
+    // Transform caption
+    let caption
+    if (post.recipeIntro.length > 160) {
+        caption = `${post.recipeIntro.substr(0, 157)}...`
+        console.log(caption)
+    } else {
+        caption = post.recipeIntro.substr(0, 160)
+    }
 
     return (
         <StyledSection>
@@ -18,12 +26,14 @@ export const MainPost = ({ post }) => {
 
                 <CaptionContainer>
                     <CaptionInner>
-                        <span>Featured {post._type}</span>
-                        <h1>{post.title}</h1>
-                        <PortableText blocks={post._rawRecipeIntro} />
-                        <Link to={`/${post._type}/${post.slug.current}`}>
+                        <SmallTitle>
+                            <span>Featured {post._type}</span>
+                        </SmallTitle>
+                        <h2>{post.title}</h2>
+                        <p>{caption}</p>
+                        <Button link={`/${post._type}/${post.slug.current}`}>
                             View recipe
-                        </Link>
+                        </Button>
                     </CaptionInner>
                 </CaptionContainer>
             </GridContainer>
@@ -31,8 +41,8 @@ export const MainPost = ({ post }) => {
     )
 }
 
-MainPost.prototypes = {
-    postData: PropTypes.object.isRequired
+MainPost.propTypes = {
+    post: PropTypes.object.isRequired
 }
 
 /* Styles */
@@ -60,17 +70,17 @@ const CaptionContainer = styled.div`
     align-items: center;
     flex-basis: 50%;
     background: ${props => props.theme.color.whiteGrey};
-    padding: 150px 120px;
+    padding: 210px 0;
+
+    @media screen and (max-width: ${props => props.theme.grid.breakpoints[0] - 0.0001}px) {
+        padding: 150px 0;
+    }
 `
 
 const CaptionInner = styled.div`
-    width: 67%;
-        
-    span {
-        display: block;
-        font-size: 12px;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-bottom: 20px;  
+    width: 60%;
+
+    & > * {
+        margin-bottom: 20px;
     }
 `

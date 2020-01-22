@@ -64,7 +64,8 @@ export default {
         {
             title: 'Recipe intro',
             name: 'recipeIntro',
-            type: 'portableText',
+            type: 'text',
+            rows: 8,
             fieldset: 'mainContent'
         },
         {

@@ -15,7 +15,7 @@ export const MainPost = ({ post }) => {
         caption = post.recipeIntro.substr(0, 160)
     }
 
-    const postLink = `/${post._type}/${post.slug.current}`
+    const postLink = `/${post.slug.current}`
 
     return (
         <StyledSection>

@@ -24,7 +24,10 @@ export default {
             description: 'Click generate to auto generate a slug',
             options: {
                 source: 'title',
-                maxLength: 100
+                slugify: (input) => {
+                    let titleSlug = input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
+                    return `culture/${titleSlug}`
+                },
             },
             validation: Rule => [
                 Rule.required().error('Please add / generate a unique slug')
@@ -62,10 +65,10 @@ export default {
             const { title, createdAt, image } = select
 
             //Format date
-            let date = new Date(createdAt);
-            let d = date.getDate();
-            let m = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
-            let y = date.getFullYear();
+            let date = new Date(createdAt)
+            let d = date.getDate()
+            let m = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+            let y = date.getFullYear()
 
             return {
                 title: title,

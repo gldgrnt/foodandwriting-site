@@ -5,7 +5,7 @@ import { GridContainer } from '../layout'
 import { SmallTitle, Button } from '../ui'
 import { Link } from 'gatsby'
 
-export const MainPost = ({ post }) => {
+export const FeaturedPost = ({ post }) => {
 
     // Transform caption
     let caption
@@ -43,7 +43,7 @@ export const MainPost = ({ post }) => {
     )
 }
 
-MainPost.propTypes = {
+FeaturedPost.propTypes = {
     post: PropTypes.object.isRequired
 }
 
@@ -89,9 +89,11 @@ const CaptionInner = styled.div`
 `
 
 const StyledTitleLink = styled(Link)`
+    display: inline-block;
     color: ${props => props.theme.color.black};
     text-decoration: none;
     transition: text-decoration ${props => props.theme.transition.fast};
+    margin: 0;
 
     &:hover,
     &:focus {

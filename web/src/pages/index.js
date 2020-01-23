@@ -1,7 +1,7 @@
 import React from "react"
 import { Page, SEO } from '../components/global'
 import { graphql } from 'gatsby'
-import { MainPost } from '../components/posts'
+import { FeaturedPost, PostSlider } from '../components/posts-sections'
 
 export const pageQuery = graphql`
     query HomePagequery {
@@ -39,7 +39,10 @@ const IndexPage = ({ data }) => {
             <Page>
 
                 {/* Main post */}
-                <MainPost post={mainPostData} />
+                <FeaturedPost post={mainPostData} />
+
+                {/* Post slider */}
+                <PostSlider posts={['hello', 'goodbye']} />
             </Page>
         </>
     )

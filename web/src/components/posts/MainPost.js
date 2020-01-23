@@ -3,35 +3,37 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { GridContainer } from '../layout'
 import { SmallTitle, Button } from '../ui'
+import { Link } from 'gatsby'
 
 export const MainPost = ({ post }) => {
-
-    // console.log(post)
 
     // Transform caption
     let caption
     if (post.recipeIntro.length > 160) {
         caption = `${post.recipeIntro.substr(0, 157)}...`
-        console.log(caption)
     } else {
         caption = post.recipeIntro.substr(0, 160)
     }
 
+    const postLink = `/${post._type}/${post.slug.current}`
+
     return (
         <StyledSection>
             <GridContainer>
-                <ImageContainer>
+                <ImageLinkContainer to={postLink}>
                     <img src={post.featuredImage.asset.fluid.srcWebp} alt={post.title} />
-                </ImageContainer>
+                </ImageLinkContainer>
 
                 <CaptionContainer>
                     <CaptionInner>
                         <SmallTitle>
                             <span>Featured {post._type}</span>
                         </SmallTitle>
-                        <h2>{post.title}</h2>
+                        <StyledTitleLink to={postLink}>
+                            <h2>{post.title}</h2>
+                        </StyledTitleLink>
                         <p>{caption}</p>
-                        <Button link={`/${post._type}/${post.slug.current}`}>
+                        <Button link={postLink}>
                             View recipe
                         </Button>
                     </CaptionInner>
@@ -47,10 +49,10 @@ MainPost.propTypes = {
 
 /* Styles */
 const StyledSection = styled.section`
-    padding: 4rem 0 5rem;
+    padding: 2rem 0 5rem;
 `
 
-const ImageContainer = styled.div`
+const ImageLinkContainer = styled(Link)`
     position: relative;
     overflow: hidden;
     flex-basis: 50%;
@@ -74,6 +76,7 @@ const CaptionContainer = styled.div`
 
     @media screen and (max-width: ${props => props.theme.grid.breakpoints[0] - 0.0001}px) {
         padding: 150px 0;
+        min-height: 550px;
     }
 `
 
@@ -82,5 +85,16 @@ const CaptionInner = styled.div`
 
     & > * {
         margin-bottom: 20px;
+    }
+`
+
+const StyledTitleLink = styled(Link)`
+    color: ${props => props.theme.color.black};
+    text-decoration: none;
+    transition: text-decoration ${props => props.theme.transition.fast};
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
     }
 `

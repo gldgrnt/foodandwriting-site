@@ -43,7 +43,7 @@ export const variables = {
         spacing: 20,
         breakpoints: [
             1600,
-            1300,
+            1200,
             1000,
             768,
             576

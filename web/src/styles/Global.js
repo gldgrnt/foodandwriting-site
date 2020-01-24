@@ -26,6 +26,10 @@ h2 {
     font-size: ${variables.font.size.large};
 }
 
+h3 {
+    font-size: ${variables.font.size.medium};
+}
+
 p,li {
     line-height: 1.67;
 }

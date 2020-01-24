@@ -1,4 +1,4 @@
 import { Button } from './Button'
-import { SmallTitle } from './SmallTitle'
+import SmallCaps from './SmallCaps'
 
-export { Button, SmallTitle }
+export { Button, SmallCaps }

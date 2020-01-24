@@ -1,45 +1,61 @@
 import React from 'react'
-// import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import "react-responsive-carousel/lib/styles/carousel.min.css"
-import { Carousel } from 'react-responsive-carousel'
+import styled from 'styled-components'
 
-export const PostSlider = (posts) => {
+import { SmallCaps } from '../ui'
+import { GridContainer, GridRow, GridCol } from '../layout'
+import { VerticalPost } from './components'
 
-    const photoURL = 'https://picsum.photos/350/450'
+import Slider from 'react-slick'
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+
+export const PostSlider = ({ title, posts }) => {
 
     const settings = {
-
+        dots: false,
+        arrows: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        variableWidth: true,
     }
 
     return (
-        <section>
-            <Carousel slidePercentage={30} {...settings}>
-                <div>
-                    <img src={photoURL} alt="random" />
-                    <p className="legend">Legend 1</p>
-                </div>
-                <div>
-                    <img src={photoURL} alt="random" />
-                    <p className="legend">Legend 2</p>
-                </div>
-                <div>
-                    <img src={photoURL} alt="random" />
-                    <p className="legend">Legend 3</p>
-                </div>
-                <div>
-                    <img src={photoURL} alt="random" />
-                    <p className="legend">Legend 3</p>
-                </div>
-                <div>
-                    <img src={photoURL} alt="random" />
-                    <p className="legend">Legend 3</p>
-                </div>
-            </Carousel>
-        </section>
+        <StyledSection>
+            <GridContainer justify="space-between">
+                <SmallCaps tag="h2" size="regular" color="black">{title}</SmallCaps>
+            </GridContainer>
+
+            <StyledGridContainer>
+                <StyledSlider {...settings}>
+                    {posts.map((post, index) => <VerticalPost key={index} post={post} />)}
+                </StyledSlider>
+            </StyledGridContainer>
+        </StyledSection>
     )
 }
 
 PostSlider.prototypes = {
-    posts: PropTypes.array.isRequired
+    posts: PropTypes.array.isRequired,
+    titile: PropTypes.string.isRequired,
 }
+
+const StyledSection = styled.section`
+    overflow: hidden;
+`
+
+const StyledGridContainer = styled(GridContainer)`
+    display: block;
+`
+
+const StyledSlider = styled(Slider)`
+    .slick-list {
+        overflow: visible;
+    }
+
+    .slick-slide:not(:last-child) img {
+        margin-right: 80px;
+    }
+`

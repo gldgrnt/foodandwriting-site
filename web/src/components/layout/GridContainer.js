@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 /* CONTAINER */
-export const GridContainer = ({ children }) => (
-    <StyledContainer>{children}</StyledContainer>
+export const GridContainer = ({ children, ...props }) => (
+    <StyledContainer {...props}>{children}</StyledContainer>
 )
 
 GridContainer.propTypes = {
@@ -31,7 +31,7 @@ const StyledContainer = styled.div`
     margin: auto;
     padding-left: ${props => props.theme.grid.spacing}px;
     padding-right: ${props => props.theme.grid.spacing}px;
-    flex-wrap: wrap;
+    flex-wrap: ${props => props.wrap || 'no-wrap'};
     justify-content: ${props => props.justify || 'unset'};
     align-items: ${props => props.align || 'unset'};
     

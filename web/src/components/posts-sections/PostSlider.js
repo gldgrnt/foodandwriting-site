@@ -129,7 +129,7 @@ const StyledSlider = styled(Slider)`
         overflow: visible;
     }
 
-    .slick-slide:not(:last-child) img {
+    .slick-slide:not(:last-child) > * {
         margin-right: 80px;
     }
 `

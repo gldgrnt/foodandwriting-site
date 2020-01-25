@@ -51,6 +51,7 @@ template {
 }
 
 a {
+    color: inherit;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
 }
@@ -722,4 +723,4 @@ pre tt:after {
         font-size: 100%;
     }
 }
-`;
+`

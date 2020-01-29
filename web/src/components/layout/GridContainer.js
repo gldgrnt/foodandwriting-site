@@ -14,13 +14,13 @@ GridContainer.propTypes = {
 const createGridBreakpoints = (breakpoints, spacing) => {
     let styles = ''
 
-    breakpoints.forEach((breakpoint, index) => {
+    for (const size in breakpoints) {
         styles += `
-            @media screen and (max-width: ${index === 0 ? '10000' : breakpoints[index - 1] - 0.00001}px) {
-                max-width: ${index !== breakpoints.length - 1 ? (breakpoint - (spacing * 2)) + 'px' : 'none'}
+            @media screen and (max-width: ${breakpoints[size].maxScreenWidth + 'px' || 'none'}) {
+                max-width: ${breakpoints[size].minScreenWidth + 'px' || (breakpoints[size].minScreenWidth + (spacing * 2))};
             }
         `
-    })
+    }
 
     return styles
 }

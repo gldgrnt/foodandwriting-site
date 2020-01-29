@@ -41,12 +41,27 @@ export const variables = {
     grid: {
         columns: 8,
         spacing: 20,
-        breakpoints: [
-            1600,
-            1200,
-            1000,
-            768,
-            576
-        ]
+        breakpoints: {
+            monitor: {
+                maxScreenWidth: 99999,
+                minScreenWidth: 1600,
+            },
+            desktop: {
+                maxScreenWidth: 1599.999,
+                minScreenWidth: 1200,
+            },
+            laptop: {
+                maxScreenWidth: 1199.999,
+                minScreenWidth: 1000,
+            },
+            tablet: {
+                maxScreenWidth: 999.999,
+                minScreenWidth: 768,
+            },
+            mobile: {
+                maxScreenWidth: 767.99,
+                minScreenWidth: false,
+            },
+        }
     }
 }

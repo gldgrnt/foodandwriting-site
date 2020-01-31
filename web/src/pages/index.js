@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
-import { FeaturedPost, PostSlider } from '../components/post-sections'
+import { FeaturedPost, PostSlider, HorizontalPostSection } from '../components/post-sections'
 
 const IndexPage = ({ data }) => {
 
@@ -18,6 +18,9 @@ const IndexPage = ({ data }) => {
 
                 {/* Post slider */}
                 <PostSlider title={'Recipes'} posts={[mainPostData, mainPostData, mainPostData, mainPostData, mainPostData, mainPostData]} />
+
+                {/* Horizontal post section */}
+                <HorizontalPostSection category={{ title: 'Culture', link: '/culture' }} posts={[mainPostData, mainPostData, mainPostData]} />
             </Page>
         </>
     )

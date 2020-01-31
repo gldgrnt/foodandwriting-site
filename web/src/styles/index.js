@@ -1,5 +1,5 @@
 import { Reset } from './Reset'
 import { Global } from './Global'
-import { Theme } from './Theme'
+import { Theme, themeVariables } from './Theme'
 
-export { Reset, Global, Theme }
+export { Reset, Global, Theme, themeVariables }

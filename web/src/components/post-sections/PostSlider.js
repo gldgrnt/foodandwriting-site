@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 
-import { SmallCaps, Button } from '../ui'
+import { SmallCaps } from '../ui'
 import { GridContainer } from '../layout'
 import { VerticalPost } from './components'
 

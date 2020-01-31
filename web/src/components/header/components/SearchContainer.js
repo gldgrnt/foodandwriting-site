@@ -1,72 +1,72 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useSearch } from "../../../fetch/useSearch";
+import React, { useState, useEffect, useCallback } from "react"
+import { useSearch } from "../../../api"
 import { SearchBar } from './SearchBar'
 import { SearchResults } from './SearchResults'
 
 export const SearchContainer = ({ closeDropdown }) => {
-    const [state, setState] = useState({ inputValue: '', queryValue: '', timeout: 0 });
-    const searchBarRef = React.createRef();
-    const { results, loading } = useSearch(state.queryValue);
+    const [state, setState] = useState({ inputValue: '', queryValue: '', timeout: 0 })
+    const searchBarRef = React.createRef()
+    const { results, loading } = useSearch(state.queryValue)
 
     const focusInput = useCallback(() => {
-        searchBarRef.current.focus();
+        searchBarRef.current.focus()
     }, [searchBarRef])
 
     const getResults = (query) => {
-        if (!query) return;
+        if (!query) return
 
         setState(oldState => ({ ...oldState, queryValue: query }))
     }
 
     const closeSearchDropdown = useCallback((event) => {
         // Ignore if wasn't a click or esc key press
-        if (event.type === 'keydown' && event.which !== 27) return;
+        if (event.type === 'keydown' && event.which !== 27) return
 
         // Close menu
-        event.preventDefault();
-        closeDropdown();
-    }, [closeDropdown]);
+        event.preventDefault()
+        closeDropdown()
+    }, [closeDropdown])
 
     /* HANDLERS */
     const handleInputChange = (event) => {
-        let value = event.target.value;
+        let value = event.target.value
         // Update input value
         setState(oldState => ({ ...oldState, inputValue: value }))
 
         // Get results 
-        clearTimeout(state.timeout);
+        clearTimeout(state.timeout)
         setState(oldState => ({
             ...oldState, timeout: setTimeout(() => {
-                getResults(value.trim());
+                getResults(value.trim())
             }, 1000)
         }))
     }
 
     const handleEnterPress = (event) => {
         // Only continue if Enter was pressed
-        if (event.which !== 13) return;
+        if (event.which !== 13) return
 
         let value = event.target.value
         // Get results 
-        clearTimeout(state.timeout);
-        getResults(value.trim());
+        clearTimeout(state.timeout)
+        getResults(value.trim())
     }
 
     /* EFFECTS */
     // Add window escape key event listener
     useEffect(() => {
-        window.addEventListener('keydown', closeSearchDropdown);
+        window.addEventListener('keydown', closeSearchDropdown)
 
         // Clean up by removing event listener
         return () => {
-            window.removeEventListener('keydown', closeSearchDropdown);
+            window.removeEventListener('keydown', closeSearchDropdown)
         }
     }, [closeSearchDropdown])
 
     // Focus input
     useEffect(() => {
-        focusInput();
-    }, [focusInput]);
+        focusInput()
+    }, [focusInput])
 
     return (
         <>

@@ -3,14 +3,14 @@ import { ThemeProvider } from 'styled-components'
 import { PropTypes } from 'prop-types'
 
 export const Theme = ({ children }) => (
-    <ThemeProvider theme={variables}>{children}</ThemeProvider>
+    <ThemeProvider theme={themeVariables}>{children}</ThemeProvider>
 )
 
 Theme.propTypes = {
     children: PropTypes.node.isRequired,
 }
 
-export const variables = {
+export const themeVariables = {
     color: {
         white: '#FFFFFF',
         black: '#111111',

@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import { variables } from './Theme'
+import { themeVariables } from './Theme'
 
 export const Global = createGlobalStyle`
 html {
@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  font-family: ${variables.font.family.serif};
+  font-family: ${themeVariables.font.family.serif};
 }
 
 h1,
@@ -15,19 +15,19 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: ${variables.font.family.serif};
+  font-family: ${themeVariables.font.family.serif};
 }
 
 h1 {
-    font-size: ${variables.font.size.huge};
+    font-size: ${themeVariables.font.size.huge};
 }
 
 h2 {
-    font-size: ${variables.font.size.large};
+    font-size: ${themeVariables.font.size.large};
 }
 
 h3 {
-    font-size: ${variables.font.size.medium};
+    font-size: ${themeVariables.font.size.medium};
 }
 
 p,li {

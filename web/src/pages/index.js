@@ -1,7 +1,8 @@
-import React from "react"
-import { Page, SEO } from '../components/global'
+import React from 'react'
 import { graphql } from 'gatsby'
-import { FeaturedPost, PostSlider } from '../components/posts-sections'
+import { Page } from '../components/layout'
+import { SEO } from '../utils'
+import { FeaturedPost, PostSlider } from '../components/post-sections'
 
 const IndexPage = ({ data }) => {
 

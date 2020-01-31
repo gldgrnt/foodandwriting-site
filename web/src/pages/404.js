@@ -1,5 +1,6 @@
 import React from "react"
-import { Page, SEO } from "../components/global"
+import { Page } from '../components/layout'
+import { SEO } from '../utils'
 
 const NotFoundPage = () => (
     <Page>

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { GridContainer } from '../layout'
-import { Button, SmallCaps } from '../ui'
+import { InternalLink, SmallCaps } from '../ui'
 import { Link } from 'gatsby'
 
 export const FeaturedPost = ({ post }) => {
@@ -27,11 +27,11 @@ export const FeaturedPost = ({ post }) => {
                 <CaptionContainer>
                     <CaptionInner>
                         <SmallCaps as="p" size="small">Featured {post._type}</SmallCaps>
-                        <StyledTitleLink to={postLink}>
+                        <InternalLink to={postLink} title>
                             <h2>{post.title}</h2>
-                        </StyledTitleLink>
+                        </InternalLink>
                         <p>{caption}</p>
-                        <Button link={postLink}>View recipe</Button>
+                        <InternalLink to={postLink} primary>View recipe</InternalLink>
                     </CaptionInner>
                 </CaptionContainer>
             </GridContainer>
@@ -85,21 +85,5 @@ const CaptionInner = styled.div`
         :last-child {
             margin-bottom: 0;
         }
-    }
-`
-
-const StyledTitleLink = styled(Link)`
-    display: inline-block;
-    color: ${props => props.theme.color.black};
-    text-decoration: none;
-    transition: text-decoration ${props => props.theme.transition.fast};
-    
-    > * {
-        margin: 0;
-    }
-
-    &:hover,
-    &:focus {
-        text-decoration: underline;
     }
 `

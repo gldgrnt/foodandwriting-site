@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 
-import { SmallCaps } from '../ui'
+import { SmallCaps, InternalLink } from '../ui'
 import { GridContainer } from '../layout'
 import { VerticalPost } from './components'
 
@@ -40,8 +40,12 @@ export const PostSlider = ({ title, posts }) => {
     return (
         <StyledSection>
             <StyledGridContainer>
-                <TitleWrapper>
-                    <SmallCaps as="h2" size="increased" color="black">{title}</SmallCaps>
+                <UpperWrapper>
+                    <TitleWrapper>
+                        <SmallCaps as="h2" size="increased" color="black">{title}</SmallCaps>
+
+                        <InternalLink to="/recipes" secondary>View all</InternalLink>
+                    </TitleWrapper>
 
                     <ButtonWrapper>
                         <StyledButton onClick={prevSlide}>
@@ -52,15 +56,11 @@ export const PostSlider = ({ title, posts }) => {
                             <FiArrowRight />
                         </StyledButton>
                     </ButtonWrapper>
-                </TitleWrapper>
+                </UpperWrapper>
 
                 <StyledSlider ref={r => SliderRef = r} {...settings}>
                     {posts.map((post, index) => <VerticalPost key={index} post={post} />)}
                 </StyledSlider>
-
-                {/* <Button to="/recipes" primary>
-                    View all recipes
-                </Button> */}
             </StyledGridContainer>
         </StyledSection>
     )
@@ -75,15 +75,28 @@ const StyledSection = styled.section`
     overflow: hidden;
 `
 
-const TitleWrapper = styled.div`
+const UpperWrapper = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 20px;
-
+    margin: 0 0 30px;
+    
     > * {
         margin-bottom: 0;
+    }
+    `
+
+const TitleWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    
+    > * {
+        margin: 0;
+
+        &:first-child {
+            margin-right: 30px;
+        }   
     }
 `
 

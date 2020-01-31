@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import { Button } from '../../ui'
+import { InternalLink } from '../../ui'
 
 export const VerticalPost = ({ post }) => {
 
@@ -14,7 +14,7 @@ export const VerticalPost = ({ post }) => {
                 <StyledImage src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
                 <StyledTitle>{post.title}</StyledTitle>
             </ArticleLinkWrapper>
-            <Button link={postLink}>View recipe</Button>
+            <InternalLink to={postLink} primary>View recipe</InternalLink>
         </StyledArticle>
     )
 }

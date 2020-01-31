@@ -1,4 +1,4 @@
-import { Button } from './Button'
+import { InternalLink } from './InternalLink'
 import { SmallCaps } from './SmallCaps'
 
-export { Button, SmallCaps }
+export { InternalLink, SmallCaps }

@@ -1,33 +1,28 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 
-class SmallCaps extends Component {
-    render() {
-        const TagName = this.props.tag
-        const tagSize = this.props.size || 'regular'
-        const color = this.props.color || 'darkGrey'
+export const SmallCaps = ({ children, as = null, size, color }) => {
 
-        const StyledTagName = styled[TagName]`
-            display: block;
-            font-family: ${props => props.theme.font.family.sans};
-            font-size: ${props => props.theme.font.size[tagSize]};
-            font-weight: bold;
-            text-transform: uppercase;
-            color: ${props => props.theme.color[color]};
-        `
-
-        return <StyledTagName>{this.props.children}</StyledTagName>
-    }
-
+    return (
+        <StyledSmallCaps as={as} size={size} color={color}>
+            {children}
+        </StyledSmallCaps>
+    )
 }
 
-// Export with HOC withTheme to give component acess to theme values
-export default withTheme(SmallCaps)
-
 SmallCaps.propTypes = {
-    tag: PropTypes.string.isRequired,
+    as: PropTypes.string,
     children: PropTypes.node.isRequired,
     size: PropTypes.string,
     color: PropTypes.string
 }
+
+const StyledSmallCaps = styled.span`
+    display: block;
+    font-family: ${props => props.theme.font.family.sans};
+    font-size: ${props => props.theme.font.size[props.size] || props.theme.font.size.regular};
+    font-weight: bold;
+    text-transform: uppercase;
+    color: ${props => props.theme.color[props.color] || props.theme.color.darkGrey};
+`

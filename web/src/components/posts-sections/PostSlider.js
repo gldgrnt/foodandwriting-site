@@ -41,7 +41,7 @@ export const PostSlider = ({ title, posts }) => {
         <StyledSection>
             <StyledGridContainer>
                 <TitleWrapper>
-                    <SmallCaps tag="h2" size="increased" color="black">{title}</SmallCaps>
+                    <SmallCaps as="h2" size="increased" color="black">{title}</SmallCaps>
 
                     <ButtonWrapper>
                         <StyledButton onClick={prevSlide}>
@@ -58,9 +58,9 @@ export const PostSlider = ({ title, posts }) => {
                     {posts.map((post, index) => <VerticalPost key={index} post={post} />)}
                 </StyledSlider>
 
-                <Button to="/recipes">
+                {/* <Button to="/recipes" primary>
                     View all recipes
-                </Button>
+                </Button> */}
             </StyledGridContainer>
         </StyledSection>
     )
@@ -81,6 +81,10 @@ const TitleWrapper = styled.div`
     width: 100%;
     justify-content: space-between;
     margin-bottom: 20px;
+
+    > * {
+        margin-bottom: 0;
+    }
 `
 
 const ButtonWrapper = styled.div`

@@ -26,7 +26,7 @@ export const FeaturedPost = ({ post }) => {
 
                 <CaptionContainer>
                     <CaptionInner>
-                        <SmallCaps tag="p" size="small">Featured {post._type}</SmallCaps>
+                        <SmallCaps as="p" size="small">Featured {post._type}</SmallCaps>
                         <StyledTitleLink to={postLink}>
                             <h2>{post.title}</h2>
                         </StyledTitleLink>

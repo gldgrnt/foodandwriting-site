@@ -1,5 +1,5 @@
 import { FeaturedPost } from './FeaturedPost'
 import { PostSlider } from './PostSlider'
-import { HorizontalPostSection } from './HorizontalPostSection'
+import { PostList } from './PostList'
 
-export { FeaturedPost, PostSlider, HorizontalPostSection }
+export { FeaturedPost, PostSlider, PostList }

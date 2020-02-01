@@ -72,7 +72,7 @@ const SecondaryLink = styled(BaseLink)`
     padding: 7px 10px;
     background: ${props => props.theme.color.yellow};
     line-height: 1.2;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
     text-transform: uppercase;
 
     &:hover,

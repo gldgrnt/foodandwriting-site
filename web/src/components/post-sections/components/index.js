@@ -1,3 +1,4 @@
 import { VerticalPost } from './verticalPost'
+import { HorizontalPost } from './horizontalPost'
 
-export { VerticalPost } 
+export { VerticalPost, HorizontalPost } 

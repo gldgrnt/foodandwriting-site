@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+
 import { GridContainer } from '../layout'
 import { InternalLink, SmallCaps } from '../ui'
 import { Link } from 'gatsby'
+import { responsiveBreakpointDown } from '../../utils'
 
 export const FeaturedPost = ({ post }) => {
 
@@ -18,24 +20,22 @@ export const FeaturedPost = ({ post }) => {
     const postLink = `/${post.slug.current}`
 
     return (
-        <StyledSection>
-            <GridContainer>
-                <ImageLinkContainer to={postLink}>
-                    <img src={post.featuredImage.asset.fluid.srcWebp} alt={post.title} />
-                </ImageLinkContainer>
+        <GridContainer>
+            <ImageLinkContainer to={postLink}>
+                <img src={post.featuredImage.asset.fluid.srcWebp} alt={post.title} />
+            </ImageLinkContainer>
 
-                <CaptionContainer>
-                    <CaptionInner>
-                        <SmallCaps as="p" size="small">Featured {post._type}</SmallCaps>
-                        <InternalLink to={postLink} title>
-                            <h2>{post.title}</h2>
-                        </InternalLink>
-                        <p>{caption}</p>
-                        <InternalLink to={postLink} primary>View recipe</InternalLink>
-                    </CaptionInner>
-                </CaptionContainer>
-            </GridContainer>
-        </StyledSection>
+            <CaptionContainer>
+                <CaptionInner>
+                    <SmallCaps as="p" size="small">Featured {post._type}</SmallCaps>
+                    <InternalLink to={postLink} title>
+                        <h2>{post.title}</h2>
+                    </InternalLink>
+                    <p>{caption}</p>
+                    <InternalLink to={postLink} primary>View recipe</InternalLink>
+                </CaptionInner>
+            </CaptionContainer>
+        </GridContainer>
     )
 }
 
@@ -44,10 +44,6 @@ FeaturedPost.propTypes = {
 }
 
 /* Styles */
-const StyledSection = styled.section`
-    padding: 2rem 0 5rem;
-`
-
 const ImageLinkContainer = styled(Link)`
     position: relative;
     overflow: hidden;
@@ -70,10 +66,9 @@ const CaptionContainer = styled.div`
     background: ${props => props.theme.color.whiteGrey};
     padding: 210px 0;
 
-    @media screen and (max-width: ${props => props.theme.grid.breakpoints[0] - 0.0001}px) {
-        padding: 150px 0;
-        min-height: 550px;
-    }
+    ${responsiveBreakpointDown('desktop', `
+        padding: 160px 0;
+    `)}
 `
 
 const CaptionInner = styled.div`

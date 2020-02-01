@@ -38,7 +38,7 @@ export const PostSlider = ({ title, posts }) => {
 
 
     return (
-        <StyledSection>
+        <StyledWrapper>
             <StyledGridContainer>
                 <UpperWrapper>
                     <TitleWrapper>
@@ -62,7 +62,7 @@ export const PostSlider = ({ title, posts }) => {
                     {posts.map((post, index) => <VerticalPost key={index} post={post} />)}
                 </StyledSlider>
             </StyledGridContainer>
-        </StyledSection>
+        </StyledWrapper>
     )
 }
 
@@ -71,7 +71,7 @@ PostSlider.prototypes = {
     titile: PropTypes.string.isRequired,
 }
 
-const StyledSection = styled.section`
+const StyledWrapper = styled.div`
     overflow: hidden;
 `
 

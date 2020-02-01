@@ -12,13 +12,13 @@ export const responsiveBreakpointDown = (breakpointName, styles) => {
     }
 
     return `
-        @media screen and (max-width: ${maxWidth}) {
+        @media screen and (max-width: ${maxWidth}px) {
             ${styles}
-        }
+        };
     `
 }
 
 /* Get breakpoint variables from variables */
 const getBreakpoint = (breakpointName) => {
-    return themeVariables.grid.breakpoint[breakpointName]
+    return themeVariables.grid.breakpoints[breakpointName]
 }

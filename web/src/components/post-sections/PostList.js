@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { HorizontalPost } from './components'
-import { SmallCaps } from '../ui'
+import { SmallCaps, InternalLink } from '../ui'
 
 export const PostList = ({ category, posts }) => {
 
@@ -17,6 +17,8 @@ export const PostList = ({ category, posts }) => {
                 <HorizontalPost post={posts[0]}></HorizontalPost>
                 <HorizontalPost post={posts[0]}></HorizontalPost>
             </PostWrapper>
+
+            <InternalLink to="/culture" secondary>View all {category.title} posts</InternalLink>
         </>
     )
 }
@@ -27,7 +29,11 @@ PostList.prototypes = {
 }
 
 const PostWrapper = styled.div`
-    > *:not(:last-child) {
+    margin-top: 40px;
+
+    > * {
         margin-bottom: 40px;
     }
+
+
 `

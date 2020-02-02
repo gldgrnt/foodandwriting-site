@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 
-import { SmallCaps, InternalLink } from '../../ui'
+import { SmallCaps } from '../../ui'
+import { responsiveBreakpointDown } from '../../../utils'
+
 
 export const HorizontalPost = ({ post }) => {
 
@@ -11,9 +13,11 @@ export const HorizontalPost = ({ post }) => {
     const date = new Date(post._createdAt)
     const sanitizedDate = `${date.getDate()}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`
 
+    const postLink = `/${post.slug.current}`
+
     return (
         <article>
-            <StyledLink to="/">
+            <StyledLink to={postLink}>
                 <StyledImage src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
 
                 <CaptionWrapper>
@@ -53,16 +57,20 @@ const StyledLink = styled(Link)`
 
 const StyledImage = styled.img`
     display: block;
-    height: 200px;
-    width: 240px;
+    height: 210px;
+    width: 270px;
     object-fit: cover;
     margin: 0;
+
+    ${responsiveBreakpointDown('desktop', `
+        height: 180px;
+        width: 180px;
+    `)}
 `
 
 const CaptionWrapper = styled.div`
     flex-grow: 1;
-    padding-left: 40px;
-    padding-right: 20px;
+    padding: 0 40px;
 
     > *:not(:last-child) {
         margin-bottom: 15px;
@@ -70,8 +78,12 @@ const CaptionWrapper = styled.div`
 `
 
 const StyledTitle = styled.h3`
-    font-size: ${props => props.theme.font.size.regular};
+    font-size: ${props => props.theme.font.size.increased};
     line-height: 1.75;
+
+    ${responsiveBreakpointDown('desktop', `
+        font-size: ${props => props.theme.font.size.regular};
+    `)}
 `
 
 const StyledSpan = styled.span`

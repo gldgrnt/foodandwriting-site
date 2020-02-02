@@ -4,6 +4,11 @@ export default {
     title: 'Recipe',
     name: 'recipe',
     type: 'document',
+    initialValue: {
+        category: {
+            _ref: 'recipeCategory'
+        },
+    },
     icon: MdLocalDining,
     fieldsets: [
         { title: 'Main content', name: 'mainContent' }
@@ -15,16 +20,26 @@ export default {
             type: 'string'
         },
         {
+            title: 'Category',
+            name: 'category',
+            type: 'reference',
+            to: [{ type: 'recipeCategory' }],
+            readOnly: true,
+        },
+        {
             title: 'Slug',
             name: 'slug',
             type: 'slug',
             description: 'Click generate to auto generate a slug',
             options: {
-                source: 'title',
-                slugify: (input) => {
-                    let titleSlug = input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
-                    return `recipes/${titleSlug}`
+                source: (doc, options) => {
+                    console.log(doc.category, options)
+                    return `${doc.category}/${doc.title}`
                 },
+                // slugify: (input) => {
+                //     let titleSlug = input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
+                //     return `recipes/${titleSlug}`
+                // },
             },
             validation: Rule => [
                 Rule.required().error('Please add / generate a unique slug')

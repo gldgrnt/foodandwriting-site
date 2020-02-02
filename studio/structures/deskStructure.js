@@ -1,5 +1,5 @@
 import S from '@sanity/desk-tool/structure-builder'
-import { MdLocalDining, MdColorLens, MdImportContacts, MdSettings, MdPerson } from 'react-icons/md'
+import { MdLocalDining, MdColorLens, MdImportContacts, MdSettings, MdPerson, MdStyle, MdLocalOffer } from 'react-icons/md'
 
 export default () =>
     S.list()
@@ -33,6 +33,24 @@ export default () =>
                         .id('culture')
                 ),
             S.divider(),
+            S.listItem()
+                .title('Categories')
+                .icon(MdStyle)
+                .child(
+                    S.list()
+                        .title('Categories')
+                        .items([
+                            S.listItem()
+                                .title('Recipes')
+                                .icon(MdLocalOffer)
+                                .child(
+                                    S.editor()
+                                        .title('Recipes')
+                                        .id('recipeCategory')
+                                        .schemaType('recipeCategory'),
+                                ),
+                        ])
+                ),
             //About
             S.listItem()
                 .title('About')

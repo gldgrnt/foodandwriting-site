@@ -1,4 +1,5 @@
 import { MdDone, MdLocalDining } from 'react-icons/md'
+import { getCategorySlug } from '../../utils'
 
 export default {
     title: 'Recipe',
@@ -32,7 +33,13 @@ export default {
             type: 'slug',
             description: 'Click generate to auto generate a slug',
             options: {
-                source: 'title'
+                source: 'title',
+                slugify: (input) => {
+                    let titleSlug = input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
+
+                    return getCategorySlug('recipeCategory')
+                        .then(categorySlug => `${categorySlug}/${titleSlug}`)
+                },
             },
             validation: Rule => [
                 Rule.required().error('Please add / generate a unique slug')

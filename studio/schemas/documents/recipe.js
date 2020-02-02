@@ -32,14 +32,7 @@ export default {
             type: 'slug',
             description: 'Click generate to auto generate a slug',
             options: {
-                source: (doc, options) => {
-                    console.log(doc.category, options)
-                    return `${doc.category}/${doc.title}`
-                },
-                // slugify: (input) => {
-                //     let titleSlug = input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
-                //     return `recipes/${titleSlug}`
-                // },
+                source: 'title'
             },
             validation: Rule => [
                 Rule.required().error('Please add / generate a unique slug')

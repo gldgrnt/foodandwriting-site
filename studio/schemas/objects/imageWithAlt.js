@@ -1,4 +1,5 @@
 export default {
+    title: 'Image',
     name: 'imageWithAlt',
     type: 'image',
     fields: [

@@ -3,8 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-export const GridRow = ({ children }) => (
-    <StyledRow>{children}</StyledRow>
+export const GridRow = ({ children, ...props }) => (
+    <StyledRow {...props}>{children}</StyledRow>
 )
 
 GridRow.propTypes = {

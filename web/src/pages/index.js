@@ -2,12 +2,14 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
-import { FeaturedPost, PostSlider, PostList } from '../components/post-sections'
+import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/post-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
 const IndexPage = ({ data }) => {
 
     const mainPostData = data.mainPost.edges[0].node
+
+    const placeholderDescription = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rhoncus imperdiet enim id commodo. Ut laoreet suscipit purus sed finibus. Suspendisse suscipit lectus ut eros aliquet auctor.'
 
     return (
         <>
@@ -20,12 +22,17 @@ const IndexPage = ({ data }) => {
                 </Section>
 
                 {/* Post slider */}
-                <Section spacingTop="3">
+                <Section spacingTop="3" spacingBottom="5">
                     <PostSlider title={'Recipes'} posts={[mainPostData, mainPostData, mainPostData, mainPostData, mainPostData, mainPostData]} />
                 </Section>
 
+                {/* Featured section */}
+                <Section spacingTop="3" spacingBottom="4" whiteGrey>
+                    <FeaturedTopic topic={{ 'title': 'Featured title', 'description': placeholderDescription }} posts={[mainPostData, mainPostData]} />
+                </Section>
+
                 {/* Horizontal post section */}
-                <Section spacingTop="3">
+                <Section spacingTop="5">
                     <GridContainer>
                         <GridRow>
                             <GridCol cols="4">

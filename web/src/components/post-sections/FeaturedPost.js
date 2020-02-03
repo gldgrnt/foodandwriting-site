@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { GridContainer } from '../layout'
 import { InternalLink, SmallCaps } from '../ui'
 import { Link } from 'gatsby'
-import { responsiveBreakpointDown } from '../../utils'
+import { responsiveBreakpointDown, getPostSlug } from '../../utils'
 
 export const FeaturedPost = ({ post }) => {
 
@@ -17,22 +17,23 @@ export const FeaturedPost = ({ post }) => {
         caption = post.recipeIntro.substr(0, 160)
     }
 
-    const postLink = `/${post.slug.current}`
+    // Slug
+    const slug = getPostSlug(post)
 
     return (
         <GridContainer>
-            <ImageLinkContainer to={postLink}>
+            <ImageLinkContainer to={slug}>
                 <img src={post.featuredImage.asset.fluid.srcWebp} alt={post.title} />
             </ImageLinkContainer>
 
             <CaptionContainer>
                 <CaptionInner>
                     <SmallCaps as="p" size="small">Featured {post._type}</SmallCaps>
-                    <InternalLink to={postLink} title>
+                    <InternalLink to={slug} title>
                         <h2>{post.title}</h2>
                     </InternalLink>
                     <p>{caption}</p>
-                    <InternalLink to={postLink} primary>View recipe</InternalLink>
+                    <InternalLink to={slug} primary>View recipe</InternalLink>
                 </CaptionInner>
             </CaptionContainer>
         </GridContainer>

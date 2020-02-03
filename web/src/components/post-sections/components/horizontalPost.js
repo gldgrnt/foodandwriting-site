@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 
 import { SmallCaps } from '../../ui'
-import { responsiveBreakpointDown } from '../../../utils'
+import { responsiveBreakpointDown, getPostSlug } from '../../../utils'
 
 
 export const HorizontalPost = ({ post }) => {
@@ -13,11 +13,12 @@ export const HorizontalPost = ({ post }) => {
     const date = new Date(post._createdAt)
     const sanitizedDate = `${date.getDate()}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`
 
-    const postLink = `/${post.slug.current}`
+    // Slug 
+    const slug = getPostSlug(post)
 
     return (
         <article>
-            <StyledLink to={postLink}>
+            <StyledLink to={slug}>
                 <StyledImage src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
 
                 <CaptionWrapper>

@@ -54,7 +54,7 @@ export const pageQuery = graphql`
                     _type,
                     title,
                     slug {
-                    current
+                        current
                     },
                     featuredImage {
                     alt,
@@ -66,6 +66,11 @@ export const pageQuery = graphql`
                     },
                     recipeIntro,
                     _createdAt
+                    category {
+                        slug {
+                            current
+                        }
+                    }
                 }
             }
         }

@@ -3,18 +3,20 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import { InternalLink } from '../../ui'
+import { getPostSlug } from '../../../utils'
 
 export const VerticalPost = ({ post }) => {
 
-    const postLink = `/${post.slug.current}`
+    // Slug
+    const slug = getPostSlug(post)
 
     return (
         <StyledArticle>
-            <ArticleLinkWrapper href={postLink}>
+            <ArticleLinkWrapper href={slug}>
                 <StyledImage src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
                 <StyledTitle>{post.title}</StyledTitle>
             </ArticleLinkWrapper>
-            <InternalLink to={postLink} primary>View recipe</InternalLink>
+            <InternalLink to={slug} primary>View recipe</InternalLink>
         </StyledArticle>
     )
 }

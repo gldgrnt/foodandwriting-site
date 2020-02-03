@@ -15,5 +15,11 @@ export default {
             type: 'string',
             description: `Used for view all buttons. E.g View all {VIEW ALL NAME}`
         },
+        {
+            title: 'Cover photo',
+            name: 'coverPhoto',
+            type: 'imageWithAlt',
+            description: 'Used for background imagery on category page and some featured sections'
+        }
     ]
 }

@@ -49,6 +49,24 @@ export default () =>
                                         .id('recipeCategory')
                                         .schemaType('recipeCategory'),
                                 ),
+                            S.listItem()
+                                .title('Culture')
+                                .icon(MdLocalOffer)
+                                .child(
+                                    S.editor()
+                                        .title('Culture')
+                                        .id('cultureCategory')
+                                        .schemaType('cultureCategory'),
+                                ),
+                            S.listItem()
+                                .title('Blog')
+                                .icon(MdLocalOffer)
+                                .child(
+                                    S.editor()
+                                        .title('Blog')
+                                        .id('blogCategory')
+                                        .schemaType('blogCategory'),
+                                ),
                         ])
                 ),
             //About

@@ -25,8 +25,7 @@ export default {
             options: {
                 source: 'title',
                 slugify: (input) => {
-                    let titleSlug = input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
-                    return `blog/${titleSlug}`
+                    return input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
                 },
             },
             validation: Rule => [

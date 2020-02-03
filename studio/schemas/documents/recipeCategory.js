@@ -1,10 +1,16 @@
+import { MdLocalOffer } from 'react-icons/md'
+
 export default {
     title: 'Recipes',
     name: 'recipeCategory',
     type: 'document',
+    icon: MdLocalOffer,
     initialValue: {
         title: 'Recipes',
-        slug: '/recipes',
+        slug: {
+            _type: 'slug',
+            current: 'recipes',
+        }
     },
     fields: [
         {
@@ -18,6 +24,7 @@ export default {
             name: 'slug',
             type: 'slug',
             readOnly: true,
+            description: 'foodandwriting.co.uk/{slug}'
         },
         {
             title: 'SEO Description',

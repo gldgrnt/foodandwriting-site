@@ -1,5 +1,4 @@
 import { MdDone, MdLocalDining } from 'react-icons/md'
-import { getCategorySlug } from '../../utils'
 
 export default {
     title: 'Recipe',
@@ -35,10 +34,7 @@ export default {
             options: {
                 source: 'title',
                 slugify: (input) => {
-                    let titleSlug = input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
-
-                    return getCategorySlug('recipeCategory')
-                        .then(categorySlug => `${categorySlug}/${titleSlug}`)
+                    return input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
                 },
             },
             validation: Rule => [

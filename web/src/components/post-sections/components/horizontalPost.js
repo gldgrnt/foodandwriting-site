@@ -58,14 +58,14 @@ const StyledLink = styled(Link)`
 
 const StyledImage = styled.img`
     display: block;
-    height: 210px;
-    width: 270px;
+    height: 280px;
+    width: 320px;
     object-fit: cover;
     margin: 0;
 
     ${responsiveBreakpointDown('desktop', `
-        height: 180px;
-        width: 180px;
+        height: 210px;
+        width: 240px;
     `)}
 `
 

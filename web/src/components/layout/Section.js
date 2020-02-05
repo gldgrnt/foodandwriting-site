@@ -34,7 +34,6 @@ const StyledSection = styled.section`
     background: ${props => props.whiteGrey ? props.theme.color.whiteGrey : 'white'};
 `
 
-// MAKE THIS RESPONSIVE
 const makeStyles = (value, styleName) => {
     let styles = ''
     const spacing = themeVariables.grid.spacing

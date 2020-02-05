@@ -11,7 +11,7 @@ export const FeaturedTopic = ({ topic, posts }) => {
     return (
         <StyledGridContainer wrap="wrap">
             <GridRow justify="center">
-                <GridCol cols="4">
+                <GridCol cols={{ 'monitor': 4, 'desktop': 6 }}>
                     <HeaderWrapper>
                         <SmallCaps as="p" size="small">Featured</SmallCaps>
                         <h2>{topic.title}</h2>
@@ -21,7 +21,7 @@ export const FeaturedTopic = ({ topic, posts }) => {
             </GridRow>
 
             <GridRow justify="center">
-                <GridCol cols="7">
+                <GridCol cols={{ 'monitor': 7, 'desktop': 8 }}>
                     <PostWrapper>
                         {posts.map((post, index) => {
                             return <VerticalFeaturedPost key={index} post={post}></VerticalFeaturedPost>

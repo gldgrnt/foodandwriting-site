@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { InternalLink } from '../../ui'
-import { getPostSlug } from '../../../utils'
+import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
 
 export const VerticalFeaturedPost = ({ post }) => {
 
@@ -30,6 +30,10 @@ VerticalFeaturedPost.propTypes = {
 const ArticleWrapper = styled.article`
     width: 500px;
     background: white;
+
+    ${responsiveBreakpointDown('desktop', `
+        width: 440px;
+    `)}
 `
 
 const StyledImage = styled.img`
@@ -38,14 +42,18 @@ const StyledImage = styled.img`
     height: 400px;
     object-fit: cover;
     margin-bottom: 0;
+
+    ${responsiveBreakpointDown('desktop', `
+        height: 320px;
+    `)}
 `
 
 const CaptionWrapper = styled.div`
-    padding: 30px 0;
+    padding: 25px 20px;
     text-align: center;
 `
 
 const Title = styled.h3`
-    font-size: ${props => props.theme.font.size.increased};
-    margin: 0 0 15px;
+    font-size: ${props => props.theme.font.size.medium};
+    margin: 0 0 10px;
 `

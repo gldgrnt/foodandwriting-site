@@ -45,6 +45,11 @@ const IndexPage = ({ data }) => {
                         </GridRow>
                     </GridContainer>
                 </Section>
+
+                {/* Main post */}
+                <Section spacingTop="4">
+                    <FeaturedPost post={mainPostData} />
+                </Section>
             </Page>
         </>
     )

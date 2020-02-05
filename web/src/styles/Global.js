@@ -19,15 +19,15 @@ h5 {
 }
 
 h1 {
-    font-size: ${themeVariables.font.size.huge};
+    font-size: ${themeVariables.font.size.giant};
 }
 
 h2 {
-    font-size: ${themeVariables.font.size.large};
+    font-size: ${themeVariables.font.size.huge};
 }
 
 h3 {
-    font-size: ${themeVariables.font.size.medium};
+    font-size: ${themeVariables.font.size.large};
 }
 
 p,li {

@@ -30,9 +30,10 @@ export const themeVariables = {
             small: '0.8rem',
             regular: '1rem',
             increased: '1.125rem',
-            medium: '1.5rem',
-            large: '1.75rem',
-            huge: '2em'
+            medium: '1.25rem',
+            large: '1.5rem',
+            huge: '1.75rem',
+            giant: '2rem'
         }
     },
     transition: {

@@ -47,7 +47,7 @@ const IndexPage = ({ data }) => {
                 </Section>
 
                 {/* Main post */}
-                <Section spacingTop="4">
+                <Section spacingTop="4" spacingBottom="6">
                     <FeaturedPost post={mainPostData} />
                 </Section>
             </Page>

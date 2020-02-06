@@ -23,7 +23,7 @@ export const HorizontalPost = ({ post }) => {
 
                 <CaptionWrapper>
                     <SmallCaps as="time" size="small" datetime={post._createdAt}>{sanitizedDate}</SmallCaps>
-                    <StyledTitle>{post.title}</StyledTitle>
+                    <Title>{post.title}</Title>
                     <StyledSpan>Read more</StyledSpan>
                 </CaptionWrapper>
             </StyledLink>
@@ -71,19 +71,23 @@ const StyledImage = styled.img`
 
 const CaptionWrapper = styled.div`
     flex-grow: 1;
-    padding: 0 40px;
+    padding: 0 60px;
+
+    ${responsiveBreakpointDown('desktop', `
+        font-size: 40px;
+    `)}
 
     > *:not(:last-child) {
         margin-bottom: 15px;
     }
 `
 
-const StyledTitle = styled.h3`
-    font-size: ${props => props.theme.font.size.increased};
+const Title = styled.h3`
+    font-size: ${props => props.theme.font.size.medium};
     line-height: 1.75;
 
     ${responsiveBreakpointDown('desktop', `
-        font-size: ${props => props.theme.font.size.regular};
+        font-size: ${props => props.theme.font.size.increased};
     `)}
 `
 

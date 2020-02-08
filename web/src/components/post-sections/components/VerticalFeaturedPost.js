@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { InternalLink } from '../../ui'
+import { InternalLink, SmallCaps } from '../../ui'
 import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
 
 export const VerticalFeaturedPost = ({ post }) => {
@@ -16,7 +16,7 @@ export const VerticalFeaturedPost = ({ post }) => {
                 <StyledImage src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
                 <CaptionWrapper>
                     <Title>{post.title}</Title>
-                    <span>Read more</span>
+                    <SmallCaps as="span" size="tiny" color="mediumGrey" link>Read more</SmallCaps>
                 </CaptionWrapper>
             </InternalLink>
         </ArticleWrapper>
@@ -34,6 +34,21 @@ const ArticleWrapper = styled.article`
     ${responsiveBreakpointDown('desktop', `
         width: 440px;
     `)}
+
+    &:hover,
+    &:focus {
+        h3 {
+            text-decoration: underline;
+        }
+
+        span {
+            color: ${props => props.theme.color.black};
+
+            &::after {
+                background: ${props => props.theme.color.black};
+            }
+        }
+    }
 `
 
 const StyledImage = styled.img`

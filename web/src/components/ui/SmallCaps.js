@@ -26,20 +26,19 @@ const StyledSmallCaps = styled.span`
     text-transform: uppercase;
     color: ${props => props.theme.color[props.color] || props.theme.color.darkGrey};
 
-    ${props => props.link ? `
+    ${props => props.link && `
         display: inline-block;
         position: relative;
         transition: ${props.theme.transition.fast};
 
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: 3px;
-                left: 0;
-                height: 1px;
-                width: 100%;
-                background: ${props.theme.color.mediumGrey};
-            }`
-        : ''
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background: ${props.theme.color[props.color] || props.theme.color.darkGrey};
+        }`
     };
 `

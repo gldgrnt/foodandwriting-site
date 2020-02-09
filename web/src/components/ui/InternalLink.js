@@ -48,7 +48,7 @@ const PrimaryLink = styled(BaseLink)`
     &::after {
         content: '';
         position: absolute;
-        bottom: 3px;
+        bottom: 2px;
         left: 0;
         height: 1px;
         width: 100%;

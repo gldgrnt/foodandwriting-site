@@ -15,6 +15,7 @@ const StyledRow = styled.div`
     position: relative;
     display: flex;
     flex-basis: 100%;
+    flex-grow: 1;
     flex-wrap: wrap;
     margin-left: -${props => props.theme.grid.spacing}px;
     margin-right: -${props => props.theme.grid.spacing}px;

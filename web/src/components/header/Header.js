@@ -53,13 +53,13 @@ export const Header = () => {
     return (
         <StyledHeader>
             <GridContainer align="stretch">
-                <ItemWrapper>
+                <LogoWrapper>
                     <Logo />
-                </ItemWrapper>
+                </LogoWrapper>
 
-                <ItemWrapper grow>
+                <NavigationWrapper>
                     <StyledNavigation />
-                </ItemWrapper>
+                </NavigationWrapper>
 
                 <TogglesWrapper>
                     <Toggle handler={() => handleToggleClick('isSearchOpen')} active={!!dropdownState.isSearchOpen}>
@@ -93,9 +93,15 @@ const StyledHeader = styled.header`
     background: white;
 `
 
-const ItemWrapper = styled.div`
-    padding: 30px 0;
-    flex-grow: ${props => props.grow ? "1" : "0"};
+const LogoWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+
+const NavigationWrapper = styled.div`
+    padding: 25px 0;
+    flex-grow: 1;
 `
 
 const TogglesWrapper = styled.div`

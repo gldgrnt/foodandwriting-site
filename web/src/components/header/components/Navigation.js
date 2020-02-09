@@ -6,7 +6,7 @@ export const Navigation = ({ className }) => {
     const pages = [
         {
             'title': 'Recipes',
-            'link': '/'
+            'link': '/recipes'
         },
         {
             'title': 'Culture',

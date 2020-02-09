@@ -29,7 +29,7 @@ const LinkContainer = styled(Link)`
 `
 
 const Image = styled.img`
-    height: 20px;
+    height: 18px;
     width: auto;
     margin: 0;
 `;

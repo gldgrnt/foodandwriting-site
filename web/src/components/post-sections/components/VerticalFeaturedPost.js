@@ -79,7 +79,7 @@ const Image = styled.img`
     margin-bottom: 0;
 
     ${responsiveBreakpointDown('desktop', `
-        height: 375px;
+        height: 350px;
     `)}
 `
 

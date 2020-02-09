@@ -64,8 +64,8 @@ const Image = styled.img`
     margin: 0;
 
     ${responsiveBreakpointDown('desktop', `
-        height: 210px;
-        width: 240px;
+        height: 200px;
+        width: 260px;
     `)}
 `
 

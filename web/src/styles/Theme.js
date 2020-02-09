@@ -37,7 +37,7 @@ export const themeVariables = {
         },
         lineHeight: {
             header: '1.6',
-            paragraph: '1.75'
+            paragraph: '1.9'
         }
     },
     transition: {

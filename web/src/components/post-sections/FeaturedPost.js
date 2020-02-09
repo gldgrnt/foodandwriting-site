@@ -29,7 +29,7 @@ export const FeaturedPost = ({ post }) => {
 
                 <CaptionContainer>
                     <CaptionInner>
-                        <SmallCaps as="p" size="small">Featured {post._type}</SmallCaps>
+                        <SmallCaps as="p" size="tiny">Featured {post._type}</SmallCaps>
                         <InternalLink to={slug} title>
                             <CaptionTitle>{post.title}</CaptionTitle>
                         </InternalLink>
@@ -79,7 +79,7 @@ const CaptionContainer = styled.div`
 `
 
 const CaptionInner = styled.div`
-    width: 60%;
+    width: 65%;
 
     & > * {
         margin-bottom: 20px;

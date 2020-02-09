@@ -34,7 +34,7 @@ const StyledSmallCaps = styled.span`
         &::after {
             content: '';
             position: absolute;
-            bottom: 2px;
+            bottom: 3px;
             left: 0;
             height: 1px;
             width: 100%;

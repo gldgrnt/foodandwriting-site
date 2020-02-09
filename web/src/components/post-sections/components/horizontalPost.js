@@ -64,18 +64,14 @@ const Image = styled.img`
     margin: 0;
 
     ${responsiveBreakpointDown('desktop', `
-        height: 180px;
+        height: 210px;
         width: 240px;
     `)}
 `
 
 const CaptionWrapper = styled.div`
     flex-grow: 1;
-    padding: 0 20px 0 40px;
-
-    ${responsiveBreakpointDown('desktop', `
-        font-size: 40px;
-    `)}
+    padding: 0 10px 0 40px;
 `
 
 const CaptionTitle = styled.h3`
@@ -83,7 +79,7 @@ const CaptionTitle = styled.h3`
     line-height: 1.75;
     margin: 15px 0 10px;
 
-    ${responsiveBreakpointDown('desktop', `
-        font-size: ${props => props.theme.font.size.increased};
+    ${props => responsiveBreakpointDown('desktop', `
+        font-size: ${props.theme.font.size.increased};
     `)}
 `

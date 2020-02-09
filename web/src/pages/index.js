@@ -9,30 +9,28 @@ const IndexPage = ({ data }) => {
 
     const mainPostData = data.mainPost.edges[0].node
 
-    const placeholderDescription = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rhoncus imperdiet enim id commodo. Ut laoreet suscipit purus sed finibus. Suspendisse suscipit lectus ut eros aliquet auctor.'
-
     return (
         <>
             <SEO title="Home" description="Website coming soon" />
             <Page>
 
                 {/* Main post */}
-                <Section spacingTop="2">
+                <Section spacingTop={{ 'monitor': 2, 'desktop': 0 }}>
                     <FeaturedPost post={mainPostData} />
                 </Section>
 
                 {/* Post slider */}
-                <Section spacingTop="3" spacingBottom="5">
+                <Section spacingTop="3" spacingBottom="7">
                     <PostSlider title={'Recipes'} posts={[mainPostData, mainPostData, mainPostData, mainPostData, mainPostData, mainPostData]} />
                 </Section>
 
                 {/* Featured section */}
                 <Section spacingTop="3" spacingBottom="4" whiteGrey>
-                    <FeaturedTopic topic={{ 'title': 'Featured title', 'description': placeholderDescription }} posts={[mainPostData, mainPostData]} />
+                    <FeaturedTopic topic={{ 'smallTitle': 'Featured topic small title', 'title': 'Featured topic description sentence text' }} posts={[mainPostData, mainPostData]} />
                 </Section>
 
                 {/* Horizontal post section */}
-                <Section spacingTop="5">
+                <Section spacingTop="6">
                     <GridContainer>
                         <GridRow>
                             <GridCol cols="4">
@@ -47,7 +45,7 @@ const IndexPage = ({ data }) => {
                 </Section>
 
                 {/* Main post */}
-                <Section spacingTop="4" spacingBottom="6">
+                <Section spacingTop="7" spacingBottom="6">
                     <FeaturedPost post={mainPostData} />
                 </Section>
             </Page>

@@ -18,18 +18,18 @@ export const ReducedLogo = () => {
     `)
 
     return (
-        <LinkContainer to="/">
+        <LinkWrapper to="/">
             <Image src={logo.publicURL} alt={alt.siteMetadata.title} />
-        </LinkContainer>
+        </LinkWrapper>
     )
 }
 
-const LinkContainer = styled(Link)`
+const LinkWrapper = styled(Link)`
     display: inline-flex;
 `
 
 const Image = styled.img`
-    height: 20px;
+    height: 15px;
     width: auto;
     margin: 0;
 `

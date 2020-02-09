@@ -22,20 +22,22 @@ export const FeaturedPost = ({ post }) => {
 
     return (
         <GridContainer>
-            <ImageLinkContainer to={slug}>
-                <img src={post.featuredImage.asset.fluid.srcWebp} alt={post.title} />
-            </ImageLinkContainer>
+            <Article>
+                <ImageLinkWrapper to={slug}>
+                    <img src={post.featuredImage.asset.fluid.srcWebp} alt={post.title} />
+                </ImageLinkWrapper>
 
-            <CaptionContainer>
-                <CaptionInner>
-                    <SmallCaps as="p" size="small">Featured {post._type}</SmallCaps>
-                    <InternalLink to={slug} title>
-                        <h2>{post.title}</h2>
-                    </InternalLink>
-                    <p>{caption}</p>
-                    <InternalLink to={slug} primary>View recipe</InternalLink>
-                </CaptionInner>
-            </CaptionContainer>
+                <CaptionContainer>
+                    <CaptionInner>
+                        <SmallCaps as="p" size="small">Featured {post._type}</SmallCaps>
+                        <InternalLink to={slug} title>
+                            <CaptionTitle>{post.title}</CaptionTitle>
+                        </InternalLink>
+                        <CaptionText>{caption}</CaptionText>
+                        <InternalLink to={slug} primary>View recipe</InternalLink>
+                    </CaptionInner>
+                </CaptionContainer>
+            </Article>
         </GridContainer>
     )
 }
@@ -44,8 +46,12 @@ FeaturedPost.propTypes = {
     post: PropTypes.object.isRequired
 }
 
-/* Styles */
-const ImageLinkContainer = styled(Link)`
+const Article = styled.article`
+    display: flex;
+    width: 100%;
+`
+
+const ImageLinkWrapper = styled(Link)`
     position: relative;
     overflow: hidden;
     flex-basis: 50%;
@@ -68,7 +74,7 @@ const CaptionContainer = styled.div`
     padding: 210px 0;
 
     ${responsiveBreakpointDown('desktop', `
-        padding: 160px 0;
+        padding: 140px 0;
     `)}
 `
 
@@ -82,4 +88,13 @@ const CaptionInner = styled.div`
             margin-bottom: 0;
         }
     }
+`
+
+const CaptionTitle = styled.h2`
+    font-size: ${props => props.theme.font.size.huge};
+`
+
+const CaptionText = styled.p`
+    font-size: 0.9rem;
+    color: ${props => props.theme.color.mediumGrey};
 `

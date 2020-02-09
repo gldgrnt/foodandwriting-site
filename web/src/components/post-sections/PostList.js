@@ -10,7 +10,7 @@ export const PostList = ({ category, posts }) => {
 
     return (
         <>
-            <SmallCaps as="h2" size="increase" color="black">{category.title}</SmallCaps>
+            <SmallCaps as="h2" size="regular" color="black">{category.title}</SmallCaps>
 
             <PostWrapper>
                 <HorizontalPost post={posts[0]}></HorizontalPost>

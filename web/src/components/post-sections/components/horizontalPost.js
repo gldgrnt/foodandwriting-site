@@ -19,12 +19,12 @@ export const HorizontalPost = ({ post }) => {
     return (
         <article>
             <StyledLink to={slug}>
-                <StyledImage src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
+                <Image src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
 
                 <CaptionWrapper>
                     <SmallCaps as="time" size="small" datetime={post._createdAt}>{sanitizedDate}</SmallCaps>
-                    <Title>{post.title}</Title>
-                    <StyledSpan>Read more</StyledSpan>
+                    <CaptionTitle>{post.title}</CaptionTitle>
+                    <SmallCaps size="tiny" color="mediumGrey" link>Read more</SmallCaps>
                 </CaptionWrapper>
             </StyledLink>
         </article>
@@ -56,7 +56,7 @@ const StyledLink = styled(Link)`
     }
 `
 
-const StyledImage = styled.img`
+const Image = styled.img`
     display: block;
     height: 280px;
     width: 320px;
@@ -64,55 +64,26 @@ const StyledImage = styled.img`
     margin: 0;
 
     ${responsiveBreakpointDown('desktop', `
-        height: 210px;
+        height: 180px;
         width: 240px;
     `)}
 `
 
 const CaptionWrapper = styled.div`
     flex-grow: 1;
-    padding: 0 60px;
+    padding: 0 20px 0 40px;
 
     ${responsiveBreakpointDown('desktop', `
         font-size: 40px;
     `)}
-
-    > *:not(:last-child) {
-        margin-bottom: 15px;
-    }
 `
 
-const Title = styled.h3`
-    font-size: ${props => props.theme.font.size.medium};
+const CaptionTitle = styled.h3`
+    font-size: ${props => props.theme.font.size.increased};
     line-height: 1.75;
+    margin: 15px 0 10px;
 
     ${responsiveBreakpointDown('desktop', `
         font-size: ${props => props.theme.font.size.increased};
     `)}
-`
-
-const StyledSpan = styled.span`
-    display: inline-block;
-    position: relative;
-    font-family: ${props => props.theme.font.family.sans};
-    font-size: ${props => props.theme.font.size.tiny};
-    font-weight: bold;
-    text-decoration: none;
-    color: ${props => props.theme.color.mediumGrey};
-    text-transform: uppercase;
-    
-    &,
-    &::after {
-        transition: ${props => props.theme.transition.fast};
-    }
-
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 3px;
-        left: 0;
-        height: 1px;
-        width: 100%;
-        background: ${props => props.theme.color.mediumGrey}
-    }
 `

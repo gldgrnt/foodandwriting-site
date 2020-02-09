@@ -13,15 +13,14 @@ export const FeaturedTopic = ({ topic, posts }) => {
             <GridRow justify="center">
                 <GridCol cols={{ 'monitor': 4, 'desktop': 6 }}>
                     <HeaderWrapper>
-                        <SmallCaps as="p" size="small">Featured</SmallCaps>
+                        <SmallCaps as="p" size="small">{topic.smallTitle}</SmallCaps>
                         <h2>{topic.title}</h2>
-                        <p>{topic.description}</p>
                     </HeaderWrapper>
                 </GridCol>
             </GridRow>
 
             <GridRow justify="center">
-                <GridCol cols={{ 'monitor': 7, 'desktop': 8 }}>
+                <GridCol cols="8">
                     <PostWrapper>
                         {posts.map((post, index) => {
                             return <VerticalFeaturedPost key={index} post={post}></VerticalFeaturedPost>
@@ -44,13 +43,13 @@ const StyledGridContainer = styled(GridContainer)`
 
 const HeaderWrapper = styled.div`
     margin-bottom: 50px;
-
+        
     > *:last-child{
-        margin: 0;
-    }
+                margin: 0;
+        }
 `
 
 const PostWrapper = styled.div`
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
 `

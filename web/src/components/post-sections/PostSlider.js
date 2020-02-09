@@ -16,13 +16,15 @@ export const PostSlider = ({ title, posts }) => {
     const settings = {
         dots: false,
         arrows: false,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 3,
-        slidesToScroll: 2,
+        slidesToScroll: 1,
         draggable: true,
         swipe: true,
         swipeToSlide: false,
+        vairableWidth: true,
+        touchThreshold: 100,
     }
 
     // Set up movement methods
@@ -42,7 +44,7 @@ export const PostSlider = ({ title, posts }) => {
             <StyledGridContainer>
                 <UpperWrapper>
                     <TitleWrapper>
-                        <SmallCaps as="h2" size="increased" color="black">{title}</SmallCaps>
+                        <SmallCaps as="h2" size="regular" color="black">{title}</SmallCaps>
 
                         <InternalLink to="/recipes" secondary>View all</InternalLink>
                     </TitleWrapper>
@@ -80,12 +82,12 @@ const UpperWrapper = styled.div`
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    margin: 0 0 30px;
+    margin-bottom: 40px;
     
     > * {
         margin-bottom: 0;
     }
-    `
+`
 
 const TitleWrapper = styled.div`
     display: flex;
@@ -124,6 +126,8 @@ const StyledGridContainer = styled(GridContainer)`
 `
 
 const StyledSlider = styled(Slider)`
+    margin-right: -80px;
+
     .slick-list {
         overflow: visible;
     }

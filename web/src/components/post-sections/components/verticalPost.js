@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import { InternalLink } from '../../ui'
+import { SmallCaps } from '../../ui'
 import { getPostSlug } from '../../../utils'
 
 export const VerticalPost = ({ post }) => {
@@ -11,13 +11,15 @@ export const VerticalPost = ({ post }) => {
     const slug = getPostSlug(post)
 
     return (
-        <StyledArticle>
-            <ArticleLinkWrapper href={slug}>
-                <StyledImage src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
-                <StyledTitle>{post.title}</StyledTitle>
-            </ArticleLinkWrapper>
-            <InternalLink to={slug} primary>View recipe</InternalLink>
-        </StyledArticle>
+        <Article>
+            <LinkWrapper href={slug}>
+                <ImageWrapper>
+                    <Image src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
+                </ImageWrapper>
+                <Title>{post.title}</Title>
+                <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
+            </LinkWrapper>
+        </Article>
     )
 }
 
@@ -26,7 +28,7 @@ VerticalPost.prototypes = {
     active: PropTypes.boolean
 }
 
-const StyledArticle = styled.article`
+const Article = styled.article`
     max-width: ${props => (props.theme.grid.breakpoints.monitor.minScreenWidth / 3) - 120}px;
 
     @media screen and (max-width: ${props => props.theme.grid.breakpoints.desktop.maxScreenWidth}px) {
@@ -34,25 +36,40 @@ const StyledArticle = styled.article`
     }
 `
 
-const ArticleLinkWrapper = styled.a`
+const LinkWrapper = styled.a`
     text-decoration: none;
     outline: none;
 
     &:hover,
     &:focus {
         text-decoration: underline;
-    }
 
-    &,
-    > *:not(:last-child) {
-        margin-bottom: 20px;
+        span {
+            color: ${props => props.theme.color.black};
+
+            &::after {
+                background: ${props => props.theme.color.black};
+            }
+        }
     }
 `
 
-const StyledImage = styled.img`
+const ImageWrapper = styled.div`
+    position: relative;
+    padding-top: 120%;
+    margin-bottom: 20px;
+`
+
+const Image = styled.img`
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
     width: 100%;
+    object-fit: cover;
 `
 
-const StyledTitle = styled.h3`
+const Title = styled.h3`
     font-size: ${props => props.theme.font.size.increased};
+    margin-bottom: 10px;
 `

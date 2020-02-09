@@ -16,6 +16,7 @@ h3,
 h4,
 h5 {
   font-family: ${themeVariables.font.family.serif};
+  line-height: ${themeVariables.font.lineHeight.header};
 }
 
 h1 {
@@ -31,7 +32,7 @@ h3 {
 }
 
 p,li {
-    line-height: 1.67;
+    line-height: ${themeVariables.font.lineHeight.paragraph};
 }
 
 /* END */

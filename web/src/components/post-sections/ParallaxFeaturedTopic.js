@@ -3,18 +3,19 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
 
-// import { GridContainer } from '../layout'
+import { GridContainer, GridRow, GridCol } from '../layout'
+import { SmallCaps, InternalLink } from '../ui'
 
 export const ParallaxFeaturedTopic = ({ topic }) => {
 
     const imgSrcSet = topic.recipeCategoryData.categoryOptions.coverPhoto.asset.fluid.srcSetWebp
 
     // Parallax functionality
-    let ParallaxRef = useRef(null)
-    let options = {
-        rootMargin: '0px',
-        threshold: 0.0001
-    }
+    const transformOffset = 50
+    let ParallaxContainer = useRef(null)
+    let ParallaxImg = useRef(null)
+
+    let options = {rootMargin: '0px', threshold: 0.0001 }
     let observer = new IntersectionObserver(callback, options)
 
     function callback (entries, observer) {
@@ -25,27 +26,45 @@ export const ParallaxFeaturedTopic = ({ topic }) => {
         }
 
         if (isIntersecting) {
-            window.addEventListener('scroll', windowCallback)
+            window.addEventListener('scroll', doParallax)
         } else {
-            window.removeEventListener('scroll', windowCallback)
+            window.removeEventListener('scroll', doParallax)
         }
     }
 
-    function windowCallback(e) {
-        console.log(window.scrollY - ParallaxRef.offsetTop)
+    function doParallax(e) {
+        
+        if(!window) {
+            return;
+        }
+
+        const windowCentre = window.scrollY + (window.innerHeight / 2)
+        const parallaxCentre = ParallaxContainer.offsetTop + (ParallaxContainer.clientHeight / 2)
+
+        const ratio = windowCentre / parallaxCentre
+        ParallaxImg.style.transform = `translateY(${transformOffset - (transformOffset * ratio)}%)`
     }
 
     useEffect(() => {
-        observer.observe(ParallaxRef)
+        observer.observe(ParallaxContainer)
     })
 
 
     return (
-        <ParallaxWrapper ref={r => ParallaxRef = r}>
-            <ParallaxImage srcSet={imgSrcSet} alt="Background"/>
+        <ParallaxWrapper ref={r => ParallaxContainer = r}>
+            <ParallaxImage offset={transformOffset} ref={r => ParallaxImg = r} srcSet={imgSrcSet} alt="Background"/>
 
             <ContentWrapper>
-
+                <GridContainer>
+                    <GridRow>
+                        <GridCol cols="4">
+                            <SmallCaps size="small" color="white">Featured topic</SmallCaps>
+                            <Title>{topic.recipeCategoryData.title} and sentence about</Title>
+                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                            <InternalLink to={topic.recipeCategoryData.slug.current} secondary>View posts</InternalLink>
+                        </GridCol>
+                    </GridRow>
+                </GridContainer>
             </ContentWrapper>
         </ParallaxWrapper>
     )
@@ -57,7 +76,7 @@ ParallaxFeaturedTopic.propTypes = {
 
 const ParallaxWrapper = styled.div`
     position: relative;
-    padding: 80px 0;
+    padding: 120px 0;
     overflow: hidden;
 
     &::after {
@@ -67,21 +86,30 @@ const ParallaxWrapper = styled.div`
         left: 0;
         height: 100%;
         width: 100%;
-        background: black;
-        opacity: 0.6;
+        background: ${props => props.theme.color.black};
+        opacity: 0.9;
         z-index: 1;
     }
 `
 
 const ParallaxImage = styled.img`
     position: absolute;
-    top: 0;
+    top: -${props => props.offset / 2}%;
     left: 0;
     width: 100%;
-    height: auto;    
+    height: ${props => 100 + props.offset}%;    
     z-index: 0;
+    object-fit: cover;
 `
 
 const ContentWrapper = styled.div`
-    height: 300px;
+    position: relative;
+    z-index: 5;
+    color: white;
+    min-height: 200px;
+`
+
+const Title = styled.h2`
+    margin: 15px 0;
+    display: block;
 `

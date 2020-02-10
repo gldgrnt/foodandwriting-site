@@ -29,7 +29,7 @@ export const FeaturedPost = ({ post }) => {
 
                 <CaptionContainer>
                     <CaptionInner>
-                        <SmallCaps as="p" size="tiny">Featured {post._type}</SmallCaps>
+                        <SmallCaps as="p" size="small">Featured {post._type}</SmallCaps>
                         <InternalLink to={slug} title>
                             <CaptionTitle>{post.title}</CaptionTitle>
                         </InternalLink>

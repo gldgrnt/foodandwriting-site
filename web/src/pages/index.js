@@ -31,7 +31,7 @@ const IndexPage = ({ data }) => {
                 </Section>
 
                 {/* Horizontal post list section */}
-                <Section spacingTop="6" spacingBottom="3">
+                <Section spacingTop="6" spacingBottom="6">
                     <GridContainer>
                         <GridRow>
                             <GridCol cols="4">
@@ -46,13 +46,12 @@ const IndexPage = ({ data }) => {
                 </Section>
 
                 {/* Parallax topic section */}
-                <Section spacingTop="4" spacingBottom="4">
+                <Section>
                     <ParallaxFeaturedTopic topic={{recipeCategoryData}}/>
                 </Section>
 
-
                 {/* Main post */}
-                <Section spacingTop="4" spacingBottom="6">
+                <Section spacingTop="6" spacingBottom="6">
                     <FeaturedPost post={mainPostData} />
                 </Section>
             </Page>

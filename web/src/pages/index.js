@@ -2,12 +2,13 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
-import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/post-sections'
+import { FeaturedPost, PostSlider, PostList, FeaturedTopic, ParallaxFeaturedTopic } from '../components/post-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
 const IndexPage = ({ data }) => {
 
     const mainPostData = data.mainPost.edges[0].node
+    const recipeCategoryData = data.recipeCategory.edges[0].node
 
     return (
         <>
@@ -29,8 +30,8 @@ const IndexPage = ({ data }) => {
                     <FeaturedTopic topic={{ 'smallTitle': 'Featured topic small title', 'title': 'Featured topic description sentence text' }} posts={[mainPostData, mainPostData]} />
                 </Section>
 
-                {/* Horizontal post section */}
-                <Section spacingTop="6">
+                {/* Horizontal post list section */}
+                <Section spacingTop="6" spacingBottom="3">
                     <GridContainer>
                         <GridRow>
                             <GridCol cols="4">
@@ -44,8 +45,14 @@ const IndexPage = ({ data }) => {
                     </GridContainer>
                 </Section>
 
+                {/* Parallax topic section */}
+                <Section spacingTop="4" spacingBottom="4">
+                    <ParallaxFeaturedTopic topic={{recipeCategoryData}}/>
+                </Section>
+
+
                 {/* Main post */}
-                <Section spacingTop="7" spacingBottom="6">
+                <Section spacingTop="4" spacingBottom="6">
                     <FeaturedPost post={mainPostData} />
                 </Section>
             </Page>
@@ -79,6 +86,32 @@ export const pageQuery = graphql`
                     category {
                         slug {
                             current
+                        }
+                    }
+                }
+            }
+        },
+        recipeCategory:allSanityRecipeCategory {
+            edges {
+                node {
+                    title
+                    slug {
+                        current
+                    }
+                    seoDecsription
+                    categoryOptions {
+                        coverPhoto {
+                            asset {
+                                fluid(maxWidth: 1920) {
+                                    base64
+                                    aspectRatio
+                                    src
+                                    srcSet
+                                    srcWebp
+                                    srcSetWebp
+                                    sizes
+                                }
+                            }
                         }
                     }
                 }

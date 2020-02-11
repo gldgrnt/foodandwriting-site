@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
-import { FeaturedPost, PostSlider, PostList, FeaturedTopic, ParallaxFeaturedTopic } from '../components/post-sections'
+import { FeaturedPost, PostSlider, PostList, FeaturedTopic, ParallaxFeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
 const IndexPage = ({ data }) => {

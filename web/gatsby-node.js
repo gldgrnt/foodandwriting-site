@@ -13,7 +13,17 @@ exports.createPages = async ({ graphql, actions }) => {
                         title
                         seoDecsription
                         recipeIntro
+                        featuredImage {
+                            asset {
+                                fluid {
+                                    srcSetWebp
+                                }
+                            }
+                          }
                         category {
+                            categoryOptions {
+                                singleName
+                            }
                             slug {
                                 current
                             }
@@ -36,7 +46,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
         createPage({
             path,
-            component: require.resolve('./src/page-templates/page.js'),
+            component: require.resolve('./src/page-templates/singleRecipe.js'),
             context: {data: edge.node},
           })
     })

@@ -20,7 +20,7 @@ export const FeaturedTopic = ({ topic, posts }) => {
             </GridRow>
 
             <GridRow justify="center">
-                <GridCol cols="8">
+                <GridCol cols={{ 'monitor': 6, 'desktop': 8 }}>
                     <PostWrapper>
                         {posts.map((post, index) => {
                             return <VerticalFeaturedPost key={index} post={post}></VerticalFeaturedPost>

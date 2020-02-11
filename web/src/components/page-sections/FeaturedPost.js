@@ -79,7 +79,7 @@ const CaptionContainer = styled.div`
 `
 
 const CaptionInner = styled.div`
-    width: 65%;
+    width: 55%;
 
     & > * {
         margin-bottom: 20px;
@@ -88,13 +88,18 @@ const CaptionInner = styled.div`
             margin-bottom: 0;
         }
     }
+
+    ${responsiveBreakpointDown('desktop', `width: 65%;`)}
 `
 
 const CaptionTitle = styled.h2`
-    font-size: ${props => props.theme.font.size.huge};
+    font-size: ${props => props.theme.font.size.giant};
+
+    ${props =>  responsiveBreakpointDown('desktop', `font-size: ${props.theme.font.size.huge};`)}
 `
 
 const CaptionText = styled.p`
-    font-size: 0.9rem;
     color: ${props => props.theme.color.mediumGrey};
+
+    ${responsiveBreakpointDown('desktop', `font-size: 0.9rem;`)}
 `

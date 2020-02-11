@@ -57,11 +57,11 @@ export const ParallaxFeaturedTopic = ({ topic }) => {
             <ContentWrapper>
                 <GridContainer>
                     <GridRow>
-                        <GridCol cols="4">
+                        <GridCol cols={{'monitor': 3, 'desktop': 4}}>
                             <SmallCaps size="small" color="white">Featured topic</SmallCaps>
                             <Title>{topic.recipeCategoryData.title} and sentence about</Title>
                             <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                            <InternalLink to={topic.recipeCategoryData.slug.current} secondary>View posts</InternalLink>
+                            <InternalLink to={`/${topic.recipeCategoryData.slug.current}`} secondary>View posts</InternalLink>
                         </GridCol>
                     </GridRow>
                 </GridContainer>
@@ -110,6 +110,7 @@ const ContentWrapper = styled.div`
 `
 
 const Title = styled.h2`
+    font-size: ${props => props.theme.font.size.giant};
     margin: 15px 0;
     display: block;
 `

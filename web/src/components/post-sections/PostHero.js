@@ -45,7 +45,7 @@ PostHero.propTypes = {
 }
 
 const HeroWrapper = styled.div`
-    height: 75vh;
+    height: 85vh;
     min-height: 500px;
     display: flex;
 

@@ -16,7 +16,7 @@ const IndexPage = ({ data }) => {
             <Page>
 
                 {/* Main post */}
-                <Section spacingTop={{ 'monitor': 2, 'desktop': 0 }}>
+                <Section>
                     <FeaturedPost post={mainPostData} />
                 </Section>
 
@@ -26,7 +26,7 @@ const IndexPage = ({ data }) => {
                 </Section>
 
                 {/* Featured section */}
-                <Section spacingTop="3" spacingBottom="4" whiteGrey>
+                <Section spacingTop="5" spacingBottom="6" whiteGrey>
                     <FeaturedTopic topic={{ 'smallTitle': 'Featured topic small title', 'title': 'Featured topic description sentence text' }} posts={[mainPostData, mainPostData]} />
                 </Section>
 
@@ -51,7 +51,7 @@ const IndexPage = ({ data }) => {
                 </Section>
 
                 {/* Main post */}
-                <Section spacingTop="6" spacingBottom="6">
+                <Section spacingTop="7" spacingBottom="6">
                     <FeaturedPost post={mainPostData} />
                 </Section>
             </Page>

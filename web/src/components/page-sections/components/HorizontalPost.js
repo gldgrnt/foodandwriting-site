@@ -71,11 +71,15 @@ const Image = styled.img`
 
 const CaptionWrapper = styled.div`
     flex-grow: 1;
-    padding: 0 10px 0 40px;
+    padding: 0 60px;
+
+    ${props => responsiveBreakpointDown('desktop', `
+        padding: 0 10px 0 40px;
+    `)}
 `
 
 const CaptionTitle = styled.h3`
-    font-size: ${props => props.theme.font.size.increased};
+    font-size: ${props => props.theme.font.size.medium};
     line-height: 1.75;
     margin: 15px 0 10px;
 

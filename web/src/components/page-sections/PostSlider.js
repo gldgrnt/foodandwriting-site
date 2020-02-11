@@ -10,6 +10,7 @@ import { VerticalPost } from './components'
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import { responsiveBreakpointDown } from '../../utils'
 
 export const PostSlider = ({ title, posts }) => {
     // Slider settings
@@ -37,6 +38,9 @@ export const PostSlider = ({ title, posts }) => {
     const prevSlide = () => {
         SliderRef.slickPrev()
     }
+
+    // Utilize state to change controls
+    
 
 
     return (
@@ -126,7 +130,11 @@ const StyledGridContainer = styled(GridContainer)`
 `
 
 const StyledSlider = styled(Slider)`
-    margin-right: -80px;
+    margin-right: 80px;
+
+    ${props => responsiveBreakpointDown('desktop', `
+        margin-right: -80px;
+    `)}
 
     .slick-list {
         overflow: visible;

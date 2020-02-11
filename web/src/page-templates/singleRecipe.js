@@ -11,7 +11,7 @@ const page = ({ pageContext }) => {
 
     return (
         <Page>
-            <Section spacingBottom="4">
+            <Section spacingBottom="6">
                 <PostHero imageSrcSet={featuredImage.asset.fluid.srcSetWebp} category={category.categoryOptions.singleName} title={title} />
             </Section>
 

@@ -97,8 +97,9 @@ export default {
         },
         {
             title: 'Notes',
-            name: 'notes',
-            type: 'portableText',
+            name: 'recipeNotes',
+            type: 'text',
+            rows: 8,
             fieldset: 'mainContent',
         },
     ],

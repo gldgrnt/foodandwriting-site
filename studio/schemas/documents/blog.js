@@ -1,9 +1,15 @@
+import slugify from '../../utils'
 import { MdImportContacts } from 'react-icons/md'
 
 export default {
     title: 'Blog',
     name: 'blog',
     type: 'document',
+    initialValue: {
+        category: {
+            _ref: 'blogCategory'
+        },
+    },
     icon: MdImportContacts,
     fieldsets: [
         {
@@ -18,15 +24,20 @@ export default {
             type: 'string'
         },
         {
+            title: 'Category',
+            name: 'category',
+            type: 'reference',
+            to: [{ type: 'blogCategory' }],
+            readOnly: true,
+        },
+        {
             title: 'Slug',
             name: 'slug',
             type: 'slug',
             description: 'Click generate to auto generate a slug',
             options: {
                 source: 'title',
-                slugify: (input) => {
-                    return input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
-                },
+                slugify: slugify
             },
             validation: Rule => [
                 Rule.required().error('Please add / generate a unique slug')

@@ -6,7 +6,7 @@ export default {
     type: 'document',
     icon: MdLocalOffer,
     initialValue: {
-        title: 'blog',
+        title: 'Blog',
         slug: {
             _type: 'slug',
             current: 'blog',

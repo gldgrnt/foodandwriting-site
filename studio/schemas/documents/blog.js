@@ -5,11 +5,16 @@ export default {
     title: 'Blog',
     name: 'blog',
     type: 'document',
-    initialValue: {
-        category: {
-            _ref: 'blogCategory'
-        },
-    },
+    initialValue: () => ({
+        postMeta: {
+            _type: 'postMeta',
+            category: {
+                _type: 'reference',
+                _ref: 'blogCategory',
+            },
+            date: (new Date()).toISOString()
+        }
+    }),
     icon: MdImportContacts,
     fieldsets: [
         {
@@ -24,34 +29,9 @@ export default {
             type: 'string'
         },
         {
-            title: 'Category',
-            name: 'category',
-            type: 'reference',
-            to: [{ type: 'blogCategory' }],
-            readOnly: true,
-        },
-        {
-            title: 'Slug',
-            name: 'slug',
-            type: 'slug',
-            description: 'Click generate to auto generate a slug',
-            options: {
-                source: 'title',
-                slugify: slugify
-            },
-            validation: Rule => [
-                Rule.required().error('Please add / generate a unique slug')
-            ]
-        },
-        {
-            title: 'SEO Description',
-            name: 'seoDescription',
-            type: 'text',
-            description: 'Max characters 160',
-            rows: 2,
-            validation: Rule => [
-                Rule.max(160).error('Too many characters')
-            ]
+            title: 'Meta',
+            name: 'postMeta',
+            type: 'postMeta'
         },
         {
             title: 'Featured image',
@@ -65,20 +45,30 @@ export default {
             type: 'portableText',
         }
     ],
+    orderings: [
+        {
+          title: 'Date',
+          name: 'sortDate',
+          by: [
+            {field: 'postMeta.date', direction: 'desc'}
+          ]
+        },
+    ],
     preview: {
         select: {
             title: 'title',
-            createdAt: '_createdAt',
+            date: 'postMeta.date',
             image: 'featuredImage',
         },
         prepare(select) {
-            const { title, createdAt, image } = select
+            const { title, date, image } = select
 
             //Format date
-            let date = new Date(createdAt)
-            let d = date.getDate()
-            let m = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
-            let y = date.getFullYear()
+            let formattedDate = new Date(date)
+
+            let d = formattedDate.getDate()
+            let m = formattedDate.getMonth() + 1 < 10 ? `0${formattedDate.getMonth() + 1}` : formattedDate.getMonth() + 1
+            let y = formattedDate.getFullYear()
 
             return {
                 title: title,

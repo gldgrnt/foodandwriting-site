@@ -6,7 +6,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 
 //Schemas
 import { recipe, blog, culture, config, about, recipeCategory, cultureCategory, blogCategory } from './documents'
-import { flexImages, portableText, shoppingListItem, featuredImage, recipeInfo, imageWithAlt, categoryOptions } from './objects'
+import { flexImages, portableText, shoppingListItem, featuredImage, recipeInfo, imageWithAlt, categoryOptions, postMeta } from './objects'
 
 export default createSchema({
     name: 'default',
@@ -14,6 +14,6 @@ export default createSchema({
         //Documents
         recipe, blog, culture, about, config, recipeCategory, cultureCategory, blogCategory,
         //Objects
-        flexImages, portableText, shoppingListItem, featuredImage, recipeInfo, imageWithAlt, categoryOptions
+        flexImages, portableText, shoppingListItem, featuredImage, recipeInfo, imageWithAlt, categoryOptions, postMeta
     ])
 })

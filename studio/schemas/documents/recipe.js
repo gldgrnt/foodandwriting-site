@@ -1,14 +1,20 @@
+import slugify from '../../utils'
 import { MdDone, MdLocalDining } from 'react-icons/md'
 
 export default {
     title: 'Recipe',
     name: 'recipe',
     type: 'document',
-    initialValue: {
-        category: {
-            _ref: 'recipeCategory'
-        },
-    },
+    initialValue: () => ({
+        postMeta: {
+            _type: 'postMeta',
+            category: {
+                _type: 'reference',
+                _ref: 'recipeCategory',
+            },
+            date: (new Date()).toISOString()
+        }
+    }),
     icon: MdLocalDining,
     fieldsets: [
         { title: 'Main content', name: 'mainContent' }
@@ -20,36 +26,9 @@ export default {
             type: 'string'
         },
         {
-            title: 'Category',
-            name: 'category',
-            type: 'reference',
-            to: [{ type: 'recipeCategory' }],
-            readOnly: true,
-        },
-        {
-            title: 'Slug',
-            name: 'slug',
-            type: 'slug',
-            description: 'Click generate to auto generate a slug',
-            options: {
-                source: 'title',
-                slugify: (input) => {
-                    return input.toLowerCase().replace(/\s+/g, '-').slice(0, 100)
-                },
-            },
-            validation: Rule => [
-                Rule.required().error('Please add / generate a unique slug')
-            ]
-        },
-        {
-            title: 'SEO Description',
-            name: 'seoDecsription',
-            description: 'Max characters 160',
-            type: 'text',
-            rows: 2,
-            validation: Rule => [
-                Rule.max(160).error('Too many characters')
-            ]
+            title: 'Meta',
+            name: 'postMeta',
+            type: 'postMeta'
         },
         {
             title: 'Featured image',
@@ -103,18 +82,35 @@ export default {
             fieldset: 'mainContent',
         },
     ],
+    orderings: [
+        {
+          title: 'Date',
+          name: 'sortDate',
+          by: [
+            {field: 'postMeta.date', direction: 'desc'}
+          ]
+        },
+    ],
     preview: {
         select: {
             title: 'title',
-            image: 'featuredImage'
+            date: 'postMeta.date',
+            image: 'featuredImage',
         },
         prepare(select) {
-            const { title, image } = select
+            const { title, date, image } = select
+
+            //Format date
+            let formattedDate = new Date(date)
+
+            let d = formattedDate.getDate()
+            let m = formattedDate.getMonth() + 1 < 10 ? `0${formattedDate.getMonth() + 1}` : formattedDate.getMonth() + 1
+            let y = formattedDate.getFullYear()
 
             return {
                 title: title,
-                subtitle: 'Recipe',
-                media: image
+                subtitle: `Recipe - ${d}/${m}/${y}`,
+                media: image,
             }
         }
     }

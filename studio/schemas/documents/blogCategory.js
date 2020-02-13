@@ -24,7 +24,7 @@ export default {
             name: 'slug',
             type: 'slug',
             readOnly: true,
-            description: 'foodandwriting.co.uk/{slug}'
+            description: 'foodandwriting.co.uk/blog'
         },
         {
             title: 'SEO Description',

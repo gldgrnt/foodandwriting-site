@@ -47,7 +47,7 @@ const IndexPage = ({ data }) => {
 
                 {/* Parallax topic section */}
                 <Section>
-                    <ParallaxFeaturedTopic topic={{recipeCategoryData}}/>
+                    <ParallaxFeaturedTopic topic={{ recipeCategoryData }} />
                 </Section>
 
                 {/* Main post */}
@@ -69,9 +69,22 @@ export const pageQuery = graphql`
                     id,
                     _type,
                     title,
-                    slug {
-                        current
-                    },
+                    postMeta {
+                        slug {
+                            current
+                        },
+                        category {
+                        ... on SanityRecipeCategory {
+                            id
+                            categoryOptions {
+                            singleName
+                            }
+                            slug {
+                            current
+                            }
+                        }
+                        }
+                    }
                     featuredImage {
                     alt,
                     asset {
@@ -82,11 +95,6 @@ export const pageQuery = graphql`
                     },
                     recipeIntro,
                     _createdAt
-                    category {
-                        slug {
-                            current
-                        }
-                    }
                 }
             }
         },

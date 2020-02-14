@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import Img from 'gatsby-image'
 
 import { GridContainer } from '../layout'
 import { InternalLink, SmallCaps } from '../ui'
@@ -24,7 +25,7 @@ export const FeaturedPost = ({ post }) => {
         <GridContainer>
             <Article>
                 <ImageLinkWrapper to={slug}>
-                    <img src={post.featuredImage.asset.fluid.srcWebp} alt={post.title} />
+                    <Img fluid={post.featuredImage.asset.fluid} alt={post.title} />
                 </ImageLinkWrapper>
 
                 <CaptionContainer>
@@ -56,11 +57,12 @@ const ImageLinkWrapper = styled(Link)`
     overflow: hidden;
     flex-basis: 50%;
         
-    img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+    > * {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
     }
 `
 
@@ -99,7 +101,7 @@ const CaptionTitle = styled.h2`
 `
 
 const CaptionText = styled.p`
-    color: ${props => props.theme.color.mediumGrey};
+    color: ${props => props.theme.color.darkGrey};
 
     ${responsiveBreakpointDown('desktop', `font-size: 0.9rem;`)}
 `

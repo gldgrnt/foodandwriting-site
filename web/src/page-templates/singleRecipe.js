@@ -1,26 +1,25 @@
 import React from "react"
+import { graphql } from 'gatsby'
 import styled from 'styled-components'
 
 import { SEO } from '../utils'
 import { PostHero } from '../components/post-sections'
 import { Page, Section, GridContainer, GridRow, GridCol } from '../components/layout'
-import { SmallCaps } from '../components/ui'
+import { SmallCaps, Divider } from '../components/ui'
 
-const page = ({ pageContext }) => {
+export default ({ data }) => {
 
-    const { title, category, featuredImage, recipeInfo, recipeIntro, seoDescription, shoppingList, steps, recipeNotes } = pageContext.data
-
-    console.log(pageContext.data)
+    const { title, postMeta, featuredImage, recipeInfo, recipeIntro, seoDescription, shoppingList, steps, recipeNotes } = data.post
 
     return (
         <>
-            <SEO title={`${title} recipe`} description={seoDescription} />
+            <SEO title={`${title} recipe`} description={seoDescription || recipeIntro} />
             <Page>
-                <Section spacingBottom="4">
-                    <PostHero imageSrcSet={featuredImage.asset.fluid.srcSetWebp} category={category.categoryOptions.singleName} title={title} />
+                <Section spacingBottom="5">
+                    <PostHero fluid={featuredImage.asset.fluid} subtitle={postMeta.category.categoryOptions.singleName} title={title} />
                 </Section>
 
-                <Section spacingBottom="6">
+                <Section spacingBottom="5">
                     <RecipeWrapper>
                         <GridContainer wrap="wrap">
                             <GridRow justify="center">
@@ -77,8 +76,6 @@ const page = ({ pageContext }) => {
     )
 }
 
-export default page
-
 const RecipeWrapper = styled.div`
     font-size: ${props => props.theme.font.size.increased};
 `
@@ -95,13 +92,6 @@ const Intro = styled.p`
     > *:last-child {
         margin-bottom: 0;
     }
-`
-
-const Divider = styled.hr`
-    margin: 80px 0 100px;
-    height: 2px;
-    background: ${props => props.theme.color.lightGrey};
-    opacity: 0.3;
 `
 
 const RecipeStep = styled.li`
@@ -121,4 +111,49 @@ const Notes = styled.p`
     color: ${props => props.theme.color.darkGrey};
     font-style: italic;
     margin-top: 40px;
+`
+
+// Graphql query
+
+export const query = graphql`
+    query ($id: String) {
+        post: sanityRecipe(id: {eq: $id}) {
+            title
+            steps
+            shoppingList {
+                amount
+                itemSearch
+                _key
+            }
+            recipeNotes
+            recipeIntro
+            recipeInfo {
+                difficulty
+                readyIn
+                serves
+            }
+            postMeta {
+                category {
+                ... on SanityRecipeCategory {
+                    id
+                    slug {
+                    current
+                    }
+                    categoryOptions {
+                    singleName
+                    }
+                }
+                }
+                date
+                seoDescription
+            }
+            featuredImage {
+                asset {
+                    fluid {
+                    ...GatsbySanityImageFluid_noBase64
+                    }
+                }  
+            }
+        }
+    }
 `

@@ -1,11 +1,12 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import Img from 'gatsby-image'
 
 import { SmallCaps } from '../ui'
 import { FiArrowDown } from 'react-icons/fi'
 
-export const PostHero = ({ imageSrcSet, category, title }) => {
+export const PostHero = ({ fluid, subtitle, title }) => {
 
     let heroRef = useRef(null);
 
@@ -22,11 +23,11 @@ export const PostHero = ({ imageSrcSet, category, title }) => {
     return (
         <HeroWrapper ref={r => heroRef = r}>
             <ImageWrapper>
-                <Image srcSet={imageSrcSet} />
+                <Img fluid={fluid} />
             </ImageWrapper>
 
             <CaptionWrapper>
-                <SmallCaps size="regular" color="mediumGrey">{category}</SmallCaps>
+                <SmallCaps size="regular" color="mediumGrey">{subtitle}</SmallCaps>
                 <Title>{title}</Title>
 
                 <ScrollDown onClick={handleScrollDownClick}>
@@ -39,8 +40,8 @@ export const PostHero = ({ imageSrcSet, category, title }) => {
 }
 
 PostHero.propTypes = {
-    // image: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
+    fluid: PropTypes.object.isRequired,
+    subtitle: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired
 }
 
@@ -56,15 +57,14 @@ const HeroWrapper = styled.div`
 
 const ImageWrapper = styled.div`
     position: relative;
-`
 
-const Image = styled.img`
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    object-fit: cover;
+    > * {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
 `
 
 const CaptionWrapper = styled.div`

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 
 export const getPostSlug = (post) => {
-    let postLink = post.slug.current
-    let categoryLink = post.category.slug.current
+    let postLink = post.postMeta.slug.current
+    let categoryLink = post.postMeta.category.slug.current
 
     return `/${categoryLink}/${postLink}`
 }

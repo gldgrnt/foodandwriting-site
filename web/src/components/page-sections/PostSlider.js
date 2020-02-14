@@ -20,7 +20,7 @@ export const PostSlider = ({ title, posts }) => {
         infinite: false,
         speed: 500,
         slidesToShow: 3,
-        slidesToScroll: 1,
+        slidesToScroll: 2,
         draggable: true,
         swipe: true,
         swipeToSlide: false,

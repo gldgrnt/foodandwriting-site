@@ -2,13 +2,14 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
-import { FeaturedPost, PostSlider, PostList, FeaturedTopic, ParallaxFeaturedTopic } from '../components/page-sections'
+// import { FeaturedPost, PostSlider, PostList, FeaturedTopic, ParallaxFeaturedTopic } from '../components/page-sections'
+import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
 const IndexPage = ({ data }) => {
 
     const mainPostData = data.mainPost.edges[0].node
-    const recipeCategoryData = data.recipeCategory.edges[0].node
+    // const recipeCategoryData = data.recipeCategory.edges[0].node
 
     return (
         <>
@@ -46,12 +47,12 @@ const IndexPage = ({ data }) => {
                 </Section>
 
                 {/* Parallax topic section */}
-                <Section>
+                {/* <Section>
                     <ParallaxFeaturedTopic topic={{ recipeCategoryData }} />
-                </Section>
+                </Section> */}
 
                 {/* Main post */}
-                <Section spacingTop="7" spacingBottom="6">
+                <Section spacingBottom="6">
                     <FeaturedPost post={mainPostData} />
                 </Section>
             </Page>
@@ -89,10 +90,10 @@ export const pageQuery = graphql`
                     alt,
                     asset {
                         fluid {
-                                srcWebp
-                            }
-                        }   
-                    },
+                        ...GatsbySanityImageFluid_noBase64
+                        }
+                    }  
+                    }
                     recipeIntro,
                     _createdAt
                 }

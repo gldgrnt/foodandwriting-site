@@ -33,10 +33,19 @@ const calculateCols = (cols, maxCols) => {
 
             return `${cols < maxCols ? (100 / maxCols) * cols : 100}%`
 
-        case 'object':
-            let values = Object.fromEntries(
-                Object.entries(cols).map((key) => [key[0], `${key[1] < maxCols ? (100 / maxCols) * key[1] : 100}%`])
-            )
+        case 'object':           
+            let holdingArray = []
+            // Loop through cols object keys too create array of key value arrays
+            for (const key in cols) {
+                holdingArray.push([ key, `${cols[key] < maxCols ? (100 / maxCols) * cols[key] : 100}%`])
+            }
+
+            let values = {}
+            // Set each value in the values object
+            holdingArray.forEach(prop => {
+                values[prop[0]] = prop[1]
+            })
+
             return values
 
         default:

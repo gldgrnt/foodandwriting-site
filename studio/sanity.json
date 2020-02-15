@@ -17,7 +17,7 @@
     "env": {
         "development": {
             "api": {
-                "dataset": "development"
+                "dataset": "production"
             },
             "plugins": [
                 "@sanity/vision"

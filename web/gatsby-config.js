@@ -1,7 +1,7 @@
 // In your gatsby-config.js file
-// require('dotenv').config({
-//     path: `.env`
-// })
+require('dotenv').config({
+    path: `.env`
+})
 
 module.exports = {
     siteMetadata: {
@@ -29,16 +29,22 @@ module.exports = {
                 background_color: `#111`,
                 theme_color: `#111`,
                 display: `minimal-ui`,
-                // icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+                icon: 'src/images/favicon.png'
             },
         },
         {
             resolve: 'gatsby-source-sanity',
             options: {
                 projectId: 's1s9nwnc',
-                dataset: 'development',
-                // token: process.env.SANITY_TOKEN,
+                dataset: 'production',
+                token: process.env.SANITY_TOKEN,
             },
         },
+        {
+            resolve: 'gatsby-plugin-styled-components',
+            options: {
+                displayName: process.env.STYLED_COMPONENTS_DISPLAY_NAME
+            }
+        }
     ],
 }

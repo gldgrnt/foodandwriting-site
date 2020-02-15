@@ -1,4 +1,3 @@
-import slugify from '../../utils'
 import { MdImportContacts } from 'react-icons/md'
 
 export default {
@@ -70,9 +69,11 @@ export default {
             let m = formattedDate.getMonth() + 1 < 10 ? `0${formattedDate.getMonth() + 1}` : formattedDate.getMonth() + 1
             let y = formattedDate.getFullYear()
 
+            const postDate =  date ? `- ${d}/${m}/${y}` : ''
+
             return {
                 title: title,
-                subtitle: `Blog - ${d}/${m}/${y}`,
+                subtitle: `Blog ${postDate}`,
                 media: image,
             }
         }

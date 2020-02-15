@@ -1,4 +1,3 @@
-import slugify from '../../utils'
 import { MdDone, MdLocalDining } from 'react-icons/md'
 
 export default {
@@ -107,9 +106,11 @@ export default {
             let m = formattedDate.getMonth() + 1 < 10 ? `0${formattedDate.getMonth() + 1}` : formattedDate.getMonth() + 1
             let y = formattedDate.getFullYear()
 
+            const postDate =  date ? `- ${d}/${m}/${y}` : ''
+
             return {
                 title: title,
-                subtitle: `Recipe - ${d}/${m}/${y}`,
+                subtitle: `Recipe ${postDate}`,
                 media: image,
             }
         }

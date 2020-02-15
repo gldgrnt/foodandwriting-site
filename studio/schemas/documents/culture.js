@@ -69,9 +69,11 @@ export default {
             let m = formattedDate.getMonth() + 1 < 10 ? `0${formattedDate.getMonth() + 1}` : formattedDate.getMonth() + 1
             let y = formattedDate.getFullYear()
 
+            const postDate =  date ? `- ${d}/${m}/${y}` : ''
+
             return {
                 title: title,
-                subtitle: `Culture - ${d}/${m}/${y}`,
+                subtitle: `Culture ${postDate}`,
                 media: image,
             }
         }

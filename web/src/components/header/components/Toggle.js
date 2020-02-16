@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
+import { responsiveBreakpointDown } from '../../../utils'
+
 export const Toggle = ({ handler, active, children }) => {
     const handleClick = (event) => {
         event.preventDefault();
@@ -50,4 +52,9 @@ const IconLink = styled.button`
         stroke-width: 2.5px;
         pointer-events: none;
     }
+
+    ${responsiveBreakpointDown('mobile', `
+        padding-top: 25px;
+        padding-bottom: 25px;
+    `)}
 `

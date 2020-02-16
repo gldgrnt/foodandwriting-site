@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FiMenu, FiSearch } from 'react-icons/fi'
 import { Navigation, Logo, Toggle, SearchContainer } from './components'
 import { GridContainer } from '../layout'
+import { responsiveBreakpointDown } from "../../utils"
 
 export const Header = () => {
     const [dropdownState, setDropdownState] = useState({ isSearchOpen: false, isMenuOpen: false })
@@ -52,7 +53,7 @@ export const Header = () => {
 
     return (
         <StyledHeader>
-            <GridContainer align="stretch">
+            <GridContainer align="stretch" justify="space-between" removeMobilePadding={true}>
                 <LogoWrapper>
                     <Logo />
                 </LogoWrapper>
@@ -97,21 +98,34 @@ const LogoWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    ${props => responsiveBreakpointDown('mobile', `
+        padding-left: ${props.theme.grid.spacing}px;
+    `)}
 `
 
 const NavigationWrapper = styled.div`
     padding: 25px 0;
     flex-grow: 1;
+
+    ${responsiveBreakpointDown('mobile', `
+        display: none;
+    `)}
 `
 
 const TogglesWrapper = styled.div`
     display: flex;
     padding-left: 60px;
-    margin-right: -25px; /* WILL CAUSE SCREEN WIDTH TO BREAK. FIX ON SMALLER DEVICES */
+    margin-right: -25px;
 
     > * {
         height: 100%;
     }
+
+    ${responsiveBreakpointDown('mobile', `
+        padding-left: 0;
+        margin-right: 0;
+    `)}
 `
 
 const StyledNavigation = styled(Navigation)`

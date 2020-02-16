@@ -118,24 +118,25 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     // Categories
-    const {sanityBlogCategory, sanityCultureCategory, sanityRecipeCategory } = pagesToCreate.data
     const categoryPages = [
         {
             'template': './src/page-templates/categoryBlog.js',
-            'category': sanityBlogCategory
+            'category': pagesToCreate.data.sanityBlogCategory
         }, 
         {
             'template': './src/page-templates/categoryCulture.js',
-            'category': sanityCultureCategory
+            'category': pagesToCreate.data.sanityCultureCategory
         }, 
         {
             'template': './src/page-templates/categoryRecipe.js',
-            'category': sanityRecipeCategory
+            'category': pagesToCreate.data.sanityRecipeCategory
         },
     ]
     
     // Category loop
     categoryPages.forEach(({template, category}) => {
+
+        console.log(category)
 
         createPage({
             path: `/${category.slug.current}`,

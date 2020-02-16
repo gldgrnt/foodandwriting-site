@@ -6,7 +6,7 @@ import Img from 'gatsby-image'
 import { SmallCaps } from '../ui'
 import { FiArrowDown } from 'react-icons/fi'
 
-export const PostHero = ({ fluid, subtitle, title }) => {
+export const PostHero = ({ featuredImage, subtitle, title }) => {
 
     let heroRef = useRef(null);
 
@@ -23,7 +23,7 @@ export const PostHero = ({ fluid, subtitle, title }) => {
     return (
         <HeroWrapper ref={r => heroRef = r}>
             <ImageWrapper>
-                <Img fluid={fluid} />
+                { !!featuredImage ? <Img fluid={featuredImage.asset.fluid} /> : <div></div>}
             </ImageWrapper>
 
             <CaptionWrapper>
@@ -40,7 +40,7 @@ export const PostHero = ({ fluid, subtitle, title }) => {
 }
 
 PostHero.propTypes = {
-    fluid: PropTypes.object.isRequired,
+    featuredImage: PropTypes.object.isRequired,
     subtitle: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired
 }
@@ -57,6 +57,7 @@ const HeroWrapper = styled.div`
 
 const ImageWrapper = styled.div`
     position: relative;
+    background: ${props => props.theme.color.whiteGrey};
 
     > * {
         position: absolute !important;

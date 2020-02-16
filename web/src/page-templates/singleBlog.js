@@ -14,7 +14,7 @@ export default ({ data }) => {
             <SEO title={`${title} recipe`} description={ seoDescription } />
             <Page>
                 <Section spacingBottom="5">
-                    <PostHero fluid={featuredImage.asset.fluid} subtitle={postMeta.category.categoryOptions.singleName} title={title} />
+                    <PostHero featuredImage={featuredImage} subtitle={postMeta.category.categoryOptions.singleName} title={title} />
                 </Section>
 
                 <Section spacingBottom="5">

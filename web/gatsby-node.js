@@ -136,8 +136,6 @@ exports.createPages = async ({ graphql, actions }) => {
     // Category loop
     categoryPages.forEach(({template, category}) => {
 
-        console.log(category)
-
         createPage({
             path: `/${category.slug.current}`,
             component: require.resolve(template),

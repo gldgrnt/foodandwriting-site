@@ -5,14 +5,14 @@ import createSchema from 'part:@sanity/base/schema-creator'
 import schemaTypes from 'all:part:@sanity/base/schema-type'
 
 //Schemas
-import { recipe, blog, culture, config, about, recipeCategory, cultureCategory, blogCategory } from './documents'
+import { recipe, blog, culture, config, about, recipeCategory, cultureCategory, blogCategory, home } from './documents'
 import { flexImages, portableText, shoppingListItem, featuredImage, recipeInfo, imageWithAlt, categoryOptions, postMeta } from './objects'
 
 export default createSchema({
     name: 'default',
     types: schemaTypes.concat([
         //Documents
-        recipe, blog, culture, about, config, recipeCategory, cultureCategory, blogCategory,
+        recipe, blog, culture, about, config, recipeCategory, cultureCategory, blogCategory, home,
         //Objects
         flexImages, portableText, shoppingListItem, featuredImage, recipeInfo, imageWithAlt, categoryOptions, postMeta
     ])

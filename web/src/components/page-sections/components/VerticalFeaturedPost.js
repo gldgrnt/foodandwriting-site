@@ -2,21 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
+import Img from 'gatsby-image/withIEPolyfill'
 
 import { SmallCaps } from '../../ui'
 import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
 
-export const VerticalFeaturedPost = ({ post }) => {
+export const VerticalFeaturedPost = ({ post: {title, postMeta, featuredImage} }) => {
 
     // Slug
-    const slug = getPostSlug(post)
+    const slug = getPostSlug(postMeta)
 
     return (
         <Article>
             <StyledLink to={slug}>
-                <Image src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
+                <ImageWrapper>
+                    <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={title} />
+                </ImageWrapper>
+
                 <CaptionWrapper>
-                    <CaptionTitle>{post.title}</CaptionTitle>
+                    <CaptionTitle>{title}</CaptionTitle>
                     <SmallCaps as="span" size="tiny" color="mediumGrey" link>Read more</SmallCaps>
                 </CaptionWrapper>
             </StyledLink>
@@ -29,12 +33,13 @@ VerticalFeaturedPost.propTypes = {
 }
 
 const Article = styled.article`
-    width: 500px;
+    width: 560px;
     background: white;
 
-    ${responsiveBreakpointDown('desktop', `
-        width: 480px;
-    `)}
+    ${responsiveBreakpointDown('desktop', `width: 480px;`)}
+    ${responsiveBreakpointDown('laptop', `width: 420px;`)}
+    ${responsiveBreakpointDown('tablet', `width: calc(50% - 30px);`)}
+    ${responsiveBreakpointDown('mobile', `width: 100%`)}
 
     &:hover,
     &:focus {
@@ -71,24 +76,39 @@ const StyledLink = styled(Link)`
     }
 `
 
-const Image = styled.img`
-    display: block;
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    margin-bottom: 0;
+const ImageWrapper = styled.div`
 
-    ${responsiveBreakpointDown('desktop', `
-        height: 350px;
-    `)}
+    > * {
+        display: block;
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        margin-bottom: 0;
+
+        ${responsiveBreakpointDown('desktop', `height: 420px;`)}
+        ${responsiveBreakpointDown('laptop', `height: 360px;`)}
+        ${responsiveBreakpointDown('tablet', `height: 300px;`)}
+        ${responsiveBreakpointDown('mobile', `height: 360px;`)}
+    }
 `
 
 const CaptionWrapper = styled.div`
     padding: 25px 20px;
     text-align: center;
+
+    ${props => responsiveBreakpointDown('tablet', `
+        span {
+            display: none;
+        }
+    `)}
 `
 
 const CaptionTitle = styled.h3`
     font-size: ${props => props.theme.font.size.increased};
     margin: 0 0 10px;
+
+    ${props => responsiveBreakpointDown('tablet', `
+        font-size: ${props.theme.font.size.regular};
+        margin: 0;    
+    `)}
 `

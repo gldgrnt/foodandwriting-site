@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -13,6 +13,10 @@ import "slick-carousel/slick/slick-theme.css"
 import { responsiveBreakpointDown } from '../../utils'
 
 export const PostSlider = ({ title, posts }) => {
+    // Set up slider state
+    const [activeSlide, setActiveSlide] = useState(0)
+    const slideCount = posts.length
+
     // Slider settings
     const settings = {
         dots: false,
@@ -20,28 +24,44 @@ export const PostSlider = ({ title, posts }) => {
         infinite: false,
         speed: 500,
         slidesToShow: 3,
-        slidesToScroll: 2,
+        slidesToScroll: 1,
         draggable: true,
         swipe: true,
-        swipeToSlide: false,
+        swipeToSlide: true,
         vairableWidth: true,
         touchThreshold: 100,
+        afterChange: current => setActiveSlide(current),
+        responsive: [
+            {
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    centerMode: true,
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1,
+                    centerMode: true,
+                    infinite: true,
+                }
+            },
+        ]
     }
 
     // Set up movement methods
-    let SliderRef = useRef(null)
+    let sliderRef = useRef(null)
 
     const nextSlide = () => {
-        SliderRef.slickNext()
+        sliderRef.slickNext()
     }
 
     const prevSlide = () => {
-        SliderRef.slickPrev()
+        sliderRef.slickPrev()
     }
-
-    // Utilize state to change controls
-    
-
 
     return (
         <StyledWrapper>
@@ -54,18 +74,18 @@ export const PostSlider = ({ title, posts }) => {
                     </TitleWrapper>
 
                     <ButtonWrapper>
-                        <StyledButton onClick={prevSlide}>
+                        <StyledButton onClick={prevSlide} disabled={activeSlide === 0}>
                             <FiArrowLeft />
                         </StyledButton>
 
-                        <StyledButton onClick={nextSlide}>
+                        <StyledButton onClick={nextSlide} disabled={activeSlide + 2 === slideCount - 1}>
                             <FiArrowRight />
                         </StyledButton>
                     </ButtonWrapper>
                 </UpperWrapper>
 
-                <StyledSlider ref={r => SliderRef = r} {...settings}>
-                    {posts.map((post, index) => <VerticalPost key={index} post={post} />)}
+                <StyledSlider ref={r => sliderRef = r} {...settings}>
+                    {posts.map((post, index) => <VerticalPost key={index} post={post.node} />)}
                 </StyledSlider>
             </StyledGridContainer>
         </StyledWrapper>
@@ -96,6 +116,11 @@ const UpperWrapper = styled.div`
 const TitleWrapper = styled.div`
     display: flex;
     align-items: center;
+
+    ${responsiveBreakpointDown('tablet', `
+        width: 100%;
+        justify-content: space-between;
+    `)}
     
     > * {
         margin: 0;
@@ -116,11 +141,17 @@ const StyledButton = styled.button`
     border: none;
     background: none;
     padding: 5px;
+    pointer-events: ${props => props.disabled ? 'none' : 'all'};
+
+    ${props => responsiveBreakpointDown('tablet', `
+        display: none;
+    `)}
 
     > svg {
         transform: scale(1.1);
         stroke-width: 2.5px;
         pointer-events: none;
+        transition: ${props => props.theme.transition.fast};
         color: ${props => props.disabled ? props.theme.color.lightGrey : props.theme.color.black};
     }
 `
@@ -134,6 +165,10 @@ const StyledSlider = styled(Slider)`
 
     ${props => responsiveBreakpointDown('desktop', `
         margin-right: -80px;
+    `)}
+
+    ${props => responsiveBreakpointDown('tablet', `
+        margin-right: 0;
     `)}
 
     .slick-list {

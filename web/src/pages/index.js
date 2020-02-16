@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
 
-import { FeaturedPost } from '../components/page-sections'
+import { FeaturedPost, PostSlider } from '../components/page-sections'
 import { Section } from '../components/layout'
 // import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
 // import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
@@ -12,8 +12,7 @@ const IndexPage = ({ data: { recipesData } }) => {
 
     // Set up post data
     const featuredRecipe = recipesData.edges[0].node
-    // const sliderRecipes = recipesData.edges.filter((edge, index) => index !== 0)
-
+    const sliderRecipes = recipesData.edges.filter((edge, index) => index !== 0)
 
     // 1. 6 Recipes -> split into 1 & 5 - DONE
     // 2. Blog category -> up to three posts
@@ -31,9 +30,9 @@ const IndexPage = ({ data: { recipesData } }) => {
                 </Section>
 
                 {/* Post slider */}
-                {/* <Section spacingTop="3" spacingBottom="7">
-                    <PostSlider title={'Recipes'} posts={data.mainPost.edges} />
-                </Section> */}
+                <Section spacingTop="3" spacingBottom="7">
+                    <PostSlider title={'Recipes'} posts={sliderRecipes} />
+                </Section>
 
                 {/* Featured section */}
                 {/* <Section spacingTop="5" spacingBottom="6" whiteGrey>

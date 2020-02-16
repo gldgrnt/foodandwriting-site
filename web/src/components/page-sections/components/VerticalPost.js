@@ -1,22 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import Img from 'gatsby-image'
 
 import { SmallCaps } from '../../ui'
-import { getPostSlug } from '../../../utils'
+import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
 
-export const VerticalPost = ({ post }) => {
+export const VerticalPost = ({ post: {postMeta, title, featuredImage} }) => {
 
     // Slug
-    const slug = getPostSlug(post)
+    const slug = getPostSlug(postMeta)
 
     return (
         <Article>
             <LinkWrapper href={slug}>
                 <ImageWrapper>
-                    <Image src={post.featuredImage.asset.fluid.srcWebp} alt="placeholder" />
+                    <Img fluid={featuredImage.asset.fluid} alt="placeholder" />
                 </ImageWrapper>
-                <Title>{post.title}</Title>
+                <Title>{title}</Title>
                 <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
             </LinkWrapper>
         </Article>
@@ -24,16 +25,29 @@ export const VerticalPost = ({ post }) => {
 }
 
 VerticalPost.prototypes = {
-    post: PropTypes.object.isRequired,
-    active: PropTypes.boolean
+    post: PropTypes.shape({
+        postMeta: PropTypes.object.isRequired,
+        title: PropTypes.string.isRequired,
+        featuredImage: PropTypes.object.isRequired
+    }).isRequired,
 }
 
 const Article = styled.article`
     max-width: ${props => (props.theme.grid.breakpoints.monitor.minScreenWidth / 3) - 120}px;
 
-    @media screen and (max-width: ${props => props.theme.grid.breakpoints.desktop.maxScreenWidth}px) {
-        max-width: ${props => (props.theme.grid.breakpoints.desktop.minScreenWidth / 3) - 60}px;
-    }
+    ${props => responsiveBreakpointDown('desktop', `
+        max-width: ${(props.theme.grid.breakpoints.desktop.minScreenWidth / 3) - 60}px;
+    `)}
+
+    ${props => responsiveBreakpointDown('laptop', `
+        max-width: ${(props.theme.grid.breakpoints.laptop.minScreenWidth / 3) - 60}px;
+    `)}
+
+    ${responsiveBreakpointDown('mobile', `
+        max-width: none;
+        width: calc(100% - 40px);
+        margin: auto;
+    `)}
 `
 
 const LinkWrapper = styled.a`
@@ -52,24 +66,33 @@ const LinkWrapper = styled.a`
             }
         }
     }
+
+    ${responsiveBreakpointDown('tablet', `
+        span {
+            display: none;
+        }
+    `)}
 `
 
 const ImageWrapper = styled.div`
     position: relative;
-    padding-top: 120%;
+    padding-top: 140%;
     margin-bottom: 20px;
-`
 
-const Image = styled.img`
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+    > * {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
 `
 
 const Title = styled.h3`
     font-size: ${props => props.theme.font.size.increased};
     margin-bottom: 10px;
+
+    ${props => responsiveBreakpointDown('tablet', `
+        font-size: ${props.theme.font.size.regular};
+    `)}
 `

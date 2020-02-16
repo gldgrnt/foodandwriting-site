@@ -1,12 +1,21 @@
 import PropTypes from 'prop-types'
 
-export const getPostSlug = (post) => {
-    let postLink = post.postMeta.slug.current
-    let categoryLink = post.postMeta.category.slug.current
+export const getPostSlug = (postMeta) => {
+    const postLink = postMeta.slug.current
+    const categoryLink = postMeta.category.slug.current
 
     return `/${categoryLink}/${postLink}`
 }
 
 getPostSlug.proptypes = {
-    post: PropTypes.object.isRequired
+    postMeta: PropTypes.shape({
+        slug: PropTypes.shape({
+            current: PropTypes.string.isRequired
+        }),
+        category: PropTypes.shape({
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired
+            })
+        })
+    })
 }

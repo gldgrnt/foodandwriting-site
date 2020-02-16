@@ -1,5 +1,5 @@
-import { VerticalPost } from './VerticalPost'
+import { VerticalSliderPost } from './VerticalSliderPost'
 import { HorizontalPost } from './HorizontalPost'
 import { VerticalFeaturedPost } from './VerticalFeaturedPost'
 
-export { VerticalPost, HorizontalPost, VerticalFeaturedPost } 
+export { VerticalSliderPost, HorizontalPost, VerticalFeaturedPost } 

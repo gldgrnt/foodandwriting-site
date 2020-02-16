@@ -6,7 +6,7 @@ import Img from 'gatsby-image'
 import { SmallCaps } from '../../ui'
 import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
 
-export const VerticalPost = ({ post: {postMeta, title, featuredImage} }) => {
+export const VerticalSliderPost = ({ post: {postMeta, title, featuredImage} }) => {
 
     // Slug
     const slug = getPostSlug(postMeta)
@@ -24,7 +24,7 @@ export const VerticalPost = ({ post: {postMeta, title, featuredImage} }) => {
     )
 }
 
-VerticalPost.prototypes = {
+VerticalSliderPost.prototypes = {
     post: PropTypes.shape({
         postMeta: PropTypes.object.isRequired,
         title: PropTypes.string.isRequired,
@@ -76,8 +76,10 @@ const LinkWrapper = styled.a`
 
 const ImageWrapper = styled.div`
     position: relative;
-    padding-top: 140%;
+    padding-top: 120%;
     margin-bottom: 20px;
+
+    ${responsiveBreakpointDown('mobile', `padding-top: 140%;`)}
 
     > * {
         position: absolute !important;
@@ -94,5 +96,10 @@ const Title = styled.h3`
 
     ${props => responsiveBreakpointDown('tablet', `
         font-size: ${props.theme.font.size.regular};
+    `)}
+
+    ${responsiveBreakpointDown('mobile', `
+        padding: 0 15px;
+        text-align: center;
     `)}
 `

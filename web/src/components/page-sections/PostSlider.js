@@ -5,7 +5,7 @@ import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 
 import { SmallCaps, InternalLink } from '../ui'
 import { GridContainer } from '../layout'
-import { VerticalPost } from './components'
+import { VerticalSliderPost } from './components'
 
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css"
@@ -85,7 +85,7 @@ export const PostSlider = ({ title, posts }) => {
                 </UpperWrapper>
 
                 <StyledSlider ref={r => sliderRef = r} {...settings}>
-                    {posts.map((post, index) => <VerticalPost key={index} post={post.node} />)}
+                    {posts.map((post, index) => <VerticalSliderPost key={index} post={post.node} />)}
                 </StyledSlider>
             </StyledGridContainer>
         </StyledWrapper>

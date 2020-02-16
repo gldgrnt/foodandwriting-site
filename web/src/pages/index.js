@@ -2,14 +2,23 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
-// import { FeaturedPost, PostSlider, PostList, FeaturedTopic, ParallaxFeaturedTopic } from '../components/page-sections'
-import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
-import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
-const IndexPage = ({ data }) => {
+import { FeaturedPost } from '../components/page-sections'
+import { Section } from '../components/layout'
+// import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
+// import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
-    const mainPostData = data.mainPost.edges[0].node
-    // const recipeCategoryData = data.recipeCategory.edges[0].node
+const IndexPage = ({ data: { recipesData } }) => {
+
+    // Set up post data
+    const featuredRecipe = recipesData.edges[0].node
+    // const sliderRecipes = recipesData.edges.filter((edge, index) => index !== 0)
+
+
+    // 1. 6 Recipes -> split into 1 & 5 - DONE
+    // 2. Blog category -> up to three posts
+    // 3. Culture cateogy -> up to three posts
+
 
     return (
         <>
@@ -18,21 +27,21 @@ const IndexPage = ({ data }) => {
 
                 {/* Main post */}
                 <Section>
-                    <FeaturedPost post={mainPostData} />
+                    <FeaturedPost post={featuredRecipe} />
                 </Section>
 
                 {/* Post slider */}
-                <Section spacingTop="3" spacingBottom="7">
-                    <PostSlider title={'Recipes'} posts={[mainPostData, mainPostData, mainPostData, mainPostData, mainPostData, mainPostData]} />
-                </Section>
+                {/* <Section spacingTop="3" spacingBottom="7">
+                    <PostSlider title={'Recipes'} posts={data.mainPost.edges} />
+                </Section> */}
 
                 {/* Featured section */}
-                <Section spacingTop="5" spacingBottom="6" whiteGrey>
+                {/* <Section spacingTop="5" spacingBottom="6" whiteGrey>
                     <FeaturedTopic topic={{ 'smallTitle': 'Featured topic small title', 'title': 'Featured topic description sentence text' }} posts={[mainPostData, mainPostData]} />
-                </Section>
+                </Section> */}
 
                 {/* Horizontal post list section */}
-                <Section spacingTop="6" spacingBottom="6">
+                {/* <Section spacingTop="6" spacingBottom="6">
                     <GridContainer>
                         <GridRow>
                             <GridCol cols="4">
@@ -44,17 +53,12 @@ const IndexPage = ({ data }) => {
                             </GridCol>
                         </GridRow>
                     </GridContainer>
-                </Section>
-
-                {/* Parallax topic section */}
-                {/* <Section>
-                    <ParallaxFeaturedTopic topic={{ recipeCategoryData }} />
                 </Section> */}
 
                 {/* Main post */}
-                <Section spacingBottom="6">
+                {/* <Section spacingBottom="6">
                     <FeaturedPost post={mainPostData} />
-                </Section>
+                </Section> */}
             </Page>
         </>
     )
@@ -64,66 +68,37 @@ export default IndexPage
 
 export const pageQuery = graphql`
     query HomePagequery {
-        mainPost:allSanityRecipe(limit: 1, sort: {fields: _createdAt, order: DESC}) {
+        recipesData: allSanityRecipe(limit: 6, sort: {order: ASC, fields: postMeta___date}) {
             edges {
                 node {
-                    id,
-                    _type,
-                    title,
                     postMeta {
-                        slug {
-                            current
-                        },
-                        category {
-                        ... on SanityRecipeCategory {
-                            id
-                            categoryOptions {
-                            singleName
-                            }
-                            slug {
-                            current
-                            }
-                        }
-                        }
-                    }
-                    featuredImage {
-                    alt,
-                    asset {
-                        fluid {
-                        ...GatsbySanityImageFluid_noBase64
-                        }
-                    }  
-                    }
-                    recipeIntro,
-                    _createdAt
-                }
+            slug {
+              current
             }
-        },
-        recipeCategory:allSanityRecipeCategory {
-            edges {
-                node {
-                    title
-                    slug {
-                        current
-                    }
-                    seoDecsription
-                    categoryOptions {
-                        coverPhoto {
-                            asset {
-                                fluid(maxWidth: 1920) {
-                                    base64
-                                    aspectRatio
-                                    src
-                                    srcSet
-                                    srcWebp
-                                    srcSetWebp
-                                    sizes
-                                }
-                            }
-                        }
-                    }
+            category {
+              ... on SanityRecipeCategory {
+                id
+                slug {
+                  current
+                }
+                categoryOptions {
+                  singleName
+                }
+              }
+            }
+          }
+          recipeIntro
+          title
+          featuredImage {
+            asset {
+              id
+              fluid {
+                ...GatsbySanityImageFluid_noBase64
+              }
+            }
+          }
                 }
             }
         }
     }
-    `
+`

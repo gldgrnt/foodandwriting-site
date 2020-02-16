@@ -102,7 +102,7 @@ exports.createPages = async ({ graphql, actions }) => {
         },
     ]
 
-    // Loop
+    // Post page loop
     postPages.forEach((page) => {
         let { template, edges} = page
 
@@ -134,6 +134,7 @@ exports.createPages = async ({ graphql, actions }) => {
         },
     ]
     
+    // Category loop
     categoryPages.forEach(({template, category}) => {
 
         createPage({

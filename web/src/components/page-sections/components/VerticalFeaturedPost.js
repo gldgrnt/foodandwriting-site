@@ -11,12 +11,12 @@ export const VerticalFeaturedPost = ({ post: {title, postMeta, featuredImage} })
 
     // Slug
     const slug = getPostSlug(postMeta)
-
+    
     return (
         <Article>
             <StyledLink to={slug}>
                 <ImageWrapper>
-                    <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={title} />
+                    <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title}/>
                 </ImageWrapper>
 
                 <CaptionWrapper>
@@ -28,8 +28,12 @@ export const VerticalFeaturedPost = ({ post: {title, postMeta, featuredImage} })
     )
 }
 
-VerticalFeaturedPost.propTypes = {
-    post: PropTypes.object.isRequired
+VerticalFeaturedPost.prototypes = {
+    post: PropTypes.shape({
+        postMeta: PropTypes.object.isRequired,
+        title: PropTypes.string.isRequired,
+        featuredImage: PropTypes.object.isRequired
+    }).isRequired,
 }
 
 const Article = styled.article`
@@ -77,18 +81,20 @@ const StyledLink = styled(Link)`
 `
 
 const ImageWrapper = styled.div`
+    height: 500px;
+
+    ${responsiveBreakpointDown('desktop', `height: 420px;`)}
+    ${responsiveBreakpointDown('laptop', `height: 360px;`)}
+    ${responsiveBreakpointDown('tablet', `height: 300px;`)}
+    ${responsiveBreakpointDown('mobile', `height: 360px;`)}
 
     > * {
         display: block;
         width: 100%;
-        height: 500px;
+        height: 100%;
         object-fit: cover;
         margin-bottom: 0;
-
-        ${responsiveBreakpointDown('desktop', `height: 420px;`)}
-        ${responsiveBreakpointDown('laptop', `height: 360px;`)}
-        ${responsiveBreakpointDown('tablet', `height: 300px;`)}
-        ${responsiveBreakpointDown('mobile', `height: 360px;`)}
+        background: ${props => props.theme.color.whiteGrey};
     }
 `
 

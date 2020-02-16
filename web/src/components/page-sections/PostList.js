@@ -7,25 +7,34 @@ import { SmallCaps, InternalLink } from '../ui'
 
 export const PostList = ({ category, posts }) => {
 
+    const { title, slug, categoryOptions: { viewAllName } } = category
 
     return (
         <>
-            <SmallCaps as="h2" size="regular" color="black">{category.title}</SmallCaps>
+            <SmallCaps as="h2" size="regular" color="black">{title}</SmallCaps>
 
             <PostWrapper>
-                <HorizontalPost post={posts[0]}></HorizontalPost>
-                <HorizontalPost post={posts[0]}></HorizontalPost>
-                <HorizontalPost post={posts[0]}></HorizontalPost>
+                { posts && posts.map(({ node }) => (
+                   <HorizontalPost key={node.id} post={node}></HorizontalPost> 
+                ))}
             </PostWrapper>
 
-            <InternalLink to="/culture" secondary>View all {category.title} posts</InternalLink>
+            <InternalLink to={`/${slug.current}`} secondary>View all {viewAllName}</InternalLink>
         </>
     )
 }
 
 PostList.prototypes = {
-    category: PropTypes.object,
-    posts: PropTypes.array
+    category: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        slug: PropTypes.shape({
+            current: PropTypes.string.isRequired
+        }),
+        categoryObject: PropTypes.shape({
+            viewAllName: PropTypes.string.isRequired,
+        })
+    }).isRequired,
+    posts: PropTypes.array.isRequired
 }
 
 const PostWrapper = styled.div`
@@ -34,6 +43,4 @@ const PostWrapper = styled.div`
     > * {
         margin-bottom: 40px;
     }
-
-
 `

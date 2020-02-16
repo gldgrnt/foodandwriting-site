@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import Img from 'gatsby-image'
+import Img from 'gatsby-image/withIEPolyfill'
 
 import { SmallCaps } from '../../ui'
 import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
@@ -15,8 +15,9 @@ export const VerticalSliderPost = ({ post: {postMeta, title, featuredImage} }) =
         <Article>
             <LinkWrapper href={slug}>
                 <ImageWrapper>
-                    <Img fluid={featuredImage.asset.fluid} alt="placeholder" />
+                    <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title} />
                 </ImageWrapper>
+
                 <Title>{title}</Title>
                 <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
             </LinkWrapper>
@@ -45,7 +46,7 @@ const Article = styled.article`
 
     ${responsiveBreakpointDown('mobile', `
         max-width: none;
-        width: calc(100% - 40px);
+        width: calc(100% - 30px);
         margin: auto;
     `)}
 `
@@ -78,7 +79,8 @@ const ImageWrapper = styled.div`
     position: relative;
     padding-top: 120%;
     margin-bottom: 20px;
-
+    background: ${props => props.theme.color.whiteGrey};
+    
     ${responsiveBreakpointDown('mobile', `padding-top: 140%;`)}
 
     > * {

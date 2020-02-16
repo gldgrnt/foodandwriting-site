@@ -4,6 +4,7 @@ import { Link } from 'gatsby'
 
 import { GridContainer, GridRow, GridCol } from '../layout'
 import { ReducedLogo } from './components'
+import { responsiveBreakpointDown } from '../../utils'
 
 
 export const Footer = () => {
@@ -18,11 +19,11 @@ export const Footer = () => {
         <StyledFooter>
             <GridContainer>
                 <GridRow align="center">
-                    <GridCol cols="4">
+                    <GridCol cols={{'monitor' : 4, 'mobile': 8}}>
                         <ReducedLogo />
                     </GridCol>
 
-                    <GridCol cols="4">
+                    <GridCol cols={{'monitor' : 4, 'mobile': 8}}>
                         <LinksWrapper>
                             {footerLinks.map(footerLink => {
                                 let attr = footerLink.external 
@@ -65,4 +66,10 @@ const FooterLink = styled(Link)`
     &:not(:last-child) {
         margin-right: 60px;
     }
+
+    ${responsiveBreakpointDown('mobile', `
+        &:not(:last-child) {
+            margin-right: 0;
+        }
+    `)}
 `

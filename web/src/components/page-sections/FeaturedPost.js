@@ -57,7 +57,7 @@ const Article = styled.article`
     `)}
 
     ${responsiveBreakpointDown('tablet', `
-        min-height: 450px;
+        min-height: 440px;
         background: transparent;
     `)}
 `

@@ -34,7 +34,7 @@ Toggle.propTypes = {
 const IconLink = styled.button`
     display: flex;
     align-items: center;
-    padding: 0 25px;
+    padding: 0 ${props => props.theme.grid.spacing}px;
     text-decoration: none;
     background: ${props => props.active ? props.theme.color.whiteGrey : 'white'};
     color: ${props => props.theme.color.black};

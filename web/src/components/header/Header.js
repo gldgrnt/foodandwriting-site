@@ -116,7 +116,7 @@ const NavigationWrapper = styled.div`
 const TogglesWrapper = styled.div`
     display: flex;
     padding-left: 60px;
-    margin-right: -25px;
+    margin-right: -${props => props.theme.grid.spacing}px;
 
     > * {
         height: 100%;

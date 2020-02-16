@@ -45,7 +45,9 @@ export const PostSlider = ({ title, posts }) => {
                 breakpoint: 576,
                 settings: {
                     slidesToShow: 1,
+                    slidesToScroll: 1,
                     centerMode: true,
+                    centreModePadding: 50,
                     infinite: true,
                 }
             },
@@ -163,15 +165,12 @@ const StyledGridContainer = styled(GridContainer)`
 const StyledSlider = styled(Slider)`
     margin-right: 80px;
 
-    ${props => responsiveBreakpointDown('desktop', `
-        margin-right: -80px;
-    `)}
-
-    ${props => responsiveBreakpointDown('tablet', `
-        margin-right: 0;
-    `)}
+    ${responsiveBreakpointDown('desktop', `margin-right: -80px;`)}
+    ${responsiveBreakpointDown('tablet', `margin-right: 0;`)}
 
     .slick-list {
         overflow: visible;
+
+        ${responsiveBreakpointDown('mobile', `padding: 0 50px;`)}
     }
 `

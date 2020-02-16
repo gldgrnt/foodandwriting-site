@@ -59,7 +59,6 @@ const StyledCol = styled.div`
     position: relative;
     padding-left: ${props => props.theme.grid.spacing}px;
     padding-right: ${props => props.theme.grid.spacing}px;
-    flex: 1;
 
-    ${props => responsiveStylesFromProp(calculateCols(props.cols, props.theme.grid.columns), 'max-width')}
+    ${props => responsiveStylesFromProp(calculateCols(props.cols, props.theme.grid.columns), 'flex-basis')}
 `

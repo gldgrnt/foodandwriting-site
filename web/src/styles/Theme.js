@@ -19,7 +19,7 @@ export const themeVariables = {
         mediumGrey: '#777777',
         darkGrey: '#5A5A5A',
         yellow: '#FFD91F',
-        blackOverlay: 'rgba(17, 17, 17, 0.75)'
+        blackOverlay: 'rgba(37, 37, 37, 0.75)'
     },
     font: {
         family: {
@@ -53,19 +53,19 @@ export const themeVariables = {
                 minScreenWidth: 1600,
             },
             desktop: {
-                maxScreenWidth: 1599.999,
+                maxScreenWidth: 1599,
                 minScreenWidth: 1200,
             },
             laptop: {
-                maxScreenWidth: 1199.999,
+                maxScreenWidth: 1199,
                 minScreenWidth: 1000,
             },
             tablet: {
-                maxScreenWidth: 999.999,
+                maxScreenWidth: 999,
                 minScreenWidth: 768,
             },
             mobile: {
-                maxScreenWidth: 767.99,
+                maxScreenWidth: 767,
                 minScreenWidth: false,
             },
         }

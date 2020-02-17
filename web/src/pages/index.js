@@ -30,17 +30,17 @@ const IndexPage = ({ data: { recipesData, featuredTopicData, blogListCategoryDat
                 </Section>
 
                 {/* Post slider */}
-                <Section spacingTop="3" spacingBottom="4">
+                <Section spacingTop={{'monitor': 3, 'tablet': 2}} spacingBottom={{'monitor': 4, 'tablet': 2}}>
                     <PostSlider title={'Recipes'} posts={sliderRecipes} />
                 </Section>
 
                 {/* Featured section */}
-                <Section spacingTop="4" spacingBottom="4" whiteGrey>
+                <Section spacingTop={{'monitor': 4, 'tablet': 3}} spacingBottom={{'monitor': 4, 'tablet': 3}} whiteGrey>
                     <FeaturedTopic title={featuredTopicTitle} subtitle={featuredTopicSubtitle} posts={featuredTopicPosts} />
                 </Section>
 
                 {/* Horizontal post list section */}
-                <Section spacingTop="4" spacingBottom="4">
+                <Section spacingTop={{'monitor': 4, 'tablet': 3}} spacingBottom={{'monitor': 4, 'tablet': 3}}>
                     <GridContainer>
                         <GridRow>
                             {/* Blog */}

@@ -60,6 +60,10 @@ const Article = styled.article`
         min-height: 500px;
         background: transparent;
     `)}
+
+    ${responsiveBreakpointDown('mobile', `
+        min-height: calc(100vh - 65px);
+    `)}
 `
 
 const ImageLinkWrapper = styled(Link)`
@@ -110,6 +114,10 @@ const CaptionContainer = styled.div`
         padding: 60px;
         text-align: center;
         background: ${props.theme.color.blackOverlay};
+    `)}
+
+    ${responsiveBreakpointDown('mobile', `
+        padding: 60px 40px;
     `)}
 `
 

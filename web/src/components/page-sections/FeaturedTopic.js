@@ -12,7 +12,7 @@ export const FeaturedTopic = ({ title, subtitle, posts }) => {
     return (
         <StyledGridContainer wrap="wrap">
             <GridRow justify="center">
-                <GridCol cols={{ 'monitor': 4, 'desktop': 6 }}>
+                <GridCol cols={{ 'monitor': 4, 'desktop': 6, 'tablet': 8 }}>
                     <HeaderWrapper>
                         <SmallCaps as="p" size="small">{subtitle}</SmallCaps>
                         <h2>{title}</h2>
@@ -47,6 +47,10 @@ const HeaderWrapper = styled.div`
     margin-bottom: 50px;
 
     ${responsiveBreakpointDown('mobile', `margin-bottom: 30px;`)}
+
+    > *:first-child {
+        ${responsiveBreakpointDown('tablet', `margin-bottom: 10px;`)}
+    }
         
     > *:last-child{
         margin: 0;
@@ -61,7 +65,7 @@ const PostWrapper = styled.div`
         flex-wrap: wrap;
         
         > *:not(:last-child) {
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
     `)}
 

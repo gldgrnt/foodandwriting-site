@@ -46,9 +46,8 @@ export const PostSlider = ({ title, posts }) => {
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    centerMode: true,
-                    centreModePadding: 50,
                     infinite: true,
+                    touchThreshold: 4
                 }
             },
         ]
@@ -167,10 +166,9 @@ const StyledSlider = styled(Slider)`
 
     ${responsiveBreakpointDown('desktop', `margin-right: -80px;`)}
     ${responsiveBreakpointDown('tablet', `margin-right: 0;`)}
+    ${responsiveBreakpointDown('mobile', `margin: 0 15px;`)}
 
     .slick-list {
         overflow: visible;
-
-        ${responsiveBreakpointDown('mobile', `padding: 0 50px;`)}
     }
 `

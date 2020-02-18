@@ -47,37 +47,42 @@ export const Header = () => {
     }
 
     if (dropdownState.isSearchOpen) activeDropdown = <SearchContainer closeDropdown={closeDropdown} />
-    else if (dropdownState.isMenuOpen) activeDropdown = <span>Menu dropdown</span>
-
+    else if (dropdownState.isMenuOpen) activeDropdown = <span>Menu dropdown coming soon...</span>
 
 
     return (
         <StyledHeader>
-            <GridContainer align="stretch" justify="space-between" removeMobilePadding={true}>
-                <LogoWrapper>
-                    <Logo />
-                </LogoWrapper>
+            <HeaderUpperWrapper>
+                <GridContainer align="stretch" justify="space-between" removeMobilePadding={true}>
+                    <LogoWrapper>
+                        <Logo />
+                    </LogoWrapper>
 
-                <NavigationWrapper>
-                    <StyledNavigation />
-                </NavigationWrapper>
+                    <NavigationWrapper>
+                        <StyledNavigation />
+                    </NavigationWrapper>
 
-                <TogglesWrapper>
-                    <Toggle handler={() => handleToggleClick('isSearchOpen')} active={!!dropdownState.isSearchOpen}>
-                        <FiSearch />
-                    </Toggle>
+                    <TogglesWrapper>
+                        <Toggle handler={() => handleToggleClick('isSearchOpen')} active={!!dropdownState.isSearchOpen}>
+                            <FiSearch />
+                        </Toggle>
 
-                    <Toggle handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
-                        <FiMenu />
-                    </Toggle>
-                </TogglesWrapper>
-            </GridContainer >
+                        <Toggle handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
+                            <FiMenu />
+                        </Toggle>
+                    </TogglesWrapper>
+                </GridContainer >
+            </HeaderUpperWrapper>
 
             <DropdownContainer isDropdownOpen={isDropdownOpen} maxHeight={dropdownInnerHeight}>
                 {isDropdownOpen &&
                     <div ref={dropdownInner}>
                         <GridContainer>
-                            {activeDropdown}
+                            {activeDropdown && 
+                                <DropdownWrapper>
+                                    {activeDropdown}
+                                </DropdownWrapper>
+                            }
                         </GridContainer>
                     </div>
                 }
@@ -92,6 +97,12 @@ const StyledHeader = styled.header`
     top: 0;
     z-index: 50;
     background: white;
+`
+
+const HeaderUpperWrapper = styled.div`
+    ${responsiveBreakpointDown('tablet', `
+        border-bottom: 1px solid #e6e6e6; 
+    `)}
 `
 
 const LogoWrapper = styled.div`
@@ -141,8 +152,13 @@ const DropdownContainer = styled.div`
     background: ${props => props.theme.color.whiteGrey};
     transition: height ${props => props.theme.transition.fast};
     /* min-height: ${props => props.isDropdownOpen ? props.maxHeight + 'px' : '0'}; */
+`
 
-    & > * {
-        padding: 40px 0;
-    }
+const DropdownWrapper = styled.div`
+    padding: 40px 0;
+
+    ${responsiveBreakpointDown('tablet', `
+        padding: 30px 0;
+        height: 100vh;
+    `)}
 `

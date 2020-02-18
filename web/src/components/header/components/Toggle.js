@@ -56,5 +56,9 @@ const IconLink = styled.button`
     ${responsiveBreakpointDown('mobile', `
         padding-top: 25px;
         padding-bottom: 25px;
+
+        svg {
+            stroke-width: 3px;
+        }
     `)}
 `

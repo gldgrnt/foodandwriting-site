@@ -2,8 +2,8 @@ import React from "react"
 import { graphql } from 'gatsby'
 
 import { SEO } from '../utils'
-import { PostHero, PostContent } from '../components/post-sections'
-import { Page, Section, GridContainer } from '../components/layout'
+import { PostHero, PostBlockContent, PostMainContent } from '../components/post-sections'
+import { Page, Section } from '../components/layout'
 
 export default ({ data }) => {
 
@@ -13,15 +13,13 @@ export default ({ data }) => {
         <>
             <SEO title={`${title} recipe`} description={ seoDescription } />
             <Page>
-                <Section spacingBottom="5">
+                <Section>
                     <PostHero featuredImage={featuredImage} subtitle={postMeta.category.categoryOptions.singleName} title={title} />
                 </Section>
 
-                <Section spacingBottom="5">
-                    <GridContainer>
-                        <PostContent content={_rawContent}/>
-                    </GridContainer>
-                </Section>
+                <PostMainContent>
+                    <PostBlockContent content={_rawContent}/>
+                </PostMainContent>
             </Page>
         </>
     )

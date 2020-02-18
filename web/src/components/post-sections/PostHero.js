@@ -5,6 +5,7 @@ import Img from 'gatsby-image'
 
 import { SmallCaps } from '../ui'
 import { FiArrowDown } from 'react-icons/fi'
+import { responsiveBreakpointDown } from '../../utils'
 
 export const PostHero = ({ featuredImage, subtitle, title }) => {
 
@@ -46,9 +47,15 @@ PostHero.propTypes = {
 }
 
 const HeroWrapper = styled.div`
+    position: relative;
     height: 85vh;
     min-height: 500px;
     display: flex;
+    overflow: hidden;
+
+    ${responsiveBreakpointDown('mobile', `
+        height: calc(90vh - 65px);
+    `)}
 
     & > * {
         flex-basis: 50%;
@@ -58,6 +65,22 @@ const HeroWrapper = styled.div`
 const ImageWrapper = styled.div`
     position: relative;
     background: ${props => props.theme.color.whiteGrey};
+
+    ${responsiveBreakpointDown('tablet', `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        flex-basis: auto;
+    `)}
+
+    ${props => responsiveBreakpointDown('mobile', `
+        width: calc(100% - ${props.theme.grid.spacing * 2}px);
+        left: 0;
+        width: 100%;
+    `)}
 
     > * {
         position: absolute !important;
@@ -77,6 +100,24 @@ const CaptionWrapper = styled.div`
     align-items: center;
     background: ${props => props.theme.color.whiteGrey};
     text-align: center;
+
+    ${props => responsiveBreakpointDown('tablet', `
+        position: relative;
+        z-index: 2;
+        flex-basis: 100%;
+        padding: 60px;
+        text-align: center;
+        background: ${props.theme.color.blackOverlay};
+        color: white;
+
+        > * {
+            color: inherit !important;
+        }
+    `)}
+
+    ${responsiveBreakpointDown('mobile', `
+        padding: 60px 30px;
+    `)}
 `
 
 const Title = styled.h1`

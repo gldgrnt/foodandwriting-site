@@ -1,8 +1,9 @@
 import React from 'react'
 import BlockContent from '@sanity/block-content-to-react'
 import styled from 'styled-components'
+import Proptypes from 'prop-types'
 
-export const PostContent = ({ content }) => {
+export const PostBlockContent = ({ content }) => {
 
     // Serializers
     const serializers = {
@@ -29,6 +30,10 @@ export const PostContent = ({ content }) => {
             <BlockContent blocks={content} serializers={serializers} />
         </ContentWrapper>
     )
+}
+
+PostBlockContent.propTypes = {
+    content: Proptypes.array.isRequired
 }
 
 const ContentWrapper = styled.article`

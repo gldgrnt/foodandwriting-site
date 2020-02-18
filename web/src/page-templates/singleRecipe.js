@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from 'gatsby'
 import styled from 'styled-components'
 
-import { SEO } from '../utils'
+import { SEO, responsiveBreakpointDown } from '../utils'
 import { PostHero } from '../components/post-sections'
 import { Page, Section, GridContainer, GridRow, GridCol } from '../components/layout'
 import { SmallCaps, Divider } from '../components/ui'
@@ -15,47 +15,50 @@ export default ({ data }) => {
         <>
             <SEO title={`${title} recipe`} description={seoDescription || recipeIntro} />
             <Page>
-                <Section spacingBottom="5">
+                <Section>
                     <PostHero featuredImage={featuredImage} subtitle={postMeta.category.categoryOptions.singleName} title={title} />
                 </Section>
 
-                <Section spacingBottom="5">
+                <Section spacingTop={{'monitor': 5, 'laptop': 4, 'tablet': 3}} spacingBottom={{'monitor': 5, 'laptop': 4, 'tablet': 3}}>
                     <RecipeWrapper>
                         <GridContainer wrap="wrap">
                             <GridRow justify="center">
-                                <GridCol cols="2">
+                                <GridCol cols={{'monitor': 2, 'tablet': 8}}>
                                     <SmallCaps size="regular" color="darkGrey">This recipe</SmallCaps>
-                                    <UnstyledList>
+                                    <UnstyledList responsive>
                                         {recipeInfo.serves && <li>Serves: {recipeInfo.serves}</li>}
                                         {recipeInfo.difficulty && <li>Difficulty: {recipeInfo.difficulty}</li>}
                                         {recipeInfo.readyIn && <li>Ready in: {recipeInfo.readyIn}</li>}
                                     </UnstyledList>
                                 </GridCol>
 
-                                <GridCol cols={{'monitor': 4, 'desktop': 5}}>
-                                    <Intro>{recipeIntro}</Intro>
+                                <GridCol cols={{'monitor': 4, 'desktop': 5, 'tablet': 8}}>
+                                    <Section as="div" spacingBottom={{'monitor': 0, tablet: 1}}>
+                                        <Intro>{recipeIntro}</Intro>
+                                    </Section>
                                 </GridCol>
                             </GridRow>
 
                             <GridRow justify="center">
-                                <GridCol cols={{'monitor': 6, 'desktop': 7}}>
+                                <GridCol cols={{'monitor': 6, 'desktop': 7, 'tablet': 8}}>
                                     <Divider />
                                 </GridCol>
                             </GridRow>
 
                             <GridRow justify="center">
-                                <GridCol cols="2">
-                                    <SmallCaps size="regular" color="darkGrey">Shopping list</SmallCaps>
-                                    <UnstyledList>
-                                        {shoppingList.map(listItem => {
-                                            let { amount, itemSearch } = listItem
-
-                                            return <li key={itemSearch + amount}>{`${itemSearch}, ${amount}`}</li>
-                                        })}
-                                    </UnstyledList>
+                                <GridCol cols={{'monitor': 2, 'tablet': 8}}>
+                                    <Section as="div" spacingTop={{'monitor': 0, tablet: 1}} spacingBottom={{'monitor': 0, tablet: 1}}>
+                                        <SmallCaps size="regular" color="darkGrey">Shopping list</SmallCaps>
+                                        <UnstyledList responsive>
+                                            {shoppingList.map(listItem => {
+                                                let { amount, itemSearch } = listItem
+                                                return <li key={itemSearch + amount}>{`${itemSearch}, ${amount}`}</li>
+                                            })}
+                                        </UnstyledList>
+                                    </Section>
                                 </GridCol>
 
-                                <GridCol cols={{'monitor': 4, 'desktop': 5}}>
+                                <GridCol cols={{'monitor': 4, 'desktop': 5, 'tablet': 8}}>
                                     <SmallCaps size="regular" color="darkGrey">Method</SmallCaps>
                                     <UnstyledList>
                                         {steps.map((step, index) => (
@@ -84,6 +87,22 @@ const UnstyledList = styled.ul`
     margin-top: 20px;
     list-style-type: none;
     margin-left: 0;
+
+    ${props => props.responsive && responsiveBreakpointDown('tablet', `
+        display: flex;
+        flex-wrap: wrap;
+
+        > li {
+            flex-basis: 50%;
+
+        }
+    `)}
+
+    ${responsiveBreakpointDown('mobile', `
+        > li {
+            flex-basis: 100%;
+        }
+    `)}
 `
 
 const Intro = styled.p`

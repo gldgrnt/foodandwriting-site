@@ -39,6 +39,7 @@ export const PostSlider = ({ title, posts }) => {
                     slidesToScroll: 1,
                     infinite: true,
                     centerMode: true,
+                    touchThreshold: 5
                 }
             },
             {

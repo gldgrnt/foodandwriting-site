@@ -43,10 +43,20 @@ export const Footer = () => {
 const StyledFooter = styled.footer`
     padding: 40px 0;
     background: ${props => props.theme.color.whiteGrey};
+
+    ${responsiveBreakpointDown('tablet', `padding: 30px 0;`)}
 `
 
 const LinksWrapper = styled.div`
     text-align: right;
+
+    ${responsiveBreakpointDown('tablet', `
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+    `)}
+
+    ${responsiveBreakpointDown('mobile', `margin-top: 25px;`)}
 `
 
 const FooterLink = styled(Link)`
@@ -67,9 +77,15 @@ const FooterLink = styled(Link)`
         margin-right: 60px;
     }
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown('tablet', `
         &:not(:last-child) {
             margin-right: 0;
         }
     `)}
+
+    /* ${responsiveBreakpointDown('mobile', `
+        &:not(:last-child) {
+            margin-right: 0;
+        }
+    `)} */
 `

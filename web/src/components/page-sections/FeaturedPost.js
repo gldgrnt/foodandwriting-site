@@ -62,7 +62,7 @@ const Article = styled.article`
     `)}
 
     ${responsiveBreakpointDown('mobile', `
-        min-height: calc(100vh - 65px);
+        min-height: calc(90vh - 65px);
     `)}
 `
 
@@ -70,14 +70,6 @@ const ImageLinkWrapper = styled(Link)`
     position: relative;
     overflow: hidden;
     flex-basis: 50%;
-        
-    > * {
-        position: absolute !important;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-    }
 
     ${props => responsiveBreakpointDown('tablet', `
         position: absolute;
@@ -93,6 +85,14 @@ const ImageLinkWrapper = styled(Link)`
         left: 0;
         width: 100%;
     `)}
+        
+    > * {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
 `
 
 const CaptionContainer = styled.div`
@@ -117,7 +117,7 @@ const CaptionContainer = styled.div`
     `)}
 
     ${responsiveBreakpointDown('mobile', `
-        padding: 60px 40px;
+        padding: 60px 30px;
     `)}
 `
 
@@ -156,6 +156,7 @@ const CaptionTitle = styled.h2`
     font-size: ${props => props.theme.font.size.giant};
 
     ${props =>  responsiveBreakpointDown('desktop', `font-size: ${props.theme.font.size.huge};`)}
+    ${props =>  responsiveBreakpointDown('tablet', `font-size: ${props.theme.font.size.giant};`)}
 `
 
 const CaptionText = styled.p`

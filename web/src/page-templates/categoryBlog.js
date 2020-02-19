@@ -2,11 +2,16 @@ import React from 'react'
 import { graphql } from 'gatsby'
 
 import { Page, PageCategory } from '../components/layout'
+import { SEO } from '../utils'
 
 export default ({ data: { categoryData, postData } }) => {
-
+    
+    const { title, seoDescription } = categoryData
+    
     return (
         <>
+            <SEO description={seoDescription} title={title} />
+            
             <Page>
                 <PageCategory categoryData={categoryData} postData={postData} postSizePercentage={67} />
             </Page>

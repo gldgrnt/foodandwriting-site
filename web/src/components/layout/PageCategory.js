@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import { Section, GridContainer, GridRow, GridCol } from '../layout'
-import { SEO, responsiveBreakpointDown } from '../../utils'
+import { responsiveBreakpointDown } from '../../utils'
 import { ArchivePost } from '../page-sections'
 import { Button } from '../ui'
 
@@ -11,7 +11,7 @@ export const PageCategory = ({ categoryData, postData, postSizePercentage }) => 
 
     const [posts, setPosts] = useState(postData.nodes)
 
-    const { title, seoDescription, categoryOptions: {viewAllName} } = categoryData
+    const { title, categoryOptions: {viewAllName} } = categoryData
     const { totalCount } = postData
 
     // Load more logic
@@ -19,8 +19,6 @@ export const PageCategory = ({ categoryData, postData, postSizePercentage }) => 
 
     return (
         <>
-            <SEO description={seoDescription} title={title} />
-
             <Section spacingTop={{'monitor': 3, 'tablet': 2}} spacingBottom={{'monitor': 4, 'tablet': 3}}>
                 <GridContainer>
                     <GridRow>

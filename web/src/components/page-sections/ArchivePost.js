@@ -66,7 +66,7 @@ const ImageWrapper = styled.div`
     position: relative;
     background: ${props => props.theme.color.whiteGrey};
     padding-top: ${props => props.imgHeight}%;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     
     > * {
         position: absolute !important;
@@ -78,6 +78,7 @@ const ImageWrapper = styled.div`
 `
 
 const Title = styled.h2`
-    font-size: ${props => props.theme.font.size.increased};
-    margin-bottom: 10px;
+    font-size: ${props => props.theme.font.size.medium};
+    margin-bottom: 15px;
+    padding-right: 30px;
 `

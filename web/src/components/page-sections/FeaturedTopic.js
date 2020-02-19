@@ -15,7 +15,7 @@ export const FeaturedTopic = ({ title, subtitle, posts }) => {
                 <GridCol cols={{ 'monitor': 4, 'desktop': 6, 'tablet': 8 }}>
                     <HeaderWrapper>
                         <SmallCaps as="p" size="small">{subtitle}</SmallCaps>
-                        <h2>{title}</h2>
+                        <Title>{title}</Title>
                     </HeaderWrapper>
                 </GridCol>
             </GridRow>
@@ -52,9 +52,13 @@ const HeaderWrapper = styled.div`
         ${responsiveBreakpointDown('tablet', `margin-bottom: 10px;`)}
     }
         
-    > *:last-child{
+    > *:last-child {
         margin: 0;
     }
+`
+
+const Title = styled.h2`
+    font-size: ${props => props.theme.font.size.giant};
 `
 
 const PostWrapper = styled.div`

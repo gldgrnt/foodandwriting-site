@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import { PropTypes } from 'prop-types'
 
 export const Theme = ({ children }) => (
-    <ThemeProvider theme={() => themeVariables}>{children}</ThemeProvider>
+    <ThemeProvider theme={themeVariables}>{children}</ThemeProvider>
 )
 
 Theme.propTypes = {

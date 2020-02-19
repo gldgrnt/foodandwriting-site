@@ -11,7 +11,6 @@ export const FeaturedTopic = ({ title, subtitle, posts }) => {
 
     return (
         <GridContainer wrap="wrap">
-            <GridContainerInner>
                 <GridRow justify="center">
                     <GridCol cols={{ 'monitor': 4, 'desktop': 6, 'tablet': 8 }}>
                         <HeaderWrapper>
@@ -30,7 +29,6 @@ export const FeaturedTopic = ({ title, subtitle, posts }) => {
                         </PostWrapper>
                     </GridCol>
                 </GridRow>
-            </GridContainerInner>
         </GridContainer>
     )
 }
@@ -41,11 +39,8 @@ FeaturedTopic.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
-const GridContainerInner = styled.div`
-    text-align: center;
-`
-
 const HeaderWrapper = styled.div`
+    text-align: center;
     margin-bottom: 50px;
 
     ${responsiveBreakpointDown('mobile', `margin-bottom: 30px;`)}

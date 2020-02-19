@@ -67,30 +67,28 @@ export const PostSlider = ({ title, posts }) => {
 
     return (
         <StyledWrapper>
-            <GridContainer>
-                <div>
-                    <UpperWrapper>
-                        <TitleWrapper>
-                            <SmallCaps as="h2" size="regular" color="black">{title}</SmallCaps>
+            <GridContainer block>
+                <UpperWrapper>
+                    <TitleWrapper>
+                        <SmallCaps as="h2" size="regular" color="black">{title}</SmallCaps>
 
-                            <InternalLink to="/recipes" secondary>View all</InternalLink>
-                        </TitleWrapper>
+                        <InternalLink to="/recipes" secondary>View all</InternalLink>
+                    </TitleWrapper>
 
-                        <ButtonWrapper>
-                            <StyledButton onClick={prevSlide} disabled={activeSlide === 0}>
-                                <FiArrowLeft />
-                            </StyledButton>
+                    <ButtonWrapper>
+                        <StyledButton onClick={prevSlide} disabled={activeSlide === 0}>
+                            <FiArrowLeft />
+                        </StyledButton>
 
-                            <StyledButton onClick={nextSlide} disabled={activeSlide + 2 === slideCount - 1}>
-                                <FiArrowRight />
-                            </StyledButton>
-                        </ButtonWrapper>
-                    </UpperWrapper>
+                        <StyledButton onClick={nextSlide} disabled={activeSlide + 2 === slideCount - 1}>
+                            <FiArrowRight />
+                        </StyledButton>
+                    </ButtonWrapper>
+                </UpperWrapper>
 
-                    <StyledSlider ref={r => sliderRef = r} {...settings}>
-                        {posts.map((post, index) => <VerticalSliderPost key={index} post={post.node} />)}
-                    </StyledSlider>
-                </div>
+                <StyledSlider ref={r => sliderRef = r} {...settings}>
+                    {posts.map((post, index) => <VerticalSliderPost key={index} post={post.node} />)}
+                </StyledSlider>
             </GridContainer>
         </StyledWrapper>
     )
@@ -159,10 +157,6 @@ const StyledButton = styled.button`
         color: ${props => props.disabled ? props.theme.color.lightGrey : props.theme.color.black};
     }
 `
-
-// const StyledGridContainer = styled(GridContainer)`
-//     display: block;
-// `
 
 const StyledSlider = styled(Slider)`
     margin-right: 80px;

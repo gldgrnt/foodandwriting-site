@@ -15,7 +15,7 @@ GridContainer.propTypes = {
 
 const StyledContainer = styled.div`
     position: relative;
-    display: flex;
+    display: ${props => props.block ? 'block' : 'flex'};
     margin: auto;
     padding-left: ${props => props.theme.grid.spacing}px;
     padding-right: ${props => props.theme.grid.spacing}px;

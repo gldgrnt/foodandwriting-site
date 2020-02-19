@@ -10,26 +10,28 @@ import { responsiveBreakpointDown } from '../../utils'
 export const FeaturedTopic = ({ title, subtitle, posts }) => {
 
     return (
-        <StyledGridContainer wrap="wrap">
-            <GridRow justify="center">
-                <GridCol cols={{ 'monitor': 4, 'desktop': 6, 'tablet': 8 }}>
-                    <HeaderWrapper>
-                        <SmallCaps as="p" size="small">{subtitle}</SmallCaps>
-                        <Title>{title}</Title>
-                    </HeaderWrapper>
-                </GridCol>
-            </GridRow>
+        <GridContainer wrap="wrap">
+            <GridContainerInner>
+                <GridRow justify="center">
+                    <GridCol cols={{ 'monitor': 4, 'desktop': 6, 'tablet': 8 }}>
+                        <HeaderWrapper>
+                            <SmallCaps as="p" size="small">{subtitle}</SmallCaps>
+                            <Title>{title}</Title>
+                        </HeaderWrapper>
+                    </GridCol>
+                </GridRow>
 
-            <GridRow justify="center">
-                <GridCol cols={{ 'monitor': 7, 'desktop': 8 }}>
-                    <PostWrapper>
-                        {posts.map((post, index) => {
-                            return <VerticalFeaturedPost key={index} post={post}></VerticalFeaturedPost>
-                        })}
-                    </PostWrapper>
-                </GridCol>
-            </GridRow>
-        </StyledGridContainer>
+                <GridRow justify="center">
+                    <GridCol cols={{ 'monitor': 7, 'desktop': 8 }}>
+                        <PostWrapper>
+                            {posts.map((post, index) => {
+                                return <VerticalFeaturedPost key={index} post={post}></VerticalFeaturedPost>
+                            })}
+                        </PostWrapper>
+                    </GridCol>
+                </GridRow>
+            </GridContainerInner>
+        </GridContainer>
     )
 }
 
@@ -39,7 +41,7 @@ FeaturedTopic.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
-const StyledGridContainer = styled(GridContainer)`
+const GridContainerInner = styled.div`
     text-align: center;
 `
 

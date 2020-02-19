@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 // import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { Page, Section, GridContainer, GridRow, GridCol } from '../layout'
+import { Section, GridContainer, GridRow, GridCol } from '../layout'
 import { SEO, responsiveBreakpointDown } from '../../utils'
 import { ArchivePost } from '../page-sections'
 import { Button } from '../ui'
@@ -21,35 +21,33 @@ export const PageCategory = ({ categoryData, postData, postSizePercentage }) => 
         <>
             <SEO description={seoDescription} title={title} />
 
-            <Page>
-                <Section spacingTop={{'monitor': 3, 'tablet': 2}} spacingBottom={{'monitor': 4, 'tablet': 3}}>
-                    <GridContainer>
-                        <GridRow>
-                            <GridCol cols="4">
-                                <Title>{title}</Title>
-                            </GridCol>
-                        </GridRow>
-                    </GridContainer>
-                </Section>
+            <Section spacingTop={{'monitor': 3, 'tablet': 2}} spacingBottom={{'monitor': 4, 'tablet': 3}}>
+                <GridContainer>
+                    <GridRow>
+                        <GridCol cols="4">
+                            <Title>{title}</Title>
+                        </GridCol>
+                    </GridRow>
+                </GridContainer>
+            </Section>
 
-                <Section spacingBottom="4">
-                    <GridContainer>
-                        <PostsWrapper>
-                            {posts.map(post => (
-                                <ArchivePost key={post.id} post={post} imgHeight={postSizePercentage} />
-                            ))}
-                        </PostsWrapper>
-                    </GridContainer>
-                </Section>
-                
-                { showMore &&
-                <Section spacingTop="1"  spacingBottom="5">
-                    <GridContainer justify="center">
-                        <Button size="small" primary>More {viewAllName}</Button>
-                    </GridContainer>
-                </Section> 
-                } 
-            </Page>
+            <Section spacingBottom="4">
+                <GridContainer>
+                    <PostsWrapper>
+                        {posts.map(post => (
+                            <ArchivePost key={post.id} post={post} imgHeight={postSizePercentage} />
+                        ))}
+                    </PostsWrapper>
+                </GridContainer>
+            </Section>
+            
+            { showMore &&
+            <Section spacingTop="1"  spacingBottom="5">
+                <GridContainer justify="center">
+                    <Button size="small" primary>More {viewAllName}</Button>
+                </GridContainer>
+            </Section> 
+            } 
         </>
     )
 }

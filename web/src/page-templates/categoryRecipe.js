@@ -1,13 +1,15 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import { PageCategory } from '../components/layout'
+import { Page, PageCategory } from '../components/layout'
 
 export default ({ data: { categoryData, postsData } }) => {
     
     return (
-        <>
-            <PageCategory categoryData={categoryData} postData={postsData} postSizePercentage={120} />
+        <>  
+            <Page>
+                <PageCategory categoryData={categoryData} postData={postsData} postSizePercentage={120} />
+            </Page>
         </>
     )
 }

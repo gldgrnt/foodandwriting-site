@@ -1,16 +1,56 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 
-export default ( ) => {
+import { PageCategory } from '../components/layout'
 
+export default ({ data: { categoryData, postData } }) => {
+    
     return (
-        <h1>This is a the culture category page</h1>
+        <>
+            <PageCategory categoryData={categoryData} postData={postData} postSizePercentage={67} />
+        </>
     )
 }
 
-// export const query = graphql`
-//     query ($id: String) {
-//         post: sanityRecipe(id: {eq: $id}) {
-            
-//         }
-//     }
-// `
+export const query = graphql`
+    query ($id: String) {
+        categoryData: sanityCultureCategory(id: {eq: $id}) {
+        categoryOptions {
+        singleName
+        viewAllName
+        }
+        seoDecsription
+        title
+    }
+        postData: allSanityCulture(limit: 6) {
+        totalCount
+        nodes {
+        id
+        postMeta {
+            category {
+            ... on SanityCultureCategory {
+                id
+                slug {
+                current
+                }
+                categoryOptions {
+                    singleName
+                }
+            }
+            }
+            slug {
+            current
+            }
+        }
+        featuredImage {
+            asset {
+            fluid {
+                ...GatsbySanityImageFluid_noBase64
+            }
+            }
+        }
+        title
+        }
+    }
+    }
+`

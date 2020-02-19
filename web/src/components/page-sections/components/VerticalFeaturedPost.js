@@ -13,8 +13,8 @@ export const VerticalFeaturedPost = ({ post: {title, postMeta, featuredImage} })
     const slug = getPostSlug(postMeta)
     
     return (
-        <Article>
-            <StyledLink to={slug}>
+        <StyledLink to={slug}>
+            <Article>
                 <ImageWrapper>
                     <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title}/>
                 </ImageWrapper>
@@ -23,8 +23,8 @@ export const VerticalFeaturedPost = ({ post: {title, postMeta, featuredImage} })
                     <CaptionTitle>{title}</CaptionTitle>
                     <SmallCaps as="span" size="tiny" color="mediumGrey" link>Read more</SmallCaps>
                 </CaptionWrapper>
-            </StyledLink>
-        </Article>
+            </Article>
+        </StyledLink>
     )
 }
 
@@ -35,6 +35,25 @@ VerticalFeaturedPost.prototypes = {
         featuredImage: PropTypes.object.isRequired
     }).isRequired,
 }
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    
+    &:hover,
+    &:focus {
+        h3 {
+            text-decoration: underline;
+        }
+
+        span {
+            color: ${props => props.theme.color.black};
+            
+            &::after {
+                background: ${props => props.theme.color.black};
+            }
+        }
+    }
+`
 
 const Article = styled.article`
     width: 560px;
@@ -54,25 +73,6 @@ const Article = styled.article`
         span {
             color: ${props => props.theme.color.black};
 
-            &::after {
-                background: ${props => props.theme.color.black};
-            }
-        }
-    }
-`
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    
-    &:hover,
-    &:focus {
-        h3 {
-            text-decoration: underline;
-        }
-
-        span {
-            color: ${props => props.theme.color.black};
-            
             &::after {
                 background: ${props => props.theme.color.black};
             }

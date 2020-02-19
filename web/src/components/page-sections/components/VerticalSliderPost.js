@@ -12,16 +12,16 @@ export const VerticalSliderPost = ({ post: {postMeta, title, featuredImage} }) =
     const slug = getPostSlug(postMeta)
 
     return (
-        <Article>
-            <LinkWrapper href={slug}>
+        <LinkWrapper href={slug}>
+            <Article>
                 <ImageWrapper>
                     <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title} />
                 </ImageWrapper>
 
                 <Title>{title}</Title>
                 <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
-            </LinkWrapper>
-        </Article>
+            </Article>
+        </LinkWrapper>
     )
 }
 
@@ -32,24 +32,6 @@ VerticalSliderPost.prototypes = {
         featuredImage: PropTypes.object.isRequired
     }).isRequired,
 }
-
-const Article = styled.article`
-    max-width: ${props => (props.theme.grid.breakpoints.monitor.minScreenWidth / 3) - 120}px;
-
-    ${props => responsiveBreakpointDown('desktop', `
-        max-width: ${(props.theme.grid.breakpoints.desktop.minScreenWidth / 3) - 60}px;
-    `)}
-
-    ${props => responsiveBreakpointDown('laptop', `
-        max-width: ${(props.theme.grid.breakpoints.laptop.minScreenWidth / 3) - 60}px;
-    `)}
-
-    ${responsiveBreakpointDown('mobile', `
-        max-width: none;
-        width: calc(100% - 30px);
-        margin: auto;
-    `)}
-`
 
 const LinkWrapper = styled.a`
     text-decoration: none;
@@ -72,6 +54,24 @@ const LinkWrapper = styled.a`
         span {
             display: none;
         }
+    `)}
+`
+
+const Article = styled.article`
+    max-width: ${props => (props.theme.grid.breakpoints.monitor.minScreenWidth / 3) - 120}px;
+
+    ${props => responsiveBreakpointDown('desktop', `
+        max-width: ${(props.theme.grid.breakpoints.desktop.minScreenWidth / 3) - 60}px;
+    `)}
+
+    ${props => responsiveBreakpointDown('laptop', `
+        max-width: ${(props.theme.grid.breakpoints.laptop.minScreenWidth / 3) - 60}px;
+    `)}
+
+    ${responsiveBreakpointDown('mobile', `
+        max-width: none;
+        width: calc(100% - 30px);
+        margin: auto;
     `)}
 `
 

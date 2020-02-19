@@ -18,8 +18,8 @@ export const HorizontalPost = ({ post: { title, postMeta, featuredImage } }) => 
     const slug = getPostSlug(postMeta)
 
     return (
-        <article>
-            <StyledLink to={slug}>
+        <StyledLink to={slug}>
+            <Article>
                 <ImageWrapper>
                     {featuredImage ? <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title} /> : <div></div>}
                 </ImageWrapper>
@@ -29,8 +29,8 @@ export const HorizontalPost = ({ post: { title, postMeta, featuredImage } }) => 
                     <CaptionTitle>{title}</CaptionTitle>
                     <SmallCaps size="tiny" color="mediumGrey" link>Read more</SmallCaps>
                 </CaptionWrapper>
-            </StyledLink>
-        </article>
+            </Article>
+        </StyledLink>
     )
 }
 
@@ -39,17 +39,8 @@ HorizontalPost.prototypes = {
 }
 
 const StyledLink = styled(Link)`
-    display: flex;
-    align-items: center;
+    display: inline-block;
     text-decoration: none;
-
-    ${responsiveBreakpointDown('mobile', `
-        flex-wrap: wrap;
-
-        > * {
-            flex-basis: 100%;
-        }
-    `)}
 
     &:hover,
     &:focus {
@@ -65,6 +56,20 @@ const StyledLink = styled(Link)`
             }
         }
     }
+`
+
+const Article = styled.article`
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    ${responsiveBreakpointDown('mobile', `
+        flex-wrap: wrap;
+
+        > * {
+            flex-basis: 100%;
+        }
+    `)}
 `
 
 const ImageWrapper = styled.div`

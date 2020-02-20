@@ -14,7 +14,7 @@ export default ({ data }) => {
             <SEO title={`${title} recipe`} description={ seoDescription } />
             <Page>
                 <Section>
-                    <PostHero featuredImage={featuredImage} subtitle={postMeta.category.categoryOptions.singleName} title={title} />
+                    <PostHero featuredImage={featuredImage} subtitle={postMeta.category.title} title={title} />
                 </Section>
 
                 <PostMainContent>
@@ -35,6 +35,7 @@ export const query = graphql`
             category {
                 ... on SanityCultureCategory {
                 id
+                title
                 categoryOptions {
                     singleName
                 }

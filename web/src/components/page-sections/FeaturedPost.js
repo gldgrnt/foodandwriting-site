@@ -150,6 +150,12 @@ const CaptionInner = styled.div`
             }
         }
     `)}
+
+    ${props => responsiveBreakpointDown('mobile', `
+        > p:first-child {
+            font-size: ${props.theme.font.size.regular};
+        }
+    `)}
 `
 
 const CaptionTitle = styled.h2`

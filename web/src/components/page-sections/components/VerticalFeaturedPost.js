@@ -37,7 +37,14 @@ VerticalFeaturedPost.prototypes = {
 }
 
 const StyledLink = styled(Link)`
+    display: inline-block;
+    width: 560px;
     text-decoration: none;
+    
+    ${responsiveBreakpointDown('desktop', `width: 480px;`)}
+    ${responsiveBreakpointDown('laptop', `width: 420px;`)}
+    ${responsiveBreakpointDown('tablet', `width: calc(50% - 30px);`)}
+    ${responsiveBreakpointDown('mobile', `width: 100%;`)}
     
     &:hover,
     &:focus {
@@ -56,13 +63,10 @@ const StyledLink = styled(Link)`
 `
 
 const Article = styled.article`
-    width: 560px;
+    width: 100%;
     background: white;
 
-    ${responsiveBreakpointDown('desktop', `width: 480px;`)}
-    ${responsiveBreakpointDown('laptop', `width: 420px;`)}
-    ${responsiveBreakpointDown('tablet', `width: calc(50% - 30px);`)}
-    ${responsiveBreakpointDown('mobile', `width: 100%`)}
+    
 
     &:hover,
     &:focus {

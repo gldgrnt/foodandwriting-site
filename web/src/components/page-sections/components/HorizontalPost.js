@@ -5,17 +5,13 @@ import { Link } from 'gatsby'
 import Img from 'gatsby-image/withIEPolyfill'
 
 import { SmallCaps } from '../../ui'
-import { responsiveBreakpointDown, getPostSlug } from '../../../utils'
+import { responsiveBreakpointDown, getPostSlug, getPostDate } from '../../../utils'
 
 
 export const HorizontalPost = ({ post: { title, postMeta, featuredImage } }) => {
 
-    // Create human readable date
-    const date = new Date(postMeta.date)
-    const sanitizedDate = `${date.getDate()}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`
-
-    // Slug 
     const slug = getPostSlug(postMeta)
+    const date = getPostDate(postMeta.date)
 
     return (
         <StyledLink to={slug}>
@@ -25,7 +21,7 @@ export const HorizontalPost = ({ post: { title, postMeta, featuredImage } }) => 
                 </ImageWrapper>
 
                 <CaptionWrapper>
-                    <SmallCaps as="time" size="small" datetime={date}>{sanitizedDate}</SmallCaps>
+                    <SmallCaps as="time" size="small" datetime={date.faw}>{date.formatted}</SmallCaps>
                     <CaptionTitle>{title}</CaptionTitle>
                     <SmallCaps size="tiny" color="mediumGrey" link>Read more</SmallCaps>
                 </CaptionWrapper>
@@ -119,7 +115,7 @@ const CaptionWrapper = styled.div`
 const CaptionTitle = styled.h3`
     font-size: ${props => props.theme.font.size.medium};
     line-height: 1.75;
-    margin: 15px 0 10px;
+    margin: 15px 0;
 
     ${props => responsiveBreakpointDown('desktop', `
         font-size: ${props.theme.font.size.increased};

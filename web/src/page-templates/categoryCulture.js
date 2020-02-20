@@ -48,6 +48,7 @@ export const query = graphql`
             slug {
             current
             }
+            date
         }
         featuredImage {
             asset {

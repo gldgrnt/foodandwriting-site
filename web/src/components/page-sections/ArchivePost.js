@@ -4,13 +4,14 @@ import styled from 'styled-components'
 import Img from 'gatsby-image/withIEPolyfill'
 import { Link } from 'gatsby'
 
-import { getPostSlug, responsiveBreakpointDown } from '../../utils'
+import { getPostSlug, getPostDate, responsiveBreakpointDown } from '../../utils'
 import { SmallCaps } from '../ui'
 
 export const ArchivePost = ({ post: {title, postMeta, featuredImage}, imgHeight }) => {
 
     const slug = getPostSlug(postMeta)
     const categoryName = postMeta.category.categoryOptions.singleName
+    const date = getPostDate(postMeta.date)
 
     return (
         <StyledLink to={slug}>
@@ -18,6 +19,8 @@ export const ArchivePost = ({ post: {title, postMeta, featuredImage}, imgHeight 
                 <ImageWrapper imgHeight={imgHeight}>
                     {featuredImage !== null ? <Img fluid={featuredImage.asset.fluid} /> : <div></div>}
                 </ImageWrapper>
+                { date && 
+                    <SmallCaps as="time" size="small" datetime={date.faw}>{date.formatted}</SmallCaps> }
                 <Title>{title}</Title>
                 <SmallCaps size="tiny" link>View {categoryName}</SmallCaps>
             </article>
@@ -38,6 +41,7 @@ const StyledLink = styled(Link)`
     text-decoration: none;
     outline: none;
 
+    ${responsiveBreakpointDown('desktop', `width: calc((100% / 3) - (120px / 3));`)}
     ${responsiveBreakpointDown('laptop', `width: calc((100% / 3) - (80px / 3));`)}
     ${responsiveBreakpointDown('tablet', `width: calc((100% / 2) - (40px / 2));`)}
     ${responsiveBreakpointDown('mobile', `width: 100%;`)}
@@ -66,7 +70,7 @@ const ImageWrapper = styled.div`
     position: relative;
     background: ${props => props.theme.color.whiteGrey};
     padding-top: ${props => props.imgHeight}%;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     
     > * {
         position: absolute !important;
@@ -80,5 +84,6 @@ const ImageWrapper = styled.div`
 const Title = styled.h2`
     font-size: ${props => props.theme.font.size.medium};
     margin-bottom: 15px;
+    padding-top: 5px;
     padding-right: 30px;
 `

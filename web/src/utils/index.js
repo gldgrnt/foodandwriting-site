@@ -1,5 +1,5 @@
 import { SEO } from './SEO'
 import { responsiveBreakpointDown, responsiveStylesFromProp } from './responsive'
-import { getPostSlug } from './post'
+import { getPostSlug, getPostDate } from './post'
 
-export { SEO, responsiveBreakpointDown, getPostSlug, responsiveStylesFromProp }
+export { SEO, responsiveBreakpointDown, getPostSlug, getPostDate, responsiveStylesFromProp }

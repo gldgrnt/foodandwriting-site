@@ -15,7 +15,7 @@ export const SearchBar = React.forwardRef((props, ref) => (
             onKeyUp={props.onKeyUp}
             type="text" />
 
-        <StyledButton onClick={props.closeDropdown}>
+        <StyledButton>
             <FiX />
         </StyledButton>
 

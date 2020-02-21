@@ -1,7 +1,5 @@
 // In your gatsby-config.js file
-require('dotenv').config({
-    path: `.env`
-})
+require('dotenv').config()
 
 module.exports = {
     siteMetadata: {
@@ -37,7 +35,7 @@ module.exports = {
             options: {
                 projectId: 's1s9nwnc',
                 dataset: 'production',
-                token: process.env.SANITY_TOKEN,
+                useCdn: true
             },
         },
         {

@@ -3,6 +3,8 @@ import { graphql } from 'gatsby'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
 
+import axios from 'axios'
+
 import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
@@ -14,10 +16,7 @@ const IndexPage = ({ data: { recipesData, featuredTopicData, blogListCategoryDat
 
     const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopicData
 
-    // 2. Blog category -> up to three posts
-    // 3. Culture cateogy -> up to three posts
-
-    // console.log(blogListCategoryData, blogListPostsData, cultureListCategoryData, cultureListPostsData)
+    axios.get('/.netlify/functions/get-posts?offset=0&type=recipe&amount=2').then(res => console.log(res));
 
     return (
         <>
@@ -71,7 +70,7 @@ export default IndexPage
 export const pageQuery = graphql`
     query HomePagequery {
         ## Recipes data
-        recipesData: allSanityRecipe(limit: 7, sort: {order: ASC, fields: postMeta___date}) {
+        recipesData: allSanityRecipe(limit: 7, sort: {order: DESC, fields: postMeta___date}) {
             edges {
                 node {
                     postMeta {

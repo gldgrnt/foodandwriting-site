@@ -2,3 +2,9 @@
     base = "web/"
     command = "gatsby build"
     publish = "public"
+    functions = "web/functions"
+
+[dev]
+    publish = "web/public"
+    functionsPort = 8008
+    autoLaunch = false

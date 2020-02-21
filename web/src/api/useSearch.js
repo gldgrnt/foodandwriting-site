@@ -16,7 +16,7 @@ export const useSearch = (query) => {
         // Set up sanity client
         const client = sanityClient({
             projectId: 's1s9nwnc',
-            dataset: 'development',
+            dataset: 'production',
             useCdn: true
         })
 

@@ -19,7 +19,7 @@ export const PageCategory = ({ categoryData, postData, postSizePercentage }) => 
 
     return (
         <>
-            <Section spacingTop={{'monitor': 3, 'tablet': 2}} spacingBottom={{'monitor': 3, 'tablet': 2}}>
+            <Section spacingTop="2" spacingBottom={{'monitor': 3, 'tablet': 2}}>
                 <GridContainer>
                     <GridRow>
                         <GridCol cols="4">

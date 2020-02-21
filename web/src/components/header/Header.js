@@ -156,6 +156,7 @@ const DropdownContainer = styled.div`
 
 const DropdownWrapper = styled.div`
     padding: 40px 0;
+    width: 100%;
 
     ${responsiveBreakpointDown('tablet', `
         padding: 30px 0;

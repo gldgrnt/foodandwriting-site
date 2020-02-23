@@ -2,19 +2,23 @@ import React, { useState } from 'react'
 // import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import { useGetPosts } from '../../hooks'
 import { Section, GridContainer, GridRow, GridCol } from '../layout'
 import { responsiveBreakpointDown } from '../../utils'
 import { ArchivePost } from '../page-sections'
 import { Button } from '../ui'
 
-export const PageCategory = ({ categoryData, postData, postSizePercentage }) => {
-
+export const CategoryPage = ({ categoryData, postData, postSizePercentage }) => {
     const [posts, setPosts] = useState(postData.nodes)
-
+    
     const { title, categoryOptions: {viewAllName} } = categoryData
     const { totalCount } = postData
-
+    
     // Load more logic
+    const { results, loading } = useGetPosts({})
+        
+
+    // Show more posts button
     const showMore = posts.length < totalCount
 
     return (

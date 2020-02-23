@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Img from 'gatsby-image/withIEPolyfill'
 import { Link } from 'gatsby'
 
-import { getPostSlug, getPostDate, responsiveBreakpointDown } from '../../utils'
+import { getPostSlug, getPostDate, responsiveBreakpointDown, getFluidPropsFromId } from '../../utils'
 import { SmallCaps } from '../ui'
 
 export const ArchivePost = ({ post: {title, postMeta, featuredImage}, imgHeight }) => {
@@ -13,11 +13,13 @@ export const ArchivePost = ({ post: {title, postMeta, featuredImage}, imgHeight 
     const categoryName = postMeta.category.categoryOptions.singleName
     const date = getPostDate(postMeta.date)
 
+    const fluid = featuredImage.asset.fluid ? featuredImage.asset.fluid : getFluidPropsFromId(featuredImage.asset.id)
+
     return (
         <StyledLink to={slug}>
             <article>
                 <ImageWrapper imgHeight={imgHeight}>
-                    {featuredImage !== null ? <Img fluid={featuredImage.asset.fluid} /> : <div></div>}
+                    {featuredImage !== null ? <Img fluid={fluid} /> : <div></div>}
                 </ImageWrapper>
                 { date && 
                     <SmallCaps as="time" size="small" datetime={date.faw}>{date.formatted}</SmallCaps> }

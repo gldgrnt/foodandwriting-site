@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react"
-import { useSearch } from "../../../api"
+import { useSearch } from "../../../hooks"
 import { SearchBar } from './SearchBar'
 import { SearchResults } from './SearchResults'
 

@@ -1,7 +1,8 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import { Page, PageCategory } from '../components/layout'
+import { Page } from '../components/layout'
+import { CategoryPage } from '../components/page-wrappers'
 import { SEO } from '../utils'
 
 export default ({ data: { categoryData, postsData } }) => {
@@ -13,7 +14,7 @@ export default ({ data: { categoryData, postsData } }) => {
             <SEO description={seoDescription} title={title} />
             
             <Page>
-                <PageCategory categoryData={categoryData} postData={postsData} postSizePercentage={120} />
+                <CategoryPage categoryData={categoryData} postData={postsData} postSizePercentage={120} />
             </Page>
         </>
     )
@@ -22,6 +23,7 @@ export default ({ data: { categoryData, postsData } }) => {
 export const query = graphql`
     query ($id: String) {
         categoryData: sanityRecipeCategory(id: {eq: $id}) {
+        _id
         categoryOptions {
         singleName
         viewAllName

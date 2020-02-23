@@ -7,12 +7,13 @@ const client  = sanityClient({
 })
 
 const fetchSanityPosts = async (params) => {
-    const { type, amount, offset } = params
+    const { categoryId, amount, offset } = params
 
     // Set up array number to get amount of posts
-    const number = `[${offset}..${parseInt(offset) + parseInt(amount)}]`
+    const start = parseInt(offset)
+    const end = start + (parseInt(amount) - 1)
 
-    return client.fetch(`*[_type == "${type}"] | order(postMeta___date desc) ${number}`, '')
+    return client.fetch(`*[postMeta.category._ref == $id] | order(postMeta___date desc) [$start..$end] {_id, title, postMeta}`, { id: categoryId, start: start, end: end})
 }
 
 exports.handler = async ( event, context ) => {
@@ -23,18 +24,11 @@ exports.handler = async ( event, context ) => {
         }
 
         // Fetch sanity posts
-        const posts = await fetchSanityPosts(event.queryStringParameters) || []
+        const sanityPosts = await fetchSanityPosts(event.queryStringParameters)
 
-
-        return { statusCode: 200, body: JSON.stringify({ hello: posts})}
+        return { statusCode: 200, body: JSON.stringify({ posts: sanityPosts, })}
 
     } catch (err) {
         return err
     }
-
-//     try {
-//         return { statusCode: 200, body: JSON.stringify('hello') }
-//     } catch (err) {
-//         return err
-//     }
 }

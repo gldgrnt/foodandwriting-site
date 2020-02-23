@@ -13,7 +13,11 @@ const fetchSanityPosts = async (params) => {
     const start = parseInt(offset)
     const end = start + (parseInt(amount) - 1)
 
-    return client.fetch(`*[postMeta.category._ref == $id] | order(postMeta___date desc) [$start..$end] {_id, title, postMeta}`, { id: categoryId, start: start, end: end})
+
+    return client.fetch(
+        `*[postMeta.category._ref == $id] | order(postMeta___date desc) [$start..$end] {_id, title, featuredImage, postMeta, "category": *[_id == ^.postMeta.category._ref][0] | {slug, categoryOptions}}`, 
+        { id: categoryId, start: start, end: end}
+    )
 }
 
 exports.handler = async ( event, context ) => {
@@ -24,9 +28,16 @@ exports.handler = async ( event, context ) => {
         }
 
         // Fetch sanity posts
-        const sanityPosts = await fetchSanityPosts(event.queryStringParameters)
+        let sanityPosts = await fetchSanityPosts(event.queryStringParameters)
 
-        return { statusCode: 200, body: JSON.stringify({ posts: sanityPosts, })}
+        // Copy category data into post meta
+        const posts = sanityPosts.map(post => {
+            post.postMeta.category = post.category
+            delete post.category
+            return post
+        })
+
+        return { statusCode: 200, body: JSON.stringify({ posts: posts })}
 
     } catch (err) {
         return err

@@ -2,14 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-export const Button = ({ children, size, ...type }) => {
+export const Button = ({ children, size, ...props }) => {
 
     switch (true) {
-        case !!type.primary:
-            return <PrimaryButton size={size}>{children}</PrimaryButton>
+        case !!props.primary:
+            return <PrimaryButton size={size} onClick={props.onClick}>{children}</PrimaryButton>
 
         default:
-            return <BaseButton size={size}>{children}</BaseButton>
+            return <BaseButton size={size} onClick={props.onClick}>{children}</BaseButton>
     }
 }
 

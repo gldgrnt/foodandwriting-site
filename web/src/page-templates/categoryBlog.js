@@ -34,7 +34,7 @@ export const query = graphql`
         postData: allSanityBlog(limit: 6) {
         totalCount
         nodes {
-        id
+        _id
         postMeta {
             category {
             ... on SanityBlogCategory {

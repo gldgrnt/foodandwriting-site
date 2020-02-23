@@ -1,25 +1,40 @@
 import React, { useState } from 'react'
 // import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import axios from 'axios'
 
-import { useGetPosts } from '../../hooks'
 import { Section, GridContainer, GridRow, GridCol } from '../layout'
 import { responsiveBreakpointDown } from '../../utils'
 import { ArchivePost } from '../page-sections'
 import { Button } from '../ui'
 
 export const CategoryPage = ({ categoryData, postData, postSizePercentage }) => {
-    const [posts, setPosts] = useState(postData.nodes)
+    const [state, setState] = useState({ posts: postData.nodes, loading: false})
+
+    // Get more posts logic
+    const handleMorePostsClick = async () => {
+        if (state.loading) return
+
+        setState(oldState => ({ ...oldState, loading: true}))
+
+        const categoryId = categoryData._id
+        const amount = 3
+        const offset = state.posts.length
+        
+        // Get posts
+        await axios.get(`/.netlify/functions/get-posts?categoryId=${categoryId}&amount=${amount}&offset=${offset}`)
+            .then(response => {
+                console.log(response.data)
+                setState(oldState => ({ posts: [...oldState.posts, ...response.data.posts], loading: false}))
+                // setState(oldState => ({ ...oldState, loading: false}))
+            })
+            .catch(error => console.log(error))   
+    }
     
+    // Variables
     const { title, categoryOptions: {viewAllName} } = categoryData
     const { totalCount } = postData
-    
-    // Load more logic
-    const { results, loading } = useGetPosts({})
-        
-
-    // Show more posts button
-    const showMore = posts.length < totalCount
+    const showGetPostsButton = state.posts.length < totalCount
 
     return (
         <>
@@ -36,17 +51,17 @@ export const CategoryPage = ({ categoryData, postData, postSizePercentage }) => 
             <Section spacingBottom="4">
                 <GridContainer>
                     <PostsWrapper>
-                        {posts.map(post => (
-                            <ArchivePost key={post.id} post={post} imgHeight={postSizePercentage} />
+                        {state.posts.map(post => (
+                            <ArchivePost key={post['_id']} post={post} imgHeight={postSizePercentage} />
                         ))}
                     </PostsWrapper>
                 </GridContainer>
             </Section>
             
-            { showMore &&
+            { showGetPostsButton &&
             <Section spacingTop="1"  spacingBottom="5">
                 <GridContainer justify="center">
-                    <Button size="small" primary>More {viewAllName}</Button>
+                    <Button size="small" primary onClick={handleMorePostsClick}>More {viewAllName}</Button>
                 </GridContainer>
             </Section> 
             } 

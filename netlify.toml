@@ -1,7 +1,7 @@
 [build]
     base = "web/"
     command = "gatsby build"
-    publish = "public"
+    publish = "web/public"
     functions = "web/functions"
 
 [dev]

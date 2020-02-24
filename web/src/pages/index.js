@@ -3,8 +3,6 @@ import { graphql } from 'gatsby'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
 
-// import axios from 'axios'
-
 import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
@@ -15,8 +13,6 @@ const IndexPage = ({ data: { recipesData, featuredTopicData, blogListCategoryDat
     const sliderRecipes = recipesData.edges.filter((edge, index) => index !== 0)
 
     const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopicData
-
-    // axios.get('/.netlify/functions/get-posts?offset=0&type=recipe&amount=2').then(res => console.log(res));
 
     return (
         <>

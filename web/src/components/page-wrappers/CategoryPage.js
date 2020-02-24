@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import axios from 'axios'
 
@@ -12,29 +12,26 @@ export const CategoryPage = ({ categoryData, postData, postSizePercentage }) => 
     const [state, setState] = useState({ posts: postData.nodes, loading: false})
 
     // Get more posts logic
-    const handleMorePostsClick = async () => {
+    const handleMorePostsClick = () => {
         if (state.loading) return
 
         setState(oldState => ({ ...oldState, loading: true}))
 
         const categoryId = categoryData._id
-        const amount = 3
+        const amount = 6
         const offset = state.posts.length
         
         // Get posts
-        await axios.get(`/.netlify/functions/get-posts?categoryId=${categoryId}&amount=${amount}&offset=${offset}`)
-            .then(response => {
-                console.log(response.data)
+        axios.get(`/.netlify/functions/get-posts?categoryId=${categoryId}&amount=${amount}&offset=${offset}`)
+            .then(response => (
                 setState(oldState => ({ posts: [...oldState.posts, ...response.data.posts], loading: false}))
-                // setState(oldState => ({ ...oldState, loading: false}))
-            })
+            ))
             .catch(error => console.log(error))   
     }
     
     // Variables
     const { title, categoryOptions: {viewAllName} } = categoryData
-    const { totalCount } = postData
-    const showGetPostsButton = state.posts.length < totalCount
+    const showGetPostsButton = state.posts.length < postData.totalCount
 
     return (
         <>
@@ -52,7 +49,7 @@ export const CategoryPage = ({ categoryData, postData, postSizePercentage }) => 
                 <GridContainer>
                     <PostsWrapper>
                         {state.posts.map(post => (
-                            <ArchivePost key={post['_id']} post={post} imgHeight={postSizePercentage} />
+                            <ArchivePost key={post['_id']} post={post} imgHeight={postSizePercentage} showDate={false} />
                         ))}
                     </PostsWrapper>
                 </GridContainer>
@@ -67,6 +64,12 @@ export const CategoryPage = ({ categoryData, postData, postSizePercentage }) => 
             } 
         </>
     )
+}
+
+CategoryPage.propTypes = {
+    categoryData: PropTypes.object.isRequired,
+    postData: PropTypes.object,
+    postSizePercentage: PropTypes.number.isRequired
 }
 
 const PostsWrapper = styled.div`

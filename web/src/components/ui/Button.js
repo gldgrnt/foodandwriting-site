@@ -6,19 +6,19 @@ export const Button = ({ children, size, ...props }) => {
 
     switch (true) {
         case !!props.primary:
-            return <PrimaryButton size={size} onClick={props.onClick}>{children}</PrimaryButton>
-
+            return <PrimaryButton size={size} onClick={props.onClick} {...props}>{children}</PrimaryButton>
         default:
-            return <BaseButton size={size} onClick={props.onClick}>{children}</BaseButton>
+            return <BaseButton size={size} onClick={props.onClick} {...props}>{children}</BaseButton>
     }
 }
 
 Button.propTypes = {
     children: PropTypes.node.isRequired,
-    size: PropTypes.string
+    size: PropTypes.string,
 }
 
 const BaseButton = styled.button`
+    display: inline-flex;
     border: none;
     padding: 0;
     margin: 0;

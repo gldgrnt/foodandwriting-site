@@ -31,7 +31,7 @@ export const query = graphql`
         seoDecsription
         title
     }
-        postData: allSanityCulture(limit: 6) {
+        postData: allSanityCulture(limit: 9) {
         totalCount
         nodes {
         _id

@@ -31,7 +31,7 @@ export const query = graphql`
         seoDecsription
         title
     }
-    postsData: allSanityRecipe(limit: 6) {
+    postsData: allSanityRecipe(limit: 9) {
         totalCount
         nodes {
         _id

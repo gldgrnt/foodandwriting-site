@@ -6,5 +6,6 @@
 
 [dev]
     publish = "web/public"
+    functions = "functions"
     functionsPort = 8008
     autoLaunch = false

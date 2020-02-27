@@ -33,10 +33,13 @@ export const Navigation = ({ className }) => {
 }
 
 const ListWrapper = styled.ul`
-    display: inline-block;
+    display: flex;
+    height: 100%;
     padding: 0;
     margin: 0;
     list-style-type: none;
+    justify-content: flex-end;
+    align-items: center;
 `
 
 const ListItem = styled.li`

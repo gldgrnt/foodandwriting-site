@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react"
-import { useSearch } from "../../../hooks"
-import { SearchBar } from './SearchBar'
-import { SearchResults } from './SearchResults'
+import { useSearch } from "../../hooks"
+import { SearchBar, SearchBarResults } from './components'
+import PropTypes from 'prop-types'
 
-export const SearchContainer = ({ closeDropdown }) => {
+export const SearchBarContainer = ({ closeDropdown }) => {
     const [state, setState] = useState({ inputValue: '', queryValue: '', timeout: 0 })
     const searchBarRef = React.createRef()
     const { results, loading } = useSearch(state.queryValue)
@@ -77,7 +77,12 @@ export const SearchContainer = ({ closeDropdown }) => {
                 onKeyUp={handleEnterPress}
                 closeDropdown={closeDropdown} />
 
-            <SearchResults loading={loading} results={results} />
+            <SearchBarResults loading={loading} results={results} />
         </>
     )
 }
+
+SearchBarContainer.propTypes = {
+    closeDropdown: PropTypes.func.isRequired
+}
+

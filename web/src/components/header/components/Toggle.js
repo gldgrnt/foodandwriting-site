@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { responsiveBreakpointDown } from '../../../utils'
 
-export const Toggle = ({ handler, active, children }) => {
+export const Toggle = ({ handler, active, children, ...rest }) => {
     const handleClick = (event) => {
         event.preventDefault();
         handler();
@@ -19,7 +19,7 @@ export const Toggle = ({ handler, active, children }) => {
     }
 
     return (
-        <IconLink href="#" onClick={handleClick} onKeyDown={handleKeyDown} active={active}>
+        <IconLink href="#" onClick={handleClick} onKeyDown={handleKeyDown} active={active} {...rest}>
             {children}
         </IconLink >
     )
@@ -61,4 +61,13 @@ const IconLink = styled.button`
             stroke-width: 3px;
         }
     `)}
+
+    /* Menu styles */
+    ${props => props.menu && `
+        display: none;
+
+        ${responsiveBreakpointDown('tablet', `
+            display: flex;
+        `)}
+    `}
 `

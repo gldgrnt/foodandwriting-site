@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-export const SearchResults = ({ loading, results }) => {
+export const SearchBarResults = ({ loading, results }) => {
 
     return (
         <ResultsWrapper>
@@ -13,7 +13,7 @@ export const SearchResults = ({ loading, results }) => {
     )
 }
 
-SearchResults.propTypes = {
+SearchBarResults.propTypes = {
     loading: PropTypes.bool.isRequired,
     results: PropTypes.array
 }

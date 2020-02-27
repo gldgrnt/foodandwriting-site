@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react"
 import styled from 'styled-components'
 import { FiMenu, FiSearch } from 'react-icons/fi'
-import { Navigation, Logo, Toggle, SearchContainer } from './components'
+
+import { Navigation, Logo, Toggle, Menu } from './components'
+import { SearchBarContainer } from '../search'
 import { GridContainer } from '../layout'
 import { responsiveBreakpointDown } from "../../utils"
 
@@ -46,8 +48,8 @@ export const Header = () => {
         setDropdownState({ isSearchOpen: false, isMenuOpen: false })
     }
 
-    if (dropdownState.isSearchOpen) activeDropdown = <SearchContainer closeDropdown={closeDropdown} />
-    else if (dropdownState.isMenuOpen) activeDropdown = <span>Menu dropdown coming soon...</span>
+    if (dropdownState.isSearchOpen) activeDropdown = <SearchBarContainer closeDropdown={closeDropdown} />
+    else if (dropdownState.isMenuOpen) activeDropdown = <Menu closeDropdown={closeDropdown} />
 
 
     return (
@@ -59,7 +61,7 @@ export const Header = () => {
                     </LogoWrapper>
 
                     <NavigationWrapper>
-                        <StyledNavigation />
+                        <Navigation />
                     </NavigationWrapper>
 
                     <TogglesWrapper>
@@ -67,7 +69,7 @@ export const Header = () => {
                             <FiSearch />
                         </Toggle>
 
-                        <Toggle handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
+                        <Toggle handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen} menu>
                             <FiMenu />
                         </Toggle>
                     </TogglesWrapper>
@@ -109,6 +111,7 @@ const LogoWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 30px 0;
 
     ${props => responsiveBreakpointDown('mobile', `
         padding-left: ${props.theme.grid.spacing}px;
@@ -116,10 +119,14 @@ const LogoWrapper = styled.div`
 `
 
 const NavigationWrapper = styled.div`
-    padding: 25px 0;
     flex-grow: 1;
+    padding-right: 80px;
 
-    ${responsiveBreakpointDown('mobile', `
+    > * {
+        height: 100%;
+    }
+
+    ${responsiveBreakpointDown('tablet', `
         display: none;
     `)}
 `
@@ -136,11 +143,6 @@ const TogglesWrapper = styled.div`
         padding-left: 0;
         margin-right: 0;
     `)}
-`
-
-const StyledNavigation = styled(Navigation)`
-    width: 100%;
-    text-align: right;
 `
 
 // Dropdown

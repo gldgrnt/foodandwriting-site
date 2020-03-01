@@ -77,7 +77,7 @@ const Article = styled.article`
 
 const ImageWrapper = styled.div`
     position: relative;
-    padding-top: 120%;
+    padding-top: 135%;
     margin-bottom: 20px;
     background: ${props => props.theme.color.whiteGrey};
     

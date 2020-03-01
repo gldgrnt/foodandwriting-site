@@ -14,7 +14,7 @@ export default ({ data: { categoryData, postsData } }) => {
             <SEO description={seoDescription} title={title} />
             
             <Page>
-                <CategoryPage categoryData={categoryData} postData={postsData} postSizePercentage={120} />
+                <CategoryPage categoryData={categoryData} postData={postsData} postSizePercentage={135} />
             </Page>
         </>
     )

@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react"
 import styled from 'styled-components'
 import { FiMenu, FiSearch } from 'react-icons/fi'
 
-import { Navigation, Logo, Toggle, Menu } from './components'
+import { Logo, Toggle } from './components'
 import { SearchBarContainer } from '../search'
+import { Navigation, NavigationDropdown } from '../navigation'
 import { GridContainer } from '../layout'
 import { responsiveBreakpointDown } from "../../utils"
 
@@ -49,7 +50,7 @@ export const Header = () => {
     }
 
     if (dropdownState.isSearchOpen) activeDropdown = <SearchBarContainer closeDropdown={closeDropdown} />
-    else if (dropdownState.isMenuOpen) activeDropdown = <Menu closeDropdown={closeDropdown} />
+    else if (dropdownState.isMenuOpen) activeDropdown = <NavigationDropdown closeDropdown={closeDropdown} />
 
 
     return (
@@ -69,7 +70,7 @@ export const Header = () => {
                             <FiSearch />
                         </Toggle>
 
-                        <Toggle handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen} menu>
+                        <Toggle handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
                             <FiMenu />
                         </Toggle>
                     </TogglesWrapper>

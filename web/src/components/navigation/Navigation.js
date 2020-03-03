@@ -1,80 +1,61 @@
 import React from "react"
-import { Link } from "gatsby"
 import styled from 'styled-components'
+import { Menu } from './components'
 
-export const Navigation = ({ className }) => {
-    const pages = [
-        {
-            'title': 'Recipes',
-            'link': '/recipes'
-        },
-        {
-            'title': 'Culture',
-            'link': '/culture'
-        }, {
-            'title': 'Blog',
-            'link': '/blog'
-        },
-    ]
+export const Navigation = () => {
 
     return (
-        <nav>
-            <ListWrapper className={className}>
-                {pages.map(page => {
-                    return (
-                        <ListItem key={page.link}>
-                            <ListItemLink to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</ListItemLink>
-                        </ListItem>
-                    )
-                })}
-            </ListWrapper>
-        </nav>
+        <StyledNav>
+            <Menu reduced={true} />
+        </StyledNav>
     )
 }
 
-const ListWrapper = styled.ul`
-    display: flex;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-    justify-content: flex-end;
-    align-items: center;
-`
-
-const ListItem = styled.li`
-    display: inline-block;
-    padding: 0 35px;
-    margin: 0;
-    font-family: ${props => props.theme.font.family.sans};
-
-    &:first-child {
-        padding-left: 0;
+const StyledNav = styled.nav`
+    ul {
+        display: flex;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        justify-content: flex-end;
+        align-items: center;
     }
 
-    &:last-child {
-        padding-right: 0;
-    }
-`
+    li {
+        display: inline-block;
+        padding: 0 35px;
+        margin: 0;
+        font-family: ${props => props.theme.font.family.sans};
 
-const ListItemLink = styled(Link)`
-    text-transform: uppercase;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 7px 10px;
-    font-size: ${props => props.theme.font.size.small};
-    color: ${props => props.theme.color.mediumGrey};
-    transition: color ${props => props.theme.transition.fast};
+        &:first-child {
+            padding-left: 0;
+        }
 
-    &:hover,
-    &:focus {
-        color: ${props => props.theme.color.black};
+        &:last-child {
+            padding-right: 0;
+        }
     }
 
-    &.active {
-        &, &:hover, &:focus {
-            background: ${props => props.theme.color.yellow};
+    a {
+        text-transform: uppercase;
+        font-weight: 600;
+        text-decoration: none;
+        padding: 7px 10px;
+        font-size: ${props => props.theme.font.size.small};
+        color: ${props => props.theme.color.mediumGrey};
+        transition: color ${props => props.theme.transition.fast};
+
+        &:hover,
+        &:focus {
             color: ${props => props.theme.color.black};
+        }
+
+        &.active {
+            &, &:hover, &:focus {
+                background: ${props => props.theme.color.yellow};
+                color: ${props => props.theme.color.black};
+            }
         }
     }
 `

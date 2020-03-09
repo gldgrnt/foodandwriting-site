@@ -28,13 +28,18 @@ export const Menu = ({ reduced = false }) => {
 
     return (
         <ul>
-            {pages.map(page => {
+            {pages.map((page, index) => {
                 if (page.reducedMenuItem || (!reduced && !page.reducedMenuItem)) {
+                    
                     return (
-                        <li key={page.link}>
-                            <Link to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</Link>
-                        </li>
+                        <>
+                            <li key={page.link} fullMenuItem={!page.reducedMenuItem && ""}>
+                                <Link to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</Link>
+                            </li>
+                        </>
                     )} 
+
+                    return false
                 }
             )}
         </ul>

@@ -70,7 +70,7 @@ export const Header = () => {
                             <FiSearch />
                         </Toggle>
 
-                        <Toggle handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
+                        <Toggle menu handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
                             <FiMenu />
                         </Toggle>
                     </TogglesWrapper>
@@ -162,6 +162,6 @@ const DropdownWrapper = styled.div`
 
     ${responsiveBreakpointDown('tablet', `
         padding: 30px 0;
-        height: 100vh;
+        height: calc(100vh - 78px);
     `)}
 `

@@ -32,11 +32,9 @@ export const Menu = ({ reduced = false }) => {
                 if (page.reducedMenuItem || (!reduced && !page.reducedMenuItem)) {
                     
                     return (
-                        <>
-                            <li key={page.link} fullMenuItem={!page.reducedMenuItem && ""}>
-                                <Link to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</Link>
-                            </li>
-                        </>
+                        <li key={page.link} className={!page.reducedMenuItem ? 'fullMenuItem' : ''}>
+                            <Link to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</Link>
+                        </li>
                     )} 
 
                     return false

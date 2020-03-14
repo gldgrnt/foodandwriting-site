@@ -1,4 +1,12 @@
-const slugify = (string, type) => {
+/**
+ * @function slugify
+ * Create a url friendly slug from a given string
+ * 
+ * @param {string} string
+ * @return {string}
+ */
+
+const slugify = (string) => {
     const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
     const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
     const p = new RegExp(a.split('').join('|'), 'g')

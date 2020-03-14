@@ -1,96 +1,39 @@
 import S from '@sanity/desk-tool/structure-builder'
-import { MdLocalDining, MdColorLens, MdImportContacts, MdSettings, MdPerson, MdStyle, MdLocalOffer, MdHome } from 'react-icons/md'
+import { MdLocalDining, MdImportContacts, MdSettings, MdPerson, MdStyle, MdLocalOffer, MdHome } from 'react-icons/md'
+import { IoMdDocument, IoIosFolderOpen } from 'react-icons/io'
 
 export default () =>
     S.list()
-        .title('Admin')
-        .items([
-            S.listItem()
-                .title('Home')
-                .icon(MdHome)
-                .child(
-                    S.editor()
-                        .title('Home')
-                        .id('home')
-                        .schemaType('home'),
-                ),
+        // Main Admin
+        .title('Admin') .items([
+            // Homepage
+            S.listItem().title('Home').icon(MdHome).child(
+                // Homepage editor
+                S.editor().title('Home').id('home').schemaType('home'),
+            ),
+            // About
+            S.listItem().title('About').icon(MdPerson).child(
+                // About editor
+                S.editor().title('About').id('about').schemaType('about'),
+            ),
+            // Divider 
             S.divider(),
-            //Recipes
-            S.listItem()
-                .title('Recipes')
-                .icon(MdLocalDining)
-                .child(
-                    S.documentTypeList('recipe')
-                        .title('Recipes')
-                        .id('recipes')
-                ),
-            //Blog posts
-            S.listItem()
-                .title('Blog posts')
-                .icon(MdImportContacts)
-                .child(
-                    S.documentTypeList('blog')
-                        .title('Blogs posts')
-                        .id('blogs')
-                ),
-            //Culture
-            S.listItem()
-                .title('Culture posts')
-                .icon(MdColorLens)
-                .child(
-                    S.documentTypeList('culture')
-                        .title('Culture posts')
-                        .id('culture')
-                ),
+            // Posts
+            S.listItem().title('Posts').icon(IoMdDocument).child(
+                S.list().title('Posts').items([
+                    // All posts
+                    S.listItem().title('All').icon(IoMdDocument),
+                    // Divicder
+                    S.divider(),
+                    // By category
+                    ...S.documentTypeListItems().filter( item => item.schemaType() === 'category' )
+                ])
+            ),
+            // TEMPORARY
+            S.documentTypeListItem('category'),
+            // Divider
             S.divider(),
-            S.listItem()
-                .title('Categories')
-                .icon(MdStyle)
-                .child(
-                    S.list()
-                        .title('Categories')
-                        .items([
-                            S.listItem()
-                                .title('Recipes')
-                                .icon(MdLocalOffer)
-                                .child(
-                                    S.editor()
-                                        .title('Recipes')
-                                        .id('recipeCategory')
-                                        .schemaType('recipeCategory'),
-                                ),
-                            S.listItem()
-                                .title('Culture')
-                                .icon(MdLocalOffer)
-                                .child(
-                                    S.editor()
-                                        .title('Culture')
-                                        .id('cultureCategory')
-                                        .schemaType('cultureCategory'),
-                                ),
-                            S.listItem()
-                                .title('Blog')
-                                .icon(MdLocalOffer)
-                                .child(
-                                    S.editor()
-                                        .title('Blog')
-                                        .id('blogCategory')
-                                        .schemaType('blogCategory'),
-                                ),
-                        ])
-                ),
-            S.divider(),
-            //About
-            S.listItem()
-                .title('About')
-                .icon(MdPerson)
-                .child(
-                    S.editor()
-                        .title('About')
-                        .id('about')
-                        .schemaType('about'),
-                ),
-            //Config
+            // Config
             S.listItem()
                 .title('Global config')
                 .icon(MdSettings)
@@ -100,15 +43,13 @@ export default () =>
                         .id('global-config')
                         .schemaType('config'),
                 ),
-            //All documents [debugging]
+            
+            /* FOR DEBUGGING */
+            //All documents
             // S.divider(),
-            // S.listItem()
-            //     .title('Everything')
-            //     .child(
-            //         S.list()
-            //             .title('Everything')
-            //             .items([
-            //                 ...S.documentTypeListItems()
-            //             ])
+            // S.listItem().title('Everything').child(
+            //     S.list().title('Everything').items([
+            //             ...S.documentTypeListItems()
+            //         ])
             //     )
         ])

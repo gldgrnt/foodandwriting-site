@@ -19,13 +19,6 @@ export default {
             ]
         },
         {
-            title: 'Category',
-            name: 'category',
-            type: 'reference',
-            to: [{ type: 'recipeCategory' }, { type: 'blogCategory' }, { type: 'cultureCategory' }],
-            readOnly: true,  
-        },
-        {
             title: 'Slug',
             name: 'slug',
             type: 'slug',
@@ -37,6 +30,17 @@ export default {
             validation: Rule => [
                 Rule.required().error('Please add / generate a unique slug')
             ]
+        },
+        {
+            title: 'Category',
+            name: 'category',
+            type: 'reference',
+            to: [{ type: 'category' },],
+        },
+        {
+            title: 'Featured image',
+            name: 'featuredImage',
+            type: 'featuredImage',
         },
         {
             title: 'SEO Description',

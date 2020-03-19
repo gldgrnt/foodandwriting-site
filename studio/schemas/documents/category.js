@@ -1,4 +1,4 @@
-import { MdLocalOffer } from 'react-icons/md'
+import { MdBook } from 'react-icons/md'
 
 import slugify from '../../utils'
 
@@ -6,12 +6,14 @@ export default {
     title: 'Category',
     name: 'category',
     type: 'document',
-    icon: MdLocalOffer,
-    initialValue: () => ({
-        categoryOptions: {
-            _type: 'categoryOptions',
-            categoryType: 'Normal'
+    fieldsets: [
+        {
+            title: 'Category options',
+            name: 'categoryOptions'
         }
+    ],
+    initialValue: () => ({
+        categoryType: 'Normal'
     }),
     fields: [
         {
@@ -41,9 +43,43 @@ export default {
             ]
         },
         {
-            title: 'Category options',
-            name: 'categoryOptions',
-            type: 'categoryOptions'
+            title: 'Category type',
+            name: 'categoryType',
+            type: 'string',
+            fieldset: 'categoryOptions',    
+            options: {
+                list: ['Normal', 'Recipe'],
+                layout: 'dropdown',
+            },
+            description: 'Choose whether posts in this category are normal blog posts or contain recipe options',
+            validation: Rule => [ Rule.required() ]
+        },
+        {
+            title: 'Single name',
+            name: 'singleName',
+            type: 'string',
+            description: `Used when referencing a single post from this category. E.g Featured {SINGLE_NAME}`,
+            fieldset: 'categoryOptions',
+            validation: Rule => [ Rule.required() ]
+        },
+        {
+            title: 'View all name',
+            name: 'viewAllName',
+            type: 'string',
+            description: `Used for view all buttons. E.g View all {VIEW_ALL_NAME}`,
+            fieldset: 'categoryOptions',
+            validation: Rule => [ Rule.required() ]
+        },
+    ],
+    preview: {
+        select: {
+            title: 'title',
+        },
+        prepare: ({ title }) => {
+            return {
+                title,
+                media: MdBook
+            }
         }
-    ]
+    }
 }

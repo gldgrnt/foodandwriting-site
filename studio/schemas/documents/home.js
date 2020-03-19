@@ -40,7 +40,7 @@ export default {
                 {
                     title: 'Post',
                     type: 'reference',
-                    to: [{type: 'blog'}, {type: 'culture'}, {type: 'recipe'},]
+                    to: [{type: 'post'},]
                 },
             ],
             fieldset: 'featuredTopic',

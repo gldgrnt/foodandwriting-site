@@ -1,5 +1,3 @@
-import { ShoppingListItem } from "../../components"
-
 export default {
     title: 'Item',
     name: 'shoppingListItem',

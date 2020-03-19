@@ -6,15 +6,10 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 
 // Documents
 import { 
-    recipe, 
-    blog, 
-    culture, 
     config, 
-    about, 
-    recipeCategory, 
-    cultureCategory, 
-    blogCategory, 
+    about,  
     home, 
+    post,
     category,
 } from './documents'
 
@@ -24,18 +19,18 @@ import {
     portableText, 
     shoppingListItem, 
     featuredImage, 
-    recipeInfo, 
     imageWithAlt, 
-    categoryOptions, 
-    postMeta 
+    postMeta,
+    defaultContent,
+    recipeContent
 } from './objects'
 
 export default createSchema({
     name: 'default',
     types: schemaTypes.concat([
         //Documents
-        recipe, blog, culture, about, config, recipeCategory, cultureCategory, blogCategory, home, category,
+        post, about, config, home, category,
         //Objects
-        flexImages, portableText, shoppingListItem, featuredImage, recipeInfo, imageWithAlt, categoryOptions, postMeta
+        flexImages, portableText, shoppingListItem, featuredImage, imageWithAlt, postMeta, defaultContent, recipeContent,
     ])
 })

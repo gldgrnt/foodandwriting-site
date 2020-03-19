@@ -2,8 +2,8 @@
  * @function slugify
  * Create a url friendly slug from a given string
  * 
- * @param {string} string
- * @return {string}
+ * @param {string} string String used to create the slug
+ * @return {string} Slug
  */
 
 const slugify = (string) => {

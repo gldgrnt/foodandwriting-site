@@ -21,7 +21,14 @@ export default {
             validation: Rule => [
                 Rule.max(160).error('Too many characters')
             ]
-        }
+        },
+        {
+            title: 'Social media image',
+            name: 'socialMediaImage',
+            type: 'image',
+            description: 'Image used when sharing the site to social media (posts will use their featured image when shared)',
+            fieldset: 'seo'
+        },
     ],
     preview: {
         select: {

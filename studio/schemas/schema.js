@@ -18,9 +18,7 @@ import {
     flexImages, 
     portableText, 
     shoppingListItem, 
-    featuredImage, 
     imageWithAlt, 
-    postMeta,
     defaultContent,
     recipeContent
 } from './objects'
@@ -29,8 +27,17 @@ export default createSchema({
     name: 'default',
     types: schemaTypes.concat([
         //Documents
-        post, about, config, home, category,
+        post, 
+        about, 
+        config, 
+        home, 
+        category,
         //Objects
-        flexImages, portableText, shoppingListItem, featuredImage, imageWithAlt, postMeta, defaultContent, recipeContent,
+        flexImages, 
+        portableText, 
+        shoppingListItem, 
+        imageWithAlt, 
+        defaultContent, 
+        recipeContent,
     ])
 })

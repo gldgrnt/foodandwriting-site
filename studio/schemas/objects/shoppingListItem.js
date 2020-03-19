@@ -5,7 +5,7 @@ export default {
     fields: [
         {
             title: 'Ingredient',
-            name: 'itemSearch',
+            name: 'ingredient',
             type: 'string',
         },
         {
@@ -16,7 +16,7 @@ export default {
     ],
     preview: {
         select: {
-            name: 'itemSearch',
+            name: 'ingredient',
             amount: 'amount'
         },
         prepare(select) {

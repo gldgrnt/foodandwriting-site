@@ -37,7 +37,7 @@ export default () =>
                     S.documentTypeList('category').title('Posts by category').child(catId =>
 
                         // List out project documents where the _id for the selected
-                        S.documentList().schemaType('post').title('Posts').filter('_type == "post" && postMeta.category._ref == $catId').params({ catId })
+                        S.documentList().schemaType('post').title('Posts').filter('_type == "post" && category._ref == $catId').params({ catId })
                     )
                 ),
             ])

@@ -1,5 +1,6 @@
 import Moment from 'moment'
 import { MdImportContacts } from 'react-icons/md'
+import slugify from '../../utils'
 
 export default {
     title: 'post',
@@ -7,6 +8,10 @@ export default {
     type: 'document',
     icon: MdImportContacts,
     fieldsets: [
+        {
+            title: 'Meta',
+            name: 'meta'
+        },
         {
             title: 'Main Content',
             name: 'mainContent',
@@ -18,14 +23,61 @@ export default {
             name: 'title',
             type: 'string'
         },
+        // Meta
         {
-            // Containg date, category, slug, seo, featuredImage
-            title: 'Meta',
-            name: 'postMeta',
-            type: 'postMeta'
+            title: 'Date',
+            name: 'date',
+            type: 'datetime',
+            fieldset: 'meta',
+            options: {
+                dateFormat: 'DD/MM/YYYY',
+                timeFormat: 'HH:mm',
+                timeStep: 60
+            },
+            validation: Rule => [
+                Rule.required().error('Please add a date')
+            ]
         },
         {
-            // Main post data
+            title: 'Slug',
+            name: 'slug',
+            type: 'slug',
+            fieldset: 'meta',
+            description: 'Click generate to auto generate a slug',
+            options: {
+                source: 'title',
+                slugify: slugify
+            },
+            validation: Rule => [
+                Rule.required().error('Please add / generate a unique slug')
+            ]
+        },
+        {
+            title: 'Category',
+            name: 'category',
+            type: 'reference',
+            fieldset: 'meta',
+            to: [{ type: 'category' },],
+        },
+        {
+            title: 'Featured image',
+            name: 'featuredImage',
+            type: 'imageWithAlt',
+            fieldset: 'meta',
+        },
+        {
+            title: 'SEO Description',
+            name: 'seoDescription',
+            type: 'text',
+            fieldset: 'meta',
+            description: 'Max characters 160',
+            rows: 2,
+            validation: Rule => [
+                Rule.max(160).error('Too many characters')
+            ]
+        },
+        // Content
+        {
             title: 'Content',
             name: 'content',
             type: 'array',
@@ -47,16 +99,16 @@ export default {
           title: 'Date',
           name: 'sortDate',
           by: [
-            {field: 'postMeta.date', direction: 'desc'}
+            {field: 'date', direction: 'desc'}
           ]
         },
     ],
     preview: {
         select: {
             title: 'title',
-            date: 'postMeta.date',
-            image: 'postMeta.featuredImage',
-            category: 'postMeta.category.title'
+            date: 'date',
+            image: 'featuredImage',
+            category: 'category.title'
         },
         prepare(select) {
             const { title, date, image, category } = select

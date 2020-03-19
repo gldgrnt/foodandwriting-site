@@ -1,8 +1,6 @@
 export { default as flexImages } from './flexImages'
 export { default as portableText } from './portableText'
 export { default as shoppingListItem } from './shoppingListItem'
-export { default as featuredImage } from './featuredImage'
 export { default as imageWithAlt } from './imageWithAlt'
-export { default as postMeta } from './postMeta'
 export { default as defaultContent } from './defaultContent'
 export { default as recipeContent } from './recipeContent'

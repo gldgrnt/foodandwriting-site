@@ -58,6 +58,9 @@ export default {
             type: 'reference',
             fieldset: 'meta',
             to: [{ type: 'category' },],
+            validation: Rule => [
+                Rule.required().error('Add this post to a category')
+            ]
         },
         {
             title: 'Featured image',

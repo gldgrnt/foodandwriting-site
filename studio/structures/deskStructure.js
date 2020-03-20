@@ -1,5 +1,5 @@
 import S from '@sanity/desk-tool/structure-builder'
-import { MdLibraryBooks, MdSettings, MdPerson, MdCollectionsBookmark, MdHome } from 'react-icons/md'
+import { MdLibraryBooks, MdSettings, MdPerson, MdCollectionsBookmark, MdHome, MdFilterNone } from 'react-icons/md'
 
 export default () =>
     S.list().title('Admin') .items([
@@ -26,9 +26,25 @@ export default () =>
             S.list().title('Posts').items([
 
                 // All posts
-                S.listItem().title('All').icon(MdLibraryBooks).child(
+                S.listItem().title('All posts').icon(MdLibraryBooks).child(
                     S.documentTypeList('post').title('All posts').defaultOrdering([{field: 'postMeta.date', direction: 'desc'}])
                 ),
+
+                // Divider
+                S.divider(),
+
+                // Published
+                S.listItem().title('Published').icon(MdLibraryBooks).child(
+                    S.documentList().schemaType('post').title('Published posts').filter('_type == "post" && !(_id in path("drafts.**"))')
+                ),
+
+                // Drafts
+                S.listItem().title('Drafts').icon(MdFilterNone).child(
+                    S.documentList().schemaType('post').title('Draft posts').filter('_type == "post" && _id in path("drafts.**")')
+                ),
+                
+                // Divider
+                S.divider(),
 
                 // By category
                 S.listItem().title('Posts by category').icon(MdCollectionsBookmark).child(

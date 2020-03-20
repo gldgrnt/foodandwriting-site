@@ -1,11 +1,11 @@
 import { MdBook } from 'react-icons/md'
-
 import slugify from '../../utils'
 
 export default {
     title: 'Category',
     name: 'category',
     type: 'document',
+    icon: MdBook,
     fieldsets: [
         {
             title: 'Category options',
@@ -78,7 +78,6 @@ export default {
         prepare: ({ title }) => {
             return {
                 title,
-                media: MdBook
             }
         }
     }

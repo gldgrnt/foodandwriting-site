@@ -1,17 +1,20 @@
 import S from '@sanity/base/structure-builder'
-import sanityClient from '@sanity/client'
-
-const client = sanityClient({
-    projectId: "s1s9nwnc",
-    dataset: "development",
-    useCdn: true
-})
-
-// client.fetch
-
 
 export default [
-    // Add in all initial values
-    ...S.defaultInitialValueTemplateItems()
+    // New post
+    S.initialValueTemplateItem('post', {})
+        .id('post')
+        .title('New post'),
+
+    // New category
+    S.initialValueTemplateItem('category', {})
+        .id('category')
+        .title('New category'),
+        
+    /**
+     * Debugging
+     * 
+     * ...S.defaultInitialValueTemplateItems()
+     */
     
 ]

@@ -3,7 +3,7 @@ import { MdImportContacts } from 'react-icons/md'
 import slugify from '../../utils'
 
 export default {
-    title: 'post',
+    title: 'Post',
     name: 'post',
     type: 'document',
     icon: MdImportContacts,

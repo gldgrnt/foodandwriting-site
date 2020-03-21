@@ -39,6 +39,14 @@
         {
             "name": "part:@sanity/base/initial-value-templates",
             "path": "./structures/initialValueTemplates.js"
-          }
+        },
+        {
+            "implements": "part:@sanity/base/brand-logo",
+            "path": "./static/Logo.js"
+        },
+        {
+            "implements": "part:@sanity/base/theme/variables/override-style",
+            "path": "./styles/variables.css"
+        }
     ]
 }

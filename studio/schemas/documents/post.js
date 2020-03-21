@@ -29,6 +29,7 @@ export default {
             name: 'date',
             type: 'datetime',
             fieldset: 'meta',
+            description: 'Posts will be ordered by date. The date won\'t always be shown on the front end (i.e for recipes)',
             options: {
                 dateFormat: 'DD/MM/YYYY',
                 timeFormat: 'HH:mm',

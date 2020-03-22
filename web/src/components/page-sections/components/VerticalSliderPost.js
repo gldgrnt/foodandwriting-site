@@ -6,10 +6,10 @@ import Img from 'gatsby-image/withIEPolyfill'
 import { SmallCaps } from '../../ui'
 import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
 
-export const VerticalSliderPost = ({ post: {postMeta, title, featuredImage} }) => {
+export const VerticalSliderPost = ({ post ,post: {title, featuredImage} }) => {
 
     // Slug
-    const slug = getPostSlug(postMeta)
+    const slug = getPostSlug(post)
 
     return (
         <LinkWrapper href={slug}>
@@ -93,7 +93,7 @@ const ImageWrapper = styled.div`
 `
 
 const Title = styled.h3`
-    font-size: ${props => props.theme.font.size.increased};
+    font-size: ${props => props.theme.font.size.medium};
     margin-bottom: 10px;
 
     ${props => responsiveBreakpointDown('tablet', `

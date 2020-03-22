@@ -87,7 +87,7 @@ export const PostSlider = ({ title, posts }) => {
                 </UpperWrapper>
 
                 <StyledSlider ref={r => sliderRef = r} {...settings}>
-                    {posts.map((post, index) => <VerticalSliderPost key={index} post={post.node} />)}
+                    {posts.map(({node}, index) => <VerticalSliderPost key={index} post={node} />)}
                 </StyledSlider>
             </GridContainer>
         </StyledWrapper>

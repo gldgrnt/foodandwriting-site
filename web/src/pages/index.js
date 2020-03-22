@@ -5,23 +5,22 @@ import { SEO } from '../utils'
 
 import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
+import { PreviewPostFragment } from '../graphql'
 
-const IndexPage = ({ data: { recipesData, featuredTopicData, blogListCategoryData, blogListPostsData, cultureListCategoryData, cultureListPostsData } }) => {
+const IndexPage = ({data: { recipes }}) => {
 
-    // Set up post data
-    const featuredRecipe = recipesData.edges[0].node
-    const sliderRecipes = recipesData.edges.filter((edge, index) => index !== 0)
+    // Destructure to get featuredRecipe and sliderRecipes
+    const [featuredRecipe, ...sliderRecipes] = recipes.edges
 
-    const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopicData
+    // const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopicData
 
     return (
         <>
             <SEO title="Home" description="Website coming soon" />
             <Page>
-
                 {/* Main post */}
                 <Section>
-                    <FeaturedPost post={featuredRecipe} />
+                    <FeaturedPost post={featuredRecipe.node} />
                 </Section>
 
                 {/* Post slider */}
@@ -31,7 +30,7 @@ const IndexPage = ({ data: { recipesData, featuredTopicData, blogListCategoryDat
 
                 {/* Featured section */}
                 <Section spacingTop={{'monitor': 4, 'tablet': 3}} spacingBottom={{'monitor': 4, 'tablet': 3}} whiteGrey>
-                    <FeaturedTopic title={featuredTopicTitle} subtitle={featuredTopicSubtitle} posts={featuredTopicPosts} />
+                    {/* <FeaturedTopic title={featuredTopicTitle} subtitle={featuredTopicSubtitle} posts={featuredTopicPosts} /> */}
                 </Section>
 
                 {/* Horizontal post list section */}
@@ -40,13 +39,13 @@ const IndexPage = ({ data: { recipesData, featuredTopicData, blogListCategoryDat
                         <GridRow>
                             {/* Blog */}
                             <GridCol cols={{'monitor': 4, 'laptop': 8}}>
-                                <Section as="div" spacingBottom={{'laptop': 4, 'tablet': 3}}>
+                                {/* <Section as="div" spacingBottom={{'laptop': 4, 'tablet': 3}}>
                                     <PostList category={blogListCategoryData} posts={blogListPostsData.edges} />
-                                </Section>
+                                </Section> */}
                             </GridCol>
 
                             <GridCol cols={{'monitor': 4, 'laptop': 8}}>
-                                <PostList category={cultureListCategoryData} posts={cultureListPostsData.edges} />
+                                {/* <PostList category={cultureListCategoryData} posts={cultureListPostsData.edges} /> */}
                             </GridCol>
                         </GridRow>
                     </GridContainer>
@@ -65,198 +64,178 @@ export default IndexPage
 
 export const pageQuery = graphql`
     query HomePagequery {
-        ## Recipes data
-        recipesData: allSanityRecipe(limit: 7, sort: {order: DESC, fields: postMeta___date}) {
+        # Recipes
+        recipes: allSanityPost(limit: 7, sort: {order: DESC, fields: date}, filter: {category: {title: {eq: "Recipes"}}}) {
             edges {
                 node {
-                    postMeta {
-            slug {
-              current
-            }
-            category {
-              ... on SanityRecipeCategory {
-                id
-                slug {
-                  current
-                }
-                categoryOptions {
-                  singleName
-                }
-              }
-            }
-          }
-          recipeIntro
-          title
-          featuredImage {
-            alt
-            asset {
-              id
-              fluid {
-                ...GatsbySanityImageFluid_noBase64
-              }
-            }
-          }
+                    ...PreviewPostFragment
+                    # Recipe intro
+                    content {
+                        ... on SanityRecipeContent {
+                            recipeIntro
+                        }
+                    }
                 }
             }
         }
 
         ## Featured topic data
-        featuredTopicData: sanityHome {
-            featuredTopicTitle
-            featuredTopicSubtitle
-            featuredTopicPosts {
-            ... on SanityBlog {
-                featuredImage {
-                alt
-                asset {
-                    fluid {
-                        ...GatsbySanityImageFluid_noBase64
-                    }
-                }
-                }
-                title
-                postMeta {
-                category {
-                    ... on SanityBlogCategory {
-                    slug {
-                        current
-                    }
-                    }
-                }
-                slug {
-                    current
-                }
-                }
-            }
-            ... on SanityCulture {
-                featuredImage {
-                alt
-                asset {
-                    fluid {
-                        ...GatsbySanityImageFluid_noBase64
-                    }
-                }
-                }
-                title
-                postMeta {
-                category {
-                    ... on SanityCultureCategory {
-                    slug {
-                        current
-                    }
-                    }
-                }
-                slug {
-                    current
-                }
-                }
-            }
-            ... on SanityRecipe {
-                featuredImage {
-                alt
-                asset {
-                    fluid {
-                        ...GatsbySanityImageFluid_noBase64
-                    }
-                }
-                }
-                title
-                postMeta {
-                category {
-                    ... on SanityRecipeCategory {
-                    slug {
-                        current
-                    }
-                    }
-                }
-                slug {
-                    current
-                }
-                }
-            }
-            }
-        }
+        # featuredTopicData: sanityHome {
+        #     featuredTopicTitle
+        #     featuredTopicSubtitle
+        #     featuredTopicPosts {
+        #     ... on SanityBlog {
+        #         featuredImage {
+        #         alt
+        #         asset {
+        #             fluid {
+        #                 ...GatsbySanityImageFluid_noBase64
+        #             }
+        #         }
+        #         }
+        #         title
+        #         postMeta {
+        #         category {
+        #             ... on SanityBlogCategory {
+        #             slug {
+        #                 current
+        #             }
+        #             }
+        #         }
+        #         slug {
+        #             current
+        #         }
+        #         }
+        #     }
+        #     ... on SanityCulture {
+        #         featuredImage {
+        #         alt
+        #         asset {
+        #             fluid {
+        #                 ...GatsbySanityImageFluid_noBase64
+        #             }
+        #         }
+        #         }
+        #         title
+        #         postMeta {
+        #         category {
+        #             ... on SanityCultureCategory {
+        #             slug {
+        #                 current
+        #             }
+        #             }
+        #         }
+        #         slug {
+        #             current
+        #         }
+        #         }
+        #     }
+        #     ... on SanityRecipe {
+        #         featuredImage {
+        #         alt
+        #         asset {
+        #             fluid {
+        #                 ...GatsbySanityImageFluid_noBase64
+        #             }
+        #         }
+        #         }
+        #         title
+        #         postMeta {
+        #         category {
+        #             ... on SanityRecipeCategory {
+        #             slug {
+        #                 current
+        #             }
+        #             }
+        #         }
+        #         slug {
+        #             current
+        #         }
+        #         }
+        #     }
+        #     }
+        # }
 
-        ## Post list data
-        # Blog
-        blogListCategoryData: sanityBlogCategory {
-            slug {
-            current
-            }
-            title
-            categoryOptions {
-            viewAllName
-            }
-        }
-        blogListPostsData: allSanityBlog(limit: 3) {
-            edges {
-            node {
-                id
-                title
-                postMeta {
-                slug {
-                    current
-                }
-                date
-                category {
-                    ... on SanityBlogCategory {
-                    slug {
-                        current
-                    }
-                    }
-                }
-                }
-                featuredImage {
-                alt
-                asset {
-                    fluid {
-                        ...GatsbySanityImageFluid_noBase64
-                    }
-                }
-                }
-            }
-            }
-        }
+        # ## Post list data
+        # # Blog
+        # blogListCategoryData: sanityBlogCategory {
+        #     slug {
+        #     current
+        #     }
+        #     title
+        #     categoryOptions {
+        #     viewAllName
+        #     }
+        # }
+        # blogListPostsData: allSanityBlog(limit: 3) {
+        #     edges {
+        #     node {
+        #         id
+        #         title
+        #         postMeta {
+        #         slug {
+        #             current
+        #         }
+        #         date
+        #         category {
+        #             ... on SanityBlogCategory {
+        #             slug {
+        #                 current
+        #             }
+        #             }
+        #         }
+        #         }
+        #         featuredImage {
+        #         alt
+        #         asset {
+        #             fluid {
+        #                 ...GatsbySanityImageFluid_noBase64
+        #             }
+        #         }
+        #         }
+        #     }
+        #     }
+        # }
 
-        # Culture
-        cultureListCategoryData: sanityCultureCategory {
-            slug {
-            current
-            }
-            title
-            categoryOptions {
-            viewAllName
-            }
-        }
-        cultureListPostsData: allSanityCulture(limit: 3) {
-            edges {
-            node {
-                id
-                title
-                postMeta {
-                slug {
-                    current
-                }
-                date
-                category {
-                    ... on SanityCultureCategory {
-                    slug {
-                        current
-                    }
-                    }
-                }
-                }
-                featuredImage {
-                alt
-                asset {
-                    fluid {
-                        ...GatsbySanityImageFluid_noBase64
-                    }
-                }
-                }
-            }
-            }
-        }
+        # # Culture
+        # cultureListCategoryData: sanityCultureCategory {
+        #     slug {
+        #     current
+        #     }
+        #     title
+        #     categoryOptions {
+        #     viewAllName
+        #     }
+        # }
+        # cultureListPostsData: allSanityCulture(limit: 3) {
+        #     edges {
+        #     node {
+        #         id
+        #         title
+        #         postMeta {
+        #         slug {
+        #             current
+        #         }
+        #         date
+        #         category {
+        #             ... on SanityCultureCategory {
+        #             slug {
+        #                 current
+        #             }
+        #             }
+        #         }
+        #         }
+        #         featuredImage {
+        #         alt
+        #         asset {
+        #             fluid {
+        #                 ...GatsbySanityImageFluid_noBase64
+        #             }
+        #         }
+        #         }
+        #     }
+        #     }
+        # }
 
     }
     

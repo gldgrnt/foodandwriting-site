@@ -8,11 +8,10 @@ import { InternalLink, SmallCaps } from '../ui'
 import { Link } from 'gatsby'
 import { responsiveBreakpointDown, getPostSlug } from '../../utils'
 
-export const FeaturedPost = ({ post: { title, postMeta, featuredImage, recipeIntro } }) => {
+export const FeaturedPost = ({ post, post: { title, category, featuredImage, recipeIntro }}) => {
     
     // Set up variables
-    const slug = getPostSlug(postMeta)
-    const categorySingleName = postMeta.category.categoryOptions.singleName
+    const slug = getPostSlug(post)
     const caption = recipeIntro ? (recipeIntro.length > 160 ? recipeIntro.substr(0, 157) + '...' : recipeIntro.substr(0, 160)) : 'Curabitur lacinia at lectus ac sodales. Sed tristique faucibus odio eget rhoncus. Quisque mollis dapibus libero et sagittis. Suspendisse sollicitudin laoreet...'
 
     return (
@@ -24,12 +23,12 @@ export const FeaturedPost = ({ post: { title, postMeta, featuredImage, recipeInt
 
                 <CaptionContainer>
                     <CaptionInner>
-                        <SmallCaps as="p" size="small">Featured {categorySingleName}</SmallCaps>
+                        <SmallCaps as="p" size="small">Featured {category.singleName}</SmallCaps>
                         <InternalLink to={slug} title>
                             <CaptionTitle>{title}</CaptionTitle>
                         </InternalLink>
                         <CaptionText>{caption}</CaptionText>
-                        <InternalLink to={slug} primary>View {categorySingleName}</InternalLink>
+                        <InternalLink to={slug} primary>View {category.singleName}</InternalLink>
                     </CaptionInner>
                 </CaptionContainer>
             </Article>

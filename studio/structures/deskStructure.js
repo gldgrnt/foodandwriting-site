@@ -42,24 +42,24 @@ export default () =>
                 S.listItem().title('Drafts').icon(MdFilterNone).child(
                     S.documentList().schemaType('post').title('Draft posts').filter('_type == "post" && _id in path("drafts.**")')
                 ),
-                
-                // Divider
-                S.divider(),
-
-                // By category
-                S.listItem().title('Posts by category').icon(MdCollectionsBookmark).child(
-
-                    // List out all categories
-                    S.documentTypeList('category').title('Posts by category').child(catId =>
-
-                        // List out project documents where the _id for the selected
-                        S.documentList().schemaType('post').title('Posts').filter('_type == "post" && category._ref == $catId').params({ catId }).initialValueTemplates([
-                            S.initialValueTemplateItem('post-in-category', {catId})
-                          ])
-                    )
-                ),
             ])
         ),
+
+        // By category
+        S.listItem().title('Posts by category').icon(MdCollectionsBookmark).child(
+
+            // List out all categories
+            S.documentTypeList('category').title('Posts by category').child(catId =>
+
+                // List out project documents where the _id for the selected
+                S.documentList().schemaType('post').title('Posts').filter('_type == "post" && category._ref == $catId').params({ catId }).initialValueTemplates([
+                    S.initialValueTemplateItem('post-in-category', {catId})
+                  ])
+            )
+        ),
+
+        // Divider
+        S.divider(),
 
         // Categories
         S.documentTypeListItem('category').title('Categories').icon(MdCollectionsBookmark),

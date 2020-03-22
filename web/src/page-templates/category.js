@@ -11,7 +11,7 @@ export default ({ category, posts, getMorePosts }) => {
     // Variables
     const { title, seoDescription, viewAllName } = category
     const showGetPostsButton = posts.length < posts.totalCount
-    const postSizePercentage = category.categoryType === 'Normal' ? 67 : 135
+    const postSizePercentage = category.categoryType === 'Normal' ? 67 : 120
 
     return (
         <>

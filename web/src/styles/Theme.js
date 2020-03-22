@@ -31,7 +31,7 @@ export const themeVariables = {
             small: '0.8rem',
             regular: '1rem',
             increased: '1.125rem',
-            medium: '1.25rem',
+            medium: '1.35rem',
             large: '1.5rem',
             huge: '1.67rem',
             giant: '2rem'

@@ -44,8 +44,8 @@ const StyledLink = styled(Link)`
     text-decoration: none;
     outline: none;
 
-    ${responsiveBreakpointDown('desktop', `width: calc((100% / 3) - (120px / 3));`)}
-    ${responsiveBreakpointDown('laptop', `width: calc((100% / 3) - (80px / 3));`)}
+    ${responsiveBreakpointDown('desktop', `width: calc((100% / 2) - (120px / 2));`)}
+    ${responsiveBreakpointDown('laptop', `width: calc((100% / 2) - (80px / 2));`)}
     ${responsiveBreakpointDown('tablet', `width: calc((100% / 2) - (40px / 2));`)}
     ${responsiveBreakpointDown('mobile', `width: 100%;`)}
 
@@ -73,7 +73,7 @@ const ImageWrapper = styled.div`
     position: relative;
     background: ${props => props.theme.color.whiteGrey};
     padding-top: ${props => props.imgHeight}%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     
     > * {
         position: absolute !important;
@@ -86,7 +86,7 @@ const ImageWrapper = styled.div`
 
 const Title = styled.h2`
     font-size: ${props => props.theme.font.size.medium};
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding-top: 5px;
     padding-right: 30px;
 `

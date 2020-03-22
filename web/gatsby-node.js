@@ -1,4 +1,6 @@
-// Create pages posts
+/**
+ * Create pages from graphql
+ */
 exports.createPages = async ({ graphql, actions }) => {
     const { createPage } = actions
 

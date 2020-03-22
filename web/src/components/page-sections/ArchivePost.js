@@ -7,12 +7,11 @@ import { Link } from 'gatsby'
 import { getPostSlug, getPostDate, responsiveBreakpointDown, getFluidPropsFromId } from '../../utils'
 import { SmallCaps } from '../ui'
 
-export const ArchivePost = ({ post: {title, postMeta, featuredImage}, imgHeight, showDate = true }) => {
+export const ArchivePost = ({ post, imgHeight, showDate = true }) => {
+    const {title, category, featuredImage} = post
 
-    const slug = getPostSlug(postMeta)
-    const categoryName = postMeta.category.categoryOptions.singleName
-    const date = getPostDate(postMeta.date)
-
+    const slug = getPostSlug(post)
+    const date = getPostDate(post.date)
     const fluid = featuredImage !== null ? (featuredImage.asset.hasOwnProperty('fluid') ? featuredImage.asset.fluid : getFluidPropsFromId(featuredImage.asset._ref)) : false
 
     return (
@@ -22,9 +21,9 @@ export const ArchivePost = ({ post: {title, postMeta, featuredImage}, imgHeight,
                     {fluid? <Img fluid={fluid} /> : <div></div>}
                 </ImageWrapper>
                 { showDate && 
-                    <SmallCaps as="time" size="small" datetime={date.faw}>{date.formatted}</SmallCaps> }
+                    <SmallCaps as="time" size="small" datetime={date.raw}>{date.formatted}</SmallCaps> }
                 <Title>{title}</Title>
-                <SmallCaps size="tiny" link>View {categoryName}</SmallCaps>
+                <SmallCaps size="tiny" link>View {category.singleName}</SmallCaps>
             </article>
         </StyledLink>
     )
@@ -32,7 +31,7 @@ export const ArchivePost = ({ post: {title, postMeta, featuredImage}, imgHeight,
 
 ArchivePost.prototypes = {
     post: PropTypes.shape({
-        postMeta: PropTypes.object.isRequired,
+        slug: PropTypes.object.isRequired,
         title: PropTypes.string.isRequired,
         featuredImage: PropTypes.object.isRequired
     }).isRequired,

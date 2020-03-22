@@ -3,83 +3,34 @@ exports.createPages = async ({ graphql, actions }) => {
     const { createPage } = actions
 
     const pagesToCreate = await graphql(`
-    {
-        allSanityRecipe {
-          edges {
-            node {
-              id
-              postMeta {
-                category {
-                  ... on SanityRecipeCategory {
-                    slug {
-                      current
-                    }
-                  }
-                }
-                slug {
-                    current
-                }
-              }
-            }
-          }
-        }
-        allSanityBlog {
-            edges {
-                node {
-                  id
-                  postMeta {
-                    category {
-                      ... on SanityBlogCategory {
+        {
+            posts: allSanityPost {
+                edges {
+                    node {
+                        _id
                         slug {
-                          current
+                            current
                         }
-                      }
+                        category {
+                            slug {
+                                current
+                            }
+                            categoryType
+                        }
                     }
-                    slug {
-                        current
-                    }
-                  }
                 }
             }
-        }
-        allSanityCulture {
-            edges {
-                node {
-                  id
-                  postMeta {
-                    category {
-                      ... on SanityCultureCategory {
+            categories: allSanityCategory {
+                edges {
+                    node {
+                        _id
                         slug {
-                          current
+                            current
                         }
-                      }
                     }
-                    slug {
-                        current
-                    }
-                  }
                 }
             }
         }
-        sanityBlogCategory {
-            slug {
-              current
-            }
-            id
-        }
-        sanityCultureCategory {
-            slug {
-              current
-            }
-            id
-        }
-        sanityRecipeCategory {
-            slug {
-              current
-            }
-            id
-        }
-      }
     `)
 
     // Check for errors
@@ -87,59 +38,30 @@ exports.createPages = async ({ graphql, actions }) => {
         throw pagesToCreate.errors
     }
 
-    const postPages = [
-        {   // Recipes
-            'template': './src/page-templates/singleRecipe.js',
-            'edges': pagesToCreate.data.allSanityRecipe.edges || []
-        },
-        {   // Blogs
-            'template': './src/page-templates/singleBlog.js',
-            'edges': pagesToCreate.data.allSanityBlog.edges || []
-        },
-        {   // Culture
-            'template': './src/page-templates/singleCulture.js',
-            'edges': pagesToCreate.data.allSanityCulture.edges || []
-        },
-    ]
+    // Destructure graphql query
+    const { posts, categories } = pagesToCreate.data
 
-    // Post page loop
-    postPages.forEach((page) => {
-        let { template, edges} = page
+    // Create post pages
+    posts.edges.forEach(({ node }) => {
+            let path = `/${node.category.slug.current}/${node.slug.current}`
+            let isDefault = node.category.categoryType === 'Normal'
 
-        edges.forEach((edge, index) => {
-            let path = `/${edge.node.postMeta.category.slug.current}/${edge.node.postMeta.slug.current}`
-    
             createPage({
                 path,
-                component: require.resolve(template),
-                context: {id: edge.node.id},
+                component: require.resolve('./src/page-templates/post.js'),
+                context: {_id: node._id, isDefaultPost: isDefault},
             })
-        })
-    })
+        }
+    )
 
-    // Categories
-    const categoryPages = [
-        {
-            'template': './src/page-templates/categoryBlog.js',
-            'category': pagesToCreate.data.sanityBlogCategory
-        }, 
-        {
-            'template': './src/page-templates/categoryCulture.js',
-            'category': pagesToCreate.data.sanityCultureCategory
-        }, 
-        {
-            'template': './src/page-templates/categoryRecipe.js',
-            'category': pagesToCreate.data.sanityRecipeCategory
-        },
-    ]
-    
-    // Category loop
-    categoryPages.forEach(({template, category}) => {
+    // Create category pages
+    categories.edges.forEach(({ node }) => {
+        let path = `/${node.slug.current}`
 
         createPage({
-            path: `/${category.slug.current}`,
-            component: require.resolve(template),
-            context: {id: category.id}
+            path,
+            component: require.resolve('./src/page-templates/categoryContainer.js'),
+            context: {_id: node._id}
         })
     })
 }

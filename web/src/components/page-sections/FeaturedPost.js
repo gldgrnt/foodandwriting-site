@@ -8,6 +8,9 @@ import { InternalLink, SmallCaps } from '../ui'
 import { Link } from 'gatsby'
 import { responsiveBreakpointDown, getPostSlug } from '../../utils'
 
+/**
+ * FeaturedPost component
+ */
 export const FeaturedPost = ({ post, post: { title, category, featuredImage, recipeIntro }}) => {
     
     // Set up variables
@@ -36,15 +39,29 @@ export const FeaturedPost = ({ post, post: { title, category, featuredImage, rec
     )
 }
 
+/**
+ * Proptypes
+ */
 FeaturedPost.propTypes = {
     post: PropTypes.shape({
         title: PropTypes.string.isRequired,
-        postMeta: PropTypes.object.isRequired,
+        slug: PropTypes.shape({
+            current: PropTypes.string.isRequired
+        }),
+        category: PropTypes.shape({
+            singleName: PropTypes.string.isRequired,
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired
+            })
+        }),
         featuredImage: PropTypes.object.isRequired,
-        recipeIntro: PropTypes.string //.isRequired
-    }).isRequired
+        recipeIntro: PropTypes.string
+    })
 }
 
+/**
+ * Styles
+ */
 const Article = styled.article`
     display: flex;
     width: 100%;

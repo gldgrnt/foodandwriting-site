@@ -5,14 +5,13 @@ import { SEO } from '../utils'
 
 import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
-import { PreviewPostFragment } from '../graphql'
 
-const IndexPage = ({data: { recipes }}) => {
+const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
-    // Destructure to get featuredRecipe and sliderRecipes
+    // Destructure to separate the data
     const [featuredRecipe, ...sliderRecipes] = recipes.edges
+    const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopic
 
-    // const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopicData
 
     return (
         <>
@@ -30,7 +29,7 @@ const IndexPage = ({data: { recipes }}) => {
 
                 {/* Featured section */}
                 <Section spacingTop={{'monitor': 4, 'tablet': 3}} spacingBottom={{'monitor': 4, 'tablet': 3}} whiteGrey>
-                    {/* <FeaturedTopic title={featuredTopicTitle} subtitle={featuredTopicSubtitle} posts={featuredTopicPosts} /> */}
+                    <FeaturedTopic title={featuredTopicTitle} subtitle={featuredTopicSubtitle} posts={featuredTopicPosts} />
                 </Section>
 
                 {/* Horizontal post list section */}
@@ -39,13 +38,13 @@ const IndexPage = ({data: { recipes }}) => {
                         <GridRow>
                             {/* Blog */}
                             <GridCol cols={{'monitor': 4, 'laptop': 8}}>
-                                {/* <Section as="div" spacingBottom={{'laptop': 4, 'tablet': 3}}>
-                                    <PostList category={blogListCategoryData} posts={blogListPostsData.edges} />
-                                </Section> */}
+                                <Section as="div" spacingBottom={{'laptop': 4, 'tablet': 3}}>
+                                    <PostList category={blog} posts={blogPosts.edges} />
+                                </Section>
                             </GridCol>
 
                             <GridCol cols={{'monitor': 4, 'laptop': 8}}>
-                                {/* <PostList category={cultureListCategoryData} posts={cultureListPostsData.edges} /> */}
+                                <PostList category={culture} posts={culturePosts.edges} />
                             </GridCol>
                         </GridRow>
                     </GridContainer>
@@ -78,165 +77,44 @@ export const pageQuery = graphql`
                 }
             }
         }
-
-        ## Featured topic data
-        # featuredTopicData: sanityHome {
-        #     featuredTopicTitle
-        #     featuredTopicSubtitle
-        #     featuredTopicPosts {
-        #     ... on SanityBlog {
-        #         featuredImage {
-        #         alt
-        #         asset {
-        #             fluid {
-        #                 ...GatsbySanityImageFluid_noBase64
-        #             }
-        #         }
-        #         }
-        #         title
-        #         postMeta {
-        #         category {
-        #             ... on SanityBlogCategory {
-        #             slug {
-        #                 current
-        #             }
-        #             }
-        #         }
-        #         slug {
-        #             current
-        #         }
-        #         }
-        #     }
-        #     ... on SanityCulture {
-        #         featuredImage {
-        #         alt
-        #         asset {
-        #             fluid {
-        #                 ...GatsbySanityImageFluid_noBase64
-        #             }
-        #         }
-        #         }
-        #         title
-        #         postMeta {
-        #         category {
-        #             ... on SanityCultureCategory {
-        #             slug {
-        #                 current
-        #             }
-        #             }
-        #         }
-        #         slug {
-        #             current
-        #         }
-        #         }
-        #     }
-        #     ... on SanityRecipe {
-        #         featuredImage {
-        #         alt
-        #         asset {
-        #             fluid {
-        #                 ...GatsbySanityImageFluid_noBase64
-        #             }
-        #         }
-        #         }
-        #         title
-        #         postMeta {
-        #         category {
-        #             ... on SanityRecipeCategory {
-        #             slug {
-        #                 current
-        #             }
-        #             }
-        #         }
-        #         slug {
-        #             current
-        #         }
-        #         }
-        #     }
-        #     }
-        # }
-
-        # ## Post list data
-        # # Blog
-        # blogListCategoryData: sanityBlogCategory {
-        #     slug {
-        #     current
-        #     }
-        #     title
-        #     categoryOptions {
-        #     viewAllName
-        #     }
-        # }
-        # blogListPostsData: allSanityBlog(limit: 3) {
-        #     edges {
-        #     node {
-        #         id
-        #         title
-        #         postMeta {
-        #         slug {
-        #             current
-        #         }
-        #         date
-        #         category {
-        #             ... on SanityBlogCategory {
-        #             slug {
-        #                 current
-        #             }
-        #             }
-        #         }
-        #         }
-        #         featuredImage {
-        #         alt
-        #         asset {
-        #             fluid {
-        #                 ...GatsbySanityImageFluid_noBase64
-        #             }
-        #         }
-        #         }
-        #     }
-        #     }
-        # }
-
-        # # Culture
-        # cultureListCategoryData: sanityCultureCategory {
-        #     slug {
-        #     current
-        #     }
-        #     title
-        #     categoryOptions {
-        #     viewAllName
-        #     }
-        # }
-        # cultureListPostsData: allSanityCulture(limit: 3) {
-        #     edges {
-        #     node {
-        #         id
-        #         title
-        #         postMeta {
-        #         slug {
-        #             current
-        #         }
-        #         date
-        #         category {
-        #             ... on SanityCultureCategory {
-        #             slug {
-        #                 current
-        #             }
-        #             }
-        #         }
-        #         }
-        #         featuredImage {
-        #         alt
-        #         asset {
-        #             fluid {
-        #                 ...GatsbySanityImageFluid_noBase64
-        #             }
-        #         }
-        #         }
-        #     }
-        #     }
-        # }
-
+        # Featured topic
+        featuredTopic: sanityHome {
+            featuredTopicTitle
+            featuredTopicSubtitle
+            featuredTopicPosts {
+                ...PreviewPostFragment
+            }
+        }
+        # Blog
+        blog: sanityCategory(title: {eq: "Blog"}) {
+            title
+            slug {
+                current
+            }
+            viewAllName
+        }
+        blogPosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Blog"}}}, sort: {order: DESC, fields: date}) {
+            edges {
+                node {
+                    ...PreviewPostFragment
+                }
+            }
+        }
+        # Culture
+        culture: sanityCategory(title: {eq: "Culture"}) {
+            title
+            slug {
+                current
+            }
+            viewAllName
+        }
+        culturePosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Culture"}}}, sort: {order: DESC, fields: date}) {
+            edges {
+                node {
+                    ...PreviewPostFragment
+                }
+            }
+        }
     }
     
 `

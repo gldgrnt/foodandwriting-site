@@ -7,7 +7,7 @@ import { SmallCaps, InternalLink } from '../ui'
 
 export const PostList = ({ category, posts }) => {
 
-    const { title, slug, categoryOptions: { viewAllName } } = category
+    const { title, slug, viewAllName } = category
 
     return (
         <>
@@ -15,7 +15,7 @@ export const PostList = ({ category, posts }) => {
 
             <PostWrapper>
                 { posts && posts.map(({ node }) => (
-                   <HorizontalPost key={node.id} post={node}></HorizontalPost> 
+                   <HorizontalPost key={node._id} post={node}></HorizontalPost> 
                 ))}
             </PostWrapper>
 

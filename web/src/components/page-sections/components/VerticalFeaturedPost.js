@@ -7,10 +7,10 @@ import Img from 'gatsby-image/withIEPolyfill'
 import { SmallCaps } from '../../ui'
 import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
 
-export const VerticalFeaturedPost = ({ post: {title, postMeta, featuredImage} }) => {
+export const VerticalFeaturedPost = ({ post, post: {title,  featuredImage} }) => {
 
     // Slug
-    const slug = getPostSlug(postMeta)
+    const slug = getPostSlug(post)
     
     return (
         <StyledLink to={slug}>
@@ -66,8 +66,6 @@ const Article = styled.article`
     width: 100%;
     background: white;
 
-    
-
     &:hover,
     &:focus {
         h3 {
@@ -114,7 +112,7 @@ const CaptionWrapper = styled.div`
 `
 
 const CaptionTitle = styled.h3`
-    font-size: ${props => props.theme.font.size.increased};
+    font-size: ${props => props.theme.font.size.medium};
     margin: 0 0 10px;
 
     ${props => responsiveBreakpointDown('tablet', `

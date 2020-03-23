@@ -3,14 +3,15 @@ import axios from 'axios'
 import { graphql } from 'gatsby'
 
 import Category from './category'
-import { PreviewPostFragment, FullCategoryFragment } from '../graphql'
 
 export default ({ data: { category, posts } }) => {
      /**
      * Get more posts
      * 
      */
-    const [state, setState] = useState({ posts: posts.edges, loading: false })
+    const [state, setState] = useState({ postsOnPage: posts.edges, loading: false })
+    const AMOUNT = posts.edges.length
+    const TOTAL = posts.totalCount
 
     const handleMorePostsClick = () => {
         if (state.loading) return
@@ -18,19 +19,18 @@ export default ({ data: { category, posts } }) => {
         setState(oldState => ({ ...oldState, loading: true}))
 
         const categoryId = category._id
-        const amount = 6
-        const offset = state.posts.length
+        const offset = state.postsOnPage.length
         
         // Get posts
-        axios.get(`/.netlify/functions/get-posts?categoryId=${categoryId}&amount=${amount}&offset=${offset}`)
+        axios.get(`/.netlify/functions/get-posts?categoryId=${categoryId}&amount=${AMOUNT}&offset=${offset}`)
             .then(response => (
-                setState(oldState => ({ posts: [...oldState.posts, ...response.data.posts], loading: false}))
+                setState(oldState => ({ postsOnPage: [...oldState.postsOnPage, ...response.data.posts], loading: false}))
             ))
             .catch(error => console.log(error))   
     }
     
     return (
-        <Category category={category} posts={state.posts} getMorePosts={handleMorePostsClick} />
+        <Category category={category} posts={state.postsOnPage} getMorePosts={handleMorePostsClick} showButton={state.postsOnPage.length < TOTAL} />
     )
 }
 
@@ -42,7 +42,7 @@ export const query = graphql`
         category: sanityCategory(_id: {eq: $_id}) {
             ...FullCategoryFragment
         }
-        posts: allSanityPost(filter: {category: {_id: {eq: $_id}}}, limit: 10) {
+        posts: allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 6) {
             totalCount
             edges {
                 node {

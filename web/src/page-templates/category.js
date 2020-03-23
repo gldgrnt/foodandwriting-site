@@ -7,10 +7,9 @@ import { responsiveBreakpointDown, SEO } from '../utils'
 import { ArchivePost } from '../components/page-sections'
 import { Button } from '../components/ui'
 
-export default ({ category, posts, getMorePosts }) => {
+export default ({ category, posts, showButton, getMorePosts }) => {
     // Variables
     const { title, seoDescription, viewAllName } = category
-    const showGetPostsButton = posts.length < posts.totalCount
     const postSizePercentage = category.categoryType === 'Normal' ? 67 : 120
 
     return (
@@ -38,7 +37,7 @@ export default ({ category, posts, getMorePosts }) => {
                     </GridContainer>
                 </Section>
                 
-                { showGetPostsButton &&
+                { showButton &&
                     <Section spacingTop="1"  spacingBottom="5">
                         <GridContainer justify="center">
                             <Button size="small" primary onClick={getMorePosts}>More {viewAllName}</Button>

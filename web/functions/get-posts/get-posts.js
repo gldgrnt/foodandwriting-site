@@ -2,21 +2,26 @@ const sanityClient = require('@sanity/client')
 
 const client  = sanityClient({
     projectId: 's1s9nwnc',
-    dataset: 'production',
+    dataset: 'development',
     useCdn: true,
 })
 
+/**
+ * Fetch posts from sanity using the sanityClient js api
+ * 
+ * @param {{categoryId: string, amount: number, offset: number}} params Params from which we fetch th posts
+ * @returns {Promise<array|Error>} Fetched posts array
+ */
 const fetchSanityPosts = async (params) => {
     const { categoryId, amount, offset } = params
 
     // Set up array number to get amount of posts
     const start = parseInt(offset)
-    const end = start + (parseInt(amount) - 1)
-
+    const end = start + (parseInt(amount))
 
     return client.fetch(
-        `*[postMeta.category._ref == $id] | order(postMeta___date desc) [$start..$end] {_id, title, featuredImage, postMeta, "category": *[_id == ^.postMeta.category._ref][0] | {slug, categoryOptions}}`, 
-        { id: categoryId, start: start, end: end}
+        `*[_type == "post" && category._ref == $categoryId] | order(date desc) [$start..$end] {_id, date, title, featuredImage, slug, "category": *[_id == ^.category._ref][0] | {slug, singleName}}`, 
+        { categoryId: categoryId, start: start, end: end}
     )
 }
 
@@ -28,15 +33,11 @@ exports.handler = async ( event, context ) => {
         }
 
         // Fetch sanity posts
-        let sanityPosts = await fetchSanityPosts(event.queryStringParameters)
+        const sanityPosts = await fetchSanityPosts(event.queryStringParameters)
 
-        // Copy category data into post meta
-        const posts = sanityPosts.map(post => {
-            post.postMeta.category = post.category
-            delete post.category
-            return post
-        })
-
+        // Preform operations so that the data is in the same format at grapql
+        const posts = sanityPosts.map(post => ({ node: post }))
+        
         return { statusCode: 200, body: JSON.stringify({ posts: posts })}
 
     } catch (err) {

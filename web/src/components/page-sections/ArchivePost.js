@@ -7,12 +7,16 @@ import { Link } from 'gatsby'
 import { getPostSlug, getPostDate, responsiveBreakpointDown, getFluidPropsFromId } from '../../utils'
 import { SmallCaps } from '../ui'
 
+/**
+ * ArchivePost component
+ */
 export const ArchivePost = ({ post, imgHeight, showDate = true }) => {
     const {title, category, featuredImage} = post
 
     const slug = getPostSlug(post)
     const date = getPostDate(post.date)
-    const fluid = featuredImage !== null ? (featuredImage.asset.hasOwnProperty('fluid') ? featuredImage.asset.fluid : getFluidPropsFromId(featuredImage.asset._ref)) : false
+    const fluid = featuredImage !== null && featuredImage.hasOwnProperty('asset') ? 
+        (featuredImage.asset.hasOwnProperty('fluid') ? featuredImage.asset.fluid : getFluidPropsFromId(featuredImage.asset._ref)) : false
 
     return (
         <StyledLink to={slug}>
@@ -29,22 +33,38 @@ export const ArchivePost = ({ post, imgHeight, showDate = true }) => {
     )
 }
 
-ArchivePost.prototypes = {
+/**
+ * Proptypes
+ */
+ArchivePost.propTypes = {
     post: PropTypes.shape({
-        slug: PropTypes.object.isRequired,
         title: PropTypes.string.isRequired,
-        featuredImage: PropTypes.object.isRequired
-    }).isRequired,
-    imgHeight: PropTypes.number,
+        date: PropTypes.string.isRequired,
+        slug: PropTypes.shape({
+            current: PropTypes.string.isRequired
+        }),
+        category: PropTypes.shape({
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired
+            })
+        }),
+        featuredImage: PropTypes.shape({
+            asset: PropTypes.object
+        })
+    }),
+    imgHeight: PropTypes.number.isRequired,
     showDate: PropTypes.bool
 }
 
+/**
+ * Styles
+ */
 const StyledLink = styled(Link)`
     width: calc((100% / 3) - (160px / 3));
     text-decoration: none;
     outline: none;
 
-    ${responsiveBreakpointDown('desktop', `width: calc((100% / 2) - (120px / 2));`)}
+    ${responsiveBreakpointDown('desktop', `width: calc((100% / 3) - (120px / 3));`)}
     ${responsiveBreakpointDown('laptop', `width: calc((100% / 2) - (80px / 2));`)}
     ${responsiveBreakpointDown('tablet', `width: calc((100% / 2) - (40px / 2));`)}
     ${responsiveBreakpointDown('mobile', `width: 100%;`)}

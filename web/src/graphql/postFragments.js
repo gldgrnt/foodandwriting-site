@@ -7,6 +7,7 @@ export const previewPostFragment = graphql`
     fragment PreviewPostFragment on SanityPost {
         _id
         title
+        date
         slug {
             current
         }

@@ -62,7 +62,7 @@ const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, cu
 export default IndexPage
 
 export const pageQuery = graphql`
-    query HomePagequery {
+    query {
         # Recipes
         recipes: allSanityPost(limit: 7, sort: {order: DESC, fields: date}, filter: {category: {title: {eq: "Recipes"}}}) {
             edges {

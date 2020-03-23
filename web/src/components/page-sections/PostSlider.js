@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -7,66 +7,34 @@ import { SmallCaps, InternalLink } from '../ui'
 import { GridContainer } from '../layout'
 import { VerticalSliderPost } from './components'
 
-import Slider from 'react-slick'
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
+import Glide from '@glidejs/glide'
+import '@glidejs/glide/dist/css/glide.core.min.css'
 import { responsiveBreakpointDown } from '../../utils'
 
-export const PostSlider = ({ title, posts }) => {
-    // Set up slider state
-    const [activeSlide, setActiveSlide] = useState(0)
-    const slideCount = posts.length
 
-    // Slider settings
-    const settings = {
-        dots: false,
-        arrows: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        draggable: true,
-        swipe: true,
-        swipeToSlide: true,
-        vairableWidth: true,
-        touchThreshold: 100,
-        afterChange: current => setActiveSlide(current),
-        responsive: [
-            {
-                breakpoint: 991,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    centerMode: true,
-                    touchThreshold: 5
-                }
-            },
-            {
-                breakpoint: 576,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    touchThreshold: 4
-                }
-            },
-        ]
-    }
+/**
+ * PostSlider component
+ */
+export const PostSlider = ({title, posts}) => {
 
-    // Set up movement methods
-    let sliderRef = useRef(null)
+    let slider = null
 
-    const nextSlide = () => {
-        sliderRef.slickNext()
-    }
+    // Slider set up
+    useEffect(() => {
 
-    const prevSlide = () => {
-        sliderRef.slickPrev()
-    }
+        if (!slider) {
+            slider = new Glide('.glide', {
+                type: 'slider',
+                rewind: false,
+                perView: 3
+            })
+    
+            slider.mount()
+        }
+    }, [])
 
     return (
-        <StyledWrapper>
+        <StyledWrapper className="glide">
             <GridContainer block>
                 <UpperWrapper>
                     <TitleWrapper>
@@ -75,29 +43,61 @@ export const PostSlider = ({ title, posts }) => {
                         <InternalLink to="/recipes" secondary>View all</InternalLink>
                     </TitleWrapper>
 
-                    <ButtonWrapper>
-                        <StyledButton onClick={prevSlide} disabled={activeSlide === 0}>
+                    <ButtonWrapper data-glide-el="controls">
+                        <StyledButton data-glide-dir="<">
                             <FiArrowLeft />
                         </StyledButton>
 
-                        <StyledButton onClick={nextSlide} disabled={activeSlide + 2 === slideCount - 1}>
+                        <StyledButton data-glide-dir=">">
                             <FiArrowRight />
                         </StyledButton>
                     </ButtonWrapper>
                 </UpperWrapper>
+                    
 
-                <StyledSlider ref={r => sliderRef = r} {...settings}>
-                    {posts.map(({node}, index) => <VerticalSliderPost key={index} post={node} />)}
-                </StyledSlider>
+                <div className="glide__track" data-glide-el="track">
+                    <ul className="glide__slides">
+                        <li className="glide__slide">0</li>
+                        <li className="glide__slide">1</li>
+                        <li className="glide__slide">2</li>
+                        <li className="glide__slide">0</li>
+                        <li className="glide__slide">1</li>
+                        <li className="glide__slide">2</li>
+                    </ul>
+                </div>
             </GridContainer>
         </StyledWrapper>
     )
 }
 
-PostSlider.prototypes = {
-    posts: PropTypes.array.isRequired,
-    titile: PropTypes.string.isRequired,
+/**
+ * Proptypes
+ */
+PostSlider.propTypes = {
+    posts: PropTypes.arrayOf(PropTypes.shape({
+        node: PropTypes.shape({
+            _id: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            date: PropTypes.string.isRequired,
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired,
+            }),
+            catgegory: PropTypes.shape({
+                singleName: PropTypes.string.isRequired,
+                slug: PropTypes.shape({
+                    current: PropTypes.string.isRequired
+                })
+            }),
+            featuredImage: PropTypes.shape({
+                asset: PropTypes.object.isRequired
+            })
+        })
+    }))
 }
+
+/**
+ * Styles
+ */
 
 const StyledWrapper = styled.div`
     overflow: hidden;
@@ -109,6 +109,7 @@ const UpperWrapper = styled.div`
     width: 100%;
     justify-content: space-between;
     margin-bottom: 40px;
+    padding-top: 3px;
     
     > * {
         margin-bottom: 0;
@@ -155,17 +156,5 @@ const StyledButton = styled.button`
         pointer-events: none;
         transition: ${props => props.theme.transition.fast};
         color: ${props => props.disabled ? props.theme.color.lightGrey : props.theme.color.black};
-    }
-`
-
-const StyledSlider = styled(Slider)`
-    margin-right: 80px;
-
-    ${responsiveBreakpointDown('desktop', `margin-right: -80px;`)}
-    ${responsiveBreakpointDown('tablet', `margin-right: 0;`)}
-    ${responsiveBreakpointDown('mobile', `margin: 0 15px;`)}
-
-    .slick-list {
-        overflow: visible;
     }
 `

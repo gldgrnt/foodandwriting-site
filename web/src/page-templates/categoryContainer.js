@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { graphql } from 'gatsby'
 
-import Category from './category'
+import { Category } from './category'
 
 export default ({ data: { category, posts } }) => {
      /**

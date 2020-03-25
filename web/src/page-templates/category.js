@@ -7,10 +7,12 @@ import { responsiveBreakpointDown, SEO } from '../utils'
 import { ArchivePost } from '../components/page-sections'
 import { Button } from '../components/ui'
 
-export default ({ category, posts, showButton, getMorePosts }) => {
+/**
+ * Category component 
+ */
+export const Category = ({ category: {title, seoDescription, viewAllName, categoryType}, posts, showButton, getMorePosts }) => {
     // Variables
-    const { title, seoDescription, viewAllName } = category
-    const postSizePercentage = category.categoryType === 'Normal' ? 67 : 120
+    const postSizePercentage = categoryType === 'Normal' ? 67 : 120
 
     return (
         <>
@@ -21,7 +23,7 @@ export default ({ category, posts, showButton, getMorePosts }) => {
                     <GridContainer>
                         <GridRow>
                             <GridCol cols="4">
-                                <Title>{category.title}</Title>
+                                <Title>{title}</Title>
                             </GridCol>
                         </GridRow>
                     </GridContainer>
@@ -49,8 +51,42 @@ export default ({ category, posts, showButton, getMorePosts }) => {
     )
 }
 
-// Add in prop types
+/**
+ * PropTypes
+ */
+Category.propTypes = {
+    category: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        seoDescription: PropTypes.string, // This is technically required but not yet
+        viewAllName: PropTypes.string.isRequired,
+        categoryType: PropTypes.string.isRequired
+    }).isRequired,
+    posts: PropTypes.arrayOf(PropTypes.shape({
+        node: PropTypes.shape({
+            _id: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            date: PropTypes.string.isRequired,
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired,
+            }),
+            catgegory: PropTypes.shape({
+                singleName: PropTypes.string.isRequired,
+                slug: PropTypes.shape({
+                    current: PropTypes.string.isRequired
+                })
+            }),
+            featuredImage: PropTypes.shape({
+                asset: PropTypes.object.isRequired
+            })
+        })
+    })),
+    showButton: PropTypes.bool.isRequired,
+    getMorePosts: PropTypes.func.isRequired
+}
 
+/**
+ * Styles
+ */
 const PostsWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;

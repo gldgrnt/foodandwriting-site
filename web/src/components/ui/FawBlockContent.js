@@ -3,7 +3,10 @@ import BlockContent from '@sanity/block-content-to-react'
 import styled from 'styled-components'
 import Proptypes from 'prop-types'
 
-export const PostBlockContent = ({ content }) => {
+/**
+ * BlockContent component
+ */
+export const FawBlockContent = ({ content }) => {
 
     // Serializers
     const serializers = {
@@ -26,33 +29,20 @@ export const PostBlockContent = ({ content }) => {
     }
 
     return (
-        <ContentWrapper>
-            <BlockContent blocks={content} serializers={serializers} />
-        </ContentWrapper>
+        <BlockContent blocks={content} serializers={serializers} />
     )
 }
 
-PostBlockContent.propTypes = {
+/**
+ * PropTypes
+ */
+FawBlockContent.propTypes = {
     content: Proptypes.array.isRequired
 }
 
-const ContentWrapper = styled.article`
-    width: 100%;
-    font-size: ${props => props.theme.font.size.increased};
-
-    > div {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        > * {
-            width: 100%;
-            max-width: 750px;
-        }
-    }
-`
-
+/**
+ * Styles
+ */
 const FlexImagesWrapper = styled.div`
     max-width: none !important;
     padding: 50px 0 40px;

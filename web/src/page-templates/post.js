@@ -2,10 +2,10 @@ import React from "react"
 import { graphql } from 'gatsby'
 
 import { SEO } from '../utils'
-import { PostHero, PostBlockContent, PostMainContent } from '../components/post-sections'
+import { PostHero, DefaultPostContent, RecipePostContent } from '../components/post-sections'
 import { Page, Section } from '../components/layout'
 
-export default ({ data: {post: {title, category, featuredImage, seoDescription}} }) => {
+export default ({ data: {post: {title, category, featuredImage, seoDescription, content, _rawContent}} }) => {
 
     return (
         <>
@@ -15,9 +15,15 @@ export default ({ data: {post: {title, category, featuredImage, seoDescription}}
                     <PostHero featuredImage={featuredImage} subtitle={category.title} title={title} />
                 </Section>
 
-                {/* <PostMainContent>
-                    <PostBlockContent content={_rawContent}/>
-                </PostMainContent> */}
+                <Section spacingTop={{'monitor': 5, 'laptop': 4, 'tablet': 3}} spacingBottom={{'monitor': 5, 'laptop': 4, 'tablet': 3}}>
+                    {// Default content
+                        content[0]._type === 'defaultContent' && <DefaultPostContent content={_rawContent[0].content}/>
+                    }
+
+                    {// Recipe content
+                        content[0]._type === 'recipeContent' && <RecipePostContent content={content[0]}/>
+                    }
+                </Section>
             </Page>
         </>
     )
@@ -29,31 +35,19 @@ export default ({ data: {post: {title, category, featuredImage, seoDescription}}
 export const query = graphql`
   query ($_id: String, $isDefaultPost: Boolean!) {
     post: sanityPost(_id: {eq: $_id}) {
-        title
-        seoDescription
-        date
-        category {
-            title
-            slug {
-                current
-            }
-        }
-        featuredImage {
-            asset {
-                fluid {
-                    ...GatsbySanityImageFluid_noBase64
-                }
-            }
-        }
-        # Get either the default content on recipe content based on the category type
+        # Get full post data
+        ...FullPostFragment     
+        # Default content
+        _rawContent(resolveReferences: {maxDepth: 10}) @include(if: $isDefaultPost)
         content @include(if: $isDefaultPost) {
             ...on SanityDefaultContent  {
                 _type
             }
         }
+        # Recipe content
         content @skip(if: $isDefaultPost) {
             ...on SanityRecipeContent  {
-                _type
+                ...RecipePostContentFragment
             }
         }
     }

@@ -26,3 +26,47 @@ export const previewPostFragment = graphql`
         }
     }
 `
+
+/**
+ * Post page fragment
+ */
+export const FullPostFragment = graphql`
+    fragment FullPostFragment on SanityPost {
+        title
+        seoDescription
+        date
+        category {
+            title
+            slug {
+                current
+            }
+        }
+        featuredImage {
+            asset {
+                fluid {
+                    ...GatsbySanityImageFluid_noBase64
+                }
+            }
+        }
+    }
+`
+
+/**
+ * Post content fragments
+ */
+export const RecipePostContentFragment = graphql`
+    fragment RecipePostContentFragment on SanityRecipeContent {
+        _type
+        difficulty
+        readyIn
+        recipeIntro
+        recipeNotes
+        serves
+        steps
+        shoppingList {
+            amount
+            ingredient
+            _key
+        }
+    }
+`

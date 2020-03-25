@@ -1,5 +1,5 @@
 import { PostHero } from './PostHero'
-import { PostBlockContent } from './PostBlockContent'
-import { PostMainContent } from './PostMainContent'
+import { DefaultPostContent } from './DefaultPostContent'
+import { RecipePostContent } from './RecipePostContent'
  
-export { PostHero, PostBlockContent, PostMainContent }
+export { PostHero, DefaultPostContent, RecipePostContent }

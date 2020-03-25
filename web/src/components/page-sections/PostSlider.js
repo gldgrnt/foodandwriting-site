@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -16,21 +16,31 @@ import { responsiveBreakpointDown } from '../../utils'
  * PostSlider component
  */
 export const PostSlider = ({title, posts}) => {
-
-    let slider = null
-
     // Slider set up
     useEffect(() => {
+        // Create slider
+        const slider = new Glide('.glide', {
+            type: 'slider',
+            rewind: false,
+            perView: 4,
+            focusAt: 0,
+            bound: true,
+            gap: 30,
+            animationDuration: 700,
+            breakpoints: {
+                999: {
+                    perView: 4
+                },
+                767: {
+                    perView: 2,
+                    gap: 25
+                }
+            }
+        })
 
-        if (!slider) {
-            slider = new Glide('.glide', {
-                type: 'slider',
-                rewind: false,
-                perView: 3
-            })
-    
-            slider.mount()
-        }
+        // Mount slider
+        slider.mount()
+
     }, [])
 
     return (
@@ -44,25 +54,21 @@ export const PostSlider = ({title, posts}) => {
                     </TitleWrapper>
 
                     <ButtonWrapper data-glide-el="controls">
-                        <StyledButton data-glide-dir="<">
+                        <StyledButton className="buttons" data-glide-dir="<">
                             <FiArrowLeft />
                         </StyledButton>
 
-                        <StyledButton data-glide-dir=">">
+                        <StyledButton className="buttons" data-glide-dir=">">
                             <FiArrowRight />
                         </StyledButton>
                     </ButtonWrapper>
                 </UpperWrapper>
                     
 
-                <div className="glide__track" data-glide-el="track">
-                    <ul className="glide__slides">
-                        <li className="glide__slide">0</li>
-                        <li className="glide__slide">1</li>
-                        <li className="glide__slide">2</li>
-                        <li className="glide__slide">0</li>
-                        <li className="glide__slide">1</li>
-                        <li className="glide__slide">2</li>
+                <div className="glide__track" data-glide-el="track" style={{overflow: "visible", marginRight: 30}}>
+                    <ul className="glide__slides" style={{margin: 0}}>
+                        {posts.map(({node}, index) => <div key={node._id}><VerticalSliderPost key={index} post={node} /></div>)}
+                        <div></div>
                     </ul>
                 </div>
             </GridContainer>
@@ -144,7 +150,6 @@ const StyledButton = styled.button`
     border: none;
     background: none;
     padding: 5px;
-    pointer-events: ${props => props.disabled ? 'none' : 'all'};
 
     ${responsiveBreakpointDown('tablet', `
         display: none;
@@ -155,6 +160,5 @@ const StyledButton = styled.button`
         stroke-width: 2.5px;
         pointer-events: none;
         transition: ${props => props.theme.transition.fast};
-        color: ${props => props.disabled ? props.theme.color.lightGrey : props.theme.color.black};
     }
 `

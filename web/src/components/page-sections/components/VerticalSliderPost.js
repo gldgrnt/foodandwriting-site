@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { Link } from 'gatsby'
 import Img from 'gatsby-image/withIEPolyfill'
 
 import { SmallCaps } from '../../ui'
@@ -12,7 +13,7 @@ export const VerticalSliderPost = ({ post ,post: {title, featuredImage} }) => {
     const slug = getPostSlug(post)
 
     return (
-        <LinkWrapper href={slug}>
+        <LinkWrapper to={slug}>
             <Article>
                 <ImageWrapper>
                     <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title} />
@@ -33,9 +34,10 @@ VerticalSliderPost.prototypes = {
     }).isRequired,
 }
 
-const LinkWrapper = styled.a`
+const LinkWrapper = styled(Link)`
     text-decoration: none;
     outline: none;
+    max-width: ${props => (props.theme.grid.breakpoints.monitor.minScreenWidth / 3) - 120}px;
 
     &:hover,
     &:focus {
@@ -50,22 +52,16 @@ const LinkWrapper = styled.a`
         }
     }
 
-    ${responsiveBreakpointDown('tablet', `
-        span {
-            display: none;
-        }
-    `)}
-`
-
-const Article = styled.article`
-    max-width: ${props => (props.theme.grid.breakpoints.monitor.minScreenWidth / 3) - 120}px;
-
     ${props => responsiveBreakpointDown('desktop', `
         max-width: ${(props.theme.grid.breakpoints.desktop.minScreenWidth / 3) - 60}px;
     `)}
 
     ${props => responsiveBreakpointDown('laptop', `
         max-width: ${(props.theme.grid.breakpoints.laptop.minScreenWidth / 3) - 60}px;
+
+        span {
+            display: none;
+        }
     `)}
 
     ${responsiveBreakpointDown('mobile', `
@@ -73,6 +69,10 @@ const Article = styled.article`
         width: calc(100% - 30px);
         margin: auto;
     `)}
+`
+
+const Article = styled.article`
+    width: 100%;
 `
 
 const ImageWrapper = styled.div`
@@ -95,13 +95,9 @@ const ImageWrapper = styled.div`
 const Title = styled.h3`
     font-size: ${props => props.theme.font.size.medium};
     margin-bottom: 10px;
+    white-space: normal;
 
     ${props => responsiveBreakpointDown('tablet', `
         font-size: ${props.theme.font.size.regular};
-    `)}
-
-    ${responsiveBreakpointDown('mobile', `
-        padding: 0 15px;
-        text-align: center;
     `)}
 `

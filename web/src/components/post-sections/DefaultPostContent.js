@@ -3,16 +3,22 @@ import styled from 'styled-components'
 import Proptypes from 'prop-types'
 
 import { GridContainer } from '../layout'
-import { FawBlockContent } from '../ui'
+import { SmallCaps, FawBlockContent } from '../ui'
+import { getPostDate } from '../../utils'
 
 /**
  * DefaultPostContent component
  */
-export const DefaultPostContent = ({ content }) => {
+export const DefaultPostContent = ({ content, date }) => {
+
+    const postDate = getPostDate(date)
 
     return (
         <GridContainer>
             <ContentWrapper>
+                <Date datetime={postDate.raw}>
+                    <SmallCaps color="mediumGrey">{postDate.formatted}</SmallCaps>
+                </Date>
                 <FawBlockContent content={content}/>
             </ContentWrapper>
         </GridContainer>
@@ -23,6 +29,7 @@ export const DefaultPostContent = ({ content }) => {
  * PropTypes
  */
 DefaultPostContent.propTypes = {
+    date: Proptypes.string.isRequired,
     content: Proptypes.array.isRequired
 }
 
@@ -39,9 +46,15 @@ const ContentWrapper = styled.article`
         flex-direction: column;
         align-items: center;
 
-        > * {
+        >  p {
             width: 100%;
             max-width: 750px;
         }
     }
+`
+
+const Date = styled.time`
+    display: block;
+    max-width: 750px;
+    margin: 0 auto 50px;
 `

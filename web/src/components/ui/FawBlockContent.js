@@ -45,7 +45,7 @@ FawBlockContent.propTypes = {
  */
 const FlexImagesWrapper = styled.div`
     max-width: none !important;
-    padding: 50px 0 40px;
+    padding: 70px 0 60px;
 `
 
 const ImagesWrapper = styled.div`
@@ -54,7 +54,8 @@ const ImagesWrapper = styled.div`
 
     img  {
         object-fit: cover;
-        max-width: ${props => `calc((100% / ${props.count}) - ((${props.spacing}px * ${props.count}) - ${props.spacing}px ))`};
+        margin: ${props => props.count === 1 ? 'auto' : ''};
+        max-width: ${props => props.count === 1 ? '100%' :`calc((100% / ${props.count}) - ((${props.spacing}px * ${props.count}) - ${props.spacing}px ))`};
     }
 `
 

@@ -5,7 +5,7 @@ import { SEO } from '../utils'
 import { PostHero, DefaultPostContent, RecipePostContent } from '../components/post-sections'
 import { Page, Section } from '../components/layout'
 
-export default ({ data: {post: {title, category, featuredImage, seoDescription, content, _rawContent}} }) => {
+export default ({ data: {post: {date, title, category, featuredImage, seoDescription, content, _rawContent}} }) => {
 
     return (
         <>
@@ -17,7 +17,7 @@ export default ({ data: {post: {title, category, featuredImage, seoDescription, 
 
                 <Section spacingTop={{'monitor': 5, 'laptop': 4, 'tablet': 3}} spacingBottom={{'monitor': 5, 'laptop': 4, 'tablet': 3}}>
                     {// Default content
-                        content[0]._type === 'defaultContent' && <DefaultPostContent content={_rawContent[0].content}/>
+                        content[0]._type === 'defaultContent' && <DefaultPostContent content={_rawContent[0].content} date={date}/>
                     }
 
                     {// Recipe content

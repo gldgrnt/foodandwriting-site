@@ -13,31 +13,46 @@ export const RecipePostContent = ({ content: { difficulty, readyIn, recipeIntro,
     return (
         <RecipeWrapper>
             <GridContainer wrap="wrap">
+                {recipeIntro && // Only render the top section if there is a recipe intro
+                    <>
+                        <GridRow justify="center">
+                            <GridCol cols={{'monitor': 2, 'tablet': 8}}>
+                                <SmallCaps size="regular" color="darkGrey">This recipe</SmallCaps>
+                                <UnstyledList responsive>
+                                    {serves && <li>Serves: {serves}</li>}
+                                    {difficulty && <li>Difficulty: {difficulty}</li>}
+                                    {readyIn && <li>Ready in: {readyIn}</li>}
+                                </UnstyledList>
+                            </GridCol>
+
+                            <GridCol cols={{'monitor': 4, 'desktop': 5, 'tablet': 8}}>
+                                <Section as="div" spacingBottom={{'monitor': 0, tablet: 1}}>
+                                    <Intro>{recipeIntro}</Intro>
+                                </Section>
+                            </GridCol>
+                        </GridRow>
+
+                        <GridRow justify="center">
+                            <GridCol cols={{'monitor': 6, 'desktop': 7, 'tablet': 8}}>
+                                <Divider />
+                            </GridCol>
+                        </GridRow>
+                    </>
+                }   
+
                 <GridRow justify="center">
                     <GridCol cols={{'monitor': 2, 'tablet': 8}}>
-                        <SmallCaps size="regular" color="darkGrey">This recipe</SmallCaps>
-                        <UnstyledList responsive>
-                            {serves && <li>Serves: {serves}</li>}
-                            {difficulty && <li>Difficulty: {difficulty}</li>}
-                            {readyIn && <li>Ready in: {readyIn}</li>}
-                        </UnstyledList>
-                    </GridCol>
+                        { !recipeIntro && // Render recipe details if there's no recipe intro
+                            <Section as="div" spacingBottom="2">
+                                <SmallCaps size="regular" color="darkGrey">This recipe</SmallCaps>
+                                <UnstyledList responsive>
+                                    {serves && <li>Serves: {serves}</li>}
+                                    {difficulty && <li>Difficulty: {difficulty}</li>}
+                                    {readyIn && <li>Ready in: {readyIn}</li>}
+                                </UnstyledList>
+                            </Section>
+                        }
 
-                    <GridCol cols={{'monitor': 4, 'desktop': 5, 'tablet': 8}}>
-                        <Section as="div" spacingBottom={{'monitor': 0, tablet: 1}}>
-                            <Intro>{recipeIntro}</Intro>
-                        </Section>
-                    </GridCol>
-                </GridRow>
-
-                <GridRow justify="center">
-                    <GridCol cols={{'monitor': 6, 'desktop': 7, 'tablet': 8}}>
-                        <Divider />
-                    </GridCol>
-                </GridRow>
-
-                <GridRow justify="center">
-                    <GridCol cols={{'monitor': 2, 'tablet': 8}}>
                         <Section as="div" spacingTop={{'monitor': 0, tablet: 1}} spacingBottom={{'monitor': 0, tablet: 1}}>
                             <SmallCaps size="regular" color="darkGrey">Shopping list</SmallCaps>
                             <UnstyledList responsive>

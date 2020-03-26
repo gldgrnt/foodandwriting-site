@@ -7,6 +7,7 @@ html {
 }
 
 body {
+  color: ${themeVariables.color.black};
   font-family: ${themeVariables.font.family.serif};
 }
 

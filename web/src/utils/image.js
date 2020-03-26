@@ -1,6 +1,6 @@
 import { getFluidGatsbyImage } from 'gatsby-source-sanity'
 
-const sanityConfig = {projectId: 's1s9nwnc', dataset: 'production'}
+const sanityConfig = {projectId: 's1s9nwnc', dataset: 'development'}
 
 export const getFluidPropsFromId = (imageAssetId = '') => {
     try {

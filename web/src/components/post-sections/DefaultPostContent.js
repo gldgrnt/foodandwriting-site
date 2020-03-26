@@ -11,13 +11,14 @@ import { getPostDate } from '../../utils'
  */
 export const DefaultPostContent = ({ content, date }) => {
 
-    const postDate = getPostDate(date)
+    const postDate = getPostDate(date, 'Do MMMM YYYY')
 
     return (
         <GridContainer>
             <ContentWrapper>
-                <Date datetime={postDate.raw}>
-                    <SmallCaps color="mediumGrey">{postDate.formatted}</SmallCaps>
+                <Date aria-label={`Posted on ${postDate.formatted}`}>
+                    <SmallCaps color="mediumGrey" size="small">Date</SmallCaps>
+                    <time dateTime={postDate.raw}>{postDate.formatted}</time>
                 </Date>
                 <FawBlockContent content={content}/>
             </ContentWrapper>
@@ -38,6 +39,8 @@ DefaultPostContent.propTypes = {
  */
 const ContentWrapper = styled.article`
     width: 100%;
+    max-width: 1200px;
+    margin: auto;
     font-size: ${props => props.theme.font.size.increased};
 
     > div {
@@ -56,5 +59,13 @@ const ContentWrapper = styled.article`
 const Date = styled.time`
     display: block;
     max-width: 750px;
-    margin: 0 auto 50px;
+    margin: 0 auto 60px;
+
+    > * {
+        display: block;
+
+        &:first-child {
+            margin-bottom: 10px;
+        }
+    }
 `

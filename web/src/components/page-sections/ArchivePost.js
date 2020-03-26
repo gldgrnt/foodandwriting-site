@@ -22,7 +22,7 @@ export const ArchivePost = ({ post, imgHeight, showDate = true }) => {
         <StyledLink to={slug}>
             <article>
                 <ImageWrapper imgHeight={imgHeight}>
-                    {fluid? <Img fluid={fluid} /> : <div></div>}
+                    {fluid ? <Img fluid={fluid} /> : <div></div>}
                 </ImageWrapper>
                 { showDate && 
                     <SmallCaps as="time" size="small" datetime={date.raw}>{date.formatted}</SmallCaps> }

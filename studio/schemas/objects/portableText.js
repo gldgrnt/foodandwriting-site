@@ -27,9 +27,8 @@ export default {
                                 name: 'link',
                                 type: 'reference',
                                 to: [
-                                    { type: 'recipe' },
-                                    { type: 'blog' },
-                                    { type: 'culture' },
+                                    { type: 'post' },
+                                    { type: 'category' },
                                     { type: 'about' },
                                 ]
                             }

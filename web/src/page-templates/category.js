@@ -90,16 +90,23 @@ Category.propTypes = {
 const PostsWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     width: 100%;
     margin-bottom: -80px;
 
+    ${responsiveBreakpointDown('laptop', `justify-content: space-between;`)}
     ${responsiveBreakpointDown('mobile', `margin-bottom: -60px;`)}
 
     > * {
         margin-bottom: 80px;
 
         ${responsiveBreakpointDown('mobile', `margin-bottom: 60px;`)}
+
+        &:not(:nth-child(3n)) {
+            margin-right: 80px;
+
+            ${responsiveBreakpointDown('desktop', `margin-right: 60px;`)}
+            ${responsiveBreakpointDown('laptop', `margin-right: 0;`)}
+        }
     }
 `
 

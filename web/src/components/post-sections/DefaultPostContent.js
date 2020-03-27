@@ -1,27 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
-import Proptypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import { FawBlockContent } from '../block-content'
-import { GridContainer } from '../layout'
-import { SmallCaps } from '../ui'
+import { GridContainer, Section } from '../layout'
+import { SmallCaps, Divider } from '../ui'
 import { getPostDate } from '../../utils'
 
 /**
  * DefaultPostContent component
  */
-export const DefaultPostContent = ({ content, date }) => {
+export const DefaultPostContent = ({ content, date, maxTextWidth = 'none' }) => {
 
     const postDate = getPostDate(date, 'Do MMMM YYYY')
 
     return (
         <GridContainer>
-            <ContentWrapper>
-                <Date aria-label={`Posted on ${postDate.formatted}`}>
+            <ContentWrapper maxTextWidth={maxTextWidth}>
+                <Date maxTextWidth={maxTextWidth} aria-label={`Posted on ${postDate.formatted}`}>
                     <SmallCaps color="mediumGrey" size="small">Date</SmallCaps>
                     <time dateTime={postDate.raw}>{postDate.formatted}</time>
                 </Date>
                 <FawBlockContent content={content}/>
+
+                <Section as="div" spacingTop="2">
+                    <Divider maxWidth={maxTextWidth} />
+                </Section>
             </ContentWrapper>
         </GridContainer>
     )
@@ -31,8 +35,9 @@ export const DefaultPostContent = ({ content, date }) => {
  * PropTypes
  */
 DefaultPostContent.propTypes = {
-    date: Proptypes.string.isRequired,
-    content: Proptypes.array.isRequired
+    date: PropTypes.string.isRequired,
+    content: PropTypes.array.isRequired,
+    maxTextWidth: PropTypes.string
 }
 
 /**
@@ -52,14 +57,14 @@ const ContentWrapper = styled.article`
 
         >  p {
             width: 100%;
-            max-width: 750px;
+            max-width: ${props => props.maxTextWidth};
         }
     }
 `
 
 const Date = styled.time`
     display: block;
-    max-width: 750px;
+    max-width: ${props => props.maxTextWidth};
     margin: 0 auto 60px;
 
     > * {

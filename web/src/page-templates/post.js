@@ -2,10 +2,13 @@ import React from "react"
 import { graphql } from 'gatsby'
 
 import { SEO } from '../utils'
-import { PostHero, DefaultPostContent, RecipePostContent } from '../components/post-sections'
+import { PostHero, DefaultPostContent, RecipePostContent, About } from '../components/post-sections'
 import { Page, Section } from '../components/layout'
 
 export default ({ data: {post: {date, title, category, featuredImage, seoDescription, content, _rawContent}} }) => {
+
+    // Create maxTextWidth style context
+    const maxTextWidth = '750px';
 
     return (
         <>
@@ -15,14 +18,22 @@ export default ({ data: {post: {date, title, category, featuredImage, seoDescrip
                     <PostHero featuredImage={featuredImage} subtitle={category.title} title={title} />
                 </Section>
 
-                <Section spacingTop={{'monitor': 5, 'laptop': 4, 'tablet': 3}} spacingBottom={{'monitor': 5, 'laptop': 4, 'tablet': 3}}>
+                <Section spacingTop={{'monitor': 5, 'laptop': 4, 'tablet': 3}}>
                     {// Default content
-                        content[0]._type === 'defaultContent' && <DefaultPostContent content={_rawContent[0].content} date={date}/>
+                        content[0]._type === 'defaultContent' && <DefaultPostContent content={_rawContent[0].content} date={date} maxTextWidth={maxTextWidth}/>
                     }
 
                     {// Recipe content
                         content[0]._type === 'recipeContent' && <RecipePostContent content={content[0]}/>
                     }
+                </Section>
+
+                <Section spacingBottom="7">
+                    <About maxTextWidth={maxTextWidth} />
+                </Section>
+
+                <Section spacingTop="4" spacingBottom="4" whiteGrey>
+
                 </Section>
             </Page>
         </>
@@ -50,6 +61,7 @@ export const query = graphql`
                 ...RecipePostContentFragment
             }
         }
+        # Related Posts
     }
-  }
+}
 `

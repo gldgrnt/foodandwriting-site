@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import Proptypes from 'prop-types'
 
+import { FawBlockContent } from '../block-content'
 import { GridContainer } from '../layout'
-import { SmallCaps, FawBlockContent } from '../ui'
+import { SmallCaps } from '../ui'
 import { getPostDate } from '../../utils'
 
 /**
@@ -67,5 +68,9 @@ const Date = styled.time`
         &:first-child {
             margin-bottom: 10px;
         }
+    }
+    
+    time {
+        font-weight: bold;
     }
 `

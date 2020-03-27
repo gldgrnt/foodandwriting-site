@@ -1,5 +1,4 @@
-import { GoLinkExternal } from 'react-icons/go'
-import { GoLink } from 'react-icons/go'
+import { GoLinkExternal, GoLink } from 'react-icons/go'
 
 export default {
     title: 'Portable text',

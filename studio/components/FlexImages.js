@@ -30,13 +30,13 @@ export default function FlexImages(props) {
     }
 
     const imageStyles = {
+        objectFit: 'cover',
         width: `calc(${100 / imagesNumber}% - ${1 - (1 / imagesNumber)}rem)`,
     }
 
     const pStyles = {
         fontSize: '0.8rem',
         fontStyle: 'italic',
-        textAlign: 'center',
         padding: '1rem',
         margin: '0',
         color: 'grey'

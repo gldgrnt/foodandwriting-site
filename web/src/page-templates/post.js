@@ -2,12 +2,12 @@ import React from "react"
 import { graphql } from 'gatsby'
 
 import { SEO } from '../utils'
-import { PostHero, DefaultPostContent, RecipePostContent, About } from '../components/post-sections'
+import { PostHero, DefaultPostContent, RecipePostContent, About, RelatedPosts } from '../components/post-sections'
 import { Page, Section } from '../components/layout'
 
-export default ({ data: {post: {date, title, category, featuredImage, seoDescription, content, _rawContent}} }) => {
+export default ({ data: {post: {date, title, category, featuredImage, seoDescription, content, _rawContent}, related} }) => {
 
-    // Create maxTextWidth style context
+    // Variables
     const maxTextWidth = '750px';
 
     return (
@@ -32,9 +32,11 @@ export default ({ data: {post: {date, title, category, featuredImage, seoDescrip
                     <About maxTextWidth={maxTextWidth} />
                 </Section>
 
-                <Section spacingTop="4" spacingBottom="4" whiteGrey>
-
-                </Section>
+                {related.nodes.length > 0 &&
+                    <Section spacingTop="4" spacingBottom="4" whiteGrey>
+                        <RelatedPosts category={category} posts={related.nodes} />
+                    </Section>
+                }
             </Page>
         </>
     )
@@ -43,11 +45,11 @@ export default ({ data: {post: {date, title, category, featuredImage, seoDescrip
 /**
  * Page query
  */
-export const query = graphql`
-  query ($_id: String, $isDefaultPost: Boolean!) {
+export const postQuery = graphql`
+  query ($_id: String, $cat_id: String, $isDefaultPost: Boolean!) {
     post: sanityPost(_id: {eq: $_id}) {
         # Get full post data
-        ...FullPostFragment     
+        ...FullPostFragment      
         # Default content
         _rawContent(resolveReferences: {maxDepth: 10}) @include(if: $isDefaultPost)
         content @include(if: $isDefaultPost) {
@@ -61,7 +63,12 @@ export const query = graphql`
                 ...RecipePostContentFragment
             }
         }
-        # Related Posts
+    }
+    # Related Posts
+    related: allSanityPost(filter: {category: {_id: {eq: $cat_id}}, _id: {ne: $_id}}, limit: 3, sort: {order: DESC, fields: date}) {
+        nodes {
+            ...PreviewPostFragment
+        }
     }
 }
 `

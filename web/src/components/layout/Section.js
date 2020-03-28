@@ -31,7 +31,7 @@ Section.prototypes = {
 const StyledSection = styled.section`
     ${props => props.spacingTop}
     ${props => props.spacingBottom}
-    background: ${props => props.whiteGrey ? props.theme.color.whiteGrey : 'white'};
+    background: ${props => props.whiteGrey ? props.theme.color.whiteGrey : 'transparent'};
 `
 
 const makeStyles = (value, styleName) => {

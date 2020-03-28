@@ -40,6 +40,8 @@ export const FullPostFragment = graphql`
             slug {
                 current
             }
+            categoryType
+            viewAllName
         }
         featuredImage {
             asset {

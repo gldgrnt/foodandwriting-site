@@ -14,6 +14,7 @@ exports.createPages = async ({ graphql, actions }) => {
                             current
                         }
                         category {
+                            _id
                             slug {
                                 current
                             }
@@ -47,11 +48,12 @@ exports.createPages = async ({ graphql, actions }) => {
     posts.edges.forEach(({ node }) => {
             let path = `/${node.category.slug.current}/${node.slug.current}`
             let isDefault = node.category.categoryType === 'Normal'
+            let cat_id = node.category._id
 
             createPage({
                 path,
                 component: require.resolve('./src/page-templates/post.js'),
-                context: {_id: node._id, isDefaultPost: isDefault},
+                context: {_id: node._id, cat_id: cat_id, isDefaultPost: isDefault},
             })
         }
     )

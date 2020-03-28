@@ -19,7 +19,8 @@ export const themeVariables = {
         mediumGrey: '#777777',
         darkGrey: '#5A5A5A',
         yellow: '#FFD91F',
-        blackOverlay: 'rgba(37, 37, 37, 0.75)'
+        blackOverlay: 'rgba(37, 37, 37, 0.75)',
+        lightGreyOverlay: 'rgba(170, 170, 170, 0.25)'
     },
     font: {
         family: {

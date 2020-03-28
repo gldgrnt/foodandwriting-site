@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import { PostArchive } from '../components/page-sections'
 import { Section, GridContainer, GridRow, GridCol, Page } from '../components/layout'
-import { responsiveBreakpointDown, SEO } from '../utils'
-import { ArchivePost } from '../components/page-sections'
+import { SEO } from '../utils'
 import { Button } from '../components/ui'
 
 /**
@@ -30,13 +30,7 @@ export const Category = ({ category: {title, seoDescription, viewAllName, catego
                 </Section>
 
                 <Section spacingBottom="4">
-                    <GridContainer>
-                        <PostsWrapper>
-                            {posts.map(({node}) => (
-                                <ArchivePost key={node._id} post={node} imgHeight={postSizePercentage} showDate={false} />
-                            ))}
-                        </PostsWrapper>
-                    </GridContainer>
+                    <PostArchive posts={posts} postSizePercentage={postSizePercentage} showDate={categoryType === 'Normal'} />
                 </Section>
                 
                 { showButton &&
@@ -61,25 +55,7 @@ Category.propTypes = {
         viewAllName: PropTypes.string.isRequired,
         categoryType: PropTypes.string.isRequired
     }).isRequired,
-    posts: PropTypes.arrayOf(PropTypes.shape({
-        node: PropTypes.shape({
-            _id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            date: PropTypes.string.isRequired,
-            slug: PropTypes.shape({
-                current: PropTypes.string.isRequired,
-            }),
-            catgegory: PropTypes.shape({
-                singleName: PropTypes.string.isRequired,
-                slug: PropTypes.shape({
-                    current: PropTypes.string.isRequired
-                })
-            }),
-            featuredImage: PropTypes.shape({
-                asset: PropTypes.object.isRequired
-            })
-        })
-    })),
+    posts: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     showButton: PropTypes.bool.isRequired,
     getMorePosts: PropTypes.func.isRequired
 }
@@ -87,29 +63,6 @@ Category.propTypes = {
 /**
  * Styles
  */
-const PostsWrapper = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    margin-bottom: -80px;
-
-    ${responsiveBreakpointDown('laptop', `justify-content: space-between;`)}
-    ${responsiveBreakpointDown('mobile', `margin-bottom: -60px;`)}
-
-    > * {
-        margin-bottom: 80px;
-
-        ${responsiveBreakpointDown('mobile', `margin-bottom: 60px;`)}
-
-        &:not(:nth-child(3n)) {
-            margin-right: 80px;
-
-            ${responsiveBreakpointDown('desktop', `margin-right: 60px;`)}
-            ${responsiveBreakpointDown('laptop', `margin-right: 0;`)}
-        }
-    }
-`
-
 const Title = styled.h1` 
     margin-bottom: 0;
 `

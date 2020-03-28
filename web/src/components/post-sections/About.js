@@ -18,7 +18,7 @@ const AboutSection = ({ data: {sanityAbout: {snippet, smallImage}}, maxTextWidth
                 <Img fluid={smallImage.asset.fluid} />
             </ImageWrapper>
             <TextWrapper>
-                <SmallCaps as="p" size="small">Author</SmallCaps>
+                <SmallCaps as="p" size="small">About</SmallCaps>
                 <p>{snippet}</p>
                 <InternalLink primary to="/about">Read more</InternalLink>
             </TextWrapper>

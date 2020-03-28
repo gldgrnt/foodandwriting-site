@@ -6,10 +6,10 @@ import { SEO } from '../utils'
 import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
-const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
+const IndexPage = ({data: { recipePosts, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
     // Destructure to separate the data
-    const [featuredRecipe, ...sliderRecipes] = recipes.edges
+    const [featuredRecipe, ...sliderRecipes] = recipePosts.nodes
     const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopic
 
 
@@ -19,7 +19,7 @@ const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, cu
             <Page>
                 {/* Main post */}
                 <Section>
-                    <FeaturedPost post={featuredRecipe.node} />
+                    <FeaturedPost post={featuredRecipe} />
                 </Section>
 
                 {/* Post slider */}
@@ -39,12 +39,12 @@ const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, cu
                             {/* Blog */}
                             <GridCol cols={{'monitor': 4, 'laptop': 8}}>
                                 <Section as="div" spacingBottom={{'laptop': 4, 'tablet': 3}}>
-                                    <PostList category={blog} posts={blogPosts.edges} />
+                                    <PostList category={blog} posts={blogPosts.nodes} />
                                 </Section>
                             </GridCol>
 
                             <GridCol cols={{'monitor': 4, 'laptop': 8}}>
-                                <PostList category={culture} posts={culturePosts.edges} />
+                                <PostList category={culture} posts={culturePosts.nodes} />
                             </GridCol>
                         </GridRow>
                     </GridContainer>
@@ -61,18 +61,16 @@ const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, cu
 
 export default IndexPage
 
-export const pageQuery = graphql`
+export const homepageQuery = graphql`
     query {
         # Recipes
-        recipes: allSanityPost(limit: 7, sort: {order: DESC, fields: date}, filter: {category: {title: {eq: "Recipes"}}}) {
-            edges {
-                node {
-                    ...PreviewPostFragment
-                    # Recipe intro
-                    content {
-                        ... on SanityRecipeContent {
-                            recipeIntro
-                        }
+        recipePosts: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 7, sort: {order: DESC, fields: date}) {
+            nodes {
+                ...PreviewPostFragment
+                # Recipe intro
+                content {
+                    ... on SanityRecipeContent {
+                        recipeIntro
                     }
                 }
             }
@@ -94,10 +92,8 @@ export const pageQuery = graphql`
             viewAllName
         }
         blogPosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Blog"}}}, sort: {order: DESC, fields: date}) {
-            edges {
-                node {
-                    ...PreviewPostFragment
-                }
+            nodes {
+                ...PreviewPostFragment
             }
         }
         # Culture
@@ -109,10 +105,8 @@ export const pageQuery = graphql`
             viewAllName
         }
         culturePosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Culture"}}}, sort: {order: DESC, fields: date}) {
-            edges {
-                node {
-                    ...PreviewPostFragment
-                }
+            nodes {
+                ...PreviewPostFragment
             }
         }
     }

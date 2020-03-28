@@ -8,7 +8,7 @@ import { SmallCaps } from '../../ui'
 import { responsiveBreakpointDown, getPostSlug, getPostDate } from '../../../utils'
 
 
-export const HorizontalPost = ({ post, post: { title, featuredImage } }) => {
+export const HorizontalPost = ({ post, post: { title, featuredImage, category } }) => {
 
     const slug = getPostSlug(post)
     const date = getPostDate(post.date)
@@ -23,7 +23,7 @@ export const HorizontalPost = ({ post, post: { title, featuredImage } }) => {
                 <CaptionWrapper>
                     <SmallCaps as="time" size="small" datetime={date.raw}>{date.formatted}</SmallCaps>
                     <CaptionTitle>{title}</CaptionTitle>
-                    <SmallCaps size="tiny" color="mediumGrey" link>Read more</SmallCaps>
+                    <SmallCaps size="tiny" color="mediumGrey" link>Read {category.singleName}</SmallCaps>
                 </CaptionWrapper>
             </Article>
         </StyledLink>

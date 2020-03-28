@@ -64,7 +64,7 @@ const HeroWrapper = styled.div`
 
 const ImageWrapper = styled.div`
     position: relative;
-    background: ${props => props.theme.color.whiteGrey};
+    background: ${props => props.theme.color.lightGreyOverlay};
 
     ${responsiveBreakpointDown('tablet', `
         position: absolute;

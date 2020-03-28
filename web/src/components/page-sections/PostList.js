@@ -14,8 +14,8 @@ export const PostList = ({ category, posts }) => {
             <SmallCaps as="h2" size="regular" color="black">{title}</SmallCaps>
 
             <PostWrapper>
-                { posts && posts.map(({ node }) => (
-                   <HorizontalPost key={node._id} post={node}></HorizontalPost> 
+                { posts && posts.map(post => (
+                   <HorizontalPost key={post._id} post={post}></HorizontalPost> 
                 ))}
             </PostWrapper>
 

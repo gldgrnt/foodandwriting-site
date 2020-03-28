@@ -67,7 +67,7 @@ export const PostSlider = ({title, posts}) => {
 
                 <div className="glide__track" data-glide-el="track" style={{overflow: "visible", marginRight: 30}}>
                     <ul className="glide__slides" style={{margin: 0}}>
-                        {posts.map(({node}, index) => <div key={node._id}><VerticalSliderPost key={index} post={node} /></div>)}
+                        {posts.map((post, index) => <div key={post._id}><VerticalSliderPost key={index} post={post} /></div>)}
                         <div></div>
                     </ul>
                 </div>
@@ -81,22 +81,20 @@ export const PostSlider = ({title, posts}) => {
  */
 PostSlider.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.shape({
-        node: PropTypes.shape({
-            _id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            date: PropTypes.string.isRequired,
+        _id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        slug: PropTypes.shape({
+            current: PropTypes.string.isRequired,
+        }),
+        catgegory: PropTypes.shape({
+            singleName: PropTypes.string.isRequired,
             slug: PropTypes.shape({
-                current: PropTypes.string.isRequired,
-            }),
-            catgegory: PropTypes.shape({
-                singleName: PropTypes.string.isRequired,
-                slug: PropTypes.shape({
-                    current: PropTypes.string.isRequired
-                })
-            }),
-            featuredImage: PropTypes.shape({
-                asset: PropTypes.object.isRequired
+                current: PropTypes.string.isRequired
             })
+        }),
+        featuredImage: PropTypes.shape({
+            asset: PropTypes.object.isRequired
         })
     }))
 }

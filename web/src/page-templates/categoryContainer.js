@@ -9,8 +9,8 @@ export default ({ data: { category, posts } }) => {
      * Get more posts
      * 
      */
-    const [state, setState] = useState({ postsOnPage: posts.edges, loading: false })
-    const AMOUNT = posts.edges.length
+    const [state, setState] = useState({ postsOnPage: posts.nodes, loading: false })
+    const AMOUNT = posts.nodes.length
     const TOTAL = posts.totalCount
 
     const handleMorePostsClick = () => {
@@ -44,10 +44,8 @@ export const query = graphql`
         }
         posts: allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 6) {
             totalCount
-            edges {
-                node {
-                   ...PreviewPostFragment
-                }
+            nodes {
+                ...PreviewPostFragment
             }
         }
     }

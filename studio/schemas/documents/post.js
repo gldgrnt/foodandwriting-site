@@ -15,6 +15,10 @@ export default {
         {
             title: 'Main Content',
             name: 'mainContent',
+        },
+        {
+            title: 'Related posts',
+            name: 'relatedPosts'
         }
     ],
     fields: [
@@ -95,6 +99,26 @@ export default {
             description: 'Choose the corresponding content type (Default or recipe)',
             validation: Rule => [
                 Rule.required().length(1).error('Choose 1 main content type')
+            ]
+        },
+        {
+            title: 'Posts',
+            name: 'relatedPosts',
+            fieldset: 'relatedPosts',
+            description: 'If less than 3 are chosen, posts from the same category will fill the related posts up to 3',
+            type: 'array',
+            of: [
+                { 
+                    type: 'reference', 
+                    to: [ { type: 'post' } ],
+                    options: {
+                        // Filter out this post
+                        filter: ({ document: { title }  }) => ({ filter: 'title != $title', params: { title: title } })
+                    }
+                }
+            ],
+            validation: Rule => [
+                Rule.max(3).error('Choose a maximum of 3 related posts')
             ]
         }
     ],

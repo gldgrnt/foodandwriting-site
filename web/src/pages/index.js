@@ -6,10 +6,10 @@ import { SEO } from '../utils'
 import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
-const IndexPage = ({data: { recipePosts, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
+const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
     // Destructure to separate the data
-    const [featuredRecipe, ...sliderRecipes] = recipePosts.nodes
+    const [featuredRecipe, ...sliderRecipes] = recipes.nodes
     const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopic
 
 
@@ -64,7 +64,7 @@ export default IndexPage
 export const homepageQuery = graphql`
     query {
         # Recipes
-        recipePosts: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 7, sort: {order: DESC, fields: date}) {
+        recipes: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 7, sort: {order: DESC, fields: date}) {
             nodes {
                 ...PreviewPostFragment
                 # Recipe intro

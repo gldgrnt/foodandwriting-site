@@ -9,13 +9,13 @@ import { responsiveBreakpointDown } from '../../utils'
 /**
  * PostArchive component
  */
-export const PostArchive = ({ posts, postSizePercentage = 67, onWhite = true, showDate = false }) => {
+export const PostArchive = ({ posts, postSizePercentage = 67, showCategory = false }) => {
 
     return (
         <GridContainer>
             <PostsWrapper>
                 {posts.map((post) => (
-                    <ArchivePost key={post._id} post={post} imgHeight={postSizePercentage} showDate={showDate} onWhite={onWhite} />
+                    <ArchivePost key={post._id} post={post} imgHeight={postSizePercentage} showCategory={showCategory} />
                 ))}
             </PostsWrapper>
         </GridContainer>
@@ -28,8 +28,6 @@ export const PostArchive = ({ posts, postSizePercentage = 67, onWhite = true, sh
 PostArchive.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     postSizePercentage: PropTypes.number,
-    onWhite: PropTypes.bool,
-    showDate: PropTypes.bool
 }
 
 

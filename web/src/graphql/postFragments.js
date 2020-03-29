@@ -23,6 +23,7 @@ export const previewPostFragment = graphql`
                 current
             }
             singleName
+            categoryType
         }
     }
 `
@@ -49,6 +50,9 @@ export const FullPostFragment = graphql`
                     ...GatsbySanityImageFluid_noBase64
                 }
             }
+        }
+        relatedPosts {
+            ...PreviewPostFragment
         }
     }
 `

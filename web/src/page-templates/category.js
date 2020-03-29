@@ -30,7 +30,7 @@ export const Category = ({ category: {title, seoDescription, viewAllName, catego
                 </Section>
 
                 <Section spacingBottom="4">
-                    <PostArchive posts={posts} postSizePercentage={postSizePercentage} showDate={categoryType === 'Normal'} />
+                    <PostArchive posts={posts} postSizePercentage={postSizePercentage} />
                 </Section>
                 
                 { showButton &&

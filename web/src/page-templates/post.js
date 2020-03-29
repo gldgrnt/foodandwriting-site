@@ -5,7 +5,7 @@ import { SEO } from '../utils'
 import { PostHero, DefaultPostContent, RecipePostContent, About, RelatedPosts } from '../components/post-sections'
 import { Page, Section } from '../components/layout'
 
-export default ({ data: {post: {date, title, category, featuredImage, seoDescription, content, _rawContent}, related} }) => {
+export default ({ data: {post: {date, title, category, featuredImage, seoDescription, content, _rawContent, relatedPosts}, autoRelatedPosts} }) => {
 
     // Variables
     const maxTextWidth = '750px';
@@ -32,9 +32,9 @@ export default ({ data: {post: {date, title, category, featuredImage, seoDescrip
                     <About maxTextWidth={maxTextWidth} />
                 </Section>
 
-                {related.nodes.length > 0 &&
+                {autoRelatedPosts.nodes.length > 0 &&
                     <Section spacingTop="4" spacingBottom="4" whiteGrey>
-                        <RelatedPosts category={category} posts={related.nodes} />
+                        <RelatedPosts category={category} autoPosts={autoRelatedPosts.nodes} selectedPosts={relatedPosts} />
                     </Section>
                 }
             </Page>
@@ -65,7 +65,7 @@ export const postQuery = graphql`
         }
     }
     # Related Posts
-    related: allSanityPost(filter: {category: {_id: {eq: $cat_id}}, _id: {ne: $_id}}, limit: 3, sort: {order: DESC, fields: date}) {
+    autoRelatedPosts: allSanityPost(filter: {category: {_id: {eq: $cat_id}}, _id: {ne: $_id}}, limit: 3, sort: {order: DESC, fields: date}) {
         nodes {
             ...PreviewPostFragment
         }

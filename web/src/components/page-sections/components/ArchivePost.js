@@ -10,13 +10,13 @@ import { SmallCaps } from '../../ui'
 /**
  * ArchivePost component
  */
-export const ArchivePost = ({ post, imgHeight, showDate = true, onWhite }) => {
-    const {title, category, featuredImage} = post
+export const ArchivePost = ({ post, post: {title, date, featuredImage, category: {singleName, categoryType}}, imgHeight, showCategory = false }) => {
 
     const slug = getPostSlug(post)
-    const date = getPostDate(post.date)
+    const postDate = getPostDate(date)
     const fluid = featuredImage !== null && featuredImage.hasOwnProperty('asset') ? 
         (featuredImage.asset.hasOwnProperty('fluid') ? featuredImage.asset.fluid : getFluidPropsFromId(featuredImage.asset._ref)) : false
+    const showDate = categoryType === 'Normal'
 
     return (
         <StyledLink to={slug}>
@@ -24,10 +24,16 @@ export const ArchivePost = ({ post, imgHeight, showDate = true, onWhite }) => {
                 <ImageWrapper imgHeight={imgHeight}>
                     {fluid ? <Img fluid={fluid} /> : <div></div>}
                 </ImageWrapper>
-                { showDate && 
-                    <SmallCaps as="time" size="small" datetime={date.raw}>{date.formatted}</SmallCaps> }
+                
+                { (showDate || showCategory) &&
+                    <MetaWrapper>
+                        { showCategory && <SmallCaps size="small">{singleName}</SmallCaps> }
+                        { showDate && <SmallCaps as="time" size="small" datetime={postDate.raw}>{postDate.formatted}</SmallCaps> }
+                    </MetaWrapper>
+                }
+                
                 <Title>{title}</Title>
-                <SmallCaps size="tiny" link>View {category.singleName}</SmallCaps>
+                <SmallCaps size="tiny" link>View {singleName}</SmallCaps>
             </article>
         </StyledLink>
     )
@@ -53,8 +59,7 @@ ArchivePost.propTypes = {
         })
     }),
     imgHeight: PropTypes.number.isRequired,
-    showDate: PropTypes.bool,
-    onWhite: PropTypes.bool
+    showCategory: PropTypes.bool
 }
 
 /**
@@ -72,13 +77,18 @@ const StyledLink = styled(Link)`
 
     &:hover,
     &:focus {
-        text-decoration: underline;
 
-        span {
-            color: ${props => props.theme.color.black};
+        article {
+            h2 {
+                text-decoration: underline;
+            }
+            
+            > span {
+                color: ${props => props.theme.color.black};
 
-            &::after {
-                background: ${props => props.theme.color.black};
+                &::after {
+                    background: ${props => props.theme.color.black};
+                }
             }
         }
     }
@@ -102,6 +112,22 @@ const ImageWrapper = styled.div`
         left: 0;
         height: 100%;
         width: 100%;
+    }
+`
+
+const MetaWrapper = styled.div`
+    display: flex;
+    align-items: center;
+
+    > *:not(:first-child) {
+        position: relative;
+        margin-left: 10px;
+
+        &::before {
+            content: ' · ';
+            position: absolute;
+            left: -6px; 
+        }
     }
 `
 

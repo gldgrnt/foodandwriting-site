@@ -7,8 +7,10 @@ import Img from 'gatsby-image/withIEPolyfill'
 import { SmallCaps } from '../../ui'
 import { responsiveBreakpointDown, getPostSlug, getPostDate } from '../../../utils'
 
-
-export const HorizontalPost = ({ post, post: { title, featuredImage, category } }) => {
+/**
+ * HorizontalPost component
+ */
+export const HorizontalPost = ({ post, post: { title, featuredImage, category: { singleName } } }) => {
 
     const slug = getPostSlug(post)
     const date = getPostDate(post.date)
@@ -23,17 +25,34 @@ export const HorizontalPost = ({ post, post: { title, featuredImage, category } 
                 <CaptionWrapper>
                     <SmallCaps as="time" size="small" datetime={date.raw}>{date.formatted}</SmallCaps>
                     <CaptionTitle>{title}</CaptionTitle>
-                    <SmallCaps size="tiny" color="mediumGrey" link>Read {category.singleName}</SmallCaps>
+                    <SmallCaps size="tiny" color="mediumGrey" link>View {singleName}</SmallCaps>
                 </CaptionWrapper>
             </Article>
         </StyledLink>
     )
 }
 
+/**
+ * PropTypes
+ */
 HorizontalPost.prototypes = {
-    post: PropTypes.object.isRequired
+    post: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        featuredImage: PropTypes.shape({
+            asset: PropTypes.object.isRequired,
+        }).isRequired,
+        category: PropTypes.shape({
+            singleName: PropTypes.string.isRequired,
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired,
+            }).isRequired,
+        })
+    }).isRequired,
 }
 
+/**
+ * Styles
+ */
 const StyledLink = styled(Link)`
     display: inline-block;
     text-decoration: none;

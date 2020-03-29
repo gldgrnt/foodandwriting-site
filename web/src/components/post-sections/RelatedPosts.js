@@ -9,18 +9,20 @@ import { PostArchive } from '../page-sections'
 /**
  * RelatedPosts 
  */
-export const RelatedPosts = ({ category: {slug, viewAllName, categoryType}, posts }) => {
+export const RelatedPosts = ({ category: {slug, viewAllName}, autoPosts, selectedPosts }) => {
+
+    const relatedPostsArray = mergeRelatedPosts(autoPosts, selectedPosts)
 
     return (
         <>
             <GridContainer justify="center">
                 <TitleWrapper>
-                    <SmallCaps size="small" as="h2">Related Posts</SmallCaps>
-                    <Title>More <span>{viewAllName}</span></Title>
+                    <SmallCaps size="small" as="h2">Read more</SmallCaps>
+                    <Title>Related posts</Title>
                 </TitleWrapper>
             </GridContainer>
 
-            <PostArchive posts={posts} onWhite={false} showDate={categoryType === 'Normal'} />
+            <PostArchive posts={relatedPostsArray} onWhite={false} showCategory={true}  />
 
             <GridContainer justify="center">
                 <Section as="div" spacingTop="2">
@@ -32,6 +34,28 @@ export const RelatedPosts = ({ category: {slug, viewAllName, categoryType}, post
 }
 
 /**
+ * Compare and reduce auto and selected posts to 3 post array
+ * 
+ * @param {[]} autoPosts Automatically selected posts from same category
+ * @param {[]} selectedPosts Posts selected from sanity
+ * @returns {[]} Array of 3 selected posts
+ */
+const mergeRelatedPosts = (autoPosts, selectedPosts) => {
+    // Create a single array to operate on, starting with the selected posts
+    let postsArray = []
+
+    if (selectedPosts.length) postsArray = [...selectedPosts]
+    if (autoPosts.length) postsArray = [...postsArray, ...autoPosts]
+
+    // Filter out repeated items
+    const filteredPostsArray = postsArray.filter((post, index) => postsArray.findIndex(item => item._id === post._id) === index)
+
+    return filteredPostsArray.slice(0, 3)
+}   
+
+
+
+/**
  * PropTypes
  */
 RelatedPosts.propTypes = {
@@ -41,7 +65,8 @@ RelatedPosts.propTypes = {
         }).isRequired,
         viewAllName: PropTypes.string.isRequired,
     }).isRequired,
-    posts: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
+    autoPosts: PropTypes.array.isRequired,
+    selectedPosts: PropTypes.array.isRequired,
 }
 
 
@@ -54,9 +79,5 @@ const TitleWrapper = styled.div`
 `
 
 const Title = styled.h3`
-    font-size: ${props => props.theme.font.size.huge};
-
-    span {
-        text-transform: lowercase;
-    }
+    font-size: ${props => props.theme.font.size.giant};
 `

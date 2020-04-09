@@ -1,6 +1,8 @@
 // In your gatsby-config.js file
 require('dotenv').config()
 
+const algoliaQueries = require("./src/utils/algolia")
+
 module.exports = {
     siteMetadata: {
         title: `Food and Writing`,
@@ -43,6 +45,15 @@ module.exports = {
             options: {
                 displayName: process.env.STYLED_COMPONENTS_DISPLAY_NAME
             }
-        }
+        },
+        {
+            resolve: `gatsby-plugin-algolia`,
+            options: {
+              appId: process.env.GATSBY_ALGOLIA_APP_ID,
+              apiKey: process.env.ALGOLIA_ADMIN_KEY,
+              queries: algoliaQueries,
+              chunkSize: 10000, // default: 1000
+            },
+        },
     ],
 }

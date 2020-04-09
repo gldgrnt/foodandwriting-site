@@ -3,12 +3,22 @@ import { themeVariables } from './Theme'
 
 export const Global = createGlobalStyle`
 html {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 body {
-  color: ${themeVariables.color.black};
-  font-family: ${themeVariables.font.family.serif};
+    color: ${themeVariables.color.black};
+    font-family: ${themeVariables.font.family.serif};
+}
+
+#gatsby-focus-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    main {
+        flex-grow: 1;
+    }
 }
 
 h1,
@@ -16,8 +26,8 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: ${themeVariables.font.family.serif};
-  line-height: ${themeVariables.font.lineHeight.header};
+    font-family: ${themeVariables.font.family.serif};
+    line-height: ${themeVariables.font.lineHeight.header};
 }
 
 h1 {

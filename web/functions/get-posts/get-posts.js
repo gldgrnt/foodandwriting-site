@@ -20,7 +20,7 @@ const fetchSanityPosts = async (params) => {
     const end = start + (parseInt(amount))
 
     return client.fetch(
-        `*[_type == "post" && category._ref == $categoryId] | order(date desc) [$start..$end] {_id, date, title, featuredImage, slug, "category": *[_id == ^.category._ref][0] | {slug, singleName}}`, 
+        `*[_type == "post" && category._ref == $categoryId] | order(date desc) [$start..$end] {_id, date, title, featuredImage, slug, "category": *[_id == ^.category._ref][0] | {slug, singleName, cate}}`, 
         { categoryId: categoryId, start: start, end: end}
     )
 }
@@ -36,8 +36,12 @@ exports.handler = async ( event, context ) => {
         const sanityPosts = await fetchSanityPosts(event.queryStringParameters)
 
         // Preform operations so that the data is in the same format at grapql
-        const posts = sanityPosts.map(post => ({ node: post }))
-        
+        const posts = sanityPosts.map(post => {
+            post['fullSlug'] = `/${post.category.slug.current}/${post.slug.current}`
+
+            return post
+        })
+
         return { statusCode: 200, body: JSON.stringify({ posts: posts })}
 
     } catch (err) {

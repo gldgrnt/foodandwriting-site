@@ -5,25 +5,24 @@ import { Link } from 'gatsby'
 import Img from 'gatsby-image/withIEPolyfill'
 
 import { SmallCaps } from '../../ui'
-import { responsiveBreakpointDown, getPostSlug, getPostDate } from '../../../utils'
+import { responsiveBreakpointDown, getPostDate } from '../../../utils'
 
 /**
  * HorizontalPost component
  */
-export const HorizontalPost = ({ post, post: { title, featuredImage, category: { singleName } } }) => {
+export const HorizontalPost = ({ post: { title, date, fullSlug, featuredImage, category: { singleName } } }) => {
 
-    const slug = getPostSlug(post)
-    const date = getPostDate(post.date)
+    const postDate = getPostDate(date)
 
     return (
-        <StyledLink to={slug}>
+        <StyledLink to={fullSlug}>
             <Article>
                 <ImageWrapper>
                     {featuredImage ? <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title} /> : <div></div>}
                 </ImageWrapper>
 
                 <CaptionWrapper>
-                    <SmallCaps as="time" size="small" datetime={date.raw}>{date.formatted}</SmallCaps>
+                    <SmallCaps as="time" size="small" datetime={postDate.raw}>{postDate.formatted}</SmallCaps>
                     <CaptionTitle>{title}</CaptionTitle>
                     <SmallCaps size="tiny" color="mediumGrey" link>View {singleName}</SmallCaps>
                 </CaptionWrapper>
@@ -38,15 +37,14 @@ export const HorizontalPost = ({ post, post: { title, featuredImage, category: {
 HorizontalPost.prototypes = {
     post: PropTypes.shape({
         title: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        fullSlug: PropTypes.string.isRequired,
         featuredImage: PropTypes.shape({
             asset: PropTypes.object.isRequired,
         }).isRequired,
         category: PropTypes.shape({
             singleName: PropTypes.string.isRequired,
-            slug: PropTypes.shape({
-                current: PropTypes.string.isRequired,
-            }).isRequired,
-        })
+        }).isRequired
     }).isRequired,
 }
 

@@ -5,15 +5,11 @@ import { Link } from 'gatsby'
 import Img from 'gatsby-image/withIEPolyfill'
 
 import { SmallCaps } from '../../ui'
-import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
+import { responsiveBreakpointDown } from '../../../utils'
 
-export const VerticalSliderPost = ({ post ,post: {title, featuredImage} }) => {
-
-    // Slug
-    const slug = getPostSlug(post)
-
+export const VerticalSliderPost = ({ post: {title, fullSlug, featuredImage} }) => {
     return (
-        <LinkWrapper to={slug}>
+        <LinkWrapper to={fullSlug}>
             <Article>
                 <ImageWrapper>
                     <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title} />
@@ -28,8 +24,8 @@ export const VerticalSliderPost = ({ post ,post: {title, featuredImage} }) => {
 
 VerticalSliderPost.prototypes = {
     post: PropTypes.shape({
-        postMeta: PropTypes.object.isRequired,
         title: PropTypes.string.isRequired,
+        fullSlug: PropTypes.string.isRequired,
         featuredImage: PropTypes.object.isRequired
     }).isRequired,
 }

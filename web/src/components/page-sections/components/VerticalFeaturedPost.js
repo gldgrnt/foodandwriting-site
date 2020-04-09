@@ -5,18 +5,15 @@ import { Link } from 'gatsby'
 import Img from 'gatsby-image/withIEPolyfill'
 
 import { SmallCaps } from '../../ui'
-import { getPostSlug, responsiveBreakpointDown } from '../../../utils'
+import { responsiveBreakpointDown } from '../../../utils'
 
 /**
  * VerticalFeaturedPost component
  */
-export const VerticalFeaturedPost = ({ post, post: {title,  featuredImage, category: { singleName }} }) => {
-
-    // Slug
-    const slug = getPostSlug(post)
+export const VerticalFeaturedPost = ({ post: { title, fullSlug, featuredImage, category: { singleName }} }) => {
     
     return (
-        <StyledLink to={slug}>
+        <StyledLink to={fullSlug}>
             <Article>
                 <ImageWrapper>
                     <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title}/>
@@ -36,16 +33,13 @@ export const VerticalFeaturedPost = ({ post, post: {title,  featuredImage, categ
  */
 VerticalFeaturedPost.prototypes = {
     post: PropTypes.shape({
-        postMeta: PropTypes.object.isRequired,
         title: PropTypes.string.isRequired,
+        fullSlug: PropTypes.string.isRequired,
         featuredImage: PropTypes.shape({
             asset: PropTypes.object.isRequired,
         }).isRequired,
         category: PropTypes.shape({
             singleName: PropTypes.string.isRequired,
-            slug: PropTypes.shape({
-                current: PropTypes.string.isRequired,
-            }).isRequired,
         }).isRequired,
     }).isRequired,
 }

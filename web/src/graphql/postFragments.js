@@ -8,9 +8,7 @@ export const previewPostFragment = graphql`
         _id
         title
         date
-        slug {
-            current
-        }
+        fullSlug
         featuredImage {
             asset {
                 fluid {
@@ -19,9 +17,6 @@ export const previewPostFragment = graphql`
             }
         }
         category {
-            slug {
-                current
-            }
             singleName
             categoryType
         }

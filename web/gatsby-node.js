@@ -69,3 +69,36 @@ exports.createPages = async ({ graphql, actions }) => {
         })
     })
 }
+
+/**
+ * Create a fullSlug field for posts
+ */
+
+exports.createResolvers = ({ createResolvers }) => {
+    const resolvers = {
+        SanityPost: {
+            fullSlug: {
+                type: `String`, 
+                resolve: (source, args, context, info) => {
+                    // Get post slug from source (source = SanityPost)
+                    const postSlug = source.slug.current
+                    const categoryRef = source.category._ref
+                    
+                    // Category is only available by reference so we must query the SanityCategory types to get the post's category's slug
+                    const categories = context.nodeModel.getAllNodes({
+                        type: `SanityCategory`,
+                      })
+                    
+                    // Filter categories by the categoryRef 
+                    const categorySlug = categories.filter(category => category.id === categoryRef)[0].slug.current
+
+                    // Return null if any part is empty
+                    if (!postSlug || !categorySlug) return null
+
+                    return `/${categorySlug}/${postSlug}`
+                }
+            },
+        }
+    }
+    createResolvers(resolvers)
+  }

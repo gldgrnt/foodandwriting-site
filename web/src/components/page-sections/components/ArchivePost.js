@@ -4,22 +4,21 @@ import styled from 'styled-components'
 import Img from 'gatsby-image/withIEPolyfill'
 import { Link } from 'gatsby'
 
-import { getPostSlug, getPostDate, responsiveBreakpointDown, getFluidPropsFromId } from '../../../utils'
+import { getPostDate, responsiveBreakpointDown, getFluidPropsFromId } from '../../../utils'
 import { SmallCaps } from '../../ui'
 
 /**
  * ArchivePost component
  */
-export const ArchivePost = ({ post, post: {title, date, featuredImage, category: {singleName, categoryType}}, imgHeight, showCategory = false }) => {
+export const ArchivePost = ({ post: {title, date, fullSlug, featuredImage, category: { singleName, categoryType }}, imgHeight, showCategory = false }) => {
 
-    const slug = getPostSlug(post)
     const postDate = getPostDate(date)
     const fluid = featuredImage !== null && featuredImage.hasOwnProperty('asset') ? 
         (featuredImage.asset.hasOwnProperty('fluid') ? featuredImage.asset.fluid : getFluidPropsFromId(featuredImage.asset._ref)) : false
     const showDate = categoryType === 'Normal'
 
     return (
-        <StyledLink to={slug}>
+        <StyledLink to={fullSlug}>
             <article>
                 <ImageWrapper imgHeight={imgHeight}>
                     {fluid ? <Img fluid={fluid} /> : <div></div>}
@@ -46,14 +45,7 @@ ArchivePost.propTypes = {
     post: PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
-        slug: PropTypes.shape({
-            current: PropTypes.string.isRequired
-        }),
-        category: PropTypes.shape({
-            slug: PropTypes.shape({
-                current: PropTypes.string.isRequired
-            })
-        }),
+        fullSlug: PropTypes.string.isRequired,
         featuredImage: PropTypes.shape({
             asset: PropTypes.object
         })

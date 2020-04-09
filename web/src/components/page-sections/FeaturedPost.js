@@ -6,32 +6,31 @@ import Img from 'gatsby-image/withIEPolyfill'
 import { GridContainer } from '../layout'
 import { InternalLink, SmallCaps } from '../ui'
 import { Link } from 'gatsby'
-import { responsiveBreakpointDown, getPostSlug } from '../../utils'
+import { responsiveBreakpointDown } from '../../utils'
 
 /**
  * FeaturedPost component
  */
-export const FeaturedPost = ({ post, post: { title, category, featuredImage, recipeIntro }}) => {
+export const FeaturedPost = ({ post: { title, featuredImage, recipeIntro, fullSlug, category: { singleName } }}) => {
     
     // Set up variables
-    const slug = getPostSlug(post)
     const caption = recipeIntro ? (recipeIntro.length > 160 ? recipeIntro.substr(0, 157) + '...' : recipeIntro.substr(0, 160)) : 'Curabitur lacinia at lectus ac sodales. Sed tristique faucibus odio eget rhoncus. Quisque mollis dapibus libero et sagittis. Suspendisse sollicitudin laoreet...'
 
     return (
         <GridContainer removeMobilePadding={true}>
             <Article>
-                <ImageLinkWrapper to={slug}>
+                <ImageLinkWrapper to={fullSlug}>
                     <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={title} />
                 </ImageLinkWrapper>
 
                 <CaptionContainer>
                     <CaptionInner>
-                        <SmallCaps as="p" size="small">Featured {category.singleName}</SmallCaps>
-                        <InternalLink to={slug} title>
+                        <SmallCaps as="p" size="small">Featured {singleName}</SmallCaps>
+                        <InternalLink to={fullSlug} title>
                             <CaptionTitle>{title}</CaptionTitle>
                         </InternalLink>
                         <CaptionText>{caption}</CaptionText>
-                        <InternalLink to={slug} primary>View {category.singleName}</InternalLink>
+                        <InternalLink to={fullSlug} primary>View {singleName}</InternalLink>
                     </CaptionInner>
                 </CaptionContainer>
             </Article>
@@ -45,9 +44,7 @@ export const FeaturedPost = ({ post, post: { title, category, featuredImage, rec
 FeaturedPost.propTypes = {
     post: PropTypes.shape({
         title: PropTypes.string.isRequired,
-        slug: PropTypes.shape({
-            current: PropTypes.string.isRequired
-        }),
+        fullSlug: PropTypes.string.isRequired,
         category: PropTypes.shape({
             singleName: PropTypes.string.isRequired,
             slug: PropTypes.shape({

@@ -5,11 +5,16 @@ import { graphql } from 'gatsby'
 import { Category } from './category'
 
 export default ({ data: { category, posts } }) => {
+    /**
+     * Get initail posts from sessionStorage if the user has already loaded more
+     */
+    const STORAGE_KEY = `${category.slug.current}-category-posts`
+    const loadedPosts = sessionStorage.getItem(STORAGE_KEY) ? JSON.parse(sessionStorage.getItem(STORAGE_KEY)) : posts.nodes
+
      /**
      * Get more posts
-     * 
      */
-    const [state, setState] = useState({ postsOnPage: posts.nodes, loading: false })
+    const [state, setState] = useState({ postsOnPage: loadedPosts, loading: false })
     const AMOUNT = posts.nodes.length
     const TOTAL = posts.totalCount
 
@@ -24,7 +29,15 @@ export default ({ data: { category, posts } }) => {
         // Get posts
         axios.get(`/.netlify/functions/get-posts?categoryId=${categoryId}&amount=${AMOUNT}&offset=${offset}`)
             .then(response => (
-                setState(oldState => ({ postsOnPage: [...oldState.postsOnPage, ...response.data.posts], loading: false}))
+                setState(oldState => {
+                    // Create array of current and loaded posts
+                    const allPosts = [...oldState.postsOnPage, ...response.data.posts]
+
+                    // Add to session storage
+                    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(allPosts))
+                    
+                    // Return state
+                    return { postsOnPage: allPosts, loading: false}})
             ))
             .catch(error => console.log(error))   
     }

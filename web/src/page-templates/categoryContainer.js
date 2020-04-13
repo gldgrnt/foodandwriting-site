@@ -9,7 +9,7 @@ export default ({ data: { category, posts } }) => {
      * Get initail posts from sessionStorage if the user has already loaded more
      */
     const STORAGE_KEY = `${category.slug.current}-category-posts`
-    const loadedPosts = sessionStorage.getItem(STORAGE_KEY) ? JSON.parse(sessionStorage.getItem(STORAGE_KEY)) : posts.nodes
+    const loadedPosts = (typeof window !== "undefined" && sessionStorage.getItem(STORAGE_KEY)) ? JSON.parse(sessionStorage.getItem(STORAGE_KEY)) : posts.nodes
 
      /**
      * Get more posts

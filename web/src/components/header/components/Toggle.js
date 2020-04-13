@@ -19,7 +19,7 @@ export const Toggle = ({ handler, active, children, ...rest }) => {
     }
 
     return (
-        <IconLink href="#" onClick={handleClick} onKeyDown={handleKeyDown} active={active} {...rest}>
+        <IconLink href="#" onClick={handleClick} onKeyDown={handleKeyDown} className={active && "active"} {...rest}>
             {children}
         </IconLink >
     )
@@ -36,15 +36,21 @@ const IconLink = styled.button`
     align-items: center;
     padding: 0 ${props => props.theme.grid.spacing}px;
     text-decoration: none;
-    background: ${props => props.active ? props.theme.color.whiteGrey : 'white'};
+    background-color: white;
     color: ${props => props.theme.color.black};
-    transition: background ${props => props.theme.transition.fast};
+    transition: background-color ${props => props.theme.transition.fast};
     outline-width: 0;
     border: none;
 
     &:hover, 
     &:focus {
-        background: ${props => props.theme.color.whiteGrey};
+        background-color: ${props => props.theme.color.whiteGrey};
+
+        ${responsiveBreakpointDown('tablet', `background-color: white;`)}
+    }
+
+    &.active {
+        background-color: ${props => props.theme.color.yellow};
     }
 
     svg {

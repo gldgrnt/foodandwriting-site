@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import styled from 'styled-components'
 import { FiMenu, FiSearch } from 'react-icons/fi'
 
@@ -10,7 +10,6 @@ import { responsiveBreakpointDown } from "../../utils"
 
 export const Header = () => {
     const [dropdownState, setDropdownState] = useState({ isSearchOpen: false, isMenuOpen: false })
-    const [dropdownInnerHeight, setDropdownInnerHeight] = useState(0)
 
     const handleToggleClick = (toggling = null) => {
         if (toggling === null) {
@@ -25,20 +24,11 @@ export const Header = () => {
 
     // Set up click elsewhere event handler - call once via []
     useEffect(() => {
+        // Close dropdown on area press
         document.querySelectorAll('main, footer').forEach(area => {
-            area.addEventListener('click', () => {
-                setDropdownState({ isSearchOpen: false, isMenuOpen: false })
-            })
+            area.addEventListener('click', () => setDropdownState({ isSearchOpen: false, isMenuOpen: false }))
         })
     }, [])
-
-    // Create ref to dropdown container to calculare child height after render
-    const dropdownInner = useRef(null)
-    useEffect(() => {
-        if (dropdownState.isSearchOpen === true || dropdownState.isMenuOpen === true) {
-            setDropdownInnerHeight(dropdownInner.current.clientHeight)
-        }
-    }, [dropdownState])
 
     // Conditionally render dropdowns
     const isDropdownOpen = dropdownState.isSearchOpen || dropdownState.isMenuOpen
@@ -77,17 +67,15 @@ export const Header = () => {
                 </GridContainer >
             </HeaderUpperWrapper>
 
-            <DropdownContainer isDropdownOpen={isDropdownOpen} maxHeight={dropdownInnerHeight}>
+            <DropdownContainer dropdownState={dropdownState}>
                 {isDropdownOpen &&
-                    <div ref={dropdownInner}>
-                        <GridContainer>
-                            {activeDropdown && 
-                                <DropdownWrapper>
-                                    {activeDropdown}
-                                </DropdownWrapper>
-                            }
-                        </GridContainer>
-                    </div>
+                    <GridContainer>
+                        {activeDropdown && 
+                            <DropdownWrapper>
+                                {activeDropdown}
+                            </DropdownWrapper>
+                        }
+                    </GridContainer>
                 }
             </DropdownContainer>
         </StyledHeader>
@@ -154,6 +142,10 @@ const DropdownContainer = styled.div`
     background: ${props => props.theme.color.whiteGrey};
     transition: height ${props => props.theme.transition.fast};
     box-shadow: 0px 20px 20px 0px #35353512;
+
+    /* Hide menu if above tablet size but opened on mobile */
+    display: ${({ dropdownState }) => dropdownState.isSearchOpen && !dropdownState.isMenuOpen ? 'block;' : 'none;'}
+    ${responsiveBreakpointDown('tablet', 'display: block;')}
 `
 
 const DropdownWrapper = styled.div`

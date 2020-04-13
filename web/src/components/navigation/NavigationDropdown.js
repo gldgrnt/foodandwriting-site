@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { TiTimes } from 'react-icons/ti'
+import { FiX } from 'react-icons/fi'
 import {useSpring, animated} from 'react-spring'
 
 import { Menu } from './components'
+import { Button } from '../ui'
+import { responsiveBreakpointDown } from '../../utils'
 
 export const NavigationDropdown = ({ closeDropdown }) => {
     
@@ -16,9 +18,7 @@ export const NavigationDropdown = ({ closeDropdown }) => {
             <animated.div style={animationProps}>
                 <Menu />
 
-                <CloseButton aria-label="Close menu" onClick={closeDropdown}>
-                    <TiTimes />
-                </CloseButton>
+                <Button secondary onClick={closeDropdown}><FiX/> Close menu</Button>
             </animated.div>
         </StyledDropdown>
     )
@@ -31,21 +31,28 @@ NavigationDropdown.propTypes = {
 const StyledDropdown = styled.div`
     position: relative;
     height: 100%;
+    flex-grow: 1;
+    overflow: auto;
 
-    ul {    
+
+    > * {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         height: 100%;
-        max-height: 450px;
+    }
+
+    ul {    
+        height: 100%;
+        width: 100%;
         margin: 0;
-        text-align: center;
+        flex-grow: 1;
 
         li {
             margin: 0;
             list-style-type: none;     
             font-family: ${props => props.theme.font.family.sans};
+            background-color: white;
 
             &.fullMenuItem{
                 margin-top: 30px;
@@ -61,40 +68,32 @@ const StyledDropdown = styled.div`
 
             a {
                 position: relative;
-                display: inline-block;
-                padding: 0 15px;
-                margin: 5px 0;
-                color: ${props => props.theme.color.black};
-                font-size: 5vw;
+                display: block;
+                padding: 15px 20px;
+                font-size: ${props => props.theme.font.size.large};
                 font-weight: 600;
                 text-transform: uppercase;
                 text-decoration: none;
-                background-color: transparent;
-                
-                &::after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 0;
-                    height: 100%;
-                    display: block;
-                    background-color: ${props => props.theme.color.yellow};
-                    transition: width ${props => props.theme.transition.fast};
-                    z-index: 0;
-                }
+                background-color: white;
 
-                &:hover,
-                &:focus {
-                    &::after {
-                        width: 100%;
-                    }
+                ${props => responsiveBreakpointDown('mobile', `
+                    font-size: ${props.theme.font.size.increased};
+                `)}
+
+                &.active {
+                    background-color: ${props => props.theme.color.yellow};
                 }
             }
         }
     }
-`
 
-const CloseButton = styled.button`
-    position: absolute;
+    button {
+        display: inline-flex;
+        align-items: center;
+
+        svg {
+            stroke-width: 3px;
+            margin-right: 3px;
+        }
+    }
 `

@@ -7,6 +7,8 @@ export const Button = ({ children, size, ...props }) => {
     switch (true) {
         case !!props.primary:
             return <PrimaryButton size={size} onClick={props.onClick} {...props}>{children}</PrimaryButton>
+        case !!props.secondary:
+            return <SecondaryButton size={size} onClick={props.onClick} {...props}>{children}</SecondaryButton>
         default:
             return <BaseButton size={size} onClick={props.onClick} {...props}>{children}</BaseButton>
     }
@@ -40,5 +42,20 @@ const PrimaryButton = styled(BaseButton)`
     &:hover,
     &:focus {
         background: ${props => props.theme.color.whiteGrey};
+    }
+`
+
+const SecondaryButton = styled(BaseButton)`
+    color: ${props => props.theme.color.black};
+    padding: 7px 10px;
+    font-size: ${props => props.theme.font.size[props.size] || props.theme.font.size.tiny};
+    line-height: 1.2;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-transform: uppercase;
+
+    &,
+    &:hover,
+    &:focus {
+        background: white;
     }
 `

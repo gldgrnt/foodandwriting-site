@@ -1,0 +1,149 @@
+import React, { useState, useEffect, useCallback } from 'react'
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import { connectSearchBox } from 'react-instantsearch-dom'
+import { FiX } from "react-icons/fi"
+
+import { responsiveBreakpointDown } from '../../../utils'
+
+/**
+ * Custom search box component (necessary to add debounce)
+ * This component is then wrapped in with the connectSearchBox HOF
+ */
+const CustomSearchBox = ({ currentRefinement, refine }) => {
+    // Initialise state
+    const [ query, setQuery ] = useState(currentRefinement)
+    const [ timer, setTimer ] = useState(null)
+    
+    // Search 1 second after the user has finished typing
+    const handleChange = event => {
+        // Get input value
+        const value = event.currentTarget.value;
+        
+        // Update state
+        clearTimeout(timer);
+        
+        // Restart the timer on every input change
+        setTimer(setTimeout(() => {
+            refine(value)
+        }, 800));
+        setQuery(value)
+        
+    };
+
+    // Clear search bar
+    const clearSearch = () => {
+        refine("")
+        setQuery("")
+    }
+
+    return (     
+        <> 
+            <input
+                value={query}
+                onChange={handleChange}
+                placeholder="Search by title or ingredient..."
+            />
+            <button title="Clear search bar" aria-label="Clear search bar" onClick={clearSearch}>
+                <FiX />
+            </button>
+        </>
+    )
+} 
+
+/**
+ * PropTypes
+ */
+CustomSearchBox.propTypes = {
+    currentRefinement: PropTypes.string.isRequired,
+    refine: PropTypes.func.isRequired
+}
+
+/**
+ * Main SearchBar component
+ */
+export const SearchBarInput = ({ closeDropdown }) => {
+
+    // Search on enter press
+    const ConnectedCustomSearchBox = connectSearchBox(CustomSearchBox)
+
+    // Create function that can be added and remove from window event listeners
+    const closeSearchDropdown = useCallback( ( event ) => {
+        if (event.code !== 'Escape') return
+
+        // Call close dropdown function prop
+        closeDropdown() 
+    }, [closeDropdown])
+
+    // Allow dropdown to be closed by ESC key
+    useEffect( () => {
+        window.addEventListener('keydown', closeSearchDropdown)
+
+        // Clean up by removing event listener
+        return () => { window.removeEventListener('keydown', closeSearchDropdown) }
+    }, [closeDropdown, closeSearchDropdown])
+
+    return (
+        <div>
+            <SearchBoxWrapper>
+                <ConnectedCustomSearchBox/>
+            </SearchBoxWrapper>
+        </div>
+    )
+}
+
+/**
+ * PropTypes
+ */
+SearchBarInput.propTypes = {
+    closeDropdown: PropTypes.func.isRequired
+}
+
+
+/**
+ * Styles
+ */
+const SearchBoxWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    margin: auto;
+
+    ${responsiveBreakpointDown('laptop', `
+        max-width: none;
+        margin-bottom: 20px;
+    `)}
+
+    input {
+        padding: 15px 20px;
+        border: none;
+        font-family: ${props => props.theme.font.family.sans};
+        font-size: ${props => props.theme.font.size.medium};
+        flex-grow: 1;
+        outline: none;
+        line-height: 1;
+
+        &::placeholder {
+            opacity: 0.67;
+        }
+    }
+
+    button {
+        position: relative;
+        background: none;
+        border: none;
+        width: 50px;
+        min-width: 50px;
+
+        svg {
+            position: absolute;
+            top: 52.5%;
+            left: 50%;
+            transform: scale(1.2) translate(-50%, -50%);
+            stroke-width: 2.5px;
+            pointer-events: none;
+        }
+    }
+`

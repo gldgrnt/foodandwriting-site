@@ -5,8 +5,22 @@ const postQuery = `
     {   
         algoliaPosts: allSanityPost {
             nodes {
+                _id
                 title
                 date
+                fullSlug
+                featuredImage {
+                    asset {
+                        fluid(maxWidth: 200, maxHeight: 200) {
+                            aspectRatio
+                            src
+                            srcSet
+                            srcWebp
+                            srcSetWebp
+                            sizes
+                        }
+                    }
+                }
                 category {
                     singleName
                     categoryType
@@ -31,25 +45,33 @@ const postQuery = `
  */
 const flattenRecipes = ( arr ) => (
     // Map each post to a flatten object
-    arr.map( ({ title, date, category, content }) => {
+    arr.map( ({ _id, title, date, fullSlug, category, content, featuredImage}) => {
+
+        // Data shared by normal and recipe posts
+        const mainData = {
+            _id,
+            title,
+            date,
+            timestamp: new Date(date).getTime(),
+            fullSlug,
+            categoryName: category.singleName,
+            categoryType: category.categoryType,
+            featuredImage
+        }
 
         // Flatten post objects based on category type
         switch (category.categoryType) { 
             case 'Normal':
                 return {
-                    title,
-                    date,
-                    category: category.singleName
+                    ...mainData,
                 }
             
             case 'Recipe':
                 let shoppingListItems = content[0].shoppingList.map( item => item.ingredient )
                 
                 return {
-                    title,
-                    date,
-                    category: category.singleName,
-                    shoppingList: shoppingListItems
+                    ...mainData,
+                    shoppingList: shoppingListItems,
                 }
 
             default:
@@ -67,7 +89,7 @@ const algoliaQueries = [
     {
         query: postQuery,
         transformer: ({ data }) => flattenRecipes(data.algoliaPosts.nodes),
-        indexName: `FOODANDWRITING`
+        indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME
     },
 ]
 

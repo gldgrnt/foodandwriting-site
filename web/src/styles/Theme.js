@@ -44,6 +44,7 @@ export const themeVariables = {
     },
     transition: {
         fast: '0.3s ease',
+        medium: '0.6s ease',
     },
     grid: {
         columns: 8,

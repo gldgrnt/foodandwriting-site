@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FiMenu, FiSearch } from 'react-icons/fi'
 
 import { Logo, Toggle } from './components'
-import { SearchBarContainer } from '../search'
+import { SearchBarContainer } from '../search-bar'
 import { Navigation, NavigationDropdown } from '../navigation'
 import { GridContainer } from '../layout'
 import { responsiveBreakpointDown } from "../../utils"
@@ -153,12 +153,16 @@ const DropdownContainer = styled.div`
     overflow: hidden;
     background: ${props => props.theme.color.whiteGrey};
     transition: height ${props => props.theme.transition.fast};
-    /* min-height: ${props => props.isDropdownOpen ? props.maxHeight + 'px' : '0'}; */
+    box-shadow: 0px 20px 20px 0px #35353512;
 `
 
 const DropdownWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
     padding: 40px 0;
     width: 100%;
+    max-height: calc(100vh - 78px);
+    overflow: hidden;
 
     ${responsiveBreakpointDown('tablet', `
         padding: 30px 0;

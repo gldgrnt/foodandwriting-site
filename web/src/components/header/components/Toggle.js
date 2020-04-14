@@ -50,7 +50,7 @@ const IconLink = styled.button`
     }
 
     &.active {
-        background-color: ${props => props.theme.color.yellow};
+        ${props => responsiveBreakpointDown('tablet', `background-color: ${props.theme.color.yellow};`)}
     }
 
     svg {

@@ -5,14 +5,14 @@ import PropTypes from 'prop-types'
 
 import { SearchBarInput, SearchBarHits, SearchBarMeta, SearchBarFooter } from './components'
 
+// Instantiate algolia client
+const searchClient = algoliasearch( process.env.GATSBY_ALGOLIA_APP_ID, process.env.GATSBY_ALGOLIA_SEARCH_KEY )
+const algoliaIndexName = process.env.GATSBY_ALGOLIA_INDEX_NAME
+
 /**
- * searchBarContainer component 
+ * SearchBarContainer component 
  */
 export const SearchBarContainer = ({ closeDropdown }) => {
-    // Initialise variables
-    const searchClient = algoliasearch( process.env.GATSBY_ALGOLIA_APP_ID, process.env.GATSBY_ALGOLIA_SEARCH_KEY )
-    const algoliaIndexName = process.env.GATSBY_ALGOLIA_INDEX_NAME
-    
     // Create custom infinite hits component   
     const SearchBarResults = connectInfiniteHits( ({ refineNext, hasMore, hits }) => (
         <>

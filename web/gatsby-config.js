@@ -35,9 +35,9 @@ module.exports = {
         {
             resolve: 'gatsby-source-sanity',
             options: {
-                projectId: 's1s9nwnc',
-                dataset: 'development',
-                useCdn: true
+                projectId: process.env.GATSBY_SANITY_PROJECT_ID,
+                dataset: process.env.GATSBY_SANITY_DATASET,
+                useCdn: true,
             },
         },
         {

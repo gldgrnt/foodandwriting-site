@@ -1,8 +1,11 @@
+require('dotenv').config()
+
+// Instantiate sanity client
 const sanityClient = require('@sanity/client')
 
 const client  = sanityClient({
-    projectId: 's1s9nwnc',
-    dataset: 'development',
+    projectId: process.env.GATSBY_SANITY_PROJECT_ID,
+    dataset: process.env.GATSBY_SANITY_DATASET,
     useCdn: true,
 })
 

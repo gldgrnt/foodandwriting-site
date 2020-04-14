@@ -1,17 +1,20 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import PropTypes from 'prop-types'
+
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
-
 import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
+/**
+ * IndexPage component
+ */
 const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
     // Destructure to separate the data
     const [featuredRecipe, ...sliderRecipes] = recipes.nodes
     const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopic
-
 
     return (
         <>
@@ -61,6 +64,47 @@ const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, cu
 
 export default IndexPage
 
+
+/**
+ * PropTypes
+ */
+IndexPage.propTypes = {
+    data: PropTypes.shape({
+        recipes: PropTypes.shape({
+            nodes: PropTypes.arrayOf(PropTypes.object).isRequired
+        }).isRequired, 
+        featuredTopic: PropTypes.shape({
+            featuredTopicTitle: PropTypes.string.isRequired,
+            featuredTopicSubtitle: PropTypes.string.isRequired,
+            featuredTopicPosts: PropTypes.arrayOf(PropTypes.object).isRequired
+        }).isRequired, 
+        blog: PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired
+            }).isRequired,
+            viewAllName: PropTypes.string.isRequired
+        }).isRequired, 
+        blogPosts: PropTypes.shape({
+            nodes: PropTypes.arrayOf(PropTypes.object).isRequired
+        }).isRequired, 
+        culture: PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired
+            }).isRequired,
+            viewAllName: PropTypes.string.isRequired
+        }).isRequired, 
+        culturePosts: PropTypes.shape({
+            nodes: PropTypes.arrayOf(PropTypes.object).isRequired
+        }).isRequired
+    }).isRequired
+}
+
+
+/**
+ * GraphQL query
+ */
 export const homepageQuery = graphql`
     query {
         # Recipes

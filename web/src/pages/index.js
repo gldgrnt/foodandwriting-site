@@ -12,8 +12,6 @@ import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
  */
 const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
-    console.log(recipes)
-
     // Destructure to separate the data
     const [featuredRecipe, ...sliderRecipes] = recipes.nodes
     const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopic

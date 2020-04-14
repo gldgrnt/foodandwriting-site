@@ -5,25 +5,25 @@ import { Link } from 'gatsby'
 import { GridContainer, GridRow, GridCol } from '../layout'
 import { ReducedLogo } from './components'
 import { responsiveBreakpointDown } from '../../utils'
+import { FiInstagram } from 'react-icons/fi'
 
 
 export const Footer = () => {
     const footerLinks = [
+        { 'title': <FiInstagram />, 'link': 'https://www.instagram.com/foodandwriting/', 'external': true },
         { 'title': 'About', 'link': '/about', 'external': false },
-        { 'title': 'Contact', 'link': '/contact', 'external': false },
-        { 'title': 'Instagram', 'link': 'https://instagram.com', 'external': true },
-        { 'title': 'Cookies', 'link': '/cookies', 'external': false },
+        { 'title': 'Cookies', 'link': '/', 'external': false },
     ]
 
     return (
         <StyledFooter>
             <GridContainer>
                 <GridRow align="center">
-                    <GridCol cols={{'monitor' : 4, 'mobile': 8}}>
+                    <GridCol cols="4">
                         <ReducedLogo />
                     </GridCol>
 
-                    <GridCol cols={{'monitor' : 4, 'mobile': 8}}>
+                    <GridCol cols="4">
                         <LinksWrapper>
                             {footerLinks.map(footerLink => {
                                 let attr = footerLink.external 
@@ -55,8 +55,6 @@ const LinksWrapper = styled.div`
         display: flex;
         justify-content: space-between;
     `)}
-
-    ${responsiveBreakpointDown('mobile', `margin-top: 25px;`)}
 `
 
 const FooterLink = styled(Link)`
@@ -67,6 +65,11 @@ const FooterLink = styled(Link)`
     font-size: ${props => props.theme.font.size.small};
     color: ${props => props.theme.color.mediumGrey};
     transition: color ${props => props.theme.transition.fast};
+
+    svg {
+        stroke-width: 2px;
+        transform: scale(1.2) translateY(1px);
+    }
 
     &:hover,
     &:focus {
@@ -82,10 +85,4 @@ const FooterLink = styled(Link)`
             margin-right: 0;
         }
     `)}
-
-    /* ${responsiveBreakpointDown('mobile', `
-        &:not(:last-child) {
-            margin-right: 0;
-        }
-    `)} */
 `

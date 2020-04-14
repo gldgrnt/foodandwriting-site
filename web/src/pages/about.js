@@ -41,8 +41,8 @@ AboutPage.propTypes = {
 /**
  * GraphQL query
  */
-export const aboutPageQuery = graphql`
-   query {
+export const query = graphql`
+   query AboutPageQuery {
         sanityAbout {
             snippet
             _rawContent

@@ -105,8 +105,8 @@ IndexPage.propTypes = {
 /**
  * GraphQL query
  */
-export const homepageQuery = graphql`
-    query {
+export const query = graphql`
+    query HomePageQuery {
         # Recipes
         recipes: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 7, sort: {order: DESC, fields: date}) {
             nodes {

@@ -43,7 +43,7 @@ const StyledNav = styled.nav`
         text-decoration: none;
         padding: 7px 10px;
         font-size: ${props => props.theme.font.size.small};
-        color: ${props => props.theme.color.mediumGrey};
+        color: ${props => props.theme.color.darkGrey};
         transition: color ${props => props.theme.transition.fast};
 
         &:hover,

@@ -54,11 +54,11 @@ export const PostSlider = ({title, posts}) => {
                     </TitleWrapper>
 
                     <ButtonWrapper data-glide-el="controls">
-                        <StyledButton className="buttons" data-glide-dir="<">
+                        <StyledButton className="buttons" data-glide-dir="<" aria-label="Previous">
                             <FiArrowLeft />
                         </StyledButton>
 
-                        <StyledButton className="buttons" data-glide-dir=">">
+                        <StyledButton className="buttons" data-glide-dir=">" aria-label="Next">
                             <FiArrowRight />
                         </StyledButton>
                     </ButtonWrapper>

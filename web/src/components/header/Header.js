@@ -56,11 +56,11 @@ export const Header = () => {
                     </NavigationWrapper>
 
                     <TogglesWrapper>
-                        <Toggle handler={() => handleToggleClick('isSearchOpen')} active={!!dropdownState.isSearchOpen}>
+                        <Toggle handler={() => handleToggleClick('isSearchOpen')} active={!!dropdownState.isSearchOpen} aria-label="Toggle search">
                             <FiSearch />
                         </Toggle>
 
-                        <Toggle menu handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen}>
+                        <Toggle menu handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen} aria-label="Toggle menu">
                             <FiMenu />
                         </Toggle>
                     </TogglesWrapper>

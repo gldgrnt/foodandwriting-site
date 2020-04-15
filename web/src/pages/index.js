@@ -1,5 +1,5 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { StaticQuery, graphql } from 'gatsby'
 import PropTypes from 'prop-types'
 
 import { Page } from '../components/layout'
@@ -10,7 +10,7 @@ import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 /**
  * IndexPage component
  */
-const IndexPage = ({data, data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
+const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
     // Destructure to separate the data
     const [featuredRecipe, ...sliderRecipes] = recipes.nodes
@@ -57,7 +57,68 @@ const IndexPage = ({data, data: { recipes, featuredTopic, blog, blogPosts, cultu
     )
 }
 
-export default IndexPage
+
+/**
+ * GraphQL query
+ */
+export default () => (
+    <StaticQuery query={
+        graphql`
+            query {
+                # Recipes
+                recipes: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 7, sort: {order: DESC, fields: date}) {
+                    nodes {
+                        ...PreviewPostFragment
+                        # Recipe intro
+                        content {
+                            ... on SanityRecipeContent {
+                                recipeIntro
+                            }
+                        }
+                    }
+                }
+                # Featured topic
+                featuredTopic: sanityHome {
+                    featuredTopicTitle
+                    featuredTopicSubtitle
+                    featuredTopicPosts {
+                        ...PreviewPostFragment
+                    }
+                }
+                # Blog
+                blog: sanityCategory(title: {eq: "Blog"}) {
+                    title
+                    slug {
+                        current
+                    }
+                    viewAllName
+                }
+                blogPosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Blog"}}}, sort: {order: DESC, fields: date}) {
+                    nodes {
+                        ...PreviewPostFragment
+                    }
+                }
+                # Culture
+                culture: sanityCategory(title: {eq: "Culture"}) {
+                    title
+                    slug {
+                        current
+                    }
+                    viewAllName
+                }
+                culturePosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Culture"}}}, sort: {order: DESC, fields: date}) {
+                    nodes {
+                        ...PreviewPostFragment
+                    }
+                }
+            }
+            
+        `
+    }
+
+    render={ data => <IndexPage data={data} /> }
+    />
+)
 
 
 /**
@@ -95,59 +156,3 @@ IndexPage.propTypes = {
         }).isRequired
     }).isRequired
 }
-
-
-/**
- * GraphQL query
- */
-export const query = graphql`
-    query {
-        # Recipes
-        recipes: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 7, sort: {order: DESC, fields: date}) {
-            nodes {
-                ...PreviewPostFragment
-                # Recipe intro
-                content {
-                    ... on SanityRecipeContent {
-                        recipeIntro
-                    }
-                }
-            }
-        }
-        # Featured topic
-        featuredTopic: sanityHome {
-            featuredTopicTitle
-            featuredTopicSubtitle
-            featuredTopicPosts {
-                ...PreviewPostFragment
-            }
-        }
-        # Blog
-        blog: sanityCategory(title: {eq: "Blog"}) {
-            title
-            slug {
-                current
-            }
-            viewAllName
-        }
-        blogPosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Blog"}}}, sort: {order: DESC, fields: date}) {
-            nodes {
-                ...PreviewPostFragment
-            }
-        }
-        # Culture
-        culture: sanityCategory(title: {eq: "Culture"}) {
-            title
-            slug {
-                current
-            }
-            viewAllName
-        }
-        culturePosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Culture"}}}, sort: {order: DESC, fields: date}) {
-            nodes {
-                ...PreviewPostFragment
-            }
-        }
-    }
-    
-`

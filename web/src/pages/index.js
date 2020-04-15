@@ -10,7 +10,7 @@ import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 /**
  * IndexPage component
  */
-const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
+const IndexPage = ({data, data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
     // Destructure to separate the data
     const [featuredRecipe, ...sliderRecipes] = recipes.nodes
@@ -52,11 +52,6 @@ const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, cu
                         </GridRow>
                     </GridContainer>
                 </Section>
-
-                {/* Main post */}
-                {/* <Section spacingBottom="6">
-                    <FeaturedPost post={mainPostData} />
-                </Section> */}
             </Page>
         </>
     )
@@ -106,7 +101,7 @@ IndexPage.propTypes = {
  * GraphQL query
  */
 export const query = graphql`
-    query HomePageQuery {
+    query {
         # Recipes
         recipes: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 7, sort: {order: DESC, fields: date}) {
             nodes {

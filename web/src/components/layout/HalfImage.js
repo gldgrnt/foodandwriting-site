@@ -4,35 +4,33 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Img from 'gatsby-image/withIEPolyfill'
 
-import { Page, GridContainer } from './index'
+import { GridContainer } from './index'
 import { responsiveBreakpointDown } from '../../utils'
 
 /**
  * HalfImagePage component
  */ 
-export const HalfImagePage = ({ children, fluidImageProps }) => {
+export const HalfImage = ({ children, fluidImageProps }) => {
 
     return (
-        <Page>
-            <HalfImageContainer>
-                <StickyImageWrapper>
-                    <Img fluid={fluidImageProps} />
-                </StickyImageWrapper>
+        <HalfImageContainer>
+            <StickyImageWrapper>
+                <Img fluid={fluidImageProps} />
+            </StickyImageWrapper>
 
-                <GridContainer justify="flex-end">
-                    <ContentWrapper>
-                        {children}
-                    </ContentWrapper>
-                </GridContainer>
-            </HalfImageContainer>
-        </Page>
+            <GridContainer justify="flex-end">
+                <ContentWrapper>
+                    {children}
+                </ContentWrapper>
+            </GridContainer>
+        </HalfImageContainer>
     )
 }
 
 /**
  * PropTypes
  */
-HalfImagePage.propTypes = {
+HalfImage.propTypes = {
     children: PropTypes.node.isRequired,
     fluidImageProps: PropTypes.object.isRequired,
 }

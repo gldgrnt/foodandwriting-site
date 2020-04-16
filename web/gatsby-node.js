@@ -64,7 +64,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
         createPage({
             path,
-            component: require.resolve('./src/page-templates/categoryContainer.js'),
+            component: require.resolve('./src/page-templates/category.js'),
             context: {_id: node._id}
         })
     })

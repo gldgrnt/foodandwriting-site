@@ -18,7 +18,7 @@ export default ({ data: {post: {date, title, category, featuredImage, seoDescrip
                     <PostHero featuredImage={featuredImage} subtitle={category.title} title={title} />
                 </Section>
 
-                <Section spacingTop={{'monitor': 5, 'laptop': 4, 'tablet': 3}}>
+                <Section spacingTop={{'monitor': 4, 'tablet': 3}}>
                     {// Default content
                         content[0]._type === 'defaultContent' && <DefaultPostContent content={_rawContent[0].content} date={date} maxTextWidth={maxTextWidth}/>
                     }

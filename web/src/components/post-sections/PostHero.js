@@ -1,28 +1,18 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Img from 'gatsby-image'
 
-import { SmallCaps } from '../ui'
-import { FiArrowDown } from 'react-icons/fi'
+import { SmallCaps, ScrollDown } from '../ui'
 import { responsiveBreakpointDown } from '../../utils'
 
 export const PostHero = ({ featuredImage, subtitle, title }) => {
 
-    let heroRef = useRef(null);
-
-    const handleScrollDownClick = (event) => {
-        event.preventDefault();
-
-        window.scrollTo({
-            top: heroRef.clientHeight,
-            left: 0,
-            behavior: 'smooth'
-        });
-    }
+    // Create tag to scroll to
+    const scrollId = 'hero'
 
     return (
-        <HeroWrapper ref={r => heroRef = r}>
+        <HeroWrapper id={scrollId}>
             <ImageWrapper>
                 { !!featuredImage ? <Img fluid={featuredImage.asset.fluid} /> : <div></div>}
             </ImageWrapper>
@@ -31,10 +21,7 @@ export const PostHero = ({ featuredImage, subtitle, title }) => {
                 <SmallCaps size="regular" color="mediumGrey">{subtitle}</SmallCaps>
                 <Title>{title}</Title>
 
-                <ScrollDown onClick={handleScrollDownClick}>
-                    <span>Scroll down</span>
-                    <FiArrowDown />
-                </ScrollDown>
+                <ScrollDown tagId={scrollId} />
             </CaptionWrapper>
         </HeroWrapper>
     )
@@ -54,7 +41,7 @@ const HeroWrapper = styled.div`
     overflow: hidden;
 
     ${responsiveBreakpointDown('mobile', `
-        height: calc(90vh - 65px);
+        height: calc(80vh - 65px);
     `)}
 
     & > * {
@@ -123,29 +110,4 @@ const CaptionWrapper = styled.div`
 const Title = styled.h1`
     max-width: 450px;
     margin: 10px 0 60px;
-`
-
-const ScrollDown = styled.button`
-    position: absolute;
-    bottom: 40px;
-    display: flex;
-    background: none;
-    border: none;
-    flex-direction: column;
-    align-items: center;
-    color: ${props => props.theme.color.darkGrey};
-    transition: color ${props => props.theme.transition.fast};
-
-    &:hover,
-    &:focus {
-        color: ${props => props.theme.color.black};
-    }
-
-    span {
-        display: inline-block;
-        font-family: ${props => props.theme.font.family.sans};
-        font-weight: bold;
-        font-size: ${props => props.theme.font.size.tiny};
-        text-transform: uppercase;
-    }
 `

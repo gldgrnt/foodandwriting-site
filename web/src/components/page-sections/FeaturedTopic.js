@@ -56,6 +56,10 @@ const HeaderWrapper = styled.div`
 
 const Title = styled.h2`
     font-size: ${props => props.theme.font.size.giant};
+
+    ${props => responsiveBreakpointDown('tablet', `
+        font-size: ${props.theme.font.size.large};
+    `)}
 `
 
 const PostWrapper = styled.div`

@@ -2,9 +2,10 @@ import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import PropTypes from 'prop-types'
 
+import { useMobileStatus } from '../hooks'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
-import { FeaturedPost, PostSlider, PostList, FeaturedTopic } from '../components/page-sections'
+import { FeaturedPost, RecipeSlider, PostList, FeaturedTopic } from '../components/page-sections'
 import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 
 /**
@@ -12,26 +13,37 @@ import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
  */
 const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
-    // Destructure to separate the data
-    const [featuredRecipe, ...sliderRecipes] = recipes.nodes
+    const isMobile = useMobileStatus()
+
+    // Set up recipes
+    let featuredRecipe, sliderRecipes
+
+    if (!isMobile) {
+        [featuredRecipe, ...sliderRecipes] = recipes.nodes
+    } else {
+        sliderRecipes = recipes.nodes 
+    }
+
+    // Set up featured topic
     const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopic
 
     return (
         <>
             <SEO title="Home" description="Website coming soon" />
             <Page>
-                {/* Main post */}
-                <Section>
-                    <FeaturedPost post={featuredRecipe} />
-                </Section>
+                { !isMobile &&
+                    <Section>
+                        <FeaturedPost post={featuredRecipe} />
+                    </Section>
+                }
 
                 {/* Post slider */}
-                <Section spacingTop={{'monitor': 3, 'tablet': 2}} spacingBottom={{'monitor': 4, 'tablet': 2}}>
-                    <PostSlider title={'Recipes'} posts={sliderRecipes} />
+                <Section spacingTop={{'monitor': 3, 'tablet': 2, 'mobile': 0}} spacingBottom={{'monitor': 4, 'tablet': 2, 'mobile': 0}}>
+                    <RecipeSlider title={'Recipes'} posts={sliderRecipes} />
                 </Section>
 
                 {/* Featured section */}
-                <Section spacingTop={{'monitor': 4, 'tablet': 3}} spacingBottom={{'monitor': 4, 'tablet': 3}} whiteGrey>
+                <Section spacingTop={{'monitor': 4, 'tablet': 3, 'mobile': 2}} spacingBottom={{'monitor': 4, 'tablet': 3, 'mobile': 2}} whiteGrey>
                     <FeaturedTopic title={featuredTopicTitle} subtitle={featuredTopicSubtitle} posts={featuredTopicPosts} />
                 </Section>
 

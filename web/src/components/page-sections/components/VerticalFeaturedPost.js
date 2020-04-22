@@ -124,7 +124,7 @@ const CaptionTitle = styled.h3`
     margin: 0 0 10px;
 
     ${props => responsiveBreakpointDown('tablet', `
-        font-size: ${props.theme.font.size.regular};
+        font-size: ${props.theme.font.size.increased};
         margin: 0;    
     `)}
 `

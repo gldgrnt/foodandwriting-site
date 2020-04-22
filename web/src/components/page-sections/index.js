@@ -1,8 +1,8 @@
 import { FeaturedPost } from './FeaturedPost'
-import { PostSlider } from './PostSlider'
+import { RecipeSlider } from './RecipeSlider'
 import { PostList } from './PostList'
 import { FeaturedTopic } from './FeaturedTopic'
 import { ParallaxFeaturedTopic } from './ParallaxFeaturedTopic'
 import { PostArchive } from './PostArchive'
 
-export { FeaturedPost, PostSlider, PostList, FeaturedTopic, ParallaxFeaturedTopic, PostArchive }
+export { FeaturedPost, RecipeSlider, PostList, FeaturedTopic, ParallaxFeaturedTopic, PostArchive }

@@ -4,10 +4,15 @@ import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 import Img from 'gatsby-image/withIEPolyfill'
 
-import { SmallCaps } from '../../ui'
+import { useMobileStatus } from '../../../hooks'
+import { SmallCaps, Button } from '../../ui'
 import { responsiveBreakpointDown } from '../../../utils'
 
-export const VerticalSliderPost = ({ post: {title, fullSlug, featuredImage} }) => {
+export const RecipeSliderPost = ({ post: {title, fullSlug, featuredImage} }) => {
+
+    // Get mobile state
+    const isMobile = useMobileStatus()
+
     return (
         <LinkWrapper to={fullSlug}>
             <Article>
@@ -15,14 +20,20 @@ export const VerticalSliderPost = ({ post: {title, fullSlug, featuredImage} }) =
                     <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title} />
                 </ImageWrapper>
 
-                <Title>{title}</Title>
-                <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
+                <CaptionWrapper>
+                    <Title>{title}</Title>
+                    { !isMobile ?
+                        <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
+                        :
+                        <Button secondary>View recipe</Button>
+                    }
+                </CaptionWrapper>
             </Article>
         </LinkWrapper>
     )
 }
 
-VerticalSliderPost.prototypes = {
+RecipeSliderPost.prototypes = {
     post: PropTypes.shape({
         title: PropTypes.string.isRequired,
         fullSlug: PropTypes.string.isRequired,
@@ -54,10 +65,6 @@ const LinkWrapper = styled(Link)`
 
     ${props => responsiveBreakpointDown('laptop', `
         max-width: ${(props.theme.grid.breakpoints.laptop.minScreenWidth / 3) - 60}px;
-
-        span {
-            display: none;
-        }
     `)}
 
     ${responsiveBreakpointDown('mobile', `
@@ -68,7 +75,12 @@ const LinkWrapper = styled(Link)`
 `
 
 const Article = styled.article`
+    position: relative;
     width: 100%;
+
+    ${props => responsiveBreakpointDown('mobile', `
+        height: calc(100vh - 58px);
+    `)}
 `
 
 const ImageWrapper = styled.div`
@@ -77,7 +89,20 @@ const ImageWrapper = styled.div`
     margin-bottom: 20px;
     background: ${props => props.theme.color.whiteGrey};
     
-    ${responsiveBreakpointDown('mobile', `padding-top: 140%;`)}
+    ${responsiveBreakpointDown('mobile', `height: 100%`)}
+
+    &::after {
+        ${props => responsiveBreakpointDown('mobile', `
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: ${props.theme.color.blackOverlay};
+            z-index: 1;
+        `)}
+    }
 
     > * {
         position: absolute !important;
@@ -88,6 +113,23 @@ const ImageWrapper = styled.div`
     }
 `
 
+const CaptionWrapper = styled.div`
+    ${responsiveBreakpointDown('mobile', `
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        padding: 0 30px;
+        text-align: center;
+
+        > h3 {
+            color: white;
+        }
+    `)}
+`
+
 const Title = styled.h3`
     font-size: ${props => props.theme.font.size.medium};
     margin-bottom: 10px;
@@ -95,5 +137,10 @@ const Title = styled.h3`
 
     ${props => responsiveBreakpointDown('tablet', `
         font-size: ${props.theme.font.size.regular};
+    `)}
+
+    ${props => responsiveBreakpointDown('mobile', `
+        font-size: ${props.theme.font.size.giant};
+        margin-bottom: 15px;
     `)}
 `

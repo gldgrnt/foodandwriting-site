@@ -91,9 +91,7 @@ const StyledHeader = styled.header`
 `
 
 const HeaderUpperWrapper = styled.div`
-    ${responsiveBreakpointDown('tablet', `
-        border-bottom: 1px solid #e6e6e6; 
-    `)}
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.08);
 `
 
 const LogoWrapper = styled.div`
@@ -103,6 +101,8 @@ const LogoWrapper = styled.div`
     padding: 30px 0;
 
     ${props => responsiveBreakpointDown('mobile', `
+        padding-top: 20px;
+        padding-bottom: 20px;
         padding-left: ${props.theme.grid.spacing}px;
     `)}
 `
@@ -158,6 +158,7 @@ const DropdownWrapper = styled.div`
 
     ${responsiveBreakpointDown('tablet', `
         padding: 30px 0;
-        height: calc(100vh - 78px);
+        height: 100vh;
+        max-height: calc(100vh - 58px);
     `)}
 `

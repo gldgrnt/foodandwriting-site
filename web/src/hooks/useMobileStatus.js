@@ -11,7 +11,7 @@ export const useMobileStatus = () => {
     // Create function to get the status of the window width
     // useCallback so that a single function is used as this hook rerenders
     const getMobileStatus = useCallback(() => {
-        return window !== "undefined" ? window.innerWidth <= themeVariables.grid.breakpoints.mobile.maxScreenWidth : false
+        return typeof window !== "undefined" ? window.innerWidth <= themeVariables.grid.breakpoints.mobile.maxScreenWidth : false
     }, [])
 
     // Create initial state based on the initial mobile status

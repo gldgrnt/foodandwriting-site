@@ -91,7 +91,9 @@ const StyledHeader = styled.header`
 `
 
 const HeaderUpperWrapper = styled.div`
-    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.08);
+    ${props => responsiveBreakpointDown('mobile', `
+        box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.08);
+    `)}
 `
 
 const LogoWrapper = styled.div`

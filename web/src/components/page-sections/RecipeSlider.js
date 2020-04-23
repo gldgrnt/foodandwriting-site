@@ -151,7 +151,7 @@ const StyledWrapper = styled.div`
 
     > button {
         position: absolute;
-        bottom: 30px;
+        bottom: 40px;
         left: 50%;
         transform: translateX(-50%);
 
@@ -168,7 +168,7 @@ const UpperWrapper = styled.div`
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 40px;
+    margin: 0 0 40px;
     padding-top: 3px;
 
     ${props => responsiveBreakpointDown('mobile', `
@@ -178,6 +178,7 @@ const UpperWrapper = styled.div`
         left: ${props.theme.grid.spacing}px;
         width: calc(100% - ${props.theme.grid.spacing * 2}px);
         z-index: 2;
+        margin: 0;
 
         svg {
             stroke: white;
@@ -233,7 +234,6 @@ const ButtonWrapper = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-
     `)}
     
     > *:first-child {

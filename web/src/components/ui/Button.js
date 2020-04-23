@@ -25,7 +25,6 @@ const BaseButton = styled.button`
     padding: 0;
     margin: 0;
     font-family: ${props => props.theme.font.family.sans};
-    font-size: ${props => props.theme.font.size[props.size] || props.theme.font.size.tiny};
     font-weight: bold;
     text-decoration: none;
 ` 

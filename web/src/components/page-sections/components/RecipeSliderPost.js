@@ -25,7 +25,7 @@ export const RecipeSliderPost = ({ post: {title, fullSlug, featuredImage} }) => 
                     { !isMobile ?
                         <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
                         :
-                        <Button secondary>View recipe</Button>
+                        <Button secondary size="small">View recipe</Button>
                     }
                 </CaptionWrapper>
             </Article>
@@ -78,8 +78,9 @@ const Article = styled.article`
     position: relative;
     width: 100%;
 
-    ${props => responsiveBreakpointDown('mobile', `
-        height: calc(100vh - 108px);
+    ${responsiveBreakpointDown('mobile', `
+        height: 100vh; /** Fallback **/
+        height: calc((var(--vh, 1vh) * 100) - 68px);
     `)}
 `
 
@@ -117,7 +118,7 @@ const CaptionWrapper = styled.div`
     ${responsiveBreakpointDown('mobile', `
         position: absolute;
         z-index: 2;
-        top: 45%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 100%;
@@ -141,6 +142,6 @@ const Title = styled.h3`
 
     ${props => responsiveBreakpointDown('mobile', `
         font-size: ${props.theme.font.size.giant};
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     `)}
 `

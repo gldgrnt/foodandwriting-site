@@ -9,6 +9,12 @@ import { Reset, Global, Theme } from '../../styles'
  * Page component
  */
 export const Page = ({ children }) => {
+
+    // Set custom viewheight variable
+    if (typeof window !== "undefined") {
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    }
+
     return (
         <Theme>
             <Reset />

@@ -91,7 +91,7 @@ const StyledHeader = styled.header`
 `
 
 const HeaderUpperWrapper = styled.div`
-    ${props => responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown('mobile', `
         box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.08);
     `)}
 `
@@ -103,8 +103,8 @@ const LogoWrapper = styled.div`
     padding: 30px 0;
 
     ${props => responsiveBreakpointDown('mobile', `
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding-top: 25px;
+        padding-bottom: 25px;
         padding-left: ${props.theme.grid.spacing}px;
     `)}
 `
@@ -161,6 +161,7 @@ const DropdownWrapper = styled.div`
     ${responsiveBreakpointDown('tablet', `
         padding: 30px 0;
         height: 100vh;
-        max-height: calc(100vh - 58px);
+        max-height: 100vh; /** Fallback **/
+        max-height: calc((var(--vh, 1vh) * 100) - 68px);
     `)}
 `

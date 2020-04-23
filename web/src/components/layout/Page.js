@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import Header from '../header'
 import Footer from '../footer'
 import { Reset, Global, Theme } from '../../styles'
+import { PageContext } from '../context'
+import { useMobileStatus } from '../../hooks'
 
 /**
  * Page component
@@ -15,16 +17,23 @@ export const Page = ({ children }) => {
         document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
     }
 
+    // Set up page context
+    const isMobile = useMobileStatus()
+
+    const context = { isMobile }
+
     return (
         <Theme>
             <Reset />
             <Global />
 
-            <Header />
-                <main>
-                    {children}
-                </main>
-            <Footer />
+            <PageContext.Provider value={context}>
+                <Header />
+                    <main>
+                        {children}
+                    </main>
+                <Footer />
+            </PageContext.Provider>
         </Theme>
     )
 }

@@ -4,14 +4,11 @@ import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 import Img from 'gatsby-image/withIEPolyfill'
 
-import { useMobileStatus } from '../../../hooks'
+import { PageContext } from '../../context'
 import { SmallCaps, Button } from '../../ui'
 import { responsiveBreakpointDown } from '../../../utils'
 
 export const RecipeSliderPost = ({ post: {title, fullSlug, featuredImage} }) => {
-
-    // Get mobile state
-    const isMobile = useMobileStatus()
 
     return (
         <LinkWrapper to={fullSlug}>
@@ -22,11 +19,13 @@ export const RecipeSliderPost = ({ post: {title, fullSlug, featuredImage} }) => 
 
                 <CaptionWrapper>
                     <Title>{title}</Title>
-                    { !isMobile ?
-                        <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
-                        :
-                        <Button secondary size="small">View recipe</Button>
-                    }
+                    <PageContext.Consumer>
+                        { ({ isMobile }) => ( !isMobile ?
+                            <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
+                            :
+                            <Button secondary size="small">View recipe</Button>
+                        )}
+                    </PageContext.Consumer>
                 </CaptionWrapper>
             </Article>
         </LinkWrapper>

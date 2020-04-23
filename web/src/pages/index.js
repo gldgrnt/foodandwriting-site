@@ -2,7 +2,7 @@ import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import PropTypes from 'prop-types'
 
-import { useMobileStatus } from '../hooks'
+import { PageContext } from '../components/context'
 import { Page } from '../components/layout'
 import { SEO } from '../utils'
 import { FeaturedPost, RecipeSlider, PostList, FeaturedTopic } from '../components/page-sections'
@@ -13,34 +13,35 @@ import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
  */
 const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
-    const isMobile = useMobileStatus()
-
     // Set up recipes
-    let featuredRecipe, sliderRecipes
-
-    if (!isMobile) {
-        [featuredRecipe, ...sliderRecipes] = recipes.nodes
-    } else {
-        sliderRecipes = recipes.nodes 
-    }
+    const featuredRecipe = recipes.nodes[0]
+    const sliderRecipes = recipes.nodes
 
     // Set up featured topic
     const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopic
 
     return (
         <>
-            <SEO title="Home" description="Website coming soon" />
+            <SEO title="Home" />
             <Page>
-                { !isMobile &&
-                    <Section>
-                        <FeaturedPost post={featuredRecipe} />
-                    </Section>
-                }
+                {/* Featured post */}
+                <PageContext.Consumer>
+                    { ({ isMobile }) => !isMobile ? 
+                        <Section>
+                            <FeaturedPost post={featuredRecipe} />
+                        </Section>  
+                        : ''
+                    }
+                </PageContext.Consumer>
 
                 {/* Post slider */}
-                <Section spacingTop={{'monitor': 3, 'tablet': 2, 'mobile': 0}} spacingBottom={{'monitor': 4, 'tablet': 2, 'mobile': 0}}>
-                    <RecipeSlider title={'Recipes'} posts={sliderRecipes} />
-                </Section>
+                <PageContext.Consumer>
+                    { ({ isMobile }) => ( 
+                        <Section spacingTop={{'monitor': 3, 'tablet': 2, 'mobile': 0}} spacingBottom={{'monitor': 4, 'tablet': 2, 'mobile': 0}}>
+                        <RecipeSlider title={'Recipes'} posts={!isMobile ? sliderRecipes.slice(1, -1) : sliderRecipes} />
+                        </Section>
+                    )}
+                </PageContext.Consumer>
 
                 {/* Featured section */}
                 <Section spacingTop={{'monitor': 4, 'tablet': 3, 'mobile': 2}} spacingBottom={{'monitor': 4, 'tablet': 3, 'mobile': 2}} whiteGrey>

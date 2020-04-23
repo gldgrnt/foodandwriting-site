@@ -6,7 +6,7 @@ import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { SmallCaps, InternalLink, ScrollDown } from '../ui'
 import { GridContainer } from '../layout'
 import { RecipeSliderPost } from './components'
-import { useMobileStatus } from '../../hooks'
+import { PageContext } from '../context'
 
 import Glide from '@glidejs/glide'
 import '@glidejs/glide/dist/css/glide.core.min.css'
@@ -22,9 +22,6 @@ export const RecipeSlider = ({title, posts}) => {
 
     // Create ID for scroll down component
     const scrollId = 'hero'
-
-    // Get mobile state
-    const isMobile = useMobileStatus()
 
     // Set up states
     const [ slide, setSlide ] = useState(0)
@@ -56,11 +53,9 @@ export const RecipeSlider = ({title, posts}) => {
 
     // Slider set up
     useEffect(() => {
-        const sliderContainer = document.querySelector('.glide')
-
-        if (posts.length && sliderContainer){
+        if (posts.length){
             // Create slider
-            const slider = new Glide(sliderContainer, sliderOptions)
+            const slider = new Glide('.glide', sliderOptions)
 
             // Add controls event listeners manually - to prevent bug
             const prevArrow = document.getElementsByClassName('glide__prev')[0]
@@ -79,41 +74,45 @@ export const RecipeSlider = ({title, posts}) => {
 
 
     return (
-        <StyledWrapper className="glide" id={scrollId}>
-            <GridContainer block removeMobilePadding={true}>
-                <UpperWrapper>
-                    <TitleWrapper>
-                        <SmallCaps as="h2" size="regular" color="black">{title}</SmallCaps>
-                        <InternalLink to="/recipes" secondary>View all</InternalLink>
-                    </TitleWrapper>
+        <PageContext.Consumer>
+            {({ isMobile }) => (
+                <StyledWrapper className="glide" id={scrollId}>
+                    <GridContainer block removeMobilePadding={true}>
+                        <UpperWrapper>
+                            <TitleWrapper>
+                                <SmallCaps as="h2" size="regular" color="black">{title}</SmallCaps>
+                                <InternalLink to="/recipes" secondary>View all</InternalLink>
+                            </TitleWrapper>
 
-                    <ButtonWrapper>
-                        <StyledButton className={`glide__prev ${atStart ? "disabled" : ''}`} aria-label="Previous">
-                            <FiArrowLeft />
-                        </StyledButton>
+                            <ButtonWrapper>
+                                <StyledButton className={`glide__prev ${atStart ? "disabled" : ''}`} aria-label="Previous">
+                                    <FiArrowLeft />
+                                </StyledButton>
 
-                        <Indicators slide={slide + 1}>
-                            { indicatorArr.map( (item, index) => <li key={index}></li> ) }
-                        </Indicators>
+                                <Indicators slide={slide + 1}>
+                                    { indicatorArr.map( (item, index) => <li key={index}></li> ) }
+                                </Indicators>
 
-                        <StyledButton className={`glide__next ${atEnd ? "disabled" : ''}`} aria-label="Next">
-                            <FiArrowRight />
-                        </StyledButton>
-                    </ButtonWrapper>
-                </UpperWrapper>
-                    
-                <GlideTrack className="glide__track" data-glide-el="track">
-                    <ul className="glide__slides" style={{margin: 0}}>
-                        {posts.map((post, index) => (
-                            <li key={post._id}><RecipeSliderPost key={index} post={post} hasNext={!!posts[index + 1]} hasPrev={!!posts[index - 1]} /></li>
-                        ))}
-                        { !isMobile && <div></div>}
-                    </ul>
-                </GlideTrack>
-            </GridContainer>
+                                <StyledButton className={`glide__next ${atEnd ? "disabled" : ''}`} aria-label="Next">
+                                    <FiArrowRight />
+                                </StyledButton>
+                            </ButtonWrapper>
+                        </UpperWrapper>
+                            
+                        <GlideTrack className="glide__track" data-glide-el="track">
+                            <ul className="glide__slides" style={{margin: 0}}>
+                                {posts.map((post, index) => (
+                                    <li key={post._id}><RecipeSliderPost key={index} post={post} hasNext={!!posts[index + 1]} hasPrev={!!posts[index - 1]} /></li>
+                                ))}
+                                { !isMobile && <div></div>}
+                            </ul>
+                        </GlideTrack>
+                    </GridContainer>
 
-            { isMobile && <ScrollDown tagId={scrollId} /> }
-        </StyledWrapper>
+                    { isMobile && <ScrollDown tagId={scrollId} /> }
+                </StyledWrapper>    
+            )}
+        </PageContext.Consumer>
     )
 }
 

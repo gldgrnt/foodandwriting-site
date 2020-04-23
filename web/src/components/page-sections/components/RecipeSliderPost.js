@@ -79,7 +79,7 @@ const Article = styled.article`
     width: 100%;
 
     ${props => responsiveBreakpointDown('mobile', `
-        height: calc(100vh - 58px);
+        height: calc(100vh - 108px);
     `)}
 `
 
@@ -117,7 +117,7 @@ const CaptionWrapper = styled.div`
     ${responsiveBreakpointDown('mobile', `
         position: absolute;
         z-index: 2;
-        top: 50%;
+        top: 45%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 100%;

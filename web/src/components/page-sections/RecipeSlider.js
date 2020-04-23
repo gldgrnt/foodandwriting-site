@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -11,6 +11,8 @@ import { useMobileStatus } from '../../hooks'
 import Glide from '@glidejs/glide'
 import '@glidejs/glide/dist/css/glide.core.min.css'
 import { responsiveBreakpointDown } from '../../utils'
+
+// GENERATE GLIDER CLASS 
 
 
 /**
@@ -29,38 +31,52 @@ export const RecipeSlider = ({title, posts}) => {
     const atStart = slide === 0
     const atEnd = slide === posts.length - 1
 
+    // Set up slider options
+    const sliderOptions = useMemo(() => ({
+        type: 'slider',
+        rewind: false,
+        perView: 4,
+        focusAt: 0,
+        bound: true,
+        gap: 30,
+        animationDuration: 700,
+        breakpoints: {
+            999: {
+                perView: 4
+            },
+            767: {
+                perView: 1,
+                gap: 0
+            }
+        }
+    }), [])
+
     // Create indicators
     const indicatorArr = new Array(posts.length).fill(0)
 
     // Slider set up
     useEffect(() => {
-        // Create slider
-        const slider = new Glide('.glide', {
-            type: 'slider',
-            rewind: false,
-            perView: 4,
-            focusAt: 0,
-            bound: true,
-            gap: 30,
-            animationDuration: 700,
-            breakpoints: {
-                999: {
-                    perView: 4
-                },
-                767: {
-                    perView: 1,
-                    gap: 0
-                }
-            }
-        })
+        const sliderContainer = document.querySelector('.glide')
 
-        // Set up event listeners
-        slider.on('run.after', () => {setSlide(slider.index)})
+        if (posts.length && sliderContainer){
+            // Create slider
+            const slider = new Glide(sliderContainer, sliderOptions)
 
-        // Mount slider
-        slider.mount()
+            // Add controls event listeners manually - to prevent bug
+            const prevArrow = document.getElementsByClassName('glide__prev')[0]
+            prevArrow.addEventListener('click', () => slider.go('<'))
+            
+            const nextArrow = document.getElementsByClassName('glide__next')[0]
+            nextArrow.addEventListener('click', () => slider.go('>'))
 
-    }, [])
+            // Update state on change
+            slider.on('run.after', () => {setSlide(slider.index)})
+
+            // Mount slider
+            slider.mount()
+        }
+    }, [sliderOptions, posts.length])
+
 
     return (
         <StyledWrapper className="glide" id={scrollId}>
@@ -71,8 +87,8 @@ export const RecipeSlider = ({title, posts}) => {
                         <InternalLink to="/recipes" secondary>View all</InternalLink>
                     </TitleWrapper>
 
-                    <ButtonWrapper data-glide-el="controls">
-                        <StyledButton className={`buttons ${atStart && "disabled"}`} data-glide-dir="<" aria-label="Previous">
+                    <ButtonWrapper>
+                        <StyledButton className={`glide__prev ${atStart ? "disabled" : ''}`} aria-label="Previous">
                             <FiArrowLeft />
                         </StyledButton>
 
@@ -80,22 +96,20 @@ export const RecipeSlider = ({title, posts}) => {
                             { indicatorArr.map( (item, index) => <li key={index}></li> ) }
                         </Indicators>
 
-                        <StyledButton className={`buttons ${atEnd && "disabled"}`} data-glide-dir=">" aria-label="Next">
+                        <StyledButton className={`glide__next ${atEnd ? "disabled" : ''}`} aria-label="Next">
                             <FiArrowRight />
                         </StyledButton>
                     </ButtonWrapper>
                 </UpperWrapper>
                     
-
-                <div className="glide__track" data-glide-el="track" style={{overflow: "visible", marginRight: 30}}>
+                <GlideTrack className="glide__track" data-glide-el="track">
                     <ul className="glide__slides" style={{margin: 0}}>
                         {posts.map((post, index) => (
-                            <div key={post._id}><RecipeSliderPost key={index} post={post} hasNext={!!posts[index + 1]} hasPrev={!!posts[index - 1]} /></div>
+                            <li key={post._id}><RecipeSliderPost key={index} post={post} hasNext={!!posts[index + 1]} hasPrev={!!posts[index - 1]} /></li>
                         ))}
                         { !isMobile && <div></div>}
                     </ul>
-                </div>
-
+                </GlideTrack>
             </GridContainer>
 
             { isMobile && <ScrollDown tagId={scrollId} /> }
@@ -177,6 +191,19 @@ const UpperWrapper = styled.div`
     
     > * {
         margin-bottom: 0;
+    }
+`
+
+const GlideTrack = styled.div`
+    overflow: visible;
+    margin-right: 30;
+
+    ${responsiveBreakpointDown('mobile', `
+        margin: 0;
+    `)}
+
+    li {
+        margin: 0;
     }
 `
 

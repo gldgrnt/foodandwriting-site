@@ -5,13 +5,13 @@ import styled from 'styled-components'
 import { responsiveBreakpointDown } from '../../utils'
 import { themeVariables } from '../../styles'
 
-export const Section = ({ children, spacingTop = "0", spacingBottom = "0", hide = false, ...props }) => {
+export const Section = ({ children, spacingTop = "0", spacingBottom = "0", hideOnMobile = false, ...props }) => {
 
     return (
         <StyledSection
             spacingTop={makeStyles(spacingTop, 'padding-top')}
             spacingBottom={makeStyles(spacingBottom, 'padding-bottom')}
-            hide={hide}
+            hideOnMobile={hideOnMobile}
             {...props}>
             {children}
         </StyledSection>
@@ -31,10 +31,13 @@ Section.prototypes = {
 }
 
 const StyledSection = styled.section`
-    display: ${props => props.hide ? 'none' : 'block'};
     ${props => props.spacingTop}
     ${props => props.spacingBottom}
     background: ${props => props.whiteGrey ? props.theme.color.whiteGrey : 'transparent'};
+
+    ${props => props.hideOnMobile && responsiveBreakpointDown('mobile', `
+        display: none;
+    `)}
 `
 
 const makeStyles = (value, styleName) => {

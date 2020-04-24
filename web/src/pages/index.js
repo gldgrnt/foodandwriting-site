@@ -11,10 +11,10 @@ import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 /**
  * IndexPage component
  */
-const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
+const IndexPage = ({data: { featuredRecipe, recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
 
     // Set up recipes
-    const featuredRecipe = recipes.nodes[0]
+    const featuredRecipePost = featuredRecipe.nodes[0]
     const sliderRecipes = recipes.nodes
 
     // Set up featured topic
@@ -25,20 +25,15 @@ const IndexPage = ({data: { recipes, featuredTopic, blog, blogPosts, culture, cu
             <SEO title="Home" />
             <Page>
                 {/* Featured post */}
-                <PageContext.Consumer>
-                    { ({ isMobile }) => !isMobile ? 
-                        <Section>
-                            <FeaturedPost post={featuredRecipe} />
-                        </Section>  
-                        : ''
-                    }
-                </PageContext.Consumer>
+                <Section hideOnMobile={true}>
+                    <FeaturedPost post={featuredRecipePost} />
+                </Section>  
 
                 {/* Post slider */}
                 <PageContext.Consumer>
                     { ({ isMobile }) => ( 
                         <Section spacingTop={{'monitor': 3, 'tablet': 2, 'mobile': 0}} spacingBottom={{'monitor': 4, 'tablet': 2, 'mobile': 0}}>
-                        <RecipeSlider title={'Recipes'} posts={!isMobile ? sliderRecipes.slice(1, -1) : sliderRecipes} />
+                            <RecipeSlider title={'Recipes'} posts={!isMobile ? sliderRecipes.slice(1, -1) : sliderRecipes} />
                         </Section>
                     )}
                 </PageContext.Consumer>
@@ -79,9 +74,23 @@ export default () => (
         graphql`
             query {
                 # Recipes
+                featuredRecipe: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 1, sort: {order: DESC, fields: date}) {
+                    nodes {
+                        ...PreviewPostFragment
+                        ...LargeFluidImageFragment
+                        # Recipe intro
+                        content {
+                            ... on SanityRecipeContent {
+                                recipeIntro
+                            }
+                        }
+                    }
+                }
+                # Recipes
                 recipes: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 7, sort: {order: DESC, fields: date}) {
                     nodes {
                         ...PreviewPostFragment
+                        ...MediumFluidImageFragment
                         # Recipe intro
                         content {
                             ... on SanityRecipeContent {
@@ -96,6 +105,7 @@ export default () => (
                     featuredTopicSubtitle
                     featuredTopicPosts {
                         ...PreviewPostFragment
+                        ...MediumFluidImageFragment
                     }
                 }
                 # Blog
@@ -109,6 +119,7 @@ export default () => (
                 blogPosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Blog"}}}, sort: {order: DESC, fields: date}) {
                     nodes {
                         ...PreviewPostFragment
+                        ...SmallFluidImageFragment
                     }
                 }
                 # Culture
@@ -122,6 +133,7 @@ export default () => (
                 culturePosts: allSanityPost(limit:3, filter: {category: {title: {eq: "Culture"}}}, sort: {order: DESC, fields: date}) {
                     nodes {
                         ...PreviewPostFragment
+                        ...SmallFluidImageFragment
                     }
                 }
             }

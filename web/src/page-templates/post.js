@@ -68,6 +68,7 @@ export const postQuery = graphql`
     autoRelatedPosts: allSanityPost(filter: {category: {_id: {eq: $cat_id}}, _id: {ne: $_id}}, limit: 3, sort: {order: DESC, fields: date}) {
         nodes {
             ...PreviewPostFragment
+            ...MediumFluidImageFragment
         }
     }
 }

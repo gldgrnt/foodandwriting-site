@@ -9,13 +9,6 @@ export const previewPostFragment = graphql`
         title
         date
         fullSlug
-        featuredImage {
-            asset {
-                fluid {
-                    ...GatsbySanityImageFluid_noBase64
-                }
-            }
-        }
         category {
             singleName
             categoryType
@@ -39,15 +32,10 @@ export const FullPostFragment = graphql`
             categoryType
             viewAllName
         }
-        featuredImage {
-            asset {
-                fluid {
-                    ...GatsbySanityImageFluid_noBase64
-                }
-            }
-        }
+        ...LargeFluidImageFragment
         relatedPosts {
             ...PreviewPostFragment
+            ...SmallFluidImageFragment
         }
     }
 `

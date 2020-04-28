@@ -55,5 +55,11 @@ module.exports = {
               chunkSize: 10000, // default: 1000
             },
         },
+        {
+            resolve: `gatsby-plugin-lodash`,
+            options: {
+                disabledFeatures: [`shorthands`, `cloning`],
+            },
+        },
     ],
 }

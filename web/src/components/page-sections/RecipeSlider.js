@@ -12,16 +12,14 @@ import Glide from '@glidejs/glide'
 import '@glidejs/glide/dist/css/glide.core.min.css'
 import { responsiveBreakpointDown } from '../../utils'
 
-// GENERATE GLIDER CLASS 
-
-
 /**
  * RecipeSlider component
  */
 export const RecipeSlider = ({title, posts}) => {
 
     // Create ID for scroll down component
-    const scrollId = 'hero'
+    const scrollId = 'hero' 
+    const sliderClass = useMemo( () => `glide-${Math.floor( Math.random() * 999 )}`, [])
 
     // Set up states
     const [ slide, setSlide ] = useState(0)
@@ -54,8 +52,11 @@ export const RecipeSlider = ({title, posts}) => {
     // Slider set up
     useEffect(() => {
         if (posts.length){
+            // Find slider
+            const sliderNode = document.querySelector(`.${sliderClass}`)
+
             // Create slider
-            const slider = new Glide('.glide', sliderOptions)
+            const slider = new Glide(sliderNode, sliderOptions)
 
             // Add controls event listeners manually - to prevent bug
             const prevArrow = document.getElementsByClassName('glide__prev')[0]
@@ -70,13 +71,13 @@ export const RecipeSlider = ({title, posts}) => {
             // Mount slider
             slider.mount()
         }
-    }, [sliderOptions, posts.length])
+    }, [sliderOptions, posts.length, sliderClass])
 
 
     return (
         <PageContext.Consumer>
             {({ isMobile }) => (
-                <StyledWrapper className="glide" id={scrollId}>
+                <StyledWrapper className={sliderClass} id={scrollId}>
                     <GridContainer block removeMobilePadding={true}>
                         <UpperWrapper>
                             <TitleWrapper>
@@ -160,6 +161,18 @@ const StyledWrapper = styled.div`
             color: white;
         }
     }
+
+    /* Hide slider on mobile until it's ready */
+    ${props => responsiveBreakpointDown('mobile', `
+        ul {
+            opacity: 0;
+            transition: opacity ${props.theme.transition.fast};
+        }
+
+        &.glide--slider ul {
+            opacity: 1; 
+        }
+    `)}
 `
 
 const UpperWrapper = styled.div`

@@ -136,6 +136,13 @@ const Hit = styled.li`
         align-items: center;
         height: 100%;
         width: 100%;
+
+        &:hover,
+        &:focus {
+            h3 {
+                text-decoration: underline;
+            }
+        }
     }
 `
 

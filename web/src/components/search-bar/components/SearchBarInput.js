@@ -119,7 +119,7 @@ const SearchBoxWrapper = styled.div`
     input {
         padding: 15px 20px;
         border: none;
-        font-family: ${props => props.theme.font.family.sans};
+        font-family: ${props => props.theme.font.family.serif};
         font-size: ${props => props.theme.font.size.medium};
         flex-grow: 1;
         outline: none;

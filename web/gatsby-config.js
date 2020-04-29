@@ -7,7 +7,8 @@ module.exports = {
     siteMetadata: {
         title: `Food and Writing`,
         description: `Making food look pretty on a bathroom tile.`,
-        author: 'wadada'
+        author: 'wadada',
+        instagramURL: 'https://instagram.com/foodandwriting'
     },
     plugins: [
         `gatsby-plugin-react-helmet`,

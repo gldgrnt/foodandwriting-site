@@ -112,14 +112,15 @@ const LogoWrapper = styled.div`
 const NavigationWrapper = styled.div`
     flex-grow: 1;
     padding-right: 80px;
+    padding-bottom: 4px;
+
+    ${responsiveBreakpointDown('desktop', `padding-right: 20px;`)}
+    ${responsiveBreakpointDown('tablet', `display: none;`)}
 
     > * {
         height: 100%;
     }
 
-    ${responsiveBreakpointDown('tablet', `
-        display: none;
-    `)}
 `
 
 const TogglesWrapper = styled.div`
@@ -159,9 +160,9 @@ const DropdownWrapper = styled.div`
     overflow: hidden;
 
     ${responsiveBreakpointDown('tablet', `
-        padding: 30px 0;
+        padding: 40px 0 30px;
         height: 100vh;
         max-height: 100vh; /** Fallback **/
-        max-height: calc((var(--vh, 1vh) * 100) - 68px);
+        max-height: calc((var(--vh-dynamic, 1vh) * 100) - 68px);
     `)}
 `

@@ -30,6 +30,6 @@ const LinkContainer = styled(Link)`
 
 const Image = styled.img`
     height: 18px;
-    width: auto;
+    width: 125px;
     margin: 0;
 `;

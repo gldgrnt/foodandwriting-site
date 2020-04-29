@@ -5,7 +5,7 @@
     functions = "./functions"
 
 [dev]
-    publish = "web/public"
-    functions = "functions"
-    functionsPort = 8008
+    publish = "./public"
     autoLaunch = false
+    port = 8888
+    targetPort = 8000

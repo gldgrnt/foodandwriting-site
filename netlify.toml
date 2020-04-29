@@ -1,8 +1,11 @@
 [build]
     base = "web"
-    command = "gatsby clean && gatsby build"
+    command = "gatsby build"
     publish = "./public"
     functions = "./functions"
+
+[[plugins]]
+package = "netlify-plugin-gatsby-cache"
 
 [dev]
     publish = "./public"

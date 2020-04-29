@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import Header from '../header'
@@ -15,7 +15,18 @@ export const Page = ({ children }) => {
     // Set custom viewheight variable
     if (typeof window !== "undefined") {
         document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+        document.documentElement.style.setProperty('--vh-dynamic', `${window.innerHeight * 0.01}px`);
     }
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.addEventListener('resize', () => document.documentElement.style.setProperty('--vh-dynamic', `${window.innerHeight * 0.01}px`) )
+        }
+
+        return () => {
+            window.removeEventListener('resize', () => document.documentElement.style.setProperty('--vh-dynamic', `${window.innerHeight * 0.01}px`) )
+        }
+    },)
 
     // Set up page context
     const isMobile = useMobileStatus()

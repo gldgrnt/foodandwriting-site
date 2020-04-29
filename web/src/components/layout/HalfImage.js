@@ -64,10 +64,9 @@ const StickyImageWrapper = styled.div`
     ${responsiveBreakpointDown('mobile', `
         position: relative;
         order: 2;
-        width: calc(100% - 40px);
-        right: auto;
-        left: 20px;
-        margin-bottom: 20px;
+        width: 100%;
+        left: 0;
+        margin-top: 60px;
     `)}
 
     > * {

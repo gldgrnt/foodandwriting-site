@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 /**
  * Archive post fragment
  */
-export const previewPostFragment = graphql`
+export const PreviewPostFragment = graphql`
     fragment PreviewPostFragment on SanityPost {
         _id
         title
@@ -12,6 +12,11 @@ export const previewPostFragment = graphql`
         category {
             singleName
             categoryType
+        }
+        content {
+            ...on SanityRecipeContent  {
+                ...RecipePostContentFragment
+            }
         }
     }
 `
@@ -37,6 +42,17 @@ export const FullPostFragment = graphql`
             ...PreviewPostFragment
             ...SmallFluidImageFragment
         }
+    }
+`
+
+/**
+ * Preview Recipe content fragments
+ */
+export const PreviewRecipePostContentFragment = graphql`
+    fragment PreviewRecipePostContentFragment on SanityRecipeContent {
+        difficulty
+        readyIn
+        serves
     }
 `
 

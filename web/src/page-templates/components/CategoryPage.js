@@ -11,8 +11,6 @@ import { Button } from '../../components/ui'
  * Category component 
  */
 export const CategoryPage = ({ category: {title, seoDescription, viewAllName, categoryType}, posts, showButton, getMorePosts }) => {
-    // Variables
-    const postSizePercentage = categoryType === 'Normal' ? 67 : 120
 
     return (
         <>
@@ -30,7 +28,7 @@ export const CategoryPage = ({ category: {title, seoDescription, viewAllName, ca
                 </Section>
 
                 <Section spacingBottom="4">
-                    <PostArchive posts={posts} postSizePercentage={postSizePercentage} />
+                    <PostArchive posts={posts} categoryType={categoryType} />
                 </Section>
                 
                 { showButton &&

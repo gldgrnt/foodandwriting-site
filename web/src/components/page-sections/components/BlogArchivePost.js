@@ -5,37 +5,26 @@ import Img from 'gatsby-image/withIEPolyfill'
 import { Link } from 'gatsby'
 import _ from 'lodash'
 
-import { getPostDate, responsiveBreakpointDown, getFluidPropsFromId } from '../../../utils'
-import { SmallCaps } from '../../ui'
+import { responsiveBreakpointDown, getFluidPropsFromId } from '../../../utils'
+import { SmallCaps, PostMeta } from '../../ui'
 
 /**
- * ArchivePost component
+ * BlogArchivePost component
  */
-export const ArchivePost = ({ post: {title, date, fullSlug, featuredImage, category: { singleName, categoryType }}, imgHeight, showCategory = false }) => {
+export const BlogArchivePost = ({ post: {title, date, fullSlug, featuredImage, category: { singleName }} }) => {
 
-    const postDate = getPostDate(date)
     const fluid = !_.isNull(featuredImage) && _.hasIn(featuredImage, 'asset') 
-        ? ( _.hasIn(featuredImage, 'asset.fluid')
-            ? featuredImage.asset.fluid
-            : getFluidPropsFromId(featuredImage.asset._ref)
-        )
+        ? ( _.hasIn(featuredImage, 'asset.fluid') ? featuredImage.asset.fluid : getFluidPropsFromId(featuredImage.asset._ref) )
         : false
-
-    const showDate = categoryType === 'Normal'
 
     return (
         <StyledLink to={fullSlug}>
             <article>
-                <ImageWrapper imgHeight={imgHeight}>
+                <ImageWrapper>
                     {fluid ? <Img fluid={fluid} /> : <div></div>}
                 </ImageWrapper>
                 
-                { (showDate || showCategory) &&
-                    <MetaWrapper>
-                        { showCategory && <SmallCaps size="small">{singleName}</SmallCaps> }
-                        { showDate && <SmallCaps as="time" size="small" datetime={postDate.raw}>{postDate.formatted}</SmallCaps> }
-                    </MetaWrapper>
-                }
+                <PostMeta date={date} />
                 
                 <Title>{title}</Title>
                 <SmallCaps size="tiny" link>View {singleName}</SmallCaps>
@@ -47,7 +36,7 @@ export const ArchivePost = ({ post: {title, date, fullSlug, featuredImage, categ
 /**
  * Proptypes
  */
-ArchivePost.propTypes = {
+BlogArchivePost.propTypes = {
     post: PropTypes.shape({
         title: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
@@ -56,8 +45,6 @@ ArchivePost.propTypes = {
             asset: PropTypes.object
         })
     }),
-    imgHeight: PropTypes.number.isRequired,
-    showCategory: PropTypes.bool
 }
 
 /**
@@ -101,7 +88,7 @@ const StyledLink = styled(Link)`
 const ImageWrapper = styled.div`
     position: relative;
     background: ${props => props.theme.color.lightGreyOverlay};
-    padding-top: ${props => props.imgHeight}%;
+    padding-top: 67%;
     margin-bottom: 20px;
     
     > * {
@@ -110,22 +97,6 @@ const ImageWrapper = styled.div`
         left: 0;
         height: 100%;
         width: 100%;
-    }
-`
-
-const MetaWrapper = styled.div`
-    display: flex;
-    align-items: center;
-
-    > *:not(:first-child) {
-        position: relative;
-        margin-left: 10px;
-
-        &::before {
-            content: ' · ';
-            position: absolute;
-            left: -6px; 
-        }
     }
 `
 

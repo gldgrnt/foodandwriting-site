@@ -1,49 +1,37 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 
-export const Menu = ({ reduced = false }) => {
+export const Menu = () => {
 
     const pages = [
         {
+            title: 'About',
+            link: '/about',
+            spaceNext: true
+        },
+        {
             title: 'Recipes',
             link: '/recipes',
-            reducedMenuItem: true
+            spaceNext: false
         },
         {
             title: 'Culture',
             link: '/culture',
-            reducedMenuItem: true
+            spaceNext: false
         }, {
             title: 'Blog',
             link: '/blog',
-            reducedMenuItem: true
-        },
-        {
-            title: 'About',
-            link: '/about',
-            reducedMenuItem: false
+            spaceNext: false
         }
     ]    
 
     return (
         <ul>
-            {pages.map((page, index) => {
-                if (page.reducedMenuItem || (!reduced && !page.reducedMenuItem)) {
-                    
-                    return (
-                        <li key={page.link} className={!page.reducedMenuItem ? 'fullMenuItem' : ''}>
-                            <Link to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</Link>
-                        </li>
-                    )} 
-
-                    return false
-                }
-            )}
+            {pages.map((page, index) => (
+                <li key={page.link} className={page.spaceNext ? 'space-next' : ''}>
+                    <Link to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</Link>
+                </li>
+            ))}
         </ul>
     )
-}
-
-Menu.propTypes = {
-    fullMenu: PropTypes.bool
 }

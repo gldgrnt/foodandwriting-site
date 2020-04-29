@@ -19,7 +19,7 @@ export const RecipeSlider = ({title, posts}) => {
 
     // Create ID for scroll down component
     const scrollId = 'hero' 
-    const sliderClass = useMemo( () => `glide-${Math.floor( Math.random() * 999 )}`, [])
+    // const sliderClass = useMemo( () => `glide-${Math.floor( Math.random() * 999 )}`, [])
 
     // Set up states
     const [ slide, setSlide ] = useState(0)
@@ -52,11 +52,8 @@ export const RecipeSlider = ({title, posts}) => {
     // Slider set up
     useEffect(() => {
         if (posts.length){
-            // Find slider
-            const sliderNode = document.querySelector(`.${sliderClass}`)
-
             // Create slider
-            const slider = new Glide(sliderNode, sliderOptions)
+            const slider = new Glide(`.glide`, sliderOptions)
 
             // Add controls event listeners manually - to prevent bug
             const prevArrow = document.getElementsByClassName('glide__prev')[0]
@@ -71,13 +68,13 @@ export const RecipeSlider = ({title, posts}) => {
             // Mount slider
             slider.mount()
         }
-    }, [sliderOptions, posts.length, sliderClass])
+    }, [sliderOptions, posts.length])
 
 
     return (
         <PageContext.Consumer>
             {({ isMobile }) => (
-                <StyledWrapper className={sliderClass} id={scrollId}>
+                <StyledWrapper className={'glide'} id={scrollId}>
                     <GridContainer block removeMobilePadding={true}>
                         <UpperWrapper>
                             <TitleWrapper>

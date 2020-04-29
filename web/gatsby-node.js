@@ -50,6 +50,8 @@ exports.createPages = async ({ graphql, actions }) => {
             let isDefault = node.category.categoryType === 'Normal'
             let cat_id = node.category._id
 
+            console.log(node.slug.current)
+
             createPage({
                 path,
                 component: require.resolve('./src/page-templates/post.js'),

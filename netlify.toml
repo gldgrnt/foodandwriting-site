@@ -4,9 +4,6 @@
     publish = "./public"
     functions = "./functions"
 
-[[plugins]]
-package = "netlify-plugin-gatsby-cache"
-
 [dev]
     publish = "./public"
     autoLaunch = false

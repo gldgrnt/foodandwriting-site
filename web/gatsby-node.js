@@ -10,9 +10,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 edges {
                     node {
                         _id
-                        slug {
-                            current
-                        }
+                        fullSlug
                         category {
                             _id
                             slug {
@@ -46,11 +44,11 @@ exports.createPages = async ({ graphql, actions }) => {
 
     // Create post pages
     posts.edges.forEach(({ node }) => {
-            let path = `/${node.category.slug.current}/${node.slug.current}`
+            let path = node.fullSlug
             let isDefault = node.category.categoryType === 'Normal'
             let cat_id = node.category._id
 
-            console.log(node.slug.current)
+            console.log(node.fullSlug)
 
             createPage({
                 path,

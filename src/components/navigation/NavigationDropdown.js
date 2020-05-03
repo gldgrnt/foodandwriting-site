@@ -74,7 +74,7 @@ const StyledDropdown = styled.div`
                 margin-bottom: 30px;
             }
 
-            &.space-next {
+            &.about-link{
                 position: relative;
                 order: 100;
                 margin-top: 40px;

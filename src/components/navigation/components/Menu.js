@@ -5,30 +5,30 @@ export const Menu = () => {
 
     const pages = [
         {
-            title: 'About',
-            link: '/about',
-            spaceNext: true
-        },
-        {
             title: 'Recipes',
             link: '/recipes',
-            spaceNext: false
+            class: false
         },
         {
             title: 'Culture',
             link: '/culture',
-            spaceNext: false
+            class: false
         }, {
             title: 'Blog',
             link: '/blog',
-            spaceNext: false
-        }
+            class: false
+        },
+        {
+            title: 'About',
+            link: '/about',
+            class: "about-link"
+        },
     ]    
 
     return (
         <ul>
             {pages.map((page, index) => (
-                <li key={page.link} className={page.spaceNext ? 'space-next' : ''}>
+                <li key={page.link} className={page.class || ''}>
                     <Link to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</Link>
                 </li>
             ))}

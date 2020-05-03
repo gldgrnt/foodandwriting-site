@@ -36,21 +36,6 @@ const StyledNav = styled.nav`
             padding-right: 0;
         }
 
-        &.space-next {
-            position: relative;
-            margin-right: 60px;
-            
-            &::after {
-                content: '';
-                position: absolute;
-                top: 50% ;
-                right: -30px;
-                height: 3px;
-                width: 3px;
-                border-radius: 50%;
-                background: ${props => props.theme.color.lightGrey};
-            }
-        }
     }
 
     a {

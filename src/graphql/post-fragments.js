@@ -50,7 +50,6 @@ export const FullPostFragment = graphql`
  */
 export const PreviewRecipePostContentFragment = graphql`
     fragment PreviewRecipePostContentFragment on SanityRecipeContent {
-        difficulty
         readyIn
         serves
     }
@@ -62,12 +61,8 @@ export const PreviewRecipePostContentFragment = graphql`
 export const RecipePostContentFragment = graphql`
     fragment RecipePostContentFragment on SanityRecipeContent {
         _type
-        difficulty
         readyIn
-        recipeIntro
-        recipeNotes
         serves
-        steps
         shoppingList {
             amount
             ingredient

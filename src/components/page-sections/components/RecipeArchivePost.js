@@ -5,18 +5,19 @@ import Img from 'gatsby-image/withIEPolyfill'
 import { Link } from 'gatsby'
 import _ from 'lodash'
 
-import { responsiveBreakpointDown, getFluidPropsFromId } from '../../../utils'
+import { responsiveBreakpointDown, getFluidPropsFromId, parseReadyInString } from '../../../utils'
 import { SmallCaps, PostMeta } from '../../ui'
 
 /**
  * RecipeArchivePost component
  */
-export const RecipeArchivePost = ({ post: {title, fullSlug, featuredImage, category: {singleName}, content }}) => {
+export const RecipeArchivePost = ({ post: { title, fullSlug, featuredImage, category: { singleName }, content } }) => {
 
-    const { serves, difficulty, readyIn } = content[0]
+    const { serves, readyIn } = content[0]
+    const humanReadyIn = parseReadyInString(readyIn)
 
-    const fluid = !_.isNull(featuredImage) && _.hasIn(featuredImage, 'asset') 
-        ? ( _.hasIn(featuredImage, 'asset.fluid')
+    const fluid = !_.isNull(featuredImage) && _.hasIn(featuredImage, 'asset')
+        ? (_.hasIn(featuredImage, 'asset.fluid')
             ? featuredImage.asset.fluid
             : getFluidPropsFromId(featuredImage.asset._ref)
         )
@@ -28,9 +29,9 @@ export const RecipeArchivePost = ({ post: {title, fullSlug, featuredImage, categ
                 <ImageWrapper>
                     {fluid ? <Img fluid={fluid} /> : <div></div>}
                 </ImageWrapper>
-                
-                <PostMeta meta={[ difficulty, `Serves ${serves}`, readyIn ]} />
-                
+
+                <PostMeta meta={[`Serves ${serves}`, humanReadyIn]} />
+
                 <Title>{title}</Title>
                 <SmallCaps size="tiny" link>View {singleName}</SmallCaps>
             </article>

@@ -10,7 +10,7 @@ import { useMobileStatus } from '../../hooks'
 /**
  * Main content component - used to wrap content that is to be rerendered
 */
-export const MainContent = ({ children }) => <main>{children}</main>
+const MainContent = ({ children }) => <main>{children}</main>
 
 /**
  * Page component

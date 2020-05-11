@@ -8,29 +8,33 @@ import { PageContext } from '../context'
 import { useMobileStatus } from '../../hooks'
 
 /**
+ * Main content component - used to wrap content that is to be rerendered
+*/
+export const MainContent = ({ children }) => <main>{children}</main>
+
+/**
  * Page component
- */
+*/
 export const Page = ({ children }) => {
 
     // Set custom viewheight variable
     if (typeof window !== "undefined") {
-        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-        document.documentElement.style.setProperty('--vh-dynamic', `${window.innerHeight * 0.01}px`);
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
+        document.documentElement.style.setProperty('--vh-dynamic', `${window.innerHeight * 0.01}px`)
     }
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            window.addEventListener('resize', () => document.documentElement.style.setProperty('--vh-dynamic', `${window.innerHeight * 0.01}px`) )
+            window.addEventListener('resize', () => document.documentElement.style.setProperty('--vh-dynamic', `${window.innerHeight * 0.01}px`))
         }
 
         return () => {
-            window.removeEventListener('resize', () => document.documentElement.style.setProperty('--vh-dynamic', `${window.innerHeight * 0.01}px`) )
+            window.removeEventListener('resize', () => document.documentElement.style.setProperty('--vh-dynamic', `${window.innerHeight * 0.01}px`))
         }
-    },)
+    })
 
     // Set up page context
     const isMobile = useMobileStatus()
-
     const context = { isMobile }
 
     return (
@@ -40,9 +44,7 @@ export const Page = ({ children }) => {
 
             <PageContext.Provider value={context}>
                 <Header />
-                    <main>
-                        {children}
-                    </main>
+                <MainContent>{children}</MainContent>
                 <Footer />
             </PageContext.Provider>
         </Theme>

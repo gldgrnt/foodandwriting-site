@@ -11,14 +11,14 @@ import { GridContainer, GridRow, GridCol, Section } from '../components/layout'
 /**
  * IndexPage component
  */
-const IndexPage = ({data: { featuredRecipe, recipes, featuredTopic, blog, blogPosts, culture, culturePosts }}) => {
+const IndexPage = ({ data: { featured, recipes, blog, blogPosts, culture, culturePosts } }) => {
 
-    // Set up recipes
-    const featuredRecipePost = featuredRecipe.nodes[0]
-    const sliderRecipes = recipes.nodes
+    // Sort featured
+    const { featuredRecipe, featuredRecipeDescription, featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featured // Setup featured items
 
-    // Set up featured topic
-    const { featuredTopicTitle, featuredTopicSubtitle, featuredTopicPosts } = featuredTopic
+    // Sort recipes
+    const recipePosts = recipes.nodes.filter(({ _id }) => _id !== featuredRecipe._id) // Remove featured post from recipe array if it's in there
+    const mobileRecipePosts = [featuredRecipe, ...recipePosts] // Add featured post to the slider on mobile if it's a recipe
 
     return (
         <>
@@ -26,35 +26,35 @@ const IndexPage = ({data: { featuredRecipe, recipes, featuredTopic, blog, blogPo
             <Page>
                 {/* Featured post */}
                 <Section hideOnMobile={true}>
-                    <FeaturedPost post={featuredRecipePost} />
-                </Section>  
+                    <FeaturedPost post={featuredRecipe} description={featuredRecipeDescription} />
+                </Section>
 
                 {/* Post slider */}
                 <PageContext.Consumer>
-                    { ({ isMobile }) => ( 
-                        <Section spacingTop={{'monitor': 3, 'tablet': 2, 'mobile': 0}} spacingBottom={{'monitor': 4, 'tablet': 2, 'mobile': 0}}>
-                            <RecipeSlider title={'Recipes'} posts={!isMobile ? sliderRecipes.slice(1, -1) : sliderRecipes} />
+                    {({ isMobile }) => (
+                        <Section spacingTop={{ 'monitor': 3, 'tablet': 2, 'mobile': 0 }} spacingBottom={{ 'monitor': 4, 'tablet': 2, 'mobile': 0 }}>
+                            <RecipeSlider title={'Recipes'} posts={isMobile ? mobileRecipePosts : recipePosts} />
                         </Section>
                     )}
                 </PageContext.Consumer>
 
                 {/* Featured section */}
-                <Section spacingTop={{'monitor': 4, 'tablet': 3, 'mobile': 2}} spacingBottom={{'monitor': 4, 'tablet': 3, 'mobile': 2}} whiteGrey>
+                <Section spacingTop={{ 'monitor': 4, 'tablet': 3, 'mobile': 2 }} spacingBottom={{ 'monitor': 4, 'tablet': 3, 'mobile': 2 }} whiteGrey>
                     <FeaturedTopic title={featuredTopicTitle} subtitle={featuredTopicSubtitle} posts={featuredTopicPosts} />
                 </Section>
 
                 {/* Horizontal post list section */}
-                <Section spacingTop={{'monitor': 4, 'tablet': 3}} spacingBottom={{'monitor': 4, 'tablet': 3}}>
+                <Section spacingTop={{ 'monitor': 4, 'tablet': 3 }} spacingBottom={{ 'monitor': 4, 'tablet': 3 }}>
                     <GridContainer>
                         <GridRow>
                             {/* Blog */}
-                            <GridCol cols={{'monitor': 4, 'laptop': 8}}>
-                                <Section as="div" spacingBottom={{'laptop': 4, 'tablet': 3}}>
+                            <GridCol cols={{ 'monitor': 4, 'laptop': 8 }}>
+                                <Section as="div" spacingBottom={{ 'laptop': 4, 'tablet': 3 }}>
                                     <PostList category={blog} posts={blogPosts.nodes} />
                                 </Section>
                             </GridCol>
 
-                            <GridCol cols={{'monitor': 4, 'laptop': 8}}>
+                            <GridCol cols={{ 'monitor': 4, 'laptop': 8 }}>
                                 <PostList category={culture} posts={culturePosts.nodes} />
                             </GridCol>
                         </GridRow>
@@ -73,37 +73,25 @@ export default () => (
     <StaticQuery query={
         graphql`
             query {
-                # Recipes
-                featuredRecipe: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 1, sort: {order: DESC, fields: date}) {
-                    nodes {
+                # Featured items
+                featured: sanityHome {
+                    # Recipe
+                    featuredRecipe {
                         ...PreviewPostFragment
                         ...LargeFluidImageFragment
-                        # Recipe intro
-                        content {
-                            ... on SanityRecipeContent {
-                                recipeIntro
-                            }
-                        }
+                    }
+                    featuredRecipeDescription
+                    # Topic
+                    featuredTopicTitle
+                    featuredTopicSubtitle
+                    featuredTopicPosts {
+                        ...PreviewPostFragment
+                        ...MediumFluidImageFragment
                     }
                 }
                 # Recipes
                 recipes: allSanityPost(filter: {category: {title: {eq: "Recipes"}}}, limit: 7, sort: {order: DESC, fields: date}) {
                     nodes {
-                        ...PreviewPostFragment
-                        ...MediumFluidImageFragment
-                        # Recipe intro
-                        content {
-                            ... on SanityRecipeContent {
-                                recipeIntro
-                            }
-                        }
-                    }
-                }
-                # Featured topic
-                featuredTopic: sanityHome {
-                    featuredTopicTitle
-                    featuredTopicSubtitle
-                    featuredTopicPosts {
                         ...PreviewPostFragment
                         ...MediumFluidImageFragment
                     }
@@ -141,7 +129,7 @@ export default () => (
         `
     }
 
-    render={ data => <IndexPage data={data} /> }
+        render={data => <IndexPage data={data} />}
     />
 )
 
@@ -153,29 +141,29 @@ IndexPage.propTypes = {
     data: PropTypes.shape({
         recipes: PropTypes.shape({
             nodes: PropTypes.arrayOf(PropTypes.object).isRequired
-        }).isRequired, 
+        }).isRequired,
         featuredTopic: PropTypes.shape({
             featuredTopicTitle: PropTypes.string.isRequired,
             featuredTopicSubtitle: PropTypes.string.isRequired,
             featuredTopicPosts: PropTypes.arrayOf(PropTypes.object).isRequired
-        }).isRequired, 
+        }).isRequired,
         blog: PropTypes.shape({
             title: PropTypes.string.isRequired,
             slug: PropTypes.shape({
                 current: PropTypes.string.isRequired
             }).isRequired,
             viewAllName: PropTypes.string.isRequired
-        }).isRequired, 
+        }).isRequired,
         blogPosts: PropTypes.shape({
             nodes: PropTypes.arrayOf(PropTypes.object).isRequired
-        }).isRequired, 
+        }).isRequired,
         culture: PropTypes.shape({
             title: PropTypes.string.isRequired,
             slug: PropTypes.shape({
                 current: PropTypes.string.isRequired
             }).isRequired,
             viewAllName: PropTypes.string.isRequired
-        }).isRequired, 
+        }).isRequired,
         culturePosts: PropTypes.shape({
             nodes: PropTypes.arrayOf(PropTypes.object).isRequired
         }).isRequired

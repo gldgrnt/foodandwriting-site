@@ -8,11 +8,6 @@ import { PageContext } from '../context'
 import { useMobileStatus } from '../../hooks'
 
 /**
- * Main content component - used to wrap content that is to be rerendered
-*/
-const MainContent = ({ children }) => <main>{children}</main>
-
-/**
  * Page component
 */
 export const Page = ({ children }) => {
@@ -44,7 +39,7 @@ export const Page = ({ children }) => {
 
             <PageContext.Provider value={context}>
                 <Header />
-                <MainContent>{children}</MainContent>
+                <main>{children}</main>
                 <Footer />
             </PageContext.Provider>
         </Theme>

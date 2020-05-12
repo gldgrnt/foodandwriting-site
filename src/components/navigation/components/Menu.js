@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import AniLink from 'gatsby-plugin-transition-link/AniLink'
 
 export const Menu = () => {
 
@@ -30,7 +29,7 @@ export const Menu = () => {
         <ul>
             {pages.map((page, index) => (
                 <li key={page.link} className={page.class || ''}>
-                    <AniLink cover to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</AniLink>
+                    <Link to={page.link} activeClassName="active" partiallyActive={true}>{page.title}</Link>
                 </li>
             ))}
         </ul>

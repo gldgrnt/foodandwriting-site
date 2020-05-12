@@ -108,7 +108,7 @@ const ImageWrapper = styled.div`
 
 const Title = styled.h2`
     font-size: ${props => props.theme.font.size.medium};
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding-top: 5px;
     padding-right: 30px;
 `

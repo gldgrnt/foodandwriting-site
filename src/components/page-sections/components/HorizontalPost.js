@@ -23,7 +23,7 @@ export const HorizontalPost = ({ post: { title, date, fullSlug, featuredImage, c
 
                 <CaptionWrapper>
                     <SmallCaps as="time" size="small" datetime={postDate.raw}>{postDate.formatted}</SmallCaps>
-                    <CaptionTitle>{title}</CaptionTitle>
+                    <Title>{title}</Title>
                     <SmallCaps size="tiny" color="mediumGrey" link>View {singleName}</SmallCaps>
                 </CaptionWrapper>
             </Article>
@@ -129,10 +129,10 @@ const CaptionWrapper = styled.div`
     ${responsiveBreakpointDown('mobile', `padding: 15px 0 0;`)}
 `
 
-const CaptionTitle = styled.h3`
+const Title = styled.h3`
     font-size: ${props => props.theme.font.size.medium};
     line-height: 1.75;
-    margin: 15px 0;
+    margin: 10px 0 15px;
 
     ${props => responsiveBreakpointDown('desktop', `
         font-size: ${props.theme.font.size.increased};

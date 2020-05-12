@@ -11,10 +11,10 @@ import { SmallCaps, PostMeta } from '../../ui'
 /**
  * BlogArchivePost component
  */
-export const BlogArchivePost = ({ post: {title, date, fullSlug, featuredImage, category: { singleName }} }) => {
+export const BlogArchivePost = ({ post: { title, date, fullSlug, featuredImage, category: { singleName } } }) => {
 
-    const fluid = !_.isNull(featuredImage) && _.hasIn(featuredImage, 'asset') 
-        ? ( _.hasIn(featuredImage, 'asset.fluid') ? featuredImage.asset.fluid : getFluidPropsFromId(featuredImage.asset._ref) )
+    const fluid = !_.isNull(featuredImage) && _.hasIn(featuredImage, 'asset')
+        ? (_.hasIn(featuredImage, 'asset.fluid') ? featuredImage.asset.fluid : getFluidPropsFromId(featuredImage.asset._ref))
         : false
 
     return (
@@ -23,9 +23,9 @@ export const BlogArchivePost = ({ post: {title, date, fullSlug, featuredImage, c
                 <ImageWrapper>
                     {fluid ? <Img fluid={fluid} /> : <div></div>}
                 </ImageWrapper>
-                
+
                 <PostMeta date={date} />
-                
+
                 <Title>{title}</Title>
                 <SmallCaps size="tiny" link>View {singleName}</SmallCaps>
             </article>
@@ -102,7 +102,7 @@ const ImageWrapper = styled.div`
 
 const Title = styled.h2`
     font-size: ${props => props.theme.font.size.medium};
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding-top: 5px;
     padding-right: 30px;
 `

@@ -4,35 +4,41 @@ import PropTypes from 'prop-types'
 import Img from 'gatsby-image/withIEPolyfill'
 
 import { GridContainer } from '../layout'
-import { InternalLink, SmallCaps } from '../ui'
-import { Link } from 'gatsby'
-import { responsiveBreakpointDown } from '../../utils'
+import { InternalLink, SmallCaps, PostMeta } from '../ui'
+import { responsiveBreakpointDown, parseReadyInString } from '../../utils'
 
 /**
  * FeaturedPost component
  */
-export const FeaturedPost = ({ post: { title, featuredImage, recipeIntro, fullSlug, category: { singleName } }}) => {
-    
-    // Set up variables
-    const caption = recipeIntro ? (recipeIntro.length > 160 ? recipeIntro.substr(0, 157) + '...' : recipeIntro.substr(0, 160)) : 'Curabitur lacinia at lectus ac sodales. Sed tristique faucibus odio eget rhoncus. Quisque mollis dapibus libero et sagittis. Suspendisse sollicitudin laoreet...'
+export const FeaturedPost = ({ post: { title, featuredImage, fullSlug, category: { singleName, categoryType }, content, date }, description }) => {
+
+    // Set up post meta
+    const isRecipe = categoryType === 'Recipe'
+
+    const { serves, readyIn } = content[0]
+    const humanReadyIn = parseReadyInString(readyIn)
+
 
     return (
         <GridContainer removeMobilePadding={true}>
             <Article>
-                <ImageLinkWrapper to={fullSlug}>
-                    <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={title} />
-                </ImageLinkWrapper>
+                <InternalLink to={fullSlug}>
+                    <ImageWrapper to={fullSlug}>
+                        <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={title} />
+                    </ImageWrapper>
 
-                <CaptionContainer>
-                    <CaptionInner>
-                        <SmallCaps as="p" size="small">Featured {singleName}</SmallCaps>
-                        <InternalLink to={fullSlug} title>
-                            <CaptionTitle>{title}</CaptionTitle>
-                        </InternalLink>
-                        <CaptionText>{caption}</CaptionText>
-                        <InternalLink to={fullSlug} primary>View {singleName}</InternalLink>
-                    </CaptionInner>
-                </CaptionContainer>
+                    <CaptionContainer>
+                        <CaptionInner>
+                            {isRecipe
+                                ? <PostMeta meta={[`Featured ${singleName}`, `Serves ${serves}`, humanReadyIn]} />
+                                : <PostMeta date={date} meta={[`Featured ${singleName}`]} />
+                            }
+                            <Title>{title}</Title>
+                            <Description>{description}</Description>
+                            <SmallCaps size="tiny" link>View {singleName}</SmallCaps>
+                        </CaptionInner>
+                    </CaptionContainer>
+                </InternalLink>
             </Article>
         </GridContainer>
     )
@@ -60,26 +66,39 @@ FeaturedPost.propTypes = {
  * Styles
  */
 const Article = styled.article`
-    display: flex;
     width: 100%;
-    background: ${props => props.theme.color.whiteGrey};
-    min-height: 700px;
 
-    ${responsiveBreakpointDown('desktop', `
-        min-height: 540px;
-    `)}
+    > * {
+        display: flex;
+        background: ${props => props.theme.color.whiteGrey};
+        min-height: 700px;
 
-    ${responsiveBreakpointDown('tablet', `
-        min-height: 500px;
-        background: transparent;
-    `)}
+        ${responsiveBreakpointDown('desktop', `
+            min-height: 540px;
+        `)}
 
-    ${responsiveBreakpointDown('mobile', `
-        min-height: calc(90vh - 65px);
-    `)}
+        ${responsiveBreakpointDown('tablet', `
+            min-height: 500px;
+            background: transparent;
+        `)}
+
+        ${responsiveBreakpointDown('mobile', `
+            min-height: calc(90vh - 65px);
+        `)}
+
+        &:hover {
+            h2 {
+                text-decoration: underline;
+            }
+            
+            p + span:last-child {
+                color: ${props => props.theme.color.black};
+            }
+        }
+    }
 `
 
-const ImageLinkWrapper = styled(Link)`
+const ImageWrapper = styled.div`
     position: relative;
     overflow: hidden;
     flex-basis: 50%;
@@ -171,15 +190,18 @@ const CaptionInner = styled.div`
     `)}
 `
 
-const CaptionTitle = styled.h2`
+const Title = styled.h2`
     font-size: ${props => props.theme.font.size.giant};
 
-    ${props =>  responsiveBreakpointDown('desktop', `font-size: ${props.theme.font.size.huge};`)}
-    ${props =>  responsiveBreakpointDown('tablet', `font-size: ${props.theme.font.size.giant};`)}
+    ${props => responsiveBreakpointDown('desktop', `font-size: ${props.theme.font.size.huge};`)}
+    ${props => responsiveBreakpointDown('tablet', `font-size: ${props.theme.font.size.giant};`)}
 `
 
-const CaptionText = styled.p`
-    color: ${props => props.theme.color.darkGrey};
+const Description = styled.p`
+    font-family: ${props => props.theme.font.family.serif};
+    color: ${props => props.theme.color.black};
+    font-size: ${props => props.theme.font.size.regular};
+    font-weight: 400;
 
     ${responsiveBreakpointDown('desktop', `font-size: 0.9rem;`)}
     ${responsiveBreakpointDown('tablet', `display: none;`)}

@@ -62,6 +62,6 @@ module.exports = {
                 disabledFeatures: [`shorthands`, `cloning`],
             },
         },
-        `gatsby-plugin-transition-link`
+        // `gatsby-plugin-transition-link`
     ],
 }

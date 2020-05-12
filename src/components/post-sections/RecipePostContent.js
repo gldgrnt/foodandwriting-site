@@ -13,6 +13,22 @@ export const RecipePostContent = ({ content: { readyIn, recipeIntro, recipeNotes
 
     const humanReadyIn = parseReadyInString(readyIn)
 
+    const recipeMeta = !recipeIntro
+        ? <Section as="div" spacingBottom="2">
+            <SmallCaps size="regular" color="darkGrey">This recipe</SmallCaps>
+            <UnstyledList responsive>
+                {serves && <li>Serves: {serves}</li>}
+                {readyIn && <li>Ready in: {humanReadyIn}</li>}
+            </UnstyledList>
+        </Section>
+        : <>
+            <SmallCaps size="regular" color="darkGrey">This recipe</SmallCaps>
+            <UnstyledList responsive>
+                {serves && <li>Serves: {serves}</li>}
+                {readyIn && <li>Ready in: {humanReadyIn}</li>}
+            </UnstyledList>
+        </>
+
     return (
         <RecipeWrapper>
             <GridContainer wrap="wrap">
@@ -20,11 +36,7 @@ export const RecipePostContent = ({ content: { readyIn, recipeIntro, recipeNotes
                     <>
                         <GridRow justify="center">
                             <GridCol cols={{ 'monitor': 2, 'tablet': 8 }}>
-                                <SmallCaps size="regular" color="darkGrey">This recipe</SmallCaps>
-                                <UnstyledList responsive>
-                                    {serves && <li>Serves: {serves}</li>}
-                                    {readyIn && <li>Ready in: {humanReadyIn}</li>}
-                                </UnstyledList>
+                                {recipeMeta}
                             </GridCol>
 
                             <GridCol cols={{ 'monitor': 4, 'desktop': 5, 'tablet': 8 }}>
@@ -44,15 +56,7 @@ export const RecipePostContent = ({ content: { readyIn, recipeIntro, recipeNotes
 
                 <GridRow justify="center">
                     <GridCol cols={{ 'monitor': 2, 'tablet': 8 }}>
-                        {!recipeIntro && // Render recipe details if there's no recipe intro
-                            <Section as="div" spacingBottom="2">
-                                <SmallCaps size="regular" color="darkGrey">This recipe</SmallCaps>
-                                <UnstyledList responsive>
-                                    {serves && <li>Serves: {serves}</li>}
-                                    {readyIn && <li>Ready in: {readyIn}</li>}
-                                </UnstyledList>
-                            </Section>
-                        }
+                        {!recipeIntro && recipeMeta}
 
                         <Section as="div" spacingTop={{ 'monitor': 0, tablet: 1 }} spacingBottom={{ 'monitor': 0, tablet: 1 }}>
                             <SmallCaps size="regular" color="darkGrey">Shopping list</SmallCaps>
@@ -122,7 +126,7 @@ const UnstyledList = styled.ul`
     `)}
 `
 
-const Intro = styled.p`
+const Intro = styled.div`
     margin-top: -3px; /* Line up with the small caps title */
     > *:last-child {
         margin-bottom: 0;

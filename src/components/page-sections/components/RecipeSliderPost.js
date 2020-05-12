@@ -5,10 +5,13 @@ import { Link } from 'gatsby'
 import Img from 'gatsby-image/withIEPolyfill'
 
 import { PageContext } from '../../context'
-import { SmallCaps, Button } from '../../ui'
-import { responsiveBreakpointDown } from '../../../utils'
+import { SmallCaps, Button, PostMeta } from '../../ui'
+import { responsiveBreakpointDown, parseReadyInString } from '../../../utils'
 
-export const RecipeSliderPost = ({ post: {title, fullSlug, featuredImage} }) => {
+export const RecipeSliderPost = ({ post: { title, fullSlug, featuredImage, content } }) => {
+
+    const { serves, readyIn } = content[0]
+    const humanReadyIn = parseReadyInString(readyIn)
 
     return (
         <LinkWrapper to={fullSlug}>
@@ -18,12 +21,12 @@ export const RecipeSliderPost = ({ post: {title, fullSlug, featuredImage} }) => 
                 </ImageWrapper>
 
                 <CaptionWrapper>
+                    <PostMeta meta={[`Serves ${serves}`, humanReadyIn]} />
                     <Title>{title}</Title>
                     <PageContext.Consumer>
-                        { ({ isMobile }) => ( !isMobile ?
-                            <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
-                            :
-                            <Button secondary size="small">View recipe</Button>
+                        {({ isMobile }) => (!isMobile
+                            ? <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
+                            : <Button secondary size="small">View recipe</Button>
                         )}
                     </PageContext.Consumer>
                 </CaptionWrapper>
@@ -47,13 +50,16 @@ const LinkWrapper = styled(Link)`
 
     &:hover,
     &:focus {
-        text-decoration: underline;
 
-        span {
-            color: ${props => props.theme.color.black};
+        h3 {
+            text-decoration: underline;
 
-            &::after {
-                background: ${props => props.theme.color.black};
+            + span {
+                color: ${props => props.theme.color.black};
+
+                &::after {
+                    background: ${props => props.theme.color.black};
+                }
             }
         }
     }
@@ -124,15 +130,20 @@ const CaptionWrapper = styled.div`
         padding: 0 30px;
         text-align: center;
 
-        > h3 {
+        > h3,
+        span {
             color: white;
+        }
+
+        > div {
+            display: inline-flex;
         }
     `)}
 `
 
 const Title = styled.h3`
     font-size: ${props => props.theme.font.size.medium};
-    margin-bottom: 10px;
+    margin: 7px 0 5px;
     white-space: normal;
 
     ${props => responsiveBreakpointDown('tablet', `

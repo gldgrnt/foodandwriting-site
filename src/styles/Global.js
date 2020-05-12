@@ -16,10 +16,6 @@ body {
     flex-direction: column;
     min-height: 100vh;
 
-    .tl-edges {
-        overflow-x: unset;
-    }
-
     main {
         flex-grow: 1;
     }

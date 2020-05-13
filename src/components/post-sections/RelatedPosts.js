@@ -9,7 +9,7 @@ import { PostArchive } from '../page-sections'
 /**
  * RelatedPosts 
  */
-export const RelatedPosts = ({ category: {slug, viewAllName}, autoPosts, selectedPosts }) => {
+export const RelatedPosts = ({ category: { slug, viewAllName }, autoPosts, selectedPosts }) => {
 
     const relatedPostsArray = mergeRelatedPosts(autoPosts, selectedPosts)
 
@@ -22,7 +22,7 @@ export const RelatedPosts = ({ category: {slug, viewAllName}, autoPosts, selecte
                 </TitleWrapper>
             </GridContainer>
 
-            <PostArchive posts={relatedPostsArray} onWhite={false} showCategory={true}  />
+            <PostArchive posts={relatedPostsArray} />
 
             <GridContainer justify="center">
                 <Section as="div" spacingTop="2">
@@ -51,7 +51,7 @@ const mergeRelatedPosts = (autoPosts, selectedPosts) => {
     const filteredPostsArray = postsArray.filter((post, index) => postsArray.findIndex(item => item._id === post._id) === index)
 
     return filteredPostsArray.slice(0, 3)
-}   
+}
 
 
 

@@ -3,40 +3,33 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Img from 'gatsby-image/withIEPolyfill'
 import { Link } from 'gatsby'
-import _ from 'lodash'
 
-import { getPostDate, responsiveBreakpointDown, getFluidPropsFromId } from '../../../utils'
-import { SmallCaps } from '../../ui'
+import { responsiveBreakpointDown, getFluidPropsFromFeaturedImage, parseReadyInString } from '../../../utils'
+import { SmallCaps, PostMeta } from '../../ui'
 
 /**
- * ArchivePost component
+ * Archive post component
  */
-export const ArchivePost = ({ post: {title, date, fullSlug, featuredImage, category: { singleName, categoryType }}, imgHeight, showCategory = false }) => {
+export const ArchivePost = ({ post: { title, date, fullSlug, featuredImage, category: { singleName }, content }, isRecipe }) => {
 
-    const postDate = getPostDate(date)
-    const fluid = !_.isNull(featuredImage) && _.hasIn(featuredImage, 'asset') 
-        ? ( _.hasIn(featuredImage, 'asset.fluid')
-            ? featuredImage.asset.fluid
-            : getFluidPropsFromId(featuredImage.asset._ref)
-        )
-        : false
+    // Set up variables
+    const fluid = getFluidPropsFromFeaturedImage(featuredImage)
+    let recipeMeta = []
 
-    const showDate = categoryType === 'Normal'
+    if (isRecipe) {
+        const { serves, readyIn } = content[0]
+        recipeMeta = [`Serves ${serves}`, parseReadyInString(readyIn)]
+    }
 
     return (
         <StyledLink to={fullSlug}>
             <article>
-                <ImageWrapper imgHeight={imgHeight}>
+                <ImageWrapper tallImage={isRecipe}>
                     {fluid ? <Img fluid={fluid} /> : <div></div>}
                 </ImageWrapper>
-                
-                { (showDate || showCategory) &&
-                    <MetaWrapper>
-                        { showCategory && <SmallCaps size="small">{singleName}</SmallCaps> }
-                        { showDate && <SmallCaps as="time" size="small" datetime={postDate.raw}>{postDate.formatted}</SmallCaps> }
-                    </MetaWrapper>
-                }
-                
+
+                {isRecipe ? <PostMeta meta={recipeMeta} /> : <PostMeta date={date} />}
+
                 <Title>{title}</Title>
                 <SmallCaps size="tiny" link>View {singleName}</SmallCaps>
             </article>
@@ -56,8 +49,6 @@ ArchivePost.propTypes = {
             asset: PropTypes.object
         })
     }),
-    imgHeight: PropTypes.number.isRequired,
-    showCategory: PropTypes.bool
 }
 
 /**
@@ -92,7 +83,7 @@ const StyledLink = styled(Link)`
     }
 
     ${responsiveBreakpointDown('tablet', `
-        span {
+        article > span {
             display: none;
         }
     `)}
@@ -101,7 +92,7 @@ const StyledLink = styled(Link)`
 const ImageWrapper = styled.div`
     position: relative;
     background: ${props => props.theme.color.lightGreyOverlay};
-    padding-top: ${props => props.imgHeight}%;
+    padding-top: ${props => props.tallImage ? '120%' : '67%'};
     margin-bottom: 20px;
     
     > * {
@@ -113,25 +104,9 @@ const ImageWrapper = styled.div`
     }
 `
 
-const MetaWrapper = styled.div`
-    display: flex;
-    align-items: center;
-
-    > *:not(:first-child) {
-        position: relative;
-        margin-left: 10px;
-
-        &::before {
-            content: ' · ';
-            position: absolute;
-            left: -6px; 
-        }
-    }
-`
-
 const Title = styled.h2`
     font-size: ${props => props.theme.font.size.medium};
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding-top: 5px;
     padding-right: 30px;
 `

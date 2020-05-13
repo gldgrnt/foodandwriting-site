@@ -3,21 +3,20 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { GridContainer } from '../layout'
-import { BlogArchivePost, RecipeArchivePost } from './components'
+import { ArchivePost } from './components'
 import { responsiveBreakpointDown } from '../../utils'
 
 /**
  * PostArchive component
  */
-export const PostArchive = ({ posts, categoryType }) => {
+export const PostArchive = ({ posts, categoryType = '' }) => {
+
+    const isRecipe = categoryType === 'Recipe'
 
     return (
         <GridContainer>
             <PostsWrapper>
-                {categoryType === 'Normal' 
-                    ? posts.map(post => <BlogArchivePost key={post._id} post={post} />)
-                    : posts.map(post => <RecipeArchivePost key={post._id} post={post} />)
-                }
+                {posts.map(post => <ArchivePost key={post._id} post={post} isRecipe={isRecipe} />)}
             </PostsWrapper>
         </GridContainer>
     )
@@ -28,7 +27,7 @@ export const PostArchive = ({ posts, categoryType }) => {
  */
 PostArchive.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-    categoryType: PropTypes.string.isRequired,
+    categoryType: PropTypes.string,
 }
 
 

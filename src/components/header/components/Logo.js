@@ -9,17 +9,15 @@ export const Logo = () => {
             logo: file(relativePath: { eq: "fandw-std.svg" }) {
                 publicURL
             }
-            alt: site {
-                siteMetadata {
-                    title
-                }
+            alt: sanityConfig {
+                siteTitle
             }
         }
     `)
 
     return (
         <LinkContainer to="/">
-            <Image src={logo.publicURL} alt={alt.siteMetadata.title} />
+            <Image src={logo.publicURL} alt={alt.siteTitle} />
         </LinkContainer>
     )
 }
@@ -32,4 +30,4 @@ const Image = styled.img`
     height: 18px;
     width: 125px;
     margin: 0;
-`;
+`

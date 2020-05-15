@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { FiX } from 'react-icons/fi'
-import {useSpring, animated} from 'react-spring'
+import { useSpring, animated } from 'react-spring'
 import { FiInstagram } from 'react-icons/fi'
 import { graphql, useStaticQuery } from 'gatsby'
 
@@ -12,18 +12,16 @@ import { responsiveBreakpointDown } from '../../utils'
 
 export const NavigationDropdown = ({ closeDropdown }) => {
 
-    const { site: { siteMetadata: { instagramURL }} } = useStaticQuery(graphql`
+    const { sanityConfig } = useStaticQuery(graphql`
         query {
-            site {
-                siteMetadata {
-                    instagramURL
-                }
+            sanityConfig {
+                instagramHandle
             }
         }
     `)
-    
+
     // Set up animation props
-    const animationProps = useSpring({to: {opacity: 1}, from: {opacity: 0}})
+    const animationProps = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } })
 
     return (
         <StyledDropdown style={animationProps}>
@@ -31,12 +29,12 @@ export const NavigationDropdown = ({ closeDropdown }) => {
                 <Menu />
 
                 <InstagramLink>
-                    <a href={instagramURL} target="_blank" rel="noopener noreferrer">
+                    <a href={`https://instagram.com/${sanityConfig.instagramHandle}`} target="_blank" rel="noopener noreferrer">
                         <FiInstagram />
                     </a>
                 </InstagramLink>
 
-                <Button secondary onClick={closeDropdown}><FiX/> Close menu</Button>
+                <Button secondary onClick={closeDropdown}><FiX /> Close menu</Button>
             </animated.div>
         </StyledDropdown>
     )

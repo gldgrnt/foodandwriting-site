@@ -3,22 +3,41 @@ import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
-export const SEO = ({ description, lang, meta, title }) => {
-    const { site } = useStaticQuery(
-        graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
-    )
+/**
+ * Function to create a function that replaces variables within a string
+ * 
+ * @param {Array} replacementArray 
+ * @returns {Function} Curried string replacement function with variables preset 
+ */
+const replaceVariables = (replacementArray) => {
+    return (str) => {
+        let newStr = str
+        replacementArray.forEach(replacer => newStr = newStr.replace(replacer.value, replacer.replacement))
+        return newStr
+    }
+}
 
-    const metaDescription = description || site.siteMetadata.description
+export const SEO = ({ description, lang, meta, title }) => {
+    const { sanityConfig } = useStaticQuery(graphql`
+        query {
+            sanityConfig {
+                siteDecsription
+                siteTitle
+                titleTemplate
+            }
+        }
+    `)
+
+    // Create string replacement function
+    const replaceSiteVariables = replaceVariables([
+        { value: '%SITETITLE%', replacement: sanityConfig.siteTitle },
+        { value: '%PAGETITLE%', replacement: '%s' }
+    ])
+
+    // Set up variables
+    const titleTemplate = replaceSiteVariables(sanityConfig.titleTemplate)
+    const metaDescription = description || replaceSiteVariables(sanityConfig.siteDecsription)
+
 
     return (
         <Helmet
@@ -26,7 +45,7 @@ export const SEO = ({ description, lang, meta, title }) => {
                 lang,
             }}
             title={title}
-            titleTemplate={`%s | ${site.siteMetadata.title}`}
+            titleTemplate={titleTemplate}
             meta={[
                 {
                     name: `description`,
@@ -47,10 +66,6 @@ export const SEO = ({ description, lang, meta, title }) => {
                 {
                     name: `twitter:card`,
                     content: `summary`,
-                },
-                {
-                    name: `twitter:creator`,
-                    content: site.siteMetadata.author,
                 },
                 {
                     name: `twitter:title`,

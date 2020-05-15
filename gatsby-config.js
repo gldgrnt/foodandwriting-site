@@ -4,12 +4,6 @@ require('dotenv').config()
 const algoliaQueries = require("./src/utils/algolia")
 
 module.exports = {
-    siteMetadata: {
-        title: `Food and Writing`,
-        description: `Making food look pretty on a bathroom tile.`,
-        author: 'wadada',
-        instagramURL: 'https://instagram.com/foodandwriting'
-    },
     plugins: [
         `gatsby-plugin-react-helmet`,
         {

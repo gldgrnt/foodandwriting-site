@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'gatsby'
+import { Link, useStaticQuery, graphql } from 'gatsby'
 
 import { GridContainer, GridRow, GridCol } from '../layout'
 import { ReducedLogo } from './components'
@@ -9,8 +9,16 @@ import { FiInstagram } from 'react-icons/fi'
 
 
 export const Footer = () => {
+    const { sanityConfig } = useStaticQuery(graphql`
+        query {
+            sanityConfig {
+                instagramHandle
+            }
+        }
+    `)
+
     const footerLinks = [
-        { 'title': <FiInstagram />, 'link': 'https://www.instagram.com/foodandwriting/', 'external': true },
+        { 'title': <FiInstagram />, 'link': `https://instagram.com/${sanityConfig.instagramHandle}/`, 'external': true },
         { 'title': 'About', 'link': '/about', 'external': false },
         { 'title': 'Cookies', 'link': '/', 'external': false },
     ]
@@ -26,10 +34,10 @@ export const Footer = () => {
                     <GridCol cols="4">
                         <LinksWrapper>
                             {footerLinks.map(footerLink => {
-                                let attr = footerLink.external 
-                                ? {key: footerLink.link, as: "a", href: footerLink.link, rel: "noopener noreferrer", target: "_blank"}
-                                : {key: footerLink.link, to: footerLink.link}
-                                
+                                let attr = footerLink.external
+                                    ? { key: footerLink.link, as: "a", href: footerLink.link, rel: "noopener noreferrer", target: "_blank" }
+                                    : { key: footerLink.link, to: footerLink.link }
+
                                 return <FooterLink {...attr}>{footerLink.title}</FooterLink>
                             })}
                         </LinksWrapper>

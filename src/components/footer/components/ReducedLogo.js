@@ -9,17 +9,15 @@ export const ReducedLogo = () => {
             logo: file(relativePath: { eq: "fandw-reduced.svg" }) {
                 publicURL
             }
-            alt: site {
-                siteMetadata {
-                    title
-                }
+            alt: sanityConfig {
+                siteTitle
             }
         }
     `)
 
     return (
         <LinkWrapper to="/">
-            <Image src={logo.publicURL} alt={alt.siteMetadata.title} />
+            <Image src={logo.publicURL} alt={alt.siteTitle} />
         </LinkWrapper>
     )
 }

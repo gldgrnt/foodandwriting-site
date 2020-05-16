@@ -5,6 +5,7 @@ import { graphql } from 'gatsby'
  */
 export const largeFluidImageFragment = graphql`
     fragment LargeFluidImageFragment on SanityPost {
+        _rawFeaturedImage(resolveReferences: {maxDepth: 10})
         featuredImage {
             asset {
                 fluid(maxWidth: 500) {

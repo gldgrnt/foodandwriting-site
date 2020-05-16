@@ -1,7 +1,12 @@
 import _ from 'lodash'
 import { getFluidGatsbyImage } from 'gatsby-source-sanity'
+import sanityClient from '@sanity/client'
+import imageURLBuilder from '@sanity/image-url'
 
-const sanityConfig = { projectId: process.env.GATSBY_SANITY_PROJECT_ID, dataset: process.env.GATSBY_SANITY_DATASET, }
+// Instantiate Sanity config objects
+const config = { projectId: process.env.GATSBY_SANITY_PROJECT_ID, dataset: process.env.GATSBY_SANITY_DATASET, }
+const client = sanityClient(config)
+const builder = imageURLBuilder(client)
 
 /**
  * Get gatsby fluid image props from sanity image ID
@@ -15,7 +20,7 @@ export const getFluidPropsFromId = (imageAssetId = '') => {
             throw new Error('Image id needs to be a non-empty string')
         }
 
-        return getFluidGatsbyImage(imageAssetId, {}, sanityConfig)
+        return getFluidGatsbyImage(imageAssetId, {}, config)
 
     } catch (err) {
         return err
@@ -41,3 +46,11 @@ export const getFluidPropsFromFeaturedImage = (featuredImage) => {
         return err
     }
 }
+
+/**
+ * Helper to return 
+ * 
+ * @param {String|Object} source Sanity image record, asset record or assetId string
+ * @return {Object} Sanity image instance
+ */
+export const urlFor = (source) => builder.image(source)

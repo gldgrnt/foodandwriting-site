@@ -1,16 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import Img from 'gatsby-image/withIEPolyfill'
 
 import { GridContainer } from '../layout'
-import { InternalLink, SmallCaps, PostMeta } from '../ui'
+import { InternalLink, SmallCaps, PostMeta, Image } from '../ui'
 import { responsiveBreakpointDown, parseReadyInString } from '../../utils'
 
 /**
  * FeaturedPost component
  */
-export const FeaturedPost = ({ post: { title, featuredImage, fullSlug, category: { singleName, categoryType }, content, date }, description }) => {
+export const FeaturedPost = ({ post: { title, _rawFeaturedImage, fullSlug, category: { singleName, categoryType }, content, date }, description }) => {
 
     // Set up post meta
     const isRecipe = categoryType === 'Recipe'
@@ -18,13 +17,17 @@ export const FeaturedPost = ({ post: { title, featuredImage, fullSlug, category:
     const { serves, readyIn } = content[0]
     const humanReadyIn = parseReadyInString(readyIn)
 
-
     return (
         <GridContainer removeMobilePadding={true}>
             <Article>
                 <InternalLink to={fullSlug}>
-                    <ImageWrapper to={fullSlug}>
-                        <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={title} />
+                    <ImageWrapper>
+                        <Image source={_rawFeaturedImage} fallbackSize={{ width: 780, height: 700 }} sizes={[
+                            { width: 780, height: 700, mediaMin: 1600 },
+                            { width: 580, height: 540, mediaMin: 1200 },
+                            { width: 480, height: 540, mediaMin: 1000 },
+                            { width: 728, height: 500, mediaMin: 768 }
+                        ]} />
                     </ImageWrapper>
 
                     <CaptionContainer>
@@ -94,6 +97,10 @@ const Article = styled.article`
             p + span:last-child {
                 color: ${props => props.theme.color.black};
             }
+
+            img {
+                transform: scale(1.05) !important;
+            }
         }
     }
 `
@@ -103,11 +110,11 @@ const ImageWrapper = styled.div`
     overflow: hidden;
     flex-basis: 50%;
 
-    ${props => responsiveBreakpointDown('tablet', `
+    ${responsiveBreakpointDown('tablet', `
         position: absolute;
         top: 0;
-        left: ${props.theme.grid.spacing}px;
-        width: calc(100% - ${props.theme.grid.spacing * 2}px);
+        left: 0;
+        width: 100%;
         height: 100%;
         z-index: 0;
         flex-basis: auto;
@@ -117,14 +124,6 @@ const ImageWrapper = styled.div`
         left: 0;
         width: 100%;
     `)}
-        
-    > * {
-        position: absolute !important;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-    }
 `
 
 const CaptionContainer = styled.div`
@@ -170,14 +169,11 @@ const CaptionInner = styled.div`
         flex-direction: column;
         align-items: center;
         width: auto;
-        color: white;
+        
+        * {
+            color: white !important;
 
-        > * {
-            color: inherit !important;
-
-            &::after,
-            &:hover::after,
-            &:focus::after {
+            &::after {
                 background: white;
             }
         }

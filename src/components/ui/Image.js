@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -8,18 +8,12 @@ import { urlFor } from '../../utils'
  * Image component
  */
 export const Image = ({ source, fallbackSize, sizes }) => {
+    // Initialise loading state
+    const [loaded, setLoaded] = useState(false)
 
     // Variables
     const dprValues = [1.5, 2]
     const urlWithSize = ({ width, height }) => urlFor(source).size(width, height)
-
-    // onLoad handler
-    const handleLoad = (event) => {
-        event.target.setAttribute('style', `
-            opacity: 1;
-            transform: scale(1);
-        `)
-    }
 
     return (
         <picture>
@@ -29,7 +23,7 @@ export const Image = ({ source, fallbackSize, sizes }) => {
                     srcSet={`${urlWithSize(size).auto('format').url()}, ${dprValues.map(dpr => `${urlWithSize(size).dpr(dpr).auto('format').url()} ${dpr}x`).toString()}`} />
             ))}
 
-            <StyledImg src={urlWithSize(fallbackSize).format('jpg').dpr(1).url()} alt={source.alt || ''} onLoad={handleLoad} loading="lazy" />
+            <StyledImg onLoad={() => setLoaded(true)} src={urlWithSize(fallbackSize).format('jpg').dpr(1).url()} alt={source.alt || ''} loading="lazy" loaded={loaded} />
         </picture>
     )
 }
@@ -61,8 +55,8 @@ const StyledImg = styled.img`
     left: 0;
     height: 100%;
     width: 100%;
-    opacity: 0;
-    transform: scale(1.1);
+    opacity: ${props => props.loaded ? 1 : 0};
+    transform: ${props => props.loaded ? 'scale(1)' : 'scale(1.1)'};
     transition: opacity 1s ease, transform 1s ease;
     object-fit: cover;
 `

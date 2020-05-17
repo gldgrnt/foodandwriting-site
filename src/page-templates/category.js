@@ -56,7 +56,7 @@ export const query = graphql`
         category: sanityCategory(_id: {eq: $_id}) {
             ...FullCategoryFragment
         }
-        posts: allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 12) {
+        posts: allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 6) {
             totalCount
             nodes {
                 ...PreviewPostFragment

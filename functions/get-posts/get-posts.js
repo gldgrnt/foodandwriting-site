@@ -3,7 +3,7 @@ require('dotenv').config()
 // Instantiate sanity client
 const sanityClient = require('@sanity/client')
 
-const client  = sanityClient({
+const client = sanityClient({
     projectId: process.env.GATSBY_SANITY_PROJECT_ID,
     dataset: process.env.GATSBY_SANITY_DATASET,
     useCdn: true,
@@ -23,16 +23,16 @@ const fetchSanityPosts = async (params) => {
     const end = start + (parseInt(amount))
 
     return client.fetch(
-        `*[_type == "post" && category._ref == $categoryId] | order(date desc) [$start..$end] {_id, date, title, featuredImage, slug, content, "category": *[_id == ^.category._ref][0] | {slug, singleName, cate}}`, 
-        { categoryId: categoryId, start: start, end: end}
+        `*[_type == "post" && category._ref == $categoryId] | order(date desc) [$start..$end] {_id, date, title, featuredImage, slug, content, "category": *[_id == ^.category._ref][0] | {slug, singleName}}`,
+        { categoryId: categoryId, start: start, end: end }
     )
 }
 
-exports.handler = async ( event, context ) => {
+exports.handler = async (event, context) => {
     try {
         // Make sure request is only a post method
         if (event.httpMethod !== "GET") {
-            throw { statusCode: 405, body: "Method Not Allowed" };
+            throw { statusCode: 405, body: "Method Not Allowed" }
         }
 
         // Fetch sanity posts
@@ -45,7 +45,7 @@ exports.handler = async ( event, context ) => {
             return post
         })
 
-        return { statusCode: 200, body: JSON.stringify({ posts: posts })}
+        return { statusCode: 200, body: JSON.stringify({ posts: posts }) }
 
     } catch (err) {
         return err

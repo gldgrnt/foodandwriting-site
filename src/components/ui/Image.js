@@ -4,10 +4,14 @@ import styled from 'styled-components'
 
 import { urlFor } from '../../utils'
 
+const cb = () => console.log('hello')
+
 /**
  * Image component
  */
 export const Image = ({ source, fallbackSize, sizes }) => {
+    // const [loaded, setLoaded] = useState(false)
+
     // Variables
     const dprValues = [1.5, 2]
     const urlWithSize = ({ width, height }) => urlFor(source).size(width, height)
@@ -20,7 +24,7 @@ export const Image = ({ source, fallbackSize, sizes }) => {
                     srcSet={`${urlWithSize(size).auto('format').url()}, ${dprValues.map(dpr => `${urlWithSize(size).dpr(dpr).auto('format').url()} ${dpr}x`).toString()}`} />
             ))}
 
-            <StyledImg onLoad={() => console.log('hello')} src={urlWithSize(fallbackSize).format('jpg').dpr(1).url()} alt={source.alt || ''} loading="lazy" />
+            <StyledImg onLoad={cb} src={urlWithSize(fallbackSize).format('jpg').dpr(1).url()} alt={source.alt || ''} loading="lazy" />
         </picture>
     )
 }

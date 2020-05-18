@@ -9,7 +9,7 @@ import { responsiveBreakpointDown } from '../../utils'
 
 /**
  * HalfImagePage component
- */ 
+ */
 export const HalfImage = ({ children, fluidImageProps }) => {
 
     return (
@@ -81,11 +81,11 @@ const StickyImageWrapper = styled.div`
 `
 
 const ContentWrapper = styled.div`
-    padding-top: 80px;
+    padding: 80px 0 160px;
     flex-basis: 50%;
 
     ${responsiveBreakpointDown('mobile', `
-        padding-top: 40px;
+        padding: 40px 0 0;
         flex-basis: 100%;
     `)}
 `

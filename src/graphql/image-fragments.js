@@ -21,6 +21,7 @@ export const largeFluidImageFragment = graphql`
  */
 export const mediumFluidImageFragment = graphql`
     fragment MediumFluidImageFragment on SanityPost {
+        _rawFeaturedImage(resolveReferences: {maxDepth: 10})
         featuredImage {
             asset {
                 fluid(maxWidth: 300) {

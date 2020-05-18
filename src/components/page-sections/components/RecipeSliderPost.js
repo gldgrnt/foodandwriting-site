@@ -5,10 +5,10 @@ import { Link } from 'gatsby'
 import Img from 'gatsby-image/withIEPolyfill'
 
 import { PageContext } from '../../context'
-import { SmallCaps, Button, PostMeta } from '../../ui'
+import { SmallCaps, Button, PostMeta, Image } from '../../ui'
 import { responsiveBreakpointDown, parseReadyInString } from '../../../utils'
 
-export const RecipeSliderPost = ({ post: { title, fullSlug, featuredImage, content } }) => {
+export const RecipeSliderPost = ({ post: { title, fullSlug, featuredImage, _rawFeaturedImage, content } }) => {
 
     const { serves, readyIn } = content[0]
     const humanReadyIn = parseReadyInString(readyIn)
@@ -17,7 +17,12 @@ export const RecipeSliderPost = ({ post: { title, fullSlug, featuredImage, conte
         <LinkWrapper to={fullSlug}>
             <Article>
                 <ImageWrapper>
-                    <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title} />
+                    <Image fadeIn source={_rawFeaturedImage} fallbackSize={{ width: 460, height: 620 }} sizes={[
+                        { width: 460, height: 620, mediaMin: 1600 },
+                        { width: 375, height: 510, mediaMin: 1200 },
+                        { width: 280, height: 380, mediaMin: 1000 },
+                        { width: 420, height: 800, mediaMin: 768 }
+                    ]} />
                 </ImageWrapper>
 
                 <CaptionWrapper>
@@ -62,6 +67,10 @@ const LinkWrapper = styled(Link)`
                 }
             }
         }
+
+        img {
+            transform: scale(1.04);
+        }
     }
 
     ${props => responsiveBreakpointDown('desktop', `
@@ -94,6 +103,7 @@ const ImageWrapper = styled.div`
     padding-top: 135%;
     margin-bottom: 20px;
     background: ${props => props.theme.color.whiteGrey};
+    overflow: hidden;
     
     ${responsiveBreakpointDown('mobile', `height: 100%`)}
 

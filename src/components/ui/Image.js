@@ -4,10 +4,18 @@ import styled from 'styled-components'
 
 import { urlFor } from '../../utils'
 
+const getAnimationType = (props) => {
+    switch (true) {
+        case props.fadeScaleIn: return 'fadeScaleIn'
+        case props.fadeIn: return 'fadeIn'
+        default: return console.error('Set image load animation')
+    }
+}
+
 /**
  * Image component
  */
-export const Image = ({ source, fallbackSize, sizes }) => {
+export const Image = ({ source, fallbackSize, sizes, ...props }) => {
     // Variables
     const dprValues = [1.5, 2]
     const urlWithSize = useCallback(({ width, height }) => urlFor(source).size(width, height), [source])
@@ -27,7 +35,7 @@ export const Image = ({ source, fallbackSize, sizes }) => {
                     srcSet={`${urlWithSize(size).auto('format').url()}, ${dprValues.map(dpr => `${urlWithSize(size).dpr(dpr).auto('format').url()} ${dpr}x`).toString()}`} />
             ))}
 
-            <StyledImg ref={imgRef} alt={source.alt || ''} loading="lazy" />
+            <StyledImg ref={imgRef} className={getAnimationType(props)} alt={'h'} loading="lazy" />
         </picture>
     )
 }
@@ -60,12 +68,23 @@ const StyledImg = styled.img`
     height: 100%;
     width: 100%;
     object-fit: cover;
+    transition: 1s ease, opacity 1.4s ease;
+
+    &.fadeScaleIn {
     opacity: 0;
     transform: scale(1.1);
-    transition: opacity 1s ease, transform 1s ease;
+        
+        &.loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 
-    &.loaded {
-        opacity: 1;
-        transform: scale(1);
+    &.fadeIn {
+        opacity: 0;
+
+        &.loaded {
+            opacity: 1;
+        }
     }
 `

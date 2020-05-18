@@ -22,7 +22,7 @@ export const FeaturedPost = ({ post: { title, _rawFeaturedImage, fullSlug, categ
             <Article>
                 <InternalLink to={fullSlug}>
                     <ImageWrapper>
-                        <Image source={_rawFeaturedImage} fallbackSize={{ width: 780, height: 700 }} sizes={[
+                        <Image fadeScaleIn source={_rawFeaturedImage} fallbackSize={{ width: 780, height: 700 }} sizes={[
                             { width: 780, height: 700, mediaMin: 1600 },
                             { width: 580, height: 540, mediaMin: 1200 },
                             { width: 480, height: 540, mediaMin: 1000 },

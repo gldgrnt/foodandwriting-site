@@ -5,7 +5,7 @@ import { SEO } from '../utils'
 import { PostHero, DefaultPostContent, RecipePostContent, About, RelatedPosts } from '../components/post-sections'
 import { Page, Section } from '../components/layout'
 
-export default ({ data: { post: { date, title, category, featuredImage, seoDescription, _rawContent, relatedPosts }, autoRelatedPosts } }) => {
+export default ({ data: { post: { date, title, category, featuredImage, _rawFeaturedImage, seoDescription, _rawContent, relatedPosts }, autoRelatedPosts } }) => {
 
     // Variables
     const maxTextWidth = '750px'
@@ -15,7 +15,7 @@ export default ({ data: { post: { date, title, category, featuredImage, seoDescr
             <SEO title={`${title} recipe`} description={seoDescription} />
             <Page>
                 <Section>
-                    <PostHero featuredImage={featuredImage} subtitle={category.title} title={title} />
+                    <PostHero featuredImage={_rawFeaturedImage} subtitle={category.title} title={title} />
                 </Section>
 
                 <Section spacingTop={{ 'monitor': 4, 'tablet': 3 }}>

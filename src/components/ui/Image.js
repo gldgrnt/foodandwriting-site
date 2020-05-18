@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -8,12 +8,12 @@ import { urlFor } from '../../utils'
  * Image component
  */
 export const Image = ({ source, fallbackSize, sizes }) => {
-    let imgRef = useRef(null)
-
     // Variables
     const dprValues = [1.5, 2]
-    const urlWithSize = ({ width, height }) => urlFor(source).size(width, height)
+    const urlWithSize = useCallback(({ width, height }) => urlFor(source).size(width, height), [source])
 
+    // Set up image fade in using onload property and css
+    let imgRef = useRef(null)
     useEffect(() => {
         imgRef.current.onload = (e) => e.target.className += ' loaded'
         imgRef.current.src = urlWithSize(fallbackSize).format('jpg').dpr(1).url()

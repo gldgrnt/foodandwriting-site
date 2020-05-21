@@ -4,7 +4,7 @@ import sanityClient from '@sanity/client'
 import imageURLBuilder from '@sanity/image-url'
 
 // Instantiate Sanity config objects
-const config = { projectId: process.env.GATSBY_SANITY_PROJECT_ID, dataset: process.env.GATSBY_SANITY_DATASET, }
+const config = { projectId: process.env.GATSBY_SANITY_PROJECT_ID, dataset: process.env.GATSBY_SANITY_DATASET, useCdn: true, }
 const client = sanityClient(config)
 const builder = imageURLBuilder(client)
 

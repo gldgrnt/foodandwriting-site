@@ -2,13 +2,23 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
-import Img from 'gatsby-image/withIEPolyfill'
 
 import { PageContext } from '../../context'
 import { SmallCaps, Button, PostMeta, Image } from '../../ui'
 import { responsiveBreakpointDown, parseReadyInString } from '../../../utils'
 
-export const RecipeSliderPost = ({ post: { title, fullSlug, featuredImage, _rawFeaturedImage, content } }) => {
+// Image sizes
+const imageSizes = [
+    { width: 460, height: 620, mediaMin: 1600 },
+    { width: 375, height: 510, mediaMin: 1200 },
+    { width: 280, height: 380, mediaMin: 1000 },
+    { width: 420, height: 800, mediaMin: 768 }
+]
+
+/**
+ * Recipe Slider post component
+ */
+export const RecipeSliderPost = ({ post: { title, fullSlug, _rawFeaturedImage, content } }) => {
 
     const { serves, readyIn } = content[0]
     const humanReadyIn = parseReadyInString(readyIn)
@@ -17,12 +27,7 @@ export const RecipeSliderPost = ({ post: { title, fullSlug, featuredImage, _rawF
         <LinkWrapper to={fullSlug}>
             <Article>
                 <ImageWrapper>
-                    <Image fadeIn source={_rawFeaturedImage} fallbackSize={{ width: 460, height: 620 }} sizes={[
-                        { width: 460, height: 620, mediaMin: 1600 },
-                        { width: 375, height: 510, mediaMin: 1200 },
-                        { width: 280, height: 380, mediaMin: 1000 },
-                        { width: 420, height: 800, mediaMin: 768 }
-                    ]} />
+                    <Image fadeIn source={_rawFeaturedImage} sizes={imageSizes} />
                 </ImageWrapper>
 
                 <CaptionWrapper>
@@ -40,14 +45,24 @@ export const RecipeSliderPost = ({ post: { title, fullSlug, featuredImage, _rawF
     )
 }
 
+/**
+ * PropTypes
+ */
 RecipeSliderPost.prototypes = {
     post: PropTypes.shape({
         title: PropTypes.string.isRequired,
         fullSlug: PropTypes.string.isRequired,
-        featuredImage: PropTypes.object.isRequired
+        _rawFeaturedImage: PropTypes.object.isRequired,
+        content: PropTypes.arrayOf(PropTypes.shape({
+            serves: PropTypes.string.isRequired,
+            readyIn: PropTypes.string.isRequried
+        })).isRequired
     }).isRequired,
 }
 
+/**
+ * Styles
+ */
 const LinkWrapper = styled(Link)`
     text-decoration: none;
     outline: none;

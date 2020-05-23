@@ -1,11 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import Img from 'gatsby-image'
 
 import { SmallCaps, ScrollDown, Image } from '../ui'
 import { responsiveBreakpointDown } from '../../utils'
 
+// Image sizes
+const imageSizes = [
+    { width: 960, height: 1000, mediaMin: 1600 },
+    { width: 800, height: 780, mediaMin: 1200 },
+    { width: 600, height: 650, mediaMin: 1000 },
+    { width: 768, height: 900, mediaMin: 768 },
+    { width: 420, height: 530, mediaMin: 0 }
+]
+
+/**
+ * PostHero component
+ */
 export const PostHero = ({ featuredImage, subtitle, title }) => {
 
 
@@ -15,13 +26,7 @@ export const PostHero = ({ featuredImage, subtitle, title }) => {
     return (
         <HeroWrapper id={scrollId}>
             <ImageWrapper>
-                <Image fadeScaleIn source={featuredImage} fallbackSize={{ width: 960, height: 500 }} sizes={[
-                    { width: 960, height: 800, mediaMin: 1600 },
-                    { width: 800, height: 510, mediaMin: 1200 },
-                    { width: 600, height: 380, mediaMin: 1000 },
-                    { width: 768, height: 900, mediaMin: 768 },
-                    { width: 420, height: 530, mediaMin: 0 }
-                ]} />
+                <Image fadeScaleIn source={featuredImage} sizes={imageSizes} />
             </ImageWrapper>
 
             <CaptionWrapper>
@@ -34,12 +39,18 @@ export const PostHero = ({ featuredImage, subtitle, title }) => {
     )
 }
 
+/**
+ * PropTypes
+ */
 PostHero.propTypes = {
     featuredImage: PropTypes.object.isRequired,
     subtitle: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired
 }
 
+/**
+ * Styles
+ */
 const HeroWrapper = styled.div`
     position: relative;
     height: 85vh;

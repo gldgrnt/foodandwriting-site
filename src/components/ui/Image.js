@@ -4,6 +4,12 @@ import styled from 'styled-components'
 
 import { urlFor } from '../../utils'
 
+/**
+ * Get the type of animation passed via props
+ * 
+ * @param {Object} props 
+ * @returns {String} returns a string from the related animation prop
+ */
 const getAnimationType = (props) => {
     switch (true) {
         case props.fadeScaleIn: return 'fadeScaleIn'
@@ -13,9 +19,22 @@ const getAnimationType = (props) => {
 }
 
 /**
+ * Get the fallback size from the largest sized minimum media size
+ * 
+ * @param {Array} sizes Array of image sizes
+ * @returns {Object} Object containing the dimensions of the largest minimum media size
+ */
+const getFallbackSize = (sizes) => {
+    const maxMedia = Math.max.apply(null, sizes.map(size => size.mediaMin))
+    const [fallbackSize] = sizes.filter(size => size.mediaMin === maxMedia)
+
+    return fallbackSize
+}
+
+/**
  * Image component
  */
-export const Image = ({ source, fallbackSize, sizes, ...props }) => {
+export const Image = ({ source, sizes, ...props }) => {
     // Variables
     const dprValues = [1.5, 2]
     const urlWithSize = useCallback(({ width, height }) => urlFor(source).size(width, height), [source])
@@ -23,9 +42,12 @@ export const Image = ({ source, fallbackSize, sizes, ...props }) => {
     // Set up image fade in using onload property and css
     let imgRef = useRef(null)
     useEffect(() => {
-        imgRef.current.onload = (e) => e.target.className += ' loaded'
-        imgRef.current.src = urlWithSize(fallbackSize).format('jpg').dpr(1).url()
-    }, [fallbackSize, urlWithSize])
+        imgRef.current.onload = (e) => {
+            e.target.className += ' loaded'
+            e.target.onload = null // Remove the listener after first invocation
+        }
+        imgRef.current.src = urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(1).url()
+    }, [sizes, urlWithSize])
 
     return (
         <picture>
@@ -45,10 +67,6 @@ export const Image = ({ source, fallbackSize, sizes, ...props }) => {
  */
 Image.propTypes = {
     source: PropTypes.object.isRequired,
-    fallbackSize: PropTypes.shape({
-        width: PropTypes.number.isRequired,
-        height: PropTypes.number.isRequired
-    }).isRequired,
     sizes: PropTypes.arrayOf(
         PropTypes.shape({
             width: PropTypes.number.isRequired,
@@ -59,7 +77,7 @@ Image.propTypes = {
 }
 
 /**
- * Sytles
+ * Styles
  */
 const StyledImg = styled.img`
     position: absolute;

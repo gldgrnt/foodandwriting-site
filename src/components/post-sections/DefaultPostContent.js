@@ -18,10 +18,9 @@ export const DefaultPostContent = ({ content, date, maxTextWidth = 'none' }) => 
         <GridContainer>
             <ContentWrapper maxTextWidth={maxTextWidth}>
                 <Date maxTextWidth={maxTextWidth} aria-label={`Posted on ${postDate.formatted}`}>
-                    <SmallCaps color="mediumGrey" size="small">Date</SmallCaps>
                     <time dateTime={postDate.raw}>{postDate.formatted}</time>
                 </Date>
-                <FawBlockContent content={content}/>
+                <FawBlockContent content={content} />
 
                 <Section as="div" spacingTop="2">
                     <Divider maxWidth={maxTextWidth} />

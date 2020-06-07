@@ -10,14 +10,13 @@ import { SmallCaps } from '../components/ui'
 /**
  * AboutPage component
  */
-const AboutPage = ({ data:{ sanityAbout: { snippet, image, _rawContent }} }) => {
+const AboutPage = ({ data: { sanityAbout: { snippet, image, _rawContent } } }) => {
 
     return (
         <>
             <SEO title="About" description={snippet} />
             <Page>
                 <HalfImage fluidImageProps={image.asset.fluid}>
-                    <SmallCaps as="p" size="small">Food &amp; Wrtiting</SmallCaps>
                     <FawBlockContent content={_rawContent} />
                 </HalfImage>
             </Page>
@@ -32,7 +31,7 @@ export default AboutPage
  * PropTypes
  */
 AboutPage.propTypes = {
-    data: PropTypes.shape({ 
+    data: PropTypes.shape({
         sanityAbout: PropTypes.shape({
             snippet: PropTypes.string.isRequired,
         }).isRequired

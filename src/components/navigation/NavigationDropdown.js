@@ -75,18 +75,6 @@ const StyledDropdown = styled.div`
             &.about-link{
                 position: relative;
                 order: 100;
-                margin-top: 40px;
-
-                &::after {
-                    content: '';
-                    position: absolute;
-                    top: -35px;
-                    left: 50%;
-                    height: 3px;
-                    width: 3px;
-                    border-radius: 50%;
-                    background: ${props => props.theme.color.darkGrey};
-                }
             }
 
             a {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
 import { GoLinkExternal, GoLink } from 'react-icons/go'
+import _ from 'lodash'
 
 import { getPostSlug } from '../../../utils'
 
@@ -23,7 +24,7 @@ export const LinkMark = ({ children, mark }) => {
             return (
                 <StyledLink>
                     <a href={mark.href} target="_blank" rel="noopener noreferrer">{children}</a>
-                    <GoLinkExternal/>
+                    <GoLinkExternal />
                 </StyledLink>
             )
 
@@ -38,7 +39,9 @@ export const LinkMark = ({ children, mark }) => {
  * @param {{_type: string, slug?: {current: string}, post?: {slug: { current: string}} }} link Link object
  * @returns {string} Link string for Gatsby Link component
  */
-const resolveInteralLink = ( link ) => {
+const resolveInteralLink = (link) => {
+    if (!_.has(link, '_type')) return '#'
+
     switch (link._type) {
         case 'post':
             return getPostSlug(link)
@@ -50,7 +53,7 @@ const resolveInteralLink = ( link ) => {
             return '/about'
 
         default:
-            return;
+            return
     }
 }
 

@@ -160,7 +160,6 @@ const DropdownWrapper = styled.div`
     overflow: hidden;
 
     ${responsiveBreakpointDown('tablet', `
-        padding: 60px 0 30px;
         height: 100vh;
         max-height: 100vh; /** Fallback **/
         max-height: calc((var(--vh-dynamic, 1vh) * 100) - 68px);

@@ -22,9 +22,7 @@ export const DefaultPostContent = ({ content, date, maxTextWidth = 'none' }) => 
                 </Date>
                 <FawBlockContent content={content} />
 
-                <Section as="div" spacingTop="2">
-                    <Divider maxWidth={maxTextWidth} />
-                </Section>
+                <Divider maxWidth={maxTextWidth} />
             </ContentWrapper>
         </GridContainer>
     )
@@ -57,7 +55,17 @@ const ContentWrapper = styled.article`
         >  p {
             width: 100%;
             max-width: ${props => props.maxTextWidth};
+
+            &:first-child::first-letter {
+                font-size: 550%;
+                float: left;
+                line-height: 1;
+                margin-right: 0.2em;
+                margin-top: -30px;
+            }
         }
+
+
     }
 `
 

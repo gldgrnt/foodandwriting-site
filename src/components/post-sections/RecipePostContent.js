@@ -14,7 +14,7 @@ export const RecipePostContent = ({ content: { readyIn, recipeIntro, recipeNotes
     const humanReadyIn = parseReadyInString(readyIn)
 
     const recipeMeta = !recipeIntro
-        ? <Section as="div" spacingBottom="2">
+        ? <Section as="div" spacingBottom={{ 'monitor': 2, 'mobile': 0 }}>
             <SmallCaps size="regular" color="darkGrey">This recipe</SmallCaps>
             <UnstyledList responsive>
                 {serves && <li>Serves: {serves}</li>}

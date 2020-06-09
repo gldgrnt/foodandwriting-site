@@ -161,7 +161,7 @@ const CaptionWrapper = styled.div`
         }
 
         > div {
-            display: inline-flex;
+            display: none;
         }
     `)}
 `

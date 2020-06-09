@@ -12,24 +12,24 @@ import { responsiveBreakpointDown } from '../../../utils'
  */
 const CustomSearchBox = ({ currentRefinement, refine }) => {
     // Initialise state
-    const [ query, setQuery ] = useState(currentRefinement)
-    const [ timer, setTimer ] = useState(null)
-    
+    const [query, setQuery] = useState(currentRefinement)
+    const [timer, setTimer] = useState(null)
+
     // Search 1 second after the user has finished typing
     const handleChange = event => {
         // Get input value
-        const value = event.currentTarget.value;
-        
+        const value = event.currentTarget.value
+
         // Update state
-        clearTimeout(timer);
-        
+        clearTimeout(timer)
+
         // Restart the timer on every input change
         setTimer(setTimeout(() => {
             refine(value)
-        }, 800));
+        }, 800))
         setQuery(value)
-        
-    };
+
+    }
 
     // Clear search bar
     const clearSearch = () => {
@@ -37,19 +37,19 @@ const CustomSearchBox = ({ currentRefinement, refine }) => {
         setQuery("")
     }
 
-    return (     
-        <> 
+    return (
+        <>
             <input
                 value={query}
                 onChange={handleChange}
-                placeholder="Search by title or ingredient..."
+                placeholder="Search here"
             />
             <button title="Clear search bar" aria-label="Clear search bar" onClick={clearSearch}>
                 <FiX />
             </button>
         </>
     )
-} 
+}
 
 /**
  * PropTypes
@@ -68,15 +68,15 @@ export const SearchBarInput = ({ closeDropdown }) => {
     const ConnectedCustomSearchBox = connectSearchBox(CustomSearchBox)
 
     // Create function that can be added and remove from window event listeners
-    const closeSearchDropdown = useCallback( ( event ) => {
+    const closeSearchDropdown = useCallback((event) => {
         if (event.code !== 'Escape') return
 
         // Call close dropdown function prop
-        closeDropdown() 
+        closeDropdown()
     }, [closeDropdown])
 
     // Allow dropdown to be closed by ESC key
-    useEffect( () => {
+    useEffect(() => {
         window.addEventListener('keydown', closeSearchDropdown)
 
         // Clean up by removing event listener
@@ -86,7 +86,7 @@ export const SearchBarInput = ({ closeDropdown }) => {
     return (
         <div>
             <SearchBoxWrapper>
-                <ConnectedCustomSearchBox/>
+                <ConnectedCustomSearchBox />
             </SearchBoxWrapper>
         </div>
     )
@@ -124,6 +124,7 @@ const SearchBoxWrapper = styled.div`
         flex-grow: 1;
         outline: none;
         line-height: 1;
+        max-width: calc(100% - 50px);
 
         &::placeholder {
             opacity: 0.67;

@@ -35,6 +35,7 @@ const Text = styled.span`
     text-transform: uppercase;
     font-weight: bold;
     margin-right: 10px;
+    margin-top: -1px;
 `
 
 const Image = styled.img`

@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link, useStaticQuery, graphql } from 'gatsby'
-
-import { GridContainer, GridRow, GridCol } from '../layout'
-import { ReducedLogo } from './components'
-import { responsiveBreakpointDown } from '../../utils'
 import { FiInstagram } from 'react-icons/fi'
+import { AiOutlineTwitter } from 'react-icons/ai'
+
+import { MadeByWadada } from './components'
+import { GridContainer } from '../layout'
+import { responsiveBreakpointDown } from '../../utils'
 
 
 export const Footer = () => {
@@ -13,84 +14,89 @@ export const Footer = () => {
         query {
             sanityConfig {
                 instagramHandle
+                twitterHandle
             }
         }
     `)
 
-    const footerLinks = [
-        { 'title': <FiInstagram />, 'link': `https://instagram.com/${sanityConfig.instagramHandle}/`, 'external': true },
-        { 'title': 'About', 'link': '/about', 'external': false },
-        { 'title': 'Cookies', 'link': '/', 'external': false },
-    ]
-
     return (
-        <StyledFooter>
-            <GridContainer>
-                <GridRow align="center">
-                    <GridCol cols="4">
-                        <ReducedLogo />
-                    </GridCol>
+        <footer>
+            <FooterUpper>
+                <GridContainer whiteGrey justify="space-between" wrap="wrap">
+                    <LinksWrapper smallSpacing>
+                        <SocialLink href={`https://instagram.com/${sanityConfig.instagramHandle}`} target="_blank">
+                            <FiInstagram />
+                        </SocialLink>
 
-                    <GridCol cols="4">
-                        <LinksWrapper>
-                            {footerLinks.map(footerLink => {
-                                let attr = footerLink.external
-                                    ? { key: footerLink.link, as: "a", href: footerLink.link, rel: "noopener noreferrer", target: "_blank" }
-                                    : { key: footerLink.link, to: footerLink.link }
+                        <SocialLink href={`https://twitter.com/${sanityConfig.instagramHandle}`} className="twitter" target="_blank">
+                            <AiOutlineTwitter />
+                        </SocialLink>
+                    </LinksWrapper>
 
-                                return <FooterLink {...attr}>{footerLink.title}</FooterLink>
-                            })}
-                        </LinksWrapper>
-                    </GridCol>
-                </GridRow>
-            </GridContainer>
-        </StyledFooter>
+                    <LinksWrapper>
+                        <PageLink to="/about">About</PageLink>
+                        <PageLink to="/cookies">Cookies</PageLink>
+                    </LinksWrapper>
+                </GridContainer>
+            </FooterUpper>
+            <FooterLower>
+                <GridContainer justify="flex-end">
+                    <MadeByWrapper>
+                        <MadeByWadada />
+                    </MadeByWrapper>
+                </GridContainer>
+            </FooterLower>
+        </footer>
     )
 }
 
-const StyledFooter = styled.footer`
-    padding: 40px 0;
+const FooterUpper = styled.div`
+    padding: 30px 0;
     background: ${props => props.theme.color.whiteGrey};
 
-    ${responsiveBreakpointDown('tablet', `padding: 30px 0;`)}
+    ${responsiveBreakpointDown('tablet', `padding: 25px 0;`)}
 `
 
 const LinksWrapper = styled.div`
-    text-align: right;
+    >* {
+        color: ${props => props.theme.color.darkGrey};
+        stroke: ${props => props.theme.color.darkGrey};
 
-    ${responsiveBreakpointDown('tablet', `
-        text-align: left;
-        display: flex;
-        justify-content: space-between;
-    `)}
+        &:not(:last-child) {
+            margin-right: ${props => props.smallSpacing ? '40px' : '50px'};
+            
+            ${responsiveBreakpointDown('mobile', `margin-right: 30px;`)}
+        }
+        
+    }
 `
 
-const FooterLink = styled(Link)`
+const SocialLink = styled.a`
+    svg {
+        transform: scale(1.2);
+    }
+
+    &.twitter svg {
+        transform: scale(1.5);
+    }
+`
+
+
+const PageLink = styled(Link)`
     font-family: ${props => props.theme.font.family.sans};
     text-transform: uppercase;
     font-weight: 600;
     text-decoration: none;
     font-size: ${props => props.theme.font.size.small};
-    color: ${props => props.theme.color.mediumGrey};
-    transition: color ${props => props.theme.transition.fast};
+    color: ${props => props.theme.color.darkGrey};
+`
 
-    svg {
-        stroke-width: 2px;
-        transform: scale(1.2) translateY(1px);
-    }
+const FooterLower = styled.div`
+    padding: 15px 0 10px;
+`
 
-    &:hover,
-    &:focus {
-        color: ${props => props.theme.color.black};
-    }
-
-    &:not(:last-child) {
-        margin-right: 60px;
-    }
-
-    ${responsiveBreakpointDown('tablet', `
-        &:not(:last-child) {
-            margin-right: 0;
-        }
-    `)}
+const MadeByWrapper = styled.div`
+    opacity: 0.8;
+    width: 100%;
+    text-align: right;
 `

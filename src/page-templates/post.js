@@ -4,15 +4,17 @@ import { graphql } from 'gatsby'
 import { SEO } from '../utils'
 import { PostHero, DefaultPostContent, RecipePostContent, About, RelatedPosts } from '../components/post-sections'
 import { Page, Section } from '../components/layout'
+import { urlFor } from '../utils'
 
 export default ({ data: { post: { date, title, category, featuredImage, _rawFeaturedImage, seoDescription, _rawContent, relatedPosts }, autoRelatedPosts } }) => {
 
     // Variables
     const maxTextWidth = '750px'
+    const metaImage = urlFor(_rawFeaturedImage).size(1200, 700).fit('min')
 
     return (
         <>
-            <SEO title={`${title} recipe`} description={seoDescription} />
+            <SEO title={`${title} recipe`} description={seoDescription} meta={[{ name: "og:image", content: metaImage }, { name: "twitter:image", content: metaImage }]} />
             <Page>
                 <Section>
                     <PostHero featuredImage={_rawFeaturedImage} subtitle={category.title} title={title} />

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { FiX } from 'react-icons/fi'
 import { useSpring, animated } from 'react-spring'
 import { FiInstagram } from 'react-icons/fi'
+import { AiOutlineTwitter } from 'react-icons/ai'
 import { graphql, useStaticQuery } from 'gatsby'
 
 import { Menu } from './components'
@@ -16,6 +17,7 @@ export const NavigationDropdown = ({ closeDropdown }) => {
         query {
             sanityConfig {
                 instagramHandle
+                twitterHandle
             }
         }
     `)
@@ -28,11 +30,15 @@ export const NavigationDropdown = ({ closeDropdown }) => {
             <animated.div style={animationProps}>
                 <Menu />
 
-                <InstagramLink>
-                    <a href={`https://instagram.com/${sanityConfig.instagramHandle}`} target="_blank" rel="noopener noreferrer">
+                <DropdownLower>
+                    <SocialLink href={`https://instagram.com/${sanityConfig.instagramHandle}`} target="_blank" rel="noopener noreferrer">
                         <FiInstagram />
-                    </a>
-                </InstagramLink>
+                    </SocialLink>
+
+                    <SocialLink href={`https://twitter.com/${sanityConfig.twitterHandle}`} target="_blank" rel="noopener noreferrer" className="twitter">
+                        <AiOutlineTwitter />
+                    </SocialLink>
+                </DropdownLower>
 
                 <Button secondary onClick={closeDropdown}><FiX /> Close menu</Button>
             </animated.div>
@@ -66,7 +72,9 @@ const StyledDropdown = styled.div`
         li {
             margin: 0;
             list-style-type: none;    
-            text-align: center;       
+            text-align: center;   
+            text-transform: uppercase;
+            font-family: ${props => props.theme.font.family.sans};
 
             &:not(.space-next) {
                 margin-bottom: 30px;
@@ -84,7 +92,7 @@ const StyledDropdown = styled.div`
                 font-weight: 600;
                 text-decoration: none;
 
-                ${responsiveBreakpointDown('mobile', `font-size: 7vw;`)}
+                ${responsiveBreakpointDown('mobile', `font-size: 6vw;`)}
 
                 &.active {
                     background-color: ${props => props.theme.color.yellow};
@@ -104,7 +112,7 @@ const StyledDropdown = styled.div`
     }
 `
 
-const InstagramLink = styled.div`
+const DropdownLower = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -119,5 +127,13 @@ const InstagramLink = styled.div`
         svg {
             transform: scale(1.5);
         }
+    }
+`
+
+const SocialLink = styled.a`
+    margin: 0 15px;
+
+    &.twitter {
+        transform: scale(1.3);
     }
 `

@@ -8,3 +8,9 @@
     autoLaunch = false
     port = 8888
     targetPort = 8000
+
+[context.deploy-preview]
+  command = "npm run noIndex"
+
+[context.branch-deploy]
+  command = "npm run noIndex"

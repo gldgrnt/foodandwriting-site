@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
-import { GoLinkExternal, GoLink } from 'react-icons/go'
+import { GoLinkExternal } from 'react-icons/go'
 import _ from 'lodash'
 
 import { getPostSlug } from '../../../utils'

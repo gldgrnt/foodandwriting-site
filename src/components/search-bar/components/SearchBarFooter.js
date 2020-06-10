@@ -12,8 +12,8 @@ import { Button } from '../../ui'
 export const SearchBarFooter = ({ closeDropdown }) => {
     return (
         <SearchBarFooterWrapper>
-            <Button secondary onClick={closeDropdown}><FiX/> Close search</Button>
-            <StyledPoweredBy translations={{ searchBy: 'Powered by'}} />
+            <Button secondary onClick={closeDropdown} tabindex="-1"><FiX /> Close search</Button>
+            <StyledPoweredBy translations={{ searchBy: 'Powered by' }} />
         </SearchBarFooterWrapper>
     )
 }
@@ -34,8 +34,13 @@ const SearchBarFooterWrapper = styled.div`
     padding-top: 20px;
 
     button {
+        opacity: 0;
         display: inline-flex;
         align-items: center;
+        
+        &:focus {
+            opacity: 1;
+        }
 
         svg {
             stroke-width: 3px;

@@ -36,8 +36,8 @@ export const parseReadyInString = str => {
 
     const [hoursNum, minsNum] = str.split(':').map(numStr => Number(numStr)) // Parse string make sure array consituents are numbers
 
-    const hoursStr = hoursNum === 0 ? false : `${hoursNum} ${hoursNum === 1 ? 'hour' : 'hours'}`
-    const minsStr = minsNum === 0 ? false : `${minsNum} ${minsNum === 1 ? 'minute' : 'minutes'}`
+    const hoursStr = hoursNum === 0 ? '' : `${hoursNum} ${hoursNum === 1 ? 'hour' : 'hours'}`
+    const minsStr = minsNum === 0 ? '' : `${minsNum} ${minsNum === 1 ? 'minute' : 'minutes'}`
     const spaceStr = hoursStr && minsStr ? ' ' : ''
 
     return hoursStr + spaceStr + minsStr

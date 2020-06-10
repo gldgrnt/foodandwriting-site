@@ -82,12 +82,6 @@ export const RecipePostContent = ({ content: { readyIn, recipeIntro, recipeNotes
                         }
                     </GridCol>
                 </GridRow>
-
-                <GridRow justify="center">
-                    <GridCol cols={{ 'monitor': 6, 'desktop': 7, 'tablet': 8 }}>
-                        <Divider />
-                    </GridCol>
-                </GridRow>
             </GridContainer>
         </RecipeWrapper>
     )

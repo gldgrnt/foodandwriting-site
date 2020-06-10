@@ -149,11 +149,6 @@ IndexPage.propTypes = {
             featuredTopicSubtitle: PropTypes.string.isRequired,
             featuredTopicPosts: PropTypes.array.isRequired,
         }).isRequired,
-        featuredTopic: PropTypes.shape({
-            featuredTopicTitle: PropTypes.string.isRequired,
-            featuredTopicSubtitle: PropTypes.string.isRequired,
-            featuredTopicPosts: PropTypes.arrayOf(PropTypes.object).isRequired
-        }).isRequired,
         blog: PropTypes.shape({
             title: PropTypes.string.isRequired,
             slug: PropTypes.shape({

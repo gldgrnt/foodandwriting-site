@@ -38,7 +38,7 @@ export const Image = ({ source, sizes, dpr = [1.5, 2], ...props }) => {
     // Variables
     const dprValues = dpr
     const urlWithSize = useCallback(({ width, height }) => urlFor(source).size(width, height), [source])
-    const altText = source.alt || ''
+    const altText = source?.alt || ''
 
     // Set up image fade in using onload property and css
     let imgRef = useRef(null)

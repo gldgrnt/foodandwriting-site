@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import { FawBlockContent } from '../block-content'
-import { GridContainer, Section } from '../layout'
-import { SmallCaps, Divider } from '../ui'
+import { GridContainer } from '../layout'
 import { getPostDate } from '../../utils'
 
 /**
@@ -21,8 +20,6 @@ export const DefaultPostContent = ({ content, date, maxTextWidth = 'none' }) => 
                     <time dateTime={postDate.raw}>{postDate.formatted}</time>
                 </Date>
                 <FawBlockContent content={content} />
-
-                <Divider maxWidth={maxTextWidth} />
             </ContentWrapper>
         </GridContainer>
     )
@@ -57,11 +54,11 @@ const ContentWrapper = styled.article`
             max-width: ${props => props.maxTextWidth};
 
             &:first-child::first-letter {
-                font-size: 550%;
+                font-size: 620%;
                 float: left;
-                line-height: 1;
+                line-height: 0.9;
                 margin-right: 0.2em;
-                margin-top: -30px;
+                margin-top: -2px;
             }
         }
 

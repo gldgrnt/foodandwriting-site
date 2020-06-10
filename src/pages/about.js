@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import { SEO } from '../utils'
 import { Page, HalfImage } from '../components/layout'
 import { FawBlockContent } from '../components/block-content'
-import { SmallCaps } from '../components/ui'
 
 /**
  * AboutPage component

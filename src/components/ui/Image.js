@@ -14,7 +14,7 @@ const getAnimationType = (props) => {
     switch (true) {
         case props.fadeScaleIn: return 'fadeScaleIn'
         case props.fadeIn: return 'fadeIn'
-        default: return console.error('Set image load animation')
+        default: return
     }
 }
 

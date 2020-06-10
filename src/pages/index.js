@@ -142,6 +142,13 @@ IndexPage.propTypes = {
         recipes: PropTypes.shape({
             nodes: PropTypes.arrayOf(PropTypes.object).isRequired
         }).isRequired,
+        featured: PropTypes.shape({
+            featuredRecipe: PropTypes.object.isRequired,
+            featuredRecipeDescription: PropTypes.string.isRequired,
+            featuredTopicTitle: PropTypes.string.isRequired,
+            featuredTopicSubtitle: PropTypes.string.isRequired,
+            featuredTopicPosts: PropTypes.array.isRequired,
+        }).isRequired,
         featuredTopic: PropTypes.shape({
             featuredTopicTitle: PropTypes.string.isRequired,
             featuredTopicSubtitle: PropTypes.string.isRequired,

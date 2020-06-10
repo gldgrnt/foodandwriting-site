@@ -1,35 +1,45 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { StaticQuery, graphql } from 'gatsby'
-import Img from 'gatsby-image/withIEPolyfill'
+import { StaticQuery, graphql, Link } from 'gatsby'
 
-import { SmallCaps, InternalLink } from '../ui'
+import { GridContainer, GridRow, GridCol } from '../layout'
+import { SmallCaps, Image } from '../ui'
 import { responsiveBreakpointDown } from '../../utils'
 
 /**
  * About component
  */
-const AboutSection = ({ data: {sanityAbout: {snippet, smallImage}}, maxTextWidth }) => {
-    
+const AboutSection = ({ data: { sanityAbout: { snippet, _rawSmallImage } } }) => {
+
+    const imgSizes = [
+        { width: 300, height: 300, mediaMin: 0 }
+    ]
+
     return (
-        <AboutWrapper maxTextWidth={maxTextWidth}>
-            <ImageWrapper>
-                <Img fluid={smallImage.asset.fluid} />
-            </ImageWrapper>
-            <TextWrapper>
-                <SmallCaps as="p" size="small">About</SmallCaps>
-                <p>{snippet}</p>
-                <InternalLink primary to="/about">Read more</InternalLink>
-            </TextWrapper>
-        </AboutWrapper>
+        <GridContainer>
+            <GridRow justify="center">
+                <GridCol cols={{ 'monitor': 6, 'desktop': 7, 'tablet': 8 }}>
+                    <AboutLinkWrapper to="/about" aria-label="Find out more about food &amp; writing">
+                        <ImageWrapper>
+                            <Image fadeIn source={_rawSmallImage} sizes={imgSizes} dpr={[1, 1.5]} />
+                        </ImageWrapper>
+                        <TextWrapper>
+                            <SmallCaps as="p" size="small">About</SmallCaps>
+                            <Snippet>{snippet}</Snippet>
+                            <SmallCaps link as="span" size="tiny">Find out more</SmallCaps>
+                        </TextWrapper>
+                    </AboutLinkWrapper>
+                </GridCol>
+            </GridRow>
+        </GridContainer>
     )
 }
 
 export const About = props => (
-    <StaticQuery query={query} render={ data => (
-        <AboutSection data={data} {...props}/>
-    )}/>
+    <StaticQuery query={query} render={data => (
+        <AboutSection data={data} {...props} />
+    )} />
 )
 
 /**
@@ -39,57 +49,75 @@ AboutSection.propTypes = {
     data: PropTypes.shape({
         sanityAbout: PropTypes.shape({
             snippet: PropTypes.string.isRequired,
-            smallImage: PropTypes.shape({
-                asset: PropTypes.shape({
-                    fluid: PropTypes.object.isRequired
-                }).isRequired
-            }).isRequired
+            _rawSmallImage: PropTypes.object.isRequired
         }).isRequired
-    }).isRequired,
-    maxTextWidth: PropTypes.string
+    }).isRequired
 }
 
 /**
  * Styles
  */
-const AboutWrapper = styled.div`
+const AboutLinkWrapper = styled(Link)`
     display: flex;
     align-items: center;
-    max-width: ${props => props.maxTextWidth};
-    margin: auto;
-    padding-top: 30px;
+    background-color: ${props => props.theme.color.whiteGrey};
+    text-decoration: none;
 
     ${responsiveBreakpointDown('mobile', `
         flex-wrap: wrap;
-        padding: 0 15px;
-    `)}
-`
-
-const ImageWrapper = styled.div`
-    ${responsiveBreakpointDown('mobile', `
-        display: none;
     `)}
 
-    > * {
-        height: 200px;
-        width: 180px;
+    &:hover,
+    &:focus {
+        img {
+            transform: scale(1.05);
+        }
+
+        span:last-child {
+            color: ${props => props.theme.color.black};
+        }
     }
 `
 
+const ImageWrapper = styled.div`
+    position: relative;
+    min-width: 300px;
+    padding-top: 300px;
+    overflow: hidden;
+
+    ${responsiveBreakpointDown('tablet', `
+        min-width: 250px;
+    `)}
+
+    ${responsiveBreakpointDown('mobile', `
+        width: 100%;
+    `)}
+`
+
 const TextWrapper = styled.div`
-    padding-left: 60px;
+    padding: 0 80px;
     flex-grow: 1;
     line-height: 2;
     min-width: 300px;
     font-size: ${props => props.theme.font.size.increased};
 
+    ${responsiveBreakpointDown('laptop', `
+        padding: 0 60px;
+    `)}
+
     ${responsiveBreakpointDown('mobile', `
-        padding: 0;
+        padding: 20px;
     `)}
 
     > *:not(:last-child) {
         margin-bottom: 15px;
     }
+`
+
+const Snippet = styled.p`
+    ${responsiveBreakpointDown('mobile', `
+        font-size: 90%;
+    `)}
 `
 
 /**
@@ -99,13 +127,7 @@ const query = graphql`
     query {
         sanityAbout {
             snippet
-            smallImage {
-                asset {
-                    fluid {
-                        ...GatsbySanityImageFluid_noBase64
-                    }
-                }
-            }
+            _rawSmallImage(resolveReferences: {maxDepth: 10})
         }
     }
 `

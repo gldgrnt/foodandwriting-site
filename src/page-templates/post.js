@@ -30,7 +30,7 @@ export default ({ data: { post: { date, title, category, _rawFeaturedImage, seoD
                     }
                 </Section>
 
-                <Section spacingTop="4" spacingBottom="7">
+                <Section spacingTop="4" spacingBottom={{ 'monitor': 5, 'mobile': 4 }}>
                     <About />
                 </Section>
 

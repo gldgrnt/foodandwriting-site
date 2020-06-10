@@ -38,6 +38,7 @@ export const Image = ({ source, sizes, dpr = [1.5, 2], ...props }) => {
     // Variables
     const dprValues = dpr
     const urlWithSize = useCallback(({ width, height }) => urlFor(source).size(width, height), [source])
+    const altText = source.alt || ''
 
     // Set up image fade in using onload property and css
     let imgRef = useRef(null)
@@ -57,7 +58,7 @@ export const Image = ({ source, sizes, dpr = [1.5, 2], ...props }) => {
                     srcSet={`${urlWithSize(size).auto('format').url()}, ${dprValues.map(dpr => `${urlWithSize(size).dpr(dpr).auto('format').url()} ${dpr}x`).toString()}`} />
             ))}
 
-            <StyledImg ref={imgRef} className={getAnimationType(props)} alt={'h'} loading="lazy" />
+            <StyledImg ref={imgRef} className={getAnimationType(props)} alt={altText} loading="lazy" />
         </picture>
     )
 }

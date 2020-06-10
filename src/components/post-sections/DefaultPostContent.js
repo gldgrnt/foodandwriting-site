@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { FawBlockContent } from '../block-content'
 import { GridContainer } from '../layout'
 import { getPostDate } from '../../utils'
+import { SignOff } from './SignOff'
 
 /**
  * DefaultPostContent component
@@ -20,6 +21,7 @@ export const DefaultPostContent = ({ content, date, maxTextWidth = 'none' }) => 
                     <time dateTime={postDate.raw}>{postDate.formatted}</time>
                 </Date>
                 <FawBlockContent content={content} />
+                <SignOff maxWidth={maxTextWidth} />
             </ContentWrapper>
         </GridContainer>
     )

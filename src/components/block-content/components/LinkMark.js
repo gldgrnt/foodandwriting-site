@@ -16,7 +16,6 @@ export const LinkMark = ({ children, mark }) => {
             return (
                 <StyledLink>
                     <Link to={resolveInteralLink(mark.link)}>{children}</Link>
-                    <GoLink />
                 </StyledLink>
             )
 

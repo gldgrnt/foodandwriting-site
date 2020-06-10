@@ -1,19 +1,26 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Img from 'gatsby-image/withIEPolyfill'
 import { Link } from 'gatsby'
 
-import { responsiveBreakpointDown, getFluidPropsFromFeaturedImage, parseReadyInString } from '../../../utils'
-import { SmallCaps, PostMeta } from '../../ui'
+import { responsiveBreakpointDown, parseReadyInString } from '../../../utils'
+import { SmallCaps, PostMeta, Image } from '../../ui'
 
 /**
  * Archive post component
  */
-export const ArchivePost = ({ post: { title, date, fullSlug, featuredImage, category: { singleName }, content }, isRecipe }) => {
+export const ArchivePost = ({ post: { title, date, fullSlug, _rawFeaturedImage, category: { singleName }, content }, isRecipe }) => {
 
     // Set up variables
-    const fluid = getFluidPropsFromFeaturedImage(featuredImage)
+    const imageRatio = isRecipe ? 120 : 67
+    const calculateHeight = useCallback(width => Number(Math.floor(width * (imageRatio / 100)).toFixed(0)), [imageRatio])
+    const imageSizes = [
+        { width: 470, height: calculateHeight(470), mediaMin: 1600 },
+        { width: 350, height: calculateHeight(350), mediaMin: 1200 },
+        { width: 440, height: calculateHeight(440), mediaMin: 1000 },
+        { width: 345, height: calculateHeight(345), mediaMin: 768 },
+        { width: 500, height: calculateHeight(500), mediaMin: 0 },
+    ]
     let recipeMeta = []
 
     if (isRecipe) {
@@ -24,8 +31,8 @@ export const ArchivePost = ({ post: { title, date, fullSlug, featuredImage, cate
     return (
         <StyledLink to={fullSlug}>
             <article>
-                <ImageWrapper tallImage={isRecipe}>
-                    {fluid ? <Img fluid={fluid} /> : <div></div>}
+                <ImageWrapper imageRatio={imageRatio}>
+                    {_rawFeaturedImage ? <Image fadeIn source={_rawFeaturedImage} sizes={imageSizes} /> : <div></div>}
                 </ImageWrapper>
 
                 {isRecipe ? <PostMeta meta={recipeMeta} /> : <PostMeta date={date} />}
@@ -79,6 +86,10 @@ const StyledLink = styled(Link)`
                     background: ${props => props.theme.color.black};
                 }
             }
+
+            img {
+                transform: scale(1.03);
+            }
         }
     }
 
@@ -92,8 +103,9 @@ const StyledLink = styled(Link)`
 const ImageWrapper = styled.div`
     position: relative;
     background: ${props => props.theme.color.lightGreyOverlay};
-    padding-top: ${props => props.tallImage ? '120%' : '67%'};
+    padding-top: ${props => props.imageRatio}%;
     margin-bottom: 20px;
+    overflow: hidden;
     
     > * {
         position: absolute !important;

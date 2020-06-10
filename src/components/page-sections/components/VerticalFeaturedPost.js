@@ -2,21 +2,28 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
-import Img from 'gatsby-image/withIEPolyfill'
 
-import { SmallCaps } from '../../ui'
+import { SmallCaps, Image } from '../../ui'
 import { responsiveBreakpointDown } from '../../../utils'
 
 /**
  * VerticalFeaturedPost component
  */
-export const VerticalFeaturedPost = ({ post: { title, fullSlug, featuredImage, category: { singleName }} }) => {
-    
+export const VerticalFeaturedPost = ({ post: { title, fullSlug, _rawFeaturedImage, category: { singleName } } }) => {
+
+    const imageSizes = [
+        { width: 560, height: 500, mediaMin: 1600 },
+        { width: 480, height: 420, mediaMin: 1200 },
+        { width: 420, height: 360, mediaMin: 1000 },
+        { width: 335, height: 300, mediaMin: 768 },
+        { width: 400, height: 360, mediaMin: 0 },
+    ]
+
     return (
         <StyledLink to={fullSlug}>
             <Article>
                 <ImageWrapper>
-                    <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title}/>
+                    <Image fadeIn source={_rawFeaturedImage} sizes={imageSizes} />
                 </ImageWrapper>
 
                 <CaptionWrapper>
@@ -67,6 +74,10 @@ const StyledLink = styled(Link)`
                 background: ${props => props.theme.color.black};
             }
         }
+
+        img {
+            transform: scale(1.03);
+        }
     }
 `
 
@@ -91,21 +102,14 @@ const Article = styled.article`
 `
 
 const ImageWrapper = styled.div`
+    position: relative;
     height: 500px;
+    overflow: hidden;
 
     ${responsiveBreakpointDown('desktop', `height: 420px;`)}
     ${responsiveBreakpointDown('laptop', `height: 360px;`)}
     ${responsiveBreakpointDown('tablet', `height: 300px;`)}
     ${responsiveBreakpointDown('mobile', `height: 360px;`)}
-
-    > * {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        margin-bottom: 0;
-        background: ${props => props.theme.color.whiteGrey};
-    }
 `
 
 const CaptionWrapper = styled.div`

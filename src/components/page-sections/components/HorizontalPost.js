@@ -2,23 +2,29 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
-import Img from 'gatsby-image/withIEPolyfill'
 
-import { SmallCaps } from '../../ui'
+import { SmallCaps, Image } from '../../ui'
 import { responsiveBreakpointDown, getPostDate } from '../../../utils'
 
 /**
  * HorizontalPost component
  */
-export const HorizontalPost = ({ post: { title, date, fullSlug, featuredImage, category: { singleName } } }) => {
+export const HorizontalPost = ({ post: { title, date, fullSlug, _rawFeaturedImage, category: { singleName } } }) => {
 
     const postDate = getPostDate(date)
+    const imageSizes = [
+        { width: 320, height: 280, mediaMin: 1600 },
+        { width: 260, height: 200, mediaMin: 1200 },
+        { width: 320, height: 280, mediaMin: 1000 },
+        { width: 260, height: 200, mediaMin: 768 },
+        { width: 460, height: 280, mediaMin: 0 },
+    ]
 
     return (
         <StyledLink to={fullSlug}>
             <Article>
                 <ImageWrapper>
-                    {featuredImage ? <Img fluid={featuredImage.asset.fluid} objectFit="cover" objectPosition="50% 50%" alt={featuredImage.alt || title} /> : <div></div>}
+                    {_rawFeaturedImage ? <Image fadeIn source={_rawFeaturedImage} sizes={imageSizes} /> : <div></div>}
                 </ImageWrapper>
 
                 <CaptionWrapper>
@@ -68,6 +74,10 @@ const StyledLink = styled(Link)`
                 background: ${props => props.theme.color.black};
             }
         }
+
+        img {
+            transform: scale(1.03);
+        }
     }
 `
 
@@ -90,6 +100,7 @@ const ImageWrapper = styled.div`
     height: 280px;
     min-width: 320px;
     background: ${props => props.theme.color.whiteGrey};
+    overflow: hidden;
 
     ${responsiveBreakpointDown('desktop', `
         height: 200px;
@@ -111,14 +122,6 @@ const ImageWrapper = styled.div`
         min-width: none;
         padding-top: 60%;
     `)}
-
-    > * {
-        position: absolute !important;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-    }
 `
 
 const CaptionWrapper = styled.div`

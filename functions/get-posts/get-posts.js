@@ -23,7 +23,7 @@ const fetchSanityPosts = async (params) => {
     const end = start + (parseInt(amount))
 
     return client.fetch(
-        `*[_type == "post" && category._ref == $categoryId] | order(date desc) [$start..$end] {_id, date, title, featuredImage, slug, content, "category": *[_id == ^.category._ref][0] | {slug, singleName}}`,
+        `*[_type == "post" && category._ref == $categoryId] | order(date desc) [$start..$end] {_id, date, title, "_rawFeaturedImage": featuredImage, slug, content, "category": *[_id == ^.category._ref][0] | {slug, singleName}}`,
         { categoryId: categoryId, start: start, end: end }
     )
 }

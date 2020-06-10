@@ -24,6 +24,7 @@ export const SEO = ({ description, lang, meta, title }) => {
                 siteDecsription
                 siteTitle
                 titleTemplate
+                twitterHandle
             }
         }
     `)
@@ -75,6 +76,14 @@ export const SEO = ({ description, lang, meta, title }) => {
                     name: `twitter:description`,
                     content: metaDescription,
                 },
+                {
+                    name: `twitter:site`,
+                    content: `@${sanityConfig.twitterHandle}`
+                },
+                {
+                    name: `twitter:creator`,
+                    content: `@${sanityConfig.twitterHandle}`
+                }
             ].concat(meta)}
         />
     )

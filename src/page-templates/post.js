@@ -6,7 +6,7 @@ import { PostHero, DefaultPostContent, RecipePostContent, About, RelatedPosts } 
 import { Page, Section } from '../components/layout'
 import { urlFor } from '../utils'
 
-export default ({ data: { post: { date, title, category, featuredImage, _rawFeaturedImage, seoDescription, _rawContent, relatedPosts }, autoRelatedPosts } }) => {
+export default ({ data: { post: { date, title, category, _rawFeaturedImage, seoDescription, _rawContent, relatedPosts }, autoRelatedPosts } }) => {
 
     // Variables
     const maxTextWidth = '750px'
@@ -14,7 +14,7 @@ export default ({ data: { post: { date, title, category, featuredImage, _rawFeat
 
     return (
         <>
-            <SEO title={`${title} recipe`} description={seoDescription} meta={[{ name: "og:image", content: metaImage }, { name: "twitter:image", content: metaImage }]} />
+            <SEO title={`${title} recipe`} description={seoDescription} meta={[{ property: "og:image", content: metaImage }, { name: "twitter:image", content: metaImage }]} />
             <Page>
                 <Section>
                     <PostHero featuredImage={_rawFeaturedImage} subtitle={category.title} title={title} />

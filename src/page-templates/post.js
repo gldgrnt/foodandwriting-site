@@ -30,8 +30,8 @@ export default ({ data: { post: { date, title, category, _rawFeaturedImage, seoD
                     }
                 </Section>
 
-                <Section spacingBottom="7">
-                    <About maxTextWidth={maxTextWidth} />
+                <Section spacingTop="4" spacingBottom="7">
+                    <About />
                 </Section>
 
                 {autoRelatedPosts.nodes.length > 0 &&

@@ -34,9 +34,9 @@ const getFallbackSize = (sizes) => {
 /**
  * Image component
  */
-export const Image = ({ source, sizes, ...props }) => {
+export const Image = ({ source, sizes, dpr = [1.5, 2], ...props }) => {
     // Variables
-    const dprValues = [1.5, 2]
+    const dprValues = dpr
     const urlWithSize = useCallback(({ width, height }) => urlFor(source).size(width, height), [source])
 
     // Set up image fade in using onload property and css

@@ -5,6 +5,7 @@ import { FiX } from 'react-icons/fi'
 import { PoweredBy } from 'react-instantsearch-dom'
 
 import { Button } from '../../ui'
+import { responsiveBreakpointDown } from '../../../utils'
 
 /**
  * SearchBarFooter component
@@ -32,6 +33,10 @@ const SearchBarFooterWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     padding-top: 20px;
+
+    ${responsiveBreakpointDown('mobile', `
+        padding-top: 10px;
+    `)}
 
     button {
         opacity: 0;
@@ -76,4 +81,9 @@ const StyledPoweredBy = styled(PoweredBy)`
             }
         }
     }
+
+    ${responsiveBreakpointDown('mobile', `
+        transform: scale(0.8);
+        transform-origin: bottom right;
+    `)}
 `

@@ -50,9 +50,9 @@ export const Header = () => {
 
     } else if (window !== undefined && !isDropdownOpen) {
         const html = document.querySelector('html')
-        const scroll = html.getAttribute('scroll', html.scrollTop)
+        const scroll = parseInt(html.getAttribute('scroll'))
 
-        if (scroll !== undefined && scroll !== null && window.width < 768) {
+        if (scroll !== undefined && scroll !== null && window.innerWidth < 769) {
             html.classList.remove('menu-open')
             html.scrollTop = scroll
         }

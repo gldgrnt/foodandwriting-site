@@ -123,7 +123,7 @@ const SearchBoxWrapper = styled.div`
         font-size: ${props => props.theme.font.size.medium};
         flex-grow: 1;
         outline: none;
-        line-height: 1;
+        line-height: initial;
         max-width: calc(100% - 50px);
 
         &::placeholder {

@@ -4,12 +4,14 @@ import { themeVariables } from './Theme'
 export const Global = createGlobalStyle`
 html {
     font-size: 15px;
+}
 
-    &.menu-open {
+@media screen and (max-width: 768) {
+    html.menu-open {
         height: 100%;
         position: fixed;
         width: 100%;
-    }
+    }    
 }
 
 body {

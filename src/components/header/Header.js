@@ -47,12 +47,13 @@ export const Header = () => {
         const html = document.querySelector('html')
         html.setAttribute('scroll', html.scrollTop)
         html.classList.add('menu-open')
+
     } else if (window !== undefined && !isDropdownOpen) {
         const html = document.querySelector('html')
         const scroll = html.getAttribute('scroll', html.scrollTop)
-        if (scroll) {
+
+        if (scroll !== undefined && scroll !== null && window.width < 768) {
             html.classList.remove('menu-open')
-            html.removeAttribute('scroll')
             html.scrollTop = scroll
         }
     }

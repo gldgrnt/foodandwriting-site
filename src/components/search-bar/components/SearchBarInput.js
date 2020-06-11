@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { connectSearchBox } from 'react-instantsearch-dom'
-import { FiX } from "react-icons/fi"
+import { GrPowerReset } from "react-icons/gr"
 
 import { responsiveBreakpointDown } from '../../../utils'
 
@@ -45,7 +45,7 @@ const CustomSearchBox = ({ currentRefinement, refine }) => {
                 placeholder="Search here"
             />
             <button title="Clear search bar" aria-label="Clear search bar" onClick={clearSearch}>
-                <FiX />
+                <GrPowerReset />
             </button>
         </>
     )
@@ -108,7 +108,7 @@ const SearchBoxWrapper = styled.div`
     justify-content: center;
     width: 100%;
     max-width: 500px;
-    background: white;
+    background: ${props => props.theme.color.yellow};
     margin: auto;
 
     ${responsiveBreakpointDown('laptop', `
@@ -125,10 +125,19 @@ const SearchBoxWrapper = styled.div`
         outline: none;
         line-height: initial;
         max-width: calc(100% - 50px);
+        background: none;
 
         &::placeholder {
-            opacity: 0.67;
+            /* opacity: 0.67; */
         }
+
+        ${props => responsiveBreakpointDown('mobile', `
+            font-size: ${props.theme.font.size.increased};
+        `)}
+    }
+
+    input:placeholder-shown + button svg {
+        /* opacity: 0.6; */
     }
 
     button {
@@ -143,8 +152,11 @@ const SearchBoxWrapper = styled.div`
             top: 52.5%;
             left: 50%;
             transform: scale(1.2) translate(-50%, -50%);
-            stroke-width: 2.5px;
             pointer-events: none;
+
+            path {
+                stroke-width: 2.5px;
+            }
         }
     }
 `

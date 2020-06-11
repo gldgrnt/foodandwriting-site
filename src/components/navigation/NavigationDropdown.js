@@ -105,6 +105,10 @@ const StyledDropdown = styled.div`
         display: inline-flex;
         align-items: center;
 
+        ${responsiveBreakpointDown('mobile', `
+            display: none;
+        `)}
+
         svg {
             stroke-width: 3px;
             margin-right: 3px;

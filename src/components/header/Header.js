@@ -42,6 +42,20 @@ export const Header = () => {
     if (dropdownState.isSearchOpen) activeDropdown = <SearchBarContainer closeDropdown={closeDropdown} />
     else if (dropdownState.isMenuOpen) activeDropdown = <NavigationDropdown closeDropdown={closeDropdown} />
 
+    // Add class to body and html tag when menu is open
+    if (window !== undefined && isDropdownOpen) {
+        const html = document.querySelector('html')
+        html.setAttribute('scroll', html.scrollTop)
+        html.classList.add('menu-open')
+    } else if (window !== undefined && !isDropdownOpen) {
+        const html = document.querySelector('html')
+        const scroll = html.getAttribute('scroll', html.scrollTop)
+        if (scroll) {
+            html.classList.remove('menu-open')
+            html.removeAttribute('scroll')
+            html.scrollTop = scroll
+        }
+    }
 
     return (
         <StyledHeader>
@@ -163,5 +177,9 @@ const DropdownWrapper = styled.div`
         height: 100vh;
         max-height: 100vh; /** Fallback **/
         max-height: calc((var(--vh-dynamic, 1vh) * 100) - 68px);
+    `)}
+
+    ${responsiveBreakpointDown('tablet', `
+        padding: 20px 0 15px;
     `)}
 `

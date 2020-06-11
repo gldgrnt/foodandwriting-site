@@ -129,7 +129,7 @@ const SearchBoxWrapper = styled.div`
         background: none;
 
         &::placeholder {
-            /* opacity: 0.67; */
+            opacity: 1;
         }
 
         ${props => responsiveBreakpointDown('mobile', `

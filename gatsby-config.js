@@ -56,6 +56,17 @@ module.exports = {
                 disabledFeatures: [`shorthands`, `cloning`],
             },
         },
-        // `gatsby-plugin-transition-link`
+        {
+            resolve: `gatsby-plugin-gdpr-cookies`,
+            options: {
+                googleAnalytics: {
+                    trackingId: 'test', // leave empty if you want to disable the tracker
+                    cookieName: 'gatsby-gdpr-google-analytics', // default
+                    anonymize: true // default
+                },
+                // defines the environments where the tracking should be available  - default is ["production"]
+                environments: ['production', 'development']
+            },
+        },
     ],
 }

@@ -8,34 +8,36 @@ import { Page, Section, GridContainer, GridRow, GridCol } from '../components/la
 import { SmallCaps, InternalLink } from '../components/ui'
 import { SEO } from '../utils'
 
-const FourOhFourPage = ({ data: { recentRecipes, recipesCategory } }) => (
-    <Page>
-        <SEO title="Page not found" />
-        <Section spacingTop="2" spacingBottom="3" >
-            <GridContainer>
-                <GridRow>
-                    <GridCol>
-                        <h1>Page not found</h1>
-                        <p>There were no results for that page.</p>
-                        <InternalLink primary to="/">Back home</InternalLink>
-                    </GridCol>
-                </GridRow>
-            </GridContainer>
-        </Section>
+const FourOhFourPage = ({ data: { recentRecipes, recipesCategory }, data }) => {
+    return (
+        <Page>
+            <SEO title="Page not found" />
+            <Section spacingTop="2" spacingBottom="3" >
+                <GridContainer>
+                    <GridRow>
+                        <GridCol>
+                            <h1>Page not found</h1>
+                            <p>There were no results for that page.</p>
+                            <InternalLink primary to="/">Back home</InternalLink>
+                        </GridCol>
+                    </GridRow>
+                </GridContainer>
+            </Section>
 
-        <Section spacingBottom="4">
-            <RecentRecipesWrapper>
-                <GridContainer justify="flex-start" align="center">
-                    <SmallCaps as="h2" color="black">Recent recipes</SmallCaps>
-                </GridContainer>
-                <PostArchive posts={recentRecipes.nodes} categoryType="Recipe" />
-                <GridContainer justify="flex-start" align="center">
-                    <InternalLink secondary to={`/${recipesCategory.slug.current}`}>View all recipes</InternalLink>
-                </GridContainer>
-            </RecentRecipesWrapper>
-        </Section>
-    </Page >
-)
+            <Section spacingBottom="4">
+                <RecentRecipesWrapper>
+                    <GridContainer justify="flex-start" align="center">
+                        <SmallCaps as="h2" color="black">Recent recipes</SmallCaps>
+                    </GridContainer>
+                    <PostArchive posts={recentRecipes.nodes} categoryType="Recipe" />
+                    <GridContainer justify="flex-start" align="center">
+                        <InternalLink secondary to={`/${recipesCategory.slug.current}`}>View all recipes</InternalLink>
+                    </GridContainer>
+                </RecentRecipesWrapper>
+            </Section>
+        </Page >
+    )
+}
 
 export default FourOhFourPage
 
@@ -74,13 +76,13 @@ const RecentRecipesWrapper = styled.div`
  */
 export const query = graphql`
    query FourOhFourPageQuery {
-        recentRecipes:  allSanityPost(limit: 3, sort: {order: DESC, fields: date}, filter: {category: {categoryType: {eq: "Recipe"}}}) {
+        recentRecipes:  allSanityPost(limit: 3, sort: {order: DESC, fields: date}, filter: {category: {title: {eq: "Recipes"}}}) {
             nodes {
                 ...PreviewPostFragment
                 ...MediumFluidImageFragment
             }
         }
-        recipesCategory: sanityCategory(categoryType: {eq: "Recipe"}) {
+        recipesCategory: sanityCategory(title: {eq: "Recipes"}) {
             slug {
                 current
             }

@@ -43,12 +43,12 @@ export const Header = () => {
     else if (dropdownState.isMenuOpen) activeDropdown = <NavigationDropdown closeDropdown={closeDropdown} />
 
     // Add class to body and html tag when menu is open
-    if (window !== undefined && isDropdownOpen) {
+    if (typeof window !== undefined && isDropdownOpen) {
         const html = document.querySelector('html')
         html.setAttribute('scroll', html.scrollTop)
         html.classList.add('menu-open')
 
-    } else if (window !== undefined && !isDropdownOpen) {
+    } else if (typeof window !== undefined && !isDropdownOpen) {
         const html = document.querySelector('html')
         const scroll = parseInt(html.getAttribute('scroll'))
 

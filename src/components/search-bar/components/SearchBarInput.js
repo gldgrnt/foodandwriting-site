@@ -43,6 +43,7 @@ const CustomSearchBox = ({ currentRefinement, refine }) => {
                 value={query}
                 onChange={handleChange}
                 placeholder="Search here"
+                aria-label="Search here"
             />
             <button title="Clear search bar" aria-label="Clear search bar" onClick={clearSearch}>
                 <GrPowerReset />

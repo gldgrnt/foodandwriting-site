@@ -6,7 +6,7 @@ html {
     font-size: 15px;
 }
 
-@media screen and (max-width: 768) {
+@media screen and (max-width: 769px) {
     html.menu-open {
         height: 100%;
         position: fixed;

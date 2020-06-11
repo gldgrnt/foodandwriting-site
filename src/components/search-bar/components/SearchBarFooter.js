@@ -35,6 +35,7 @@ const SearchBarFooterWrapper = styled.div`
     padding-top: 20px;
 
     ${responsiveBreakpointDown('mobile', `
+        justify-content: flex-end;
         padding-top: 10px;
     `)}
 
@@ -46,6 +47,10 @@ const SearchBarFooterWrapper = styled.div`
         &:focus {
             opacity: 1;
         }
+
+        ${responsiveBreakpointDown('mobile', `
+            display: none;
+        `)}
 
         svg {
             stroke-width: 3px;

@@ -23,7 +23,7 @@ const CustomInfiniteHits = ({ hits, searchResults, loadMore, hasMore }) => {
         if (hits.length) searchHits = hits
 
         // Change visible posts to 2 for empty query (showing recent posts)
-        if (query.trim() === "" && page === 0) searchHits = hits.slice(0,2)
+        if (query.trim() === "" && page === 0) searchHits = hits.slice(0, 2)
 
         // Set HitsWrapper expansion
         if (searchHits > hitsPerPage) expand = true
@@ -37,7 +37,7 @@ const CustomInfiniteHits = ({ hits, searchResults, loadMore, hasMore }) => {
     return (
         <HitsWrapper>
             <HitsList expand={expand}>
-                {searchHits.length > 0 ? searchHits.map( hit => {
+                {searchHits.length > 0 ? searchHits.map(hit => {
 
                     // Destructure variables
                     const { fullSlug, date, featuredImage, categoryName, categoryType } = hit
@@ -45,7 +45,7 @@ const CustomInfiniteHits = ({ hits, searchResults, loadMore, hasMore }) => {
 
                     // Get the matched ingredients
                     if (categoryType === 'Recipe') {
-                        hit["_highlightResult"]["shoppingList"] = hit._highlightResult.shoppingList.filter( item => item.matchedWords.length > 0)
+                        hit["_highlightResult"]["shoppingList"] = hit._highlightResult.shoppingList.filter(item => item.matchedWords.length > 0)
                     }
 
                     return (<Hit key={hit._id}>
@@ -53,22 +53,23 @@ const CustomInfiniteHits = ({ hits, searchResults, loadMore, hasMore }) => {
                             <ImageWrapper>
                                 {featuredImage !== null ? <Img fluid={featuredImage.asset.fluid} /> : <div></div>}
                             </ImageWrapper>
-            
+
                             <CaptionWrapper>
-                                <Title><Highlight hit={hit} attribute="title"/></Title>
-            
+                                <Title><Highlight hit={hit} attribute="title" /></Title>
+
                                 <MetaWrapper>
-                                    { categoryName && <SmallCaps>{categoryName}</SmallCaps> }
-                                    { date && <SmallCaps as="time" datetime={postDate.raw}>{postDate.formatted}</SmallCaps> }
+                                    {categoryName && <SmallCaps>{categoryName}</SmallCaps>}
+                                    {date && <SmallCaps as="time" datetime={postDate.raw}>{postDate.formatted}</SmallCaps>}
                                 </MetaWrapper>
-            
-                                { (Array.isArray(hit._highlightResult.shoppingList) && hit._highlightResult.shoppingList.length > 0) && 
-                                    <MatchedIngredients> Contains: <Highlight hit={hit} attribute="shoppingList"/></MatchedIngredients>
+
+                                {(Array.isArray(hit._highlightResult.shoppingList) && hit._highlightResult.shoppingList.length > 0) &&
+                                    <MatchedIngredients> Contains: <Highlight hit={hit} attribute="shoppingList" /></MatchedIngredients>
                                 }
                             </CaptionWrapper>
                         </InternalLink>
                     </Hit>
-                )}) : <span></span>}
+                    )
+                }) : <span></span>}
             </HitsList>
 
             {showButton && <Button primary onClick={loadMore}>View more results</Button>}
@@ -88,7 +89,7 @@ CustomInfiniteHits.propTypes = {
         hitsPerPage: PropTypes.number.isRequired,
     }),
     hits: PropTypes.arrayOf(PropTypes.shape({
-        hit: PropTypes.shape({ 
+        hit: PropTypes.shape({
             _id: PropTypes.string.isRequired,
             title: PropTypes.string.isRequired,
             date: PropTypes.string.isRequired,
@@ -124,7 +125,7 @@ const HitsList = styled.ul`
 `
 
 const Hit = styled.li`
-    min-height: 150px;
+    min-height: 125px;
     width: calc(50% - 20px);
     margin: 0 0 20px;
     background: white;
@@ -184,8 +185,8 @@ const Title = styled.h3`
     font-size: ${props => props.theme.font.size.increased};
     margin-bottom: 15px;
 
-    ${responsiveBreakpointDown('desktop', `
-        font-size: ${props => props.theme.font.size.regular};
+    ${props => responsiveBreakpointDown('desktop', `
+        font-size: ${props.theme.font.size.regular};
     `)}
 `
 

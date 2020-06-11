@@ -1,26 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { FiX } from 'react-icons/fi'
 
 import { responsiveBreakpointDown } from '../../../utils'
 
 export const Toggle = ({ handler, active, children, ...rest }) => {
     const handleClick = (event) => {
-        event.preventDefault();
-        handler();
+        event.preventDefault()
+        handler()
     }
 
     const handleKeyDown = (event) => {
         // If spacebar wasn't pressed, ignore event
         if (event.which !== 32) {
-            return;
+            return
         }
-        handleClick(event);
+        handleClick(event)
     }
 
     return (
         <IconLink href="#" onClick={handleClick} onKeyDown={handleKeyDown} className={active && "active"} {...rest}>
-            {children}
+            {active ? <FiX /> : children}
         </IconLink >
     )
 }

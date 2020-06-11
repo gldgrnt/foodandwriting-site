@@ -10,10 +10,10 @@
     targetPort = 8000
 
 [context.deploy-preview]
-  command = "npm run noIndex"
+  command = "npm run build && npm run noIndex"
 
 [context.branch-deploy]
-  command = "npm run noIndex"
+  command = "npm run build && npm run noIndex"
 
 [[headers]]
   # Define which paths this specific [[headers]] block will cover.

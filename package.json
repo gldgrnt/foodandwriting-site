@@ -51,7 +51,7 @@
         "serve": "gatsby serve",
         "clean": "gatsby clean",
         "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-        "noIndex": "npm run build && echo 'User-agent: *\nDisallow: /' > dist/robots.txt"
+        "noIndex": "echo 'User-agent: *\nDisallow: /' > static/robots.txt"
     },
     "repository": {
         "type": "git",

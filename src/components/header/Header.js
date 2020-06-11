@@ -43,20 +43,26 @@ export const Header = () => {
     else if (dropdownState.isMenuOpen) activeDropdown = <NavigationDropdown closeDropdown={closeDropdown} />
 
     // Add class to body and html tag when menu is open
-    if (typeof window !== undefined && isDropdownOpen) {
-        const html = document.querySelector('html')
-        html.setAttribute('scroll', html.scrollTop)
-        html.classList.add('menu-open')
-
-    } else if (typeof window !== undefined && !isDropdownOpen) {
-        const html = document.querySelector('html')
-        const scroll = parseInt(html.getAttribute('scroll'))
-
-        if (scroll !== undefined && scroll !== null && window.innerWidth < 769) {
-            html.classList.remove('menu-open')
-            html.scrollTop = scroll
+    useEffect(() => {
+        if (typeof window === undefined) {
+            return
         }
-    }
+        const html = document.querySelector('html')
+
+        if (isDropdownOpen) {
+            html.setAttribute('scroll', html.scrollTop)
+            html.classList.add('menu-open')
+        }
+
+        if (!isDropdownOpen) {
+            const scroll = parseInt(html.getAttribute('scroll'))
+
+            if (scroll !== undefined && scroll !== null && window.innerWidth < 769) {
+                html.classList.remove('menu-open')
+                html.scrollTop = scroll
+            }
+        }
+    }, [isDropdownOpen])
 
     return (
         <StyledHeader>

@@ -52,7 +52,7 @@ export const Image = ({ source, sizes, dpr = [1.5, 2], ...props }) => {
                             {sizes.map(size => (
                                 <source
                                     key={size.mediaMin} media={`(min-width: ${size.mediaMin}px)`}
-                                    srcSet={`${urlWithSize(size).auto('format').url()}, ${dpr.map(dprValue => `${urlWithSize(size).dpr(dpr).auto('format').url()} ${dprValue}x`).toString()}`} />
+                                    srcSet={`${urlWithSize(size).auto('format').url()}, ${dpr.map(dprValue => `${urlWithSize(size).dpr(dprValue).auto('format').url()} ${dprValue}x`).toString()}`} />
                             ))}
 
                             <StyledImg src={urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(1).url()} className={getAnimationType(props)} alt={altText} loading="lazy" onLoad={(e) => { e.target.className += ' loaded'; e.target.onload = null }} />

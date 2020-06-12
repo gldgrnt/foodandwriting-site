@@ -80,7 +80,7 @@ const Text = styled.p`
     margin: 0 25px 0 0;
 
     ${responsiveBreakpointDown('mobile', `
-        flex-basis: 100;
+        flex-basis: 100%;
         margin: 0 0 15px;
     `)}
 `

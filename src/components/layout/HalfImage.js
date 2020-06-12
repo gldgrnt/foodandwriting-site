@@ -81,7 +81,7 @@ const StickyImageWrapper = styled.div`
 `
 
 const ContentWrapper = styled.div`
-    padding: 80px 0 80px 40px;
+    padding: 40px 0 80px 40px;
     flex-basis: 50%;
 
     ${responsiveBreakpointDown('mobile', `

@@ -37,14 +37,14 @@ const getFallbackSize = (sizes) => {
  */
 export const Image = ({ source, sizes, dpr = [1.5, 2], ...props }) => {
     // Variables
-    const dprValues = dpr
+    const maxDpr = dpr.reduce((a, b) => Math.max(a, b))
     const urlWithSize = useCallback(({ width, height }) => urlFor(source).size(width, height), [source])
     const altText = source?.alt || ''
 
     return (
         <PageContext.Consumer>
             {({ browser }) => {
-                if (browser === null || browser.name === 'node') return <img alt={altText} /> // Prerender empty image with alt
+                if (browser === null || browser.name === 'node') return <StyledImg src="" className="hidden" alt={altText} /> // Prerender empty image with alt
 
                 if (!['safari', 'ios'].includes(browser.name)) {
                     return (
@@ -52,14 +52,14 @@ export const Image = ({ source, sizes, dpr = [1.5, 2], ...props }) => {
                             {sizes.map(size => (
                                 <source
                                     key={size.mediaMin} media={`(min-width: ${size.mediaMin}px)`}
-                                    srcSet={`${urlWithSize(size).auto('format').url()}, ${dprValues.map(dpr => `${urlWithSize(size).dpr(dpr).auto('format').url()} ${dpr}x`).toString()}`} />
+                                    srcSet={`${urlWithSize(size).auto('format').url()}, ${dpr.map(dprValue => `${urlWithSize(size).dpr(dpr).auto('format').url()} ${dprValue}x`).toString()}`} />
                             ))}
 
                             <StyledImg src={urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(1).url()} className={getAnimationType(props)} alt={altText} loading="lazy" onLoad={(e) => { e.target.className += ' loaded'; e.target.onload = null }} />
                         </picture>
                     )
                 } else {
-                    return <StyledImg src={urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(2).url()} className={getAnimationType(props)} alt={altText} loading="lazy" onLoad={(e) => { e.target.className += ' loaded'; e.target.onload = null }} />
+                    return <StyledImg src={urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(maxDpr).url()} className={getAnimationType(props)} alt={altText} loading="lazy" onLoad={(e) => { e.target.className += ' loaded'; e.target.onload = null }} />
                 }
             }}
         </PageContext.Consumer>
@@ -91,6 +91,10 @@ const StyledImg = styled.img`
     width: 100%;
     object-fit: cover;
     transition: 1s ease, opacity 1.4s ease;
+
+    &.hidden {
+        opacity: 0;
+    }
 
     &.fadeScaleIn {
     opacity: 0;

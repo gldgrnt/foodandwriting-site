@@ -5,7 +5,7 @@ import Header from '../header'
 import Footer from '../footer'
 import { Reset, Global, Theme } from '../../styles'
 import { PageContext } from '../context'
-import { useMobileStatus } from '../../hooks'
+import { useMobileStatus, useDetectBrowser } from '../../hooks'
 
 /**
  * Page component
@@ -30,7 +30,8 @@ export const Page = ({ children }) => {
 
     // Set up page context
     const isMobile = useMobileStatus()
-    const context = { isMobile }
+    const browser = useDetectBrowser()
+    const context = { isMobile, browser }
 
     return (
         <Theme>

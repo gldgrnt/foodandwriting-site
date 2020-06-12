@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import { PageContext } from '../context'
 import { urlFor } from '../../utils'
 
 /**
@@ -40,26 +41,28 @@ export const Image = ({ source, sizes, dpr = [1.5, 2], ...props }) => {
     const urlWithSize = useCallback(({ width, height }) => urlFor(source).size(width, height), [source])
     const altText = source?.alt || ''
 
-    // Set up image fade in using onload property and css
-    let imgRef = useRef(null)
-    useEffect(() => {
-        imgRef.current.onload = (e) => {
-            e.target.className += ' loaded'
-            e.target.onload = null // Remove the listener after first invocation
-        }
-        imgRef.current.src = urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(1).url()
-    }, [sizes, urlWithSize])
-
     return (
-        <picture>
-            {sizes.map(size => (
-                <source
-                    key={size.mediaMin} media={`(min-width: ${size.mediaMin}px)`}
-                    srcSet={`${urlWithSize(size).auto('format').url()}, ${dprValues.map(dpr => `${urlWithSize(size).dpr(dpr).auto('format').url()} ${dpr}x`).toString()}`} />
-            ))}
+        <PageContext.Consumer>
+            {({ browser }) => {
+                if (browser === null || browser.name === 'node') return <img alt={altText} /> // Prerender empty image with alt
 
-            <StyledImg ref={imgRef} className={getAnimationType(props)} alt={altText} loading="lazy" />
-        </picture>
+                if (!['safari', 'ios'].includes(browser.name)) {
+                    return (
+                        <picture>
+                            {sizes.map(size => (
+                                <source
+                                    key={size.mediaMin} media={`(min-width: ${size.mediaMin}px)`}
+                                    srcSet={`${urlWithSize(size).auto('format').url()}, ${dprValues.map(dpr => `${urlWithSize(size).dpr(dpr).auto('format').url()} ${dpr}x`).toString()}`} />
+                            ))}
+
+                            <StyledImg src={urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(1).url()} className={getAnimationType(props)} alt={altText} loading="lazy" onLoad={(e) => { e.target.className += ' loaded'; e.target.onload = null }} />
+                        </picture>
+                    )
+                } else {
+                    return <StyledImg src={urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(2).url()} className={getAnimationType(props)} alt={altText} loading="lazy" onLoad={(e) => { e.target.className += ' loaded'; e.target.onload = null }} />
+                }
+            }}
+        </PageContext.Consumer>
     )
 }
 

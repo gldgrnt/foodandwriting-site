@@ -36,7 +36,6 @@ export const Footer = () => {
                         </LinksWrapper>
 
                         <LinksWrapper>
-                            <PageLink to="/about">About</PageLink>
                             <PageLink to="/contact">Contact</PageLink>
                             <PageLink to="/cookies">Cookies</PageLink>
                         </LinksWrapper>

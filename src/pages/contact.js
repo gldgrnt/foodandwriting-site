@@ -5,7 +5,6 @@ import styled from 'styled-components'
 
 import { SEO } from '../utils'
 import { Page, Section, GridContainer } from '../components/layout'
-// import { FawBlockContent } from '../components/block-content'
 
 /**
  * ContactPage component
@@ -17,14 +16,14 @@ const ContactPage = () => {
             <SEO title="Contact" />
             <Page>
                 <Section spacingTop="2" spacingBottom="3">
-                    <GridContainer>
-                        <Title>Contact</Title>
+                    <GridContainer justify="center">
+                        <Content>
+                            <h1>Contact</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla tristique venenatis. Quisque ac lectus turpis. Ut commodo porta sapien eu hendrerit.</p>
+                            <br />
+                        </Content>
                     </GridContainer>
                 </Section>
-
-                <GridContainer>
-                    <p>Contact page content</p>
-                </GridContainer>
             </Page>
         </>
     )
@@ -32,6 +31,7 @@ const ContactPage = () => {
 
 export default ContactPage
 
-const Title = styled.h1`
-    margin: 0;
+const Content = styled.div`
+    width: 100%;
+    max-width: 750px;
 `

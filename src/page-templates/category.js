@@ -4,7 +4,9 @@ import { graphql } from 'gatsby'
 
 import { CategoryPage } from './components'
 
-export default ({ data: { category, posts } }) => {
+export default ({ data: { sanityCategory, allSanityPost } }) => {
+    const category = sanityCategory
+    const posts = allSanityPost
     /**
      * Get initial posts from sessionStorage if the user has already loaded more
      */
@@ -53,10 +55,10 @@ export default ({ data: { category, posts } }) => {
  */
 export const query = graphql`
     query($_id: String!) {
-        category: sanityCategory(_id: {eq: $_id}) {
+        sanityCategory(_id: {eq: $_id}) {
             ...FullCategoryFragment
         }
-        posts: allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 12) {
+        allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 12) {
             totalCount
             nodes {
                 ...PreviewPostFragment

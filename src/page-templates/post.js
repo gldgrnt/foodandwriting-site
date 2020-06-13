@@ -6,8 +6,7 @@ import { PostHero, DefaultPostContent, RecipePostContent, About, RelatedPosts } 
 import { Page, Section } from '../components/layout'
 import { urlFor } from '../utils'
 
-export default ({ data: { post: { date, title, category, _rawFeaturedImage, seoDescription, _rawContent, relatedPosts }, allSanityPost } }) => {
-    const autoRelatedPosts = allSanityPost
+export default ({ data: { post: { date, title, category, _rawFeaturedImage, seoDescription, _rawContent, relatedPosts }, autoRelatedPosts } }) => {
     // Variables
     const maxTextWidth = '750px'
     const metaImage = urlFor(_rawFeaturedImage).size(1200, 700).fit('min')
@@ -56,7 +55,7 @@ export const postQuery = graphql`
         _rawContent(resolveReferences: {maxDepth: 10})
     }
     # Related Posts
-    allSanityPost(filter: {category: {_id: {eq: $cat_id}}, _id: {ne: $_id}}, limit: 3, sort: {order: DESC, fields: date}) {
+    autoRelatedPosts: allSanityPost(filter: {category: {_id: {eq: $cat_id}}, _id: {ne: $_id}}, limit: 3, sort: {order: DESC, fields: date}) {
         nodes {
             ...PreviewPostFragment
             ...MediumFluidImageFragment

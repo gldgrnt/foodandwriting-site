@@ -32,7 +32,7 @@ module.exports = {
             options: {
                 projectId: process.env.GATSBY_SANITY_PROJECT_ID,
                 dataset: process.env.GATSBY_SANITY_DATASET,
-                useCdn: true,
+                token: process.env.GATSBY_SANITY_READ_TOKEN
             },
         },
         {

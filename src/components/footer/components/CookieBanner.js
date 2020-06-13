@@ -35,7 +35,7 @@ export const CookieBanner = () => {
         <Banner hidden={hidden}>
             <GridContainer>
                 <BannerContent>
-                    <Text>This site uses cookies. Visit the <a href="/cookies">cookies page</a> for more info.</Text>
+                    <Text>This site uses cookies. <br />Visit the <a href="/cookies">cookies page</a> for more info.</Text>
                     <Button secondary onClick={allowCookies}>Allow cookies</Button>
                     <Button secondary onClick={declineCookies}>Decline</Button>
                 </BannerContent>
@@ -55,6 +55,14 @@ const Banner = styled.div`
     color: ${props => props.theme.color.black};
     text-align: center;
     z-index: 10;
+
+    br {
+        display: none;
+
+        ${responsiveBreakpointDown('mobile', `
+            display: block;
+        `)}
+    }
 `
 
 const BannerContent = styled.div`

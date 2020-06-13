@@ -5,7 +5,7 @@ import { graphql } from 'gatsby'
 import { CategoryPage } from './components'
 
 export default ({ data: { category, posts }, data }) => {
-    console.log(data)
+    typeof window === "undefined" && console.log(data)
     /**
      * Get initial posts from sessionStorage if the user has already loaded more
      */

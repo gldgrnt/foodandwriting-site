@@ -7,27 +7,23 @@ exports.createPages = async ({ graphql, actions }) => {
     const pagesToCreate = await graphql(`
         {
             posts: allSanityPost {
-                edges {
-                    node {
-                        _id
-                        fullSlug
-                        category {
-                            _id
-                            slug {
-                                current
-                            }
-                            categoryType
-                        }
-                    }
-                }
-            }
-            categories: allSanityCategory {
-                edges {
-                    node {
+                nodes {
+                    _id
+                    fullSlug
+                    category {
                         _id
                         slug {
                             current
                         }
+                        categoryType
+                    }
+                }
+            }
+            categories: allSanityCategory {
+                nodes {
+                    _id
+                    slug {
+                        current
                     }
                 }
             }
@@ -43,7 +39,7 @@ exports.createPages = async ({ graphql, actions }) => {
     const { posts, categories } = pagesToCreate.data
 
     // Create post pages
-    posts.edges.forEach(({ node }) => {
+    posts.nodes.forEach(node => {
         let path = node.fullSlug
         let cat_id = node.category._id
 
@@ -56,7 +52,7 @@ exports.createPages = async ({ graphql, actions }) => {
     )
 
     // Create category pages
-    categories.edges.forEach(({ node }) => {
+    categories.nodes.forEach(node => {
         let path = `/${node.slug.current}`
 
         createPage({

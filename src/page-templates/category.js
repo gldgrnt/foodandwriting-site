@@ -4,8 +4,8 @@ import { graphql } from 'gatsby'
 
 import { CategoryPage } from './components'
 
-export default ({ data: { category, posts1 } }) => {
-    const posts = posts1 // Quick fix Gatsby page query error - might be caching issue
+export default ({ data: { category, posts }, data }) => {
+    console.log(data)
     /**
      * Get initial posts from sessionStorage if the user has already loaded more
      */
@@ -57,7 +57,7 @@ export const query = graphql`
         category: sanityCategory(_id: {eq: $_id}) {
             ...FullCategoryFragment
         }
-        posts1: allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 12) {
+        posts: allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 12) {
             totalCount
             nodes {
                 ...PreviewPostFragment

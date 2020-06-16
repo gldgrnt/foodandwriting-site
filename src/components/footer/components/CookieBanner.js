@@ -5,39 +5,40 @@ import { GridContainer } from '../../layout'
 import { Button } from '../../ui'
 import { responsiveBreakpointDown } from '../../../utils'
 
-const fawCookie = 'faw_cookie=1'
-
-const allowCookies = () => {
-    document.cookie = `${fawCookie};`
-    document.cookie = 'gatsby-gdpr-google-analytics=true;'
-    window.location.reload(true)
-}
-
-const declineCookies = () => {
-    document.cookie = `${fawCookie};`
-    window.location.reload(true)
-}
+// Cookie name
+const cookieName = 'faw-allow-analytics'
 
 export const CookieBanner = () => {
+    // Initialise banner state
     const [hidden, setHidden] = useState(true)
 
     useEffect(() => {
-        const cookies = document.cookie
-
-        if (cookies.indexOf(fawCookie) !== -1) {
+        // Show banner if cookie is not present
+        if (document.cookie.indexOf(cookieName) !== -1) {
             return
         }
-
         setHidden(false)
     }, [])
 
-    return (
-        <Banner hidden={hidden}>
+    // Set cookie function
+    const setCookie = (hasConsented) => {
+        // Set cookie
+        document.cookie = `${cookieName}=${hasConsented};`
+        // Start tracking
+        if (hasConsented) {
+            window.trackGoogleAnalytics()
+        }
+        // Hide banner
+        setHidden(true)
+    }
+
+    return !hidden && (
+        <Banner >
             <GridContainer>
                 <BannerContent>
                     <Text>This site uses cookies. <br />Visit the <a href="/cookies">cookies page</a> for more info.</Text>
-                    <Button secondary onClick={allowCookies}>Allow cookies</Button>
-                    <Button secondary onClick={declineCookies}>Decline</Button>
+                    <Button secondary onClick={() => setCookie(true)}>Allow cookies</Button>
+                    <Button secondary onClick={() => setCookie(false)}>Decline</Button>
                 </BannerContent>
             </GridContainer>
         </Banner>
@@ -45,7 +46,7 @@ export const CookieBanner = () => {
 }
 
 const Banner = styled.div`
-    display: ${props => props.hidden ? 'none' : 'block'};
+    display: block;
     padding: 20px 0;
     position: fixed;
     bottom: 0;

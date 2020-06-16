@@ -32,7 +32,8 @@ module.exports = {
             options: {
                 projectId: process.env.GATSBY_SANITY_PROJECT_ID,
                 dataset: process.env.GATSBY_SANITY_DATASET,
-                token: process.env.GATSBY_SANITY_READ_TOKEN
+                token: process.env.GATSBY_SANITY_READ_TOKEN,
+                watchMode: process.env.NODE_ENV !== 'production'
             },
         },
         {
@@ -57,14 +58,16 @@ module.exports = {
             },
         },
         {
-            resolve: `gatsby-plugin-gdpr-cookies`,
+            resolve: 'gatsby-plugin-gdpr-tracking',
             options: {
+                // debug: true,
                 googleAnalytics: {
-                    trackingId: 'test', // leave empty if you want to disable the tracker
-                    cookieName: 'gatsby-gdpr-google-analytics', // default
-                    anonymize: true // default
+                    trackingId: 'UA-158593963-1',
+                    autoStart: false,
+                    anonymize: true,
+                    controlCookieName: 'faw-allow-analytics',
                 },
-                // defines the environments where the tracking should be available  - default is ["production"]
+                // Defines the environments where the tracking should be available  - default is ["production"]
                 environments: ['production', 'development']
             },
         },

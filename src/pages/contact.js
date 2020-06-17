@@ -5,11 +5,12 @@ import styled from 'styled-components'
 
 import { SEO } from '../utils'
 import { Page, Section, GridContainer } from '../components/layout'
+import { FawBlockContent } from '../components/block-content'
 
 /**
  * ContactPage component
  */
-const ContactPage = () => {
+const ContactPage = ({ data: { sanityContact: { _rawContent } } }) => {
 
     return (
         <>
@@ -19,8 +20,7 @@ const ContactPage = () => {
                     <GridContainer justify="center">
                         <Content>
                             <h1>Contact</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla tristique venenatis. Quisque ac lectus turpis. Ut commodo porta sapien eu hendrerit.</p>
-                            <br />
+                            <FawBlockContent content={_rawContent} />
                         </Content>
                     </GridContainer>
                 </Section>
@@ -34,4 +34,15 @@ export default ContactPage
 const Content = styled.div`
     width: 100%;
     max-width: 750px;
+`
+
+/**
+ * GraphQL query
+ */
+export const query = graphql`
+   query ContactPageQuery {
+        sanityContact {
+            _rawContent(resolveReferences: {maxDepth: 10})
+        }
+    }
 `

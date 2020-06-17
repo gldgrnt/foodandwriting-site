@@ -1,5 +1,5 @@
-import { ReducedLogo } from './ReducedLogo'
+import { Copyright } from './Copyright'
 import { MadeByWadada } from './MadeByWadada'
 import { CookieBanner } from './CookieBanner'
 
-export { ReducedLogo, MadeByWadada, CookieBanner }
+export { Copyright, MadeByWadada, CookieBanner }

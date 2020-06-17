@@ -1,8 +1,9 @@
 import React from 'react'
-import { useStaticQuery, graphql, Link } from 'gatsby'
+import { useStaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
+import { SmallCaps } from '../../ui'
 
-export const ReducedLogo = () => {
+export const Copyright = () => {
 
     const { logo, alt } = useStaticQuery(graphql`
         query {
@@ -16,18 +17,26 @@ export const ReducedLogo = () => {
     `)
 
     return (
-        <LinkWrapper to="/">
+        <CopyrightWrapper>
+            <SmallCaps size="small" color="black">&copy; 2020</SmallCaps>
             <Image src={logo.publicURL} alt={alt.siteTitle} />
-        </LinkWrapper>
+        </CopyrightWrapper>
     )
 }
 
-const LinkWrapper = styled(Link)`
-    display: inline-flex;
+const CopyrightWrapper = styled.div`
+    display: flex;
+    align-items: baseline;
+
+    span {
+        line-height: 1;
+        white-space: nowrap;
+        margin-right: 7px;
+    }
 `
 
 const Image = styled.img`
-    height: 15px;
+    height: 13px;
     width: auto;
     margin: 0;
 `

@@ -4,7 +4,7 @@ import { Link, useStaticQuery, graphql } from 'gatsby'
 import { FiInstagram } from 'react-icons/fi'
 import { AiOutlineTwitter } from 'react-icons/ai'
 
-import { MadeByWadada, CookieBanner } from './components'
+import { Copyright, MadeByWadada, CookieBanner } from './components'
 import { GridContainer } from '../layout'
 import { responsiveBreakpointDown } from '../../utils'
 
@@ -41,13 +41,14 @@ export const Footer = () => {
                         </LinksWrapper>
                     </GridContainer>
                 </FooterUpper>
-                <FooterLower>
-                    <GridContainer justify="flex-end">
-                        <MadeByWrapper>
+                <FooterLowerWrapper>
+                    <GridContainer>
+                        <FooterLower>
+                            <Copyright />
                             <MadeByWadada />
-                        </MadeByWrapper>
+                        </FooterLower>
                     </GridContainer>
-                </FooterLower>
+                </FooterLowerWrapper>
             </footer>
         </>
     )
@@ -104,14 +105,14 @@ const PageLink = styled(Link)`
     color: ${props => props.theme.color.darkGrey};
 `
 
-const FooterLower = styled.div`
+const FooterLowerWrapper = styled.div`
     padding: 15px 0 10px;
 `
 
-const MadeByWrapper = styled.div`
+const FooterLower = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     opacity: 0.8;
     width: 100%;
-    text-align: right;
-
-    ${responsiveBreakpointDown('mobile', `text-align: center;`)}
-`
+`   

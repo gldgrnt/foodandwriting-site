@@ -2,35 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { SEO, responsiveBreakpointDown } from '../utils'
+import { FawBlockContent } from '../components/block-content'
 import { Page, Section, GridContainer } from '../components/layout'
-
-const cookieInfo = [
-    {
-        type: 'Necessary',
-        name: '_faw',
-        purpose: 'Used to determine if the visitor has dismissed the cookie banner already.'
-    },
-    {
-        type: 'Analytical',
-        name: '_ga',
-        purpose: 'Registers a unique ID that is used to generate statistical data on how the visitor uses the website.'
-    },
-    {
-        type: 'Analytical',
-        name: '_gat',
-        purpose: 'Used by Google Analytics to throttle request rate.'
-    },
-    {
-        type: 'Analytical',
-        name: '_gid',
-        purpose: 'Registers a unique ID that is used to generate statistical data on how the visitor uses the website.'
-    },
-]
 
 /**
  * CookiesPage component
  */
-const CookiesPage = () => {
+const CookiesPage = ({ data: { sanityCookies: { _rawContent, cookies } } }) => {
 
     return (
         <>
@@ -40,14 +18,7 @@ const CookiesPage = () => {
                     <GridContainer justify="center">
                         <Content>
                             <h1>Cookies</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla tristique venenatis. Quisque ac lectus turpis. Ut commodo porta sapien eu hendrerit.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla tristique venenatis. Quisque ac lectus turpis. Ut commodo porta sapien eu hendrerit.</p>
-                            <ul>
-                                <li><b>Necessary cookies</b> - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                                <li><b>Necessary cookies</b> - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                            </ul>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla tristique venenatis. Quisque ac lectus turpis. Ut commodo porta sapien eu hendrerit.</p>
-                            <br></br>
+                            <FawBlockContent content={_rawContent} />
                             <TableWrapper>
                                 <table>
                                     <thead>
@@ -58,7 +29,7 @@ const CookiesPage = () => {
                                         </TableRow>
                                     </thead>
                                     <tbody>
-                                        {cookieInfo.map(({ type, name, purpose }) => (
+                                        {cookies.map(({ type, name, purpose }) => (
                                             <TableRow key={name}>
                                                 <td>{type}</td>
                                                 <td>{name}</td>
@@ -78,12 +49,17 @@ const CookiesPage = () => {
 
 export default CookiesPage
 
+/**
+ * Styles
+ */
+
 const Content = styled.div`
     width: 100%;
     max-width: 750px;
 `
 
 const TableWrapper = styled.div`
+    padding-top: 15px;
     max-width: 100%;
 
     ${responsiveBreakpointDown('mobile', `
@@ -97,8 +73,32 @@ const TableWrapper = styled.div`
 
 const TableRow = styled.tr`
     td, th {
+        line-height: 1.7;
+
         &:not(:last-child) {
-            width: 20%;
+            width: 25%;
+        }
+    }
+
+    td {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+`
+
+/**
+ * GraphQL query
+ */
+export const query = graphql`
+   query CookiesPageQuery {
+        sanityCookies {
+            _rawContent(resolveReferences: {maxDepth: 10})
+            cookies {
+                name
+                purpose
+                type
+                _key
+            }
         }
     }
 `

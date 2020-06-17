@@ -9,13 +9,14 @@ import { FawBlockContent } from '../components/block-content'
 /**
  * AboutPage component
  */
-const AboutPage = ({ data: { sanityAbout: { snippet, image, _rawContent } } }) => {
+const AboutPage = ({ data: { sanityAbout: { title, snippet, image, _rawContent } } }) => {
 
     return (
         <>
             <SEO title="About" description={snippet} />
             <Page>
                 <HalfImage fluidImageProps={image.asset.fluid}>
+                    <h1>{title}</h1>
                     <FawBlockContent content={_rawContent} />
                 </HalfImage>
             </Page>
@@ -44,6 +45,7 @@ AboutPage.propTypes = {
 export const query = graphql`
    query AboutPageQuery {
         sanityAbout {
+            title
             snippet
             _rawContent
             image {

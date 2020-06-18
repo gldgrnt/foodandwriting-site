@@ -69,5 +69,9 @@ module.exports = {
                 environments: ['production', 'development']
             },
         },
+        {
+            resolve: `gatsby-plugin-create-client-paths`,
+            options: { prefixes: [`/preview/`] },
+        }
     ],
 }

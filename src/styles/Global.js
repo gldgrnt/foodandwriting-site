@@ -24,6 +24,32 @@ body {
     flex-direction: column;
     min-height: 100vh;
 
+    /* For previews */
+    > div[tabindex="-1"] {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        
+        &::after {
+            content: 'Page preview';
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 1.5rem;
+            width: 100%;
+            background-color: ${themeVariables.color.yellow};
+            z-index: 999;
+            text-align: center;
+            padding: 1px;
+            font-family: ${themeVariables.font.family.sans};
+            font-size: ${themeVariables.font.size.small};
+            font-weight: bold;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+    }
+
     main {
         flex-grow: 1;
     }

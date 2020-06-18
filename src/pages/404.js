@@ -8,7 +8,7 @@ import { Page, Section, GridContainer, GridRow, GridCol } from '../components/la
 import { SmallCaps, InternalLink } from '../components/ui'
 import { SEO } from '../utils'
 
-const FourOhFourPage = ({ data: { recentRecipes, recipesCategory }, data }) => {
+const FourOhFourPage = ({ data: { allSanityPost, sanityCategory }, data }) => {
     return (
         <Page>
             <SEO title="Page not found" />
@@ -29,9 +29,9 @@ const FourOhFourPage = ({ data: { recentRecipes, recipesCategory }, data }) => {
                     <GridContainer justify="flex-start" align="center">
                         <SmallCaps as="h2" color="black">Recent recipes</SmallCaps>
                     </GridContainer>
-                    <PostArchive posts={recentRecipes.nodes} categoryType="Recipe" />
+                    <PostArchive posts={allSanityPost.nodes} categoryType="Recipe" />
                     <GridContainer justify="flex-start" align="center">
-                        <InternalLink secondary to={`/${recipesCategory.slug.current}`}>View all recipes</InternalLink>
+                        <InternalLink secondary to={`/${sanityCategory.slug.current}`}>View all recipes</InternalLink>
                     </GridContainer>
                 </RecentRecipesWrapper>
             </Section>
@@ -76,13 +76,13 @@ const RecentRecipesWrapper = styled.div`
  */
 export const query = graphql`
    query FourOhFourPageQuery {
-        recentRecipes:  allSanityPost(limit: 3, sort: {order: DESC, fields: date}, filter: {category: {title: {eq: "Recipes"}}}) {
+        allSanityPost(limit: 3, sort: {order: DESC, fields: date}, filter: {category: {title: {eq: "Recipes"}}}) {
             nodes {
                 ...PreviewPostFragment
                 ...MediumFluidImageFragment
             }
         }
-        recipesCategory: sanityCategory(title: {eq: "Recipes"}) {
+        sanityCategory(title: {eq: "Recipes"}) {
             slug {
                 current
             }

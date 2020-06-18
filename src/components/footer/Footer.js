@@ -112,7 +112,7 @@ const FooterLowerWrapper = styled.div`
 const FooterLower = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     opacity: 0.8;
     width: 100%;
 `   

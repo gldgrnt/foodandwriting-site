@@ -36,7 +36,7 @@ const CopyrightWrapper = styled.div`
 `
 
 const Image = styled.img`
-    height: 13px;
+    height: 12px;
     width: auto;
     margin: 0;
 `

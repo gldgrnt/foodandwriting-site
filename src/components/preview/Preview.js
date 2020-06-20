@@ -6,6 +6,7 @@ import AboutPage from '../../pages/about'
 import ContactPage from '../../pages/contact'
 import CookiesPage from '../../pages/cookies'
 import PostTemplate from '../../page-templates/post'
+import { NetlifyLogin } from './NetlifyLogin'
 
 // Instantiate sanity client
 const client = sanityClient({
@@ -66,12 +67,13 @@ const getDocument = async (query, params) => {
  * Component
  */
 export const Preview = () => {
+    const [loggedIn, setLoggedIn] = useState(false)
     const [state, setState] = useState(null)
 
     useEffect(() => {
         (async () => {
             try {
-                if (typeof window === undefined) {
+                if (typeof window === undefined || !loggedIn) {
                     return
                 }
 
@@ -94,7 +96,11 @@ export const Preview = () => {
                 return console.log(err)
             }
         })()
-    }, [])
+    }, [loggedIn])
+
+    if (!loggedIn) {
+        return <NetlifyLogin setLoggedIn={() => setLoggedIn(true)} />
+    }
 
     if (state === null) {
         return <div></div>

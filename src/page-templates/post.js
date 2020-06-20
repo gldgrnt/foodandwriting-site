@@ -6,8 +6,9 @@ import { PostHero, DefaultPostContent, RecipePostContent, About, RelatedPosts } 
 import { Page, Section } from '../components/layout'
 import { urlFor } from '../utils'
 
-export default ({ data: { sanityPost: { date, title, category, _rawFeaturedImage, seoDescription, _rawContent, relatedPosts }, allSanityPost } }) => {
-    const autoRelatedPosts = allSanityPost
+export default ({ data: { sanityPost: { _id, date, title, category, _rawFeaturedImage, seoDescription, _rawContent, relatedPosts }, otherRelatedPosts } }) => {
+    const filteredRelatedPosts = otherRelatedPosts.nodes.filter(post => post.category._id === category._id && post._id !== _id)
+    const autoRelatedPosts = { nodes: filteredRelatedPosts.slice(0, 3) }
     // Variables
     const maxTextWidth = '750px'
     const metaImage = urlFor(_rawFeaturedImage).size(1200, 700).fit('min')
@@ -48,7 +49,7 @@ export default ({ data: { sanityPost: { date, title, category, _rawFeaturedImage
  * Page query
  */
 export const postQuery = graphql`
-  query ($_id: String, $cat_id: String) {
+  query ($_id: String) {
     sanityPost(_id: {eq: $_id}) {
         # Get full post data
         ...FullPostFragment      
@@ -56,7 +57,7 @@ export const postQuery = graphql`
         _rawContent(resolveReferences: {maxDepth: 10})
     }
     # Related Posts
-    allSanityPost(filter: {category: {_id: {eq: $cat_id}}, _id: {ne: $_id}}, limit: 3, sort: {order: DESC, fields: date}) {
+    otherRelatedPosts: allSanityPost(sort: {order: DESC, fields: date}) {
         nodes {
             ...PreviewPostFragment
             ...MediumFluidImageFragment
@@ -64,3 +65,21 @@ export const postQuery = graphql`
     }
 }
 `
+
+// export const postQuery = graphql`
+//   query ($_id: String, $cat_id: String) {
+//     sanityPost(_id: {eq: $_id}) {
+//         # Get full post data
+//         ...FullPostFragment      
+//         # Default content
+//         _rawContent(resolveReferences: {maxDepth: 10})
+//     }
+//     # Related Posts
+//     allSanityPost(filter: {category: {_id: {eq: $cat_id}}, _id: {ne: $_id}}, limit: 3, sort: {order: DESC, fields: date}) {
+//         nodes {
+//             ...PreviewPostFragment
+//             ...MediumFluidImageFragment
+//         }
+//     }
+// }
+// `

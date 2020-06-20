@@ -4,9 +4,12 @@ import { graphql } from 'gatsby'
 
 import { CategoryPage } from './components'
 
-export default ({ data: { category, posts } }) => {
+export default ({ data: { category, allPosts } }) => {
     // const category = sanityCategory
     // const posts = allSanityPost
+    const filteredPosts = allPosts.nodes.filter(post => post.category._id === category._id)
+    const posts = { nodes: filteredPosts.slice(0, 15), totalCount: filteredPosts.length }
+
     /**
      * Get initial posts from sessionStorage if the user has already loaded more
      */
@@ -58,7 +61,7 @@ export const query = graphql`
         category: sanityCategory(_id: {eq: $_id}) {
             ...FullCategoryFragment
         }
-        posts: allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 15) {
+        allPosts: allSanityPost(sort: {order: DESC, fields: date}) {
             totalCount
             nodes {
                 ...PreviewPostFragment
@@ -67,3 +70,18 @@ export const query = graphql`
         }
     }
 `
+
+// export const query = graphql`
+//     query($_id: String!) {
+//         category: sanityCategory(_id: {eq: $_id}) {
+//             ...FullCategoryFragment
+//         }
+//         posts: allSanityPost(sort: {order: DESC, fields: date}, filter: {category: {_id: {eq: $_id}}}, limit: 15) {
+//             totalCount
+//             nodes {
+//                 ...PreviewPostFragment
+//                 ...MediumFluidImageFragment
+//             }
+//         }
+//     }
+// `

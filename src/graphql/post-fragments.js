@@ -10,6 +10,7 @@ export const PreviewPostFragment = graphql`
         date
         fullSlug
         category {
+            _id
             singleName
             categoryType
         }
@@ -30,6 +31,7 @@ export const FullPostFragment = graphql`
         seoDescription
         date
         category {
+            _id
             title
             slug {
                 current

@@ -1,5 +1,5 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 
 import { SEO, responsiveBreakpointDown } from '../utils'
@@ -48,7 +48,25 @@ const CookiesPage = ({ data: { sanityCookies: { _rawContent, cookies } } }) => {
     )
 }
 
-export default CookiesPage
+export default () => (
+    <StaticQuery query={
+        graphql`
+            query CookiesPageQuery {
+                sanityCookies {
+                    _rawContent(resolveReferences: {maxDepth: 10})
+                    cookies {
+                        name
+                        purpose
+                        type
+                        _key
+                    }
+                }
+            }
+        `
+    }
+        render={data => <CookiesPage data={data} />}
+    />
+)
 
 /**
  * Styles
@@ -84,22 +102,5 @@ const TableRow = styled.tr`
     td {
         padding-top: 0.75rem;
         padding-bottom: 0.75rem;
-    }
-`
-
-/**
- * GraphQL query
- */
-export const query = graphql`
-   query CookiesPageQuery {
-        sanityCookies {
-            _rawContent(resolveReferences: {maxDepth: 10})
-            cookies {
-                name
-                purpose
-                type
-                _key
-            }
-        }
     }
 `

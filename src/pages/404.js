@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql } from 'gatsby'
+import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -8,7 +8,7 @@ import { Page, Section, GridContainer, GridRow, GridCol } from '../components/la
 import { SmallCaps, InternalLink } from '../components/ui'
 import { SEO } from '../utils'
 
-const FourOhFourPage = ({ data: { allSanityPost, sanityCategory }, data }) => {
+const FourOhFourPage = ({ data: { allSanityPost, sanityCategory } }) => {
     return (
         <Page>
             <SEO title="Page not found" />
@@ -39,7 +39,27 @@ const FourOhFourPage = ({ data: { allSanityPost, sanityCategory }, data }) => {
     )
 }
 
-export default FourOhFourPage
+export default () => (
+    <StaticQuery query={
+        graphql`
+            query FourOhFourPageQuery {
+                allSanityPost(limit: 3, sort: {order: DESC, fields: date}, filter: {category: {title: {eq: "Recipes"}}}) {
+                    nodes {
+                        ...PreviewPostFragment
+                        ...MediumFluidImageFragment
+                    }
+                }
+                sanityCategory(title: {eq: "Recipes"}) {
+                    slug {
+                        current
+                    }
+                }
+            } 
+        `
+    }
+        render={data => <FourOhFourPage data={data} />}
+    />
+)
 
 /**
  * PropTypes
@@ -69,23 +89,4 @@ const RecentRecipesWrapper = styled.div`
     > *:not(:last-child) {
         margin-bottom: 40px;
     }
-`
-
-/**
- * GraphQL query
- */
-export const query = graphql`
-   query FourOhFourPageQuery {
-        allSanityPost(limit: 3, sort: {order: DESC, fields: date}, filter: {category: {title: {eq: "Recipes"}}}) {
-            nodes {
-                ...PreviewPostFragment
-                ...MediumFluidImageFragment
-            }
-        }
-        sanityCategory(title: {eq: "Recipes"}) {
-            slug {
-                current
-            }
-        }
-    } 
 `

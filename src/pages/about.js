@@ -1,5 +1,5 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { StaticQuery, graphql } from 'gatsby'
 import PropTypes from 'prop-types'
 
 import { SEO } from '../utils'
@@ -24,7 +24,28 @@ const AboutPage = ({ data: { sanityAbout: { title, snippet, image, _rawContent }
     )
 }
 
-export default AboutPage
+export default () => (
+    <StaticQuery query={
+        graphql`
+            query AboutPageQuery {
+                sanityAbout {
+                    title
+                    snippet
+                    _rawContent
+                    image {
+                        asset {
+                            fluid {
+                                ...GatsbySanityImageFluid_noBase64
+                            }
+                        }
+                    }            
+                }
+            } 
+        `
+    }
+        render={data => <AboutPage data={data} />}
+    />
+)
 
 
 /**
@@ -37,24 +58,3 @@ AboutPage.propTypes = {
         }).isRequired
     }).isRequired
 }
-
-
-/**
- * GraphQL query
- */
-export const query = graphql`
-   query AboutPageQuery {
-        sanityAbout {
-            title
-            snippet
-            _rawContent
-            image {
-                asset {
-                    fluid {
-                        ...GatsbySanityImageFluid_noBase64
-                    }
-                }
-            }            
-        }
-    } 
-`

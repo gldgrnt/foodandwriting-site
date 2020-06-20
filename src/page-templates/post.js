@@ -7,8 +7,8 @@ import { Page, Section } from '../components/layout'
 import { urlFor } from '../utils'
 
 export default ({ data: { sanityPost: { _id, date, title, category, _rawFeaturedImage, seoDescription, _rawContent, relatedPosts }, otherRelatedPosts } }) => {
-    const filteredRelatedPosts = otherRelatedPosts.nodes.filter(post => post.category._id === category._id && post._id !== _id)
-    const autoRelatedPosts = { nodes: filteredRelatedPosts.slice(0, 3) }
+    const filteredRelatedPosts = otherRelatedPosts && otherRelatedPosts.nodes.filter(post => post.category._id === category._id && post._id !== _id)
+    const autoRelatedPosts = filteredRelatedPosts && { nodes: filteredRelatedPosts.slice(0, 3) }
     // Variables
     const maxTextWidth = '750px'
     const metaImage = urlFor(_rawFeaturedImage).size(1200, 700).fit('min')
@@ -35,7 +35,7 @@ export default ({ data: { sanityPost: { _id, date, title, category, _rawFeatured
                     <About />
                 </Section>
 
-                {autoRelatedPosts.nodes.length > 0 &&
+                {autoRelatedPosts?.nodes?.length > 0 &&
                     <Section spacingTop="4" spacingBottom="4" whiteGrey>
                         <RelatedPosts category={category} autoPosts={autoRelatedPosts.nodes} selectedPosts={relatedPosts} />
                     </Section>

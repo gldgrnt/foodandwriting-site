@@ -1,4 +1,4 @@
-const transformContact = ({ content }) => {
+export const transformContact = ({ content }) => {
 
     return {
         sanityContact: {
@@ -6,5 +6,3 @@ const transformContact = ({ content }) => {
         }
     }
 }
-
-export { transformContact }

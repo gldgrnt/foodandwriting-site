@@ -1,27 +1,70 @@
 import React, { useEffect, useState } from 'react'
 import sanityClient from '@sanity/client'
 
-import { transformContact, transformAbout } from '../../utils/preview'
+import { transformContact, transformAbout, transformPost, postProjection, transformCookies } from '../../utils/preview'
 import AboutPage from '../../pages/about'
 import ContactPage from '../../pages/contact'
+import CookiesPage from '../../pages/cookies'
+import PostTemplate from '../../page-templates/post'
 
+// Instantiate sanity client
 const client = sanityClient({
     projectId: process.env.GATSBY_SANITY_PROJECT_ID,
     dataset: process.env.GATSBY_SANITY_DATASET,
-    token: process.env.GATSBY_SANITY_READ_TOKEN, // or leave blank to be anonymous user
+    token: process.env.GATSBY_SANITY_READ_TOKEN,
     useCdn: false
 })
 
-const getDocument = async (_id, _type) => {
+// Func to get required query and component per _type
+const getPreview = (_type) => {
+    const defaultQuery = '*[ _id == $_id && _type == $_type]'
+
+    switch (_type) {
+        case 'contact':
+            return {
+                query: defaultQuery,
+                Component: ContactPage,
+                transformer: transformContact
+            }
+
+        case 'about':
+            return {
+                query: defaultQuery,
+                Component: AboutPage,
+                transformer: transformAbout
+            }
+
+        case 'post':
+            return {
+                query: defaultQuery + postProjection,
+                Component: PostTemplate,
+                transformer: transformPost
+            }
+
+        case 'cookies':
+            return {
+                query: defaultQuery,
+                Component: CookiesPage,
+                transformer: transformCookies
+            }
+
+        default:
+            return
+    }
+}
+
+// Fetch document from Sanity
+const getDocument = async (query, params) => {
     try {
-        const query = '*[ _id == $_id && _type == $_type]'
-        const params = { _id, _type }
         return client.fetch(query, params)
     } catch {
         return false
     }
 }
 
+/**
+ * Component
+ */
 export const Preview = () => {
     const [state, setState] = useState(null)
 
@@ -32,36 +75,33 @@ export const Preview = () => {
                     return
                 }
 
+                // Set up fetch query and params 
                 const urlParams = new URLSearchParams(window.location.search)
-                const _id = urlParams.get('_id')
-                const _type = urlParams.get('_type')
+                const params = { _id: urlParams.get('_id'), _type: urlParams.get('_type') }
+                const { query, Component, transformer } = getPreview(params._type)
 
-                const results = await getDocument(_id, _type)
-                const previewDocument = results[0]
+                // Fetch data from Sanity
+                const [data] = await getDocument(query, params)
 
-                if (!previewDocument) {
+                // Redirect if empty
+                if (!data) {
                     return window.location.href = "/"
                 }
 
-                setState({ _type, document: previewDocument })
+                // Set the state
+                setState({ data: transformer(data), Component })
             } catch (err) {
                 return console.log(err)
             }
         })()
     }, [])
 
-    if (!state) {
+    if (state === null) {
         return <div></div>
     }
 
-    switch (state._type) {
-        case 'contact':
-            return <ContactPage data={transformContact(state.document)} />
+    // Deconstruct the state
+    const { data, Component } = state
 
-        case 'about':
-            return <AboutPage data={transformAbout(state.document)} />
-
-        default:
-            return <div></div>
-    }
+    return <Component data={data} />
 }

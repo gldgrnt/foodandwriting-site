@@ -73,8 +73,8 @@ const FooterUpper = styled.div`
 
 const LinksWrapper = styled.div`
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         display: flex;
         justify-content: center;
         flex-basis: 100%;
@@ -83,7 +83,7 @@ const LinksWrapper = styled.div`
             margin: 0 0 15px;
         }
     `
-    )}
+)}
 
     >* {
         color: ${props => props.theme.color.darkGrey};
@@ -123,7 +123,7 @@ const FooterLowerWrapper = styled.div`
 const FooterLower = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     opacity: 0.8;
     width: 100%;
 `

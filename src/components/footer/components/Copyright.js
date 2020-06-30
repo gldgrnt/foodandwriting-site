@@ -17,10 +17,10 @@ export const Copyright = () => {
 
     return (
         <CopyrightWrapper>
+            <Image src={logo.publicURL} alt={alt.siteTitle} />
             <SmallCaps size="small" color="black">
                 &copy; 2020
             </SmallCaps>
-            <Image src={logo.publicURL} alt={alt.siteTitle} />
         </CopyrightWrapper>
     )
 }
@@ -29,15 +29,18 @@ const CopyrightWrapper = styled.div`
     display: flex;
     align-items: baseline;
 
+    > *:first-child {
+        margin-right: 7px;
+    }
+
     span {
         line-height: 1;
         white-space: nowrap;
-        margin-right: 7px;
     }
 `
 
 const Image = styled.img`
-    height: 12px;
+    height: 11px;
     width: auto;
     margin: 0;
 `

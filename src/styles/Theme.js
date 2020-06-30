@@ -16,7 +16,7 @@ export const themeVariables = {
         black: "#111111",
         whiteGrey: "#F6F6F6",
         lightGrey: "#AAAAAA",
-        mediumGrey: "#777777",
+        mediumGrey: "#666666",
         darkGrey: "#5A5A5A",
         yellow: "#FFD91F",
         blackOverlay: "rgba(37, 37, 37, 0.75)",

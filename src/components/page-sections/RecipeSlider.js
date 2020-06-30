@@ -93,7 +93,7 @@ export const RecipeSlider = ({ title, posts }) => {
                                 <StyledButton
                                     className={`glide__prev ${
                                         atStart ? "disabled" : ""
-                                    }`}
+                                        }`}
                                     aria-label="Previous"
                                 >
                                     <FiArrowLeft />
@@ -108,7 +108,7 @@ export const RecipeSlider = ({ title, posts }) => {
                                 <StyledButton
                                     className={`glide__next ${
                                         atEnd ? "disabled" : ""
-                                    }`}
+                                        }`}
                                     aria-label="Next"
                                 >
                                     <FiArrowRight />
@@ -131,7 +131,7 @@ export const RecipeSlider = ({ title, posts }) => {
                                         />
                                     </li>
                                 ))}
-                                {!isMobile && <div></div>}
+                                {!isMobile && <li></li>}
                             </ul>
                         </GlideTrack>
                     </GridContainer>
@@ -252,11 +252,11 @@ const GlideTrack = styled.div`
     margin-right: 30;
 
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         margin: 0;
     `
-    )}
+)}
 
     li {
         margin: 0;
@@ -268,12 +268,12 @@ const TitleWrapper = styled.div`
     align-items: center;
 
     ${responsiveBreakpointDown(
-        "tablet",
-        `
+    "tablet",
+    `
         width: 100%;
         justify-content: space-between;
     `
-    )}
+)}
 
     ${responsiveBreakpointDown("mobile", `display: none;`)}
 
@@ -288,13 +288,13 @@ const TitleWrapper = styled.div`
 const ButtonWrapper = styled.div`
     ${responsiveBreakpointDown("tablet", `display: none;`)}
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         display: flex;
         justify-content: space-between;
         align-items: center;
     `
-    )}
+)}
     
     > *:first-child {
         margin-right: 10px;

@@ -25,16 +25,16 @@ export const RecipePostContent = ({
             </UnstyledList>
         </Section>
     ) : (
-        <>
-            <SmallCaps size="regular" color="darkGrey">
-                This recipe
+            <>
+                <SmallCaps size="regular" color="darkGrey">
+                    This recipe
             </SmallCaps>
-            <UnstyledList responsive>
-                {serves && <li>Serves: {serves}</li>}
-                {readyIn && <li>Ready in: {humanReadyIn}</li>}
-            </UnstyledList>
-        </>
-    )
+                <UnstyledList responsive>
+                    {serves && <li>Serves: {serves}</li>}
+                    {readyIn && <li>Ready in: {humanReadyIn}</li>}
+                </UnstyledList>
+            </>
+        )
 
     return (
         <RecipeWrapper>
@@ -101,7 +101,7 @@ export const RecipePostContent = ({
                         <SmallCaps size="regular" color="darkGrey">
                             Method
                         </SmallCaps>
-                        <UnstyledList>
+                        <UnstyledList as="div">
                             <FawBlockContent content={steps} />
                         </UnstyledList>
                         {recipeNotes && (
@@ -147,13 +147,13 @@ const UnstyledList = styled.ul`
     `
         )}
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+            "mobile",
+            `
         > li {
             flex-basis: 100%;
         }
     `
-    )}
+        )}
 `
 
 const Intro = styled.div`

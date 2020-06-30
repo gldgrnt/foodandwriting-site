@@ -12,7 +12,7 @@ export const MadeByWadada = () => {
     `)
 
     return (
-        <LinkWrapper href="https://wadada-design.com" target="_blank">
+        <LinkWrapper href="https://wadada-design.com" target="_blank" rel="noopener noreferrer">
             <Text>Site by </Text>
             <Image src={logo.publicURL} alt="Wadada design logo" />
         </LinkWrapper>

@@ -41,7 +41,7 @@ export const ArchivePost = ({
     }
 
     return (
-        <StyledLink to={fullSlug}>
+        <StyledLink to={fullSlug} aria-label={`View ${title.toLowerCase()} ${singleName.toLowerCase()}`}>
             <article>
                 <ImageWrapper imageRatio={imageRatio}>
                     {_rawFeaturedImage ? (
@@ -51,15 +51,15 @@ export const ArchivePost = ({
                             sizes={imageSizes}
                         />
                     ) : (
-                        <div></div>
-                    )}
+                            <div></div>
+                        )}
                 </ImageWrapper>
 
                 {isRecipe ? (
                     <PostMeta meta={recipeMeta} />
                 ) : (
-                    <PostMeta date={date} />
-                )}
+                        <PostMeta date={date} />
+                    )}
 
                 <Title>{title}</Title>
                 <SmallCaps size="tiny" link>
@@ -93,17 +93,17 @@ const StyledLink = styled(Link)`
     outline: none;
 
     ${responsiveBreakpointDown(
-        "desktop",
-        `width: calc((100% / 3) - (120px / 3));`
-    )}
+    "desktop",
+    `width: calc((100% / 3) - (120px / 3));`
+)}
     ${responsiveBreakpointDown(
-        "laptop",
-        `width: calc((100% / 2) - (80px / 2));`
-    )}
+    "laptop",
+    `width: calc((100% / 2) - (80px / 2));`
+)}
     ${responsiveBreakpointDown(
-        "tablet",
-        `width: calc((100% / 2) - (40px / 2));`
-    )}
+    "tablet",
+    `width: calc((100% / 2) - (40px / 2));`
+)}
     ${responsiveBreakpointDown("mobile", `width: 100%;`)}
 
     &:hover,
@@ -129,13 +129,13 @@ const StyledLink = styled(Link)`
     }
 
     ${responsiveBreakpointDown(
-        "tablet",
-        `
+    "tablet",
+    `
         article > span {
             display: none;
         }
     `
-    )}
+)}
 `
 
 const ImageWrapper = styled.div`

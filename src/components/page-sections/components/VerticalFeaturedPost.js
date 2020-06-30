@@ -26,7 +26,7 @@ export const VerticalFeaturedPost = ({
     ]
 
     return (
-        <StyledLink to={fullSlug}>
+        <StyledLink to={fullSlug} aria-label={`View ${title.toLowerCase()} ${singleName.toLowerCase()}`}>
             <Article>
                 <ImageWrapper>
                     <Image

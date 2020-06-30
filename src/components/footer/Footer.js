@@ -32,6 +32,8 @@ export const Footer = () => {
                             <SocialLink
                                 href={`https://instagram.com/${sanityConfig.instagramHandle}`}
                                 target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Visit food &amp; writing twitter"
                             >
                                 <FiInstagram />
                             </SocialLink>
@@ -40,6 +42,8 @@ export const Footer = () => {
                                 href={`https://twitter.com/${sanityConfig.instagramHandle}`}
                                 className="twitter"
                                 target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Visit food &amp; writing instagram"
                             >
                                 <AiOutlineTwitter />
                             </SocialLink>

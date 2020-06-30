@@ -25,7 +25,7 @@ export const RecipeSliderPost = ({
     const humanReadyIn = parseReadyInString(readyIn)
 
     return (
-        <LinkWrapper to={fullSlug}>
+        <LinkWrapper to={fullSlug} aria-label={`View ${title.toLowerCase()} recipe`}>
             <Article>
                 <ImageWrapper>
                     <Image
@@ -45,10 +45,10 @@ export const RecipeSliderPost = ({
                                     View recipe
                                 </SmallCaps>
                             ) : (
-                                <Button secondary size="small">
-                                    View recipe
-                                </Button>
-                            )
+                                    <Button secondary size="small">
+                                        View recipe
+                                    </Button>
+                                )
                         }
                     </PageContext.Consumer>
                 </CaptionWrapper>
@@ -122,13 +122,13 @@ const LinkWrapper = styled(Link)`
         )}
 
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+            "mobile",
+            `
         max-width: none;
         width: calc(100% - 30px);
         margin: auto;
     `
-    )}
+        )}
 `
 
 const Article = styled.article`
@@ -136,12 +136,12 @@ const Article = styled.article`
     width: 100%;
 
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         height: 100vh; /** Fallback **/
         height: calc((var(--vh, 1vh) * 100) - 68px);
     `
-    )}
+)}
 `
 
 const ImageWrapper = styled.div`
@@ -155,9 +155,9 @@ const ImageWrapper = styled.div`
 
     &::after {
         ${props =>
-            responsiveBreakpointDown(
-                "mobile",
-                `
+        responsiveBreakpointDown(
+            "mobile",
+            `
             content: '';
             position: absolute;
             top: 0;
@@ -167,7 +167,7 @@ const ImageWrapper = styled.div`
             background: ${props.theme.color.blackOverlay};
             z-index: 1;
         `
-            )}
+        )}
     }
 
     > * {
@@ -181,8 +181,8 @@ const ImageWrapper = styled.div`
 
 const CaptionWrapper = styled.div`
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         position: absolute;
         z-index: 2;
         top: 50%;
@@ -201,7 +201,7 @@ const CaptionWrapper = styled.div`
             display: none;
         }
     `
-    )}
+)}
 `
 
 const Title = styled.h3`

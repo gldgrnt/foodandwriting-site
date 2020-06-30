@@ -28,7 +28,7 @@ export const HorizontalPost = ({
     ]
 
     return (
-        <StyledLink to={fullSlug}>
+        <StyledLink to={fullSlug} aria-label={`View ${title.toLowerCase()} ${singleName.toLowerCase()}`}>
             <Article>
                 <ImageWrapper>
                     {_rawFeaturedImage ? (
@@ -38,8 +38,8 @@ export const HorizontalPost = ({
                             sizes={imageSizes}
                         />
                     ) : (
-                        <div></div>
-                    )}
+                            <div></div>
+                        )}
                 </ImageWrapper>
 
                 <CaptionWrapper>
@@ -106,15 +106,15 @@ const Article = styled.article`
     text-decoration: none;
 
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         flex-wrap: wrap;
 
         > * {
             flex-basis: 100%;
         }
     `
-    )}
+)}
 `
 
 const ImageWrapper = styled.div`
@@ -125,37 +125,37 @@ const ImageWrapper = styled.div`
     overflow: hidden;
 
     ${responsiveBreakpointDown(
-        "desktop",
-        `
+    "desktop",
+    `
         height: 200px;
         min-width: 260px;
     `
-    )}
+)}
 
     ${responsiveBreakpointDown(
-        "laptop",
-        `
+    "laptop",
+    `
         height: 280px;
         min-width: 320px;
     `
-    )}
+)}
 
     ${responsiveBreakpointDown(
-        "tablet",
-        `
+    "tablet",
+    `
         height: 200px;
         min-width: 260px;
     `
-    )}
+)}
 
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         width: 100%;
         min-width: none;
         padding-top: 60%;
     `
-    )}
+)}
 `
 
 const CaptionWrapper = styled.div`

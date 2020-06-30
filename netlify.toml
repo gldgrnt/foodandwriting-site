@@ -1,4 +1,24 @@
 [build]
-    base = ""
     command = "npm run build"
-    publish = "web/public"
+    publish = "./public"
+    functions = "./functions"
+
+[dev]
+    framework = "#custom"
+    command = "npm run build:dev"
+    publish = "./public"
+    autoLaunch = false
+    port = 8888
+    targetPort = 9000
+
+[context.deploy-preview]
+  command = "npm run build && npm run noIndex"
+
+[context.branch-deploy]
+  command = "npm run build && npm run noIndex"
+
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"

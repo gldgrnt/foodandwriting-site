@@ -53,7 +53,6 @@ typings/
 
 # dotenv environment variable files
 .env*
-!.env.example
 
 # gatsby files
 .cache/
@@ -66,9 +65,5 @@ public
 yarn-error.log
 .pnp/
 .pnp.js
-
 # Yarn Integrity file
 .yarn-integrity
-
-# Netlify files
-.netlify/

@@ -1,5 +1,0 @@
-export { default as recipe } from './recipe'
-export { default as blog } from './blog'
-export { default as culture } from './culture'
-export { default as about } from './about'
-export { default as config } from './config'

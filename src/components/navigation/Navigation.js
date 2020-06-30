@@ -1,9 +1,8 @@
 import React from "react"
-import styled from 'styled-components'
-import { Menu } from './components'
+import styled from "styled-components"
+import { Menu } from "./components"
 
 export const Navigation = () => {
-
     return (
         <StyledNav>
             <Menu reduced={true} />
@@ -35,7 +34,6 @@ const StyledNav = styled.nav`
         &:last-child {
             padding-right: 0;
         }
-
     }
 
     a {
@@ -53,7 +51,9 @@ const StyledNav = styled.nav`
         }
 
         &.active {
-            &, &:hover, &:focus {
+            &,
+            &:hover,
+            &:focus {
                 background: ${props => props.theme.color.yellow};
                 color: ${props => props.theme.color.black};
             }

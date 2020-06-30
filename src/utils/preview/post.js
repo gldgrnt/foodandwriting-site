@@ -1,7 +1,15 @@
-export const postProjection = '{_id, date, title, seoDescription, "_rawFeaturedImage": featuredImage, "_rawContent": content, "category": *[_id == ^.category._ref][0] | {slug, title, viewAllName}}'
+export const postProjection =
+    '{_id, date, title, seoDescription, "_rawFeaturedImage": featuredImage, "_rawContent": content, "category": *[_id == ^.category._ref][0] | {slug, title, viewAllName}}'
 
-export const transformPost = ({ _id, date, title, category, _rawFeaturedImage, seoDescription, _rawContent }) => {
-
+export const transformPost = ({
+    _id,
+    date,
+    title,
+    category,
+    _rawFeaturedImage,
+    seoDescription,
+    _rawContent,
+}) => {
     return {
         sanityPost: {
             _id,
@@ -11,8 +19,8 @@ export const transformPost = ({ _id, date, title, category, _rawFeaturedImage, s
             seoDescription,
             _rawContent,
             category,
-            relatedPosts: false
+            relatedPosts: false,
         },
-        otherRelatedPosts: false
+        otherRelatedPosts: false,
     }
 }

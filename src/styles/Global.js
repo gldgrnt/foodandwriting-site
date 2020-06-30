@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import { themeVariables } from './Theme'
+import { createGlobalStyle } from "styled-components"
+import { themeVariables } from "./Theme"
 
 export const Global = createGlobalStyle`
 html {
@@ -82,4 +82,3 @@ p,li {
 
 /* END */
 `
-

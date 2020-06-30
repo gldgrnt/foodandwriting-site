@@ -1,13 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link, useStaticQuery, graphql } from 'gatsby'
-import { FiInstagram } from 'react-icons/fi'
-import { AiOutlineTwitter } from 'react-icons/ai'
+import React from "react"
+import styled from "styled-components"
+import { Link, useStaticQuery, graphql } from "gatsby"
+import { FiInstagram } from "react-icons/fi"
+import { AiOutlineTwitter } from "react-icons/ai"
 
-import { Copyright, MadeByWadada, CookieBanner } from './components'
-import { GridContainer } from '../layout'
-import { responsiveBreakpointDown } from '../../utils'
-
+import { Copyright, MadeByWadada, CookieBanner } from "./components"
+import { GridContainer } from "../layout"
+import { responsiveBreakpointDown } from "../../utils"
 
 export const Footer = () => {
     const { sanityConfig } = useStaticQuery(graphql`
@@ -24,13 +23,24 @@ export const Footer = () => {
             <CookieBanner />
             <footer>
                 <FooterUpper>
-                    <GridContainer whiteGrey justify="space-between" wrap="wrap">
+                    <GridContainer
+                        whiteGrey
+                        justify="space-between"
+                        wrap="wrap"
+                    >
                         <LinksWrapper smallSpacing>
-                            <SocialLink href={`https://instagram.com/${sanityConfig.instagramHandle}`} target="_blank">
+                            <SocialLink
+                                href={`https://instagram.com/${sanityConfig.instagramHandle}`}
+                                target="_blank"
+                            >
                                 <FiInstagram />
                             </SocialLink>
 
-                            <SocialLink href={`https://twitter.com/${sanityConfig.instagramHandle}`} className="twitter" target="_blank">
+                            <SocialLink
+                                href={`https://twitter.com/${sanityConfig.instagramHandle}`}
+                                className="twitter"
+                                target="_blank"
+                            >
                                 <AiOutlineTwitter />
                             </SocialLink>
                         </LinksWrapper>
@@ -58,11 +68,13 @@ const FooterUpper = styled.div`
     padding: 30px 0;
     background: ${props => props.theme.color.whiteGrey};
 
-    ${responsiveBreakpointDown('tablet', `padding: 25px 0;`)}
+    ${responsiveBreakpointDown("tablet", `padding: 25px 0;`)}
 `
 
 const LinksWrapper = styled.div`
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         display: flex;
         justify-content: center;
         flex-basis: 100%;
@@ -70,18 +82,18 @@ const LinksWrapper = styled.div`
         &:not(:last-child) {
             margin: 0 0 15px;
         }
-    `)}
+    `
+    )}
 
     >* {
         color: ${props => props.theme.color.darkGrey};
         stroke: ${props => props.theme.color.darkGrey};
 
         &:not(:last-child) {
-            margin-right: ${props => props.smallSpacing ? '40px' : '50px'};
-            
-            ${responsiveBreakpointDown('mobile', `margin-right: 30px;`)}
+            margin-right: ${props => (props.smallSpacing ? "40px" : "50px")};
+
+            ${responsiveBreakpointDown("mobile", `margin-right: 30px;`)}
         }
-        
     }
 `
 
@@ -94,7 +106,6 @@ const SocialLink = styled.a`
         transform: scale(1.5);
     }
 `
-
 
 const PageLink = styled(Link)`
     font-family: ${props => props.theme.font.family.sans};
@@ -115,4 +126,4 @@ const FooterLower = styled.div`
     align-items: flex-start;
     opacity: 0.8;
     width: 100%;
-`   
+`

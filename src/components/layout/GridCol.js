@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import React from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
 
-import { responsiveStylesFromProp } from '../../utils'
+import { responsiveStylesFromProp } from "../../utils"
 
 export const GridCol = ({ cols, children }) => (
     <StyledCol cols={cols}>{children}</StyledCol>
@@ -10,34 +10,34 @@ export const GridCol = ({ cols, children }) => (
 
 GridCol.propTypes = {
     children: PropTypes.node.isRequired,
-    cols: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object
-    ])
+    cols: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 }
 
 const calculateCols = (cols, maxCols) => {
-
     switch (typeof cols) {
-
-        case 'string':
+        case "string":
             cols = parseInt(cols)
 
             if (!cols) {
-                return 'none'
+                return "none"
             }
 
             if (cols > maxCols) {
-                return '100%'
+                return "100%"
             }
 
             return `${cols < maxCols ? (100 / maxCols) * cols : 100}%`
 
-        case 'object':           
+        case "object":
             let holdingArray = []
             // Loop through cols object keys too create array of key value arrays
             for (const key in cols) {
-                holdingArray.push([ key, `${cols[key] < maxCols ? (100 / maxCols) * cols[key] : 100}%`])
+                holdingArray.push([
+                    key,
+                    `${
+                        cols[key] < maxCols ? (100 / maxCols) * cols[key] : 100
+                    }%`,
+                ])
             }
 
             let values = {}
@@ -51,8 +51,6 @@ const calculateCols = (cols, maxCols) => {
         default:
             return
     }
-
-
 }
 
 const StyledCol = styled.div`
@@ -60,5 +58,9 @@ const StyledCol = styled.div`
     padding-left: ${props => props.theme.grid.spacing}px;
     padding-right: ${props => props.theme.grid.spacing}px;
 
-    ${props => responsiveStylesFromProp(calculateCols(props.cols, props.theme.grid.columns), 'flex-basis')}
+    ${props =>
+        responsiveStylesFromProp(
+            calculateCols(props.cols, props.theme.grid.columns),
+            "flex-basis"
+        )}
 `

@@ -1,10 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { Link } from 'gatsby'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { Link } from "gatsby"
 
 export const InternalLink = ({ children, to, ...type }) => {
-
     // Conditionally render each type of Link
     switch (true) {
         case !!type.primary:
@@ -23,7 +22,7 @@ export const InternalLink = ({ children, to, ...type }) => {
 
 InternalLink.propTypes = {
     children: PropTypes.any.isRequired,
-    to: PropTypes.string.isRequired
+    to: PropTypes.string.isRequired,
 }
 
 const BaseLink = styled(Link)`
@@ -39,26 +38,26 @@ const BaseLink = styled(Link)`
 const PrimaryLink = styled(BaseLink)`
     color: ${props => props.theme.color.mediumGrey};
     text-transform: uppercase;
-    
+
     &,
     &::after {
         transition: ${props => props.theme.transition.fast};
     }
 
     &::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 3px;
         left: 0;
         height: 1px;
         width: 100%;
-        background: ${props => props.theme.color.mediumGrey}
+        background: ${props => props.theme.color.mediumGrey};
     }
 
     &:hover,
     &:focus {
         color: ${props => props.theme.color.black};
-        
+
         &::after {
             background: ${props => props.theme.color.black};
         }
@@ -87,7 +86,7 @@ const TitleLink = styled(BaseLink)`
     color: ${props => props.theme.color.black};
     text-decoration: none;
     transition: text-decoration ${props => props.theme.transition.fast};
-    
+
     > * {
         margin: 0;
     }

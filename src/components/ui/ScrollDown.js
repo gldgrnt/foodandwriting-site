@@ -1,26 +1,28 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { FiArrowDown } from 'react-icons/fi'
-import { responsiveBreakpointDown } from '../../utils'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { FiArrowDown } from "react-icons/fi"
+import { responsiveBreakpointDown } from "../../utils"
 
 /**
  * ScrollDown component
  */
-export const ScrollDown = ({ tagId, text = 'Scroll down' }) => {
-
-    const handleScrollDownClick = (event) => {
+export const ScrollDown = ({ tagId, text = "Scroll down" }) => {
+    const handleScrollDownClick = event => {
         event.preventDefault()
 
         window.scrollTo({
             top: document.getElementById(tagId).clientHeight,
             left: 0,
-            behavior: 'smooth'
+            behavior: "smooth",
         })
     }
 
     return (
-        <ScrollDownButton onClick={handleScrollDownClick} aria-label="Scroll down">
+        <ScrollDownButton
+            onClick={handleScrollDownClick}
+            aria-label="Scroll down"
+        >
             <Text>{text}</Text>
             <Arrow />
         </ScrollDownButton>
@@ -32,7 +34,7 @@ export const ScrollDown = ({ tagId, text = 'Scroll down' }) => {
  */
 ScrollDown.propTypes = {
     tagId: PropTypes.string.isRequired,
-    text: PropTypes.string
+    text: PropTypes.string,
 }
 
 /**
@@ -62,13 +64,19 @@ const Text = styled.span`
     font-size: ${props => props.theme.font.size.tiny};
     text-transform: uppercase;
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         display: none;
-    `)}
+    `
+    )}
 `
 
 const Arrow = styled(FiArrowDown)`
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         transform: scale(1.1);
-    `)}
+    `
+    )}
 `

@@ -45,11 +45,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
         createPage({
             path,
-            component: require.resolve('./src/page-templates/post.js'),
+            component: require.resolve("./src/page-templates/post.js"),
             context: { _id: node._id, cat_id: cat_id },
         })
-    }
-    )
+    })
 
     // Create category pages
     categories.nodes.forEach(node => {
@@ -57,8 +56,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
         createPage({
             path,
-            component: require.resolve('./src/page-templates/category.js'),
-            context: { _id: node._id }
+            component: require.resolve("./src/page-templates/category.js"),
+            context: { _id: node._id },
         })
     })
 }
@@ -82,16 +81,18 @@ exports.createResolvers = ({ createResolvers }) => {
                         type: `SanityCategory`,
                     })
 
-                    // Filter categories by the categoryRef 
-                    const categorySlug = categories.filter(category => category.id === categoryRef)[0].slug.current
+                    // Filter categories by the categoryRef
+                    const categorySlug = categories.filter(
+                        category => category.id === categoryRef
+                    )[0].slug.current
 
                     // Return null if any part is empty
                     if (!postSlug || !categorySlug) return null
 
                     return `/${categorySlug}/${postSlug}`
-                }
+                },
             },
-        }
+        },
     }
     createResolvers(resolvers)
 }

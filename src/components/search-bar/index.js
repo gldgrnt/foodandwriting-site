@@ -1,3 +1,3 @@
-import { SearchBarContainer } from './SearchBarContainer'
+import { SearchBarContainer } from "./SearchBarContainer"
 
 export { SearchBarContainer }

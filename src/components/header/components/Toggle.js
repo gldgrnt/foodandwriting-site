@@ -1,17 +1,17 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import { FiX } from 'react-icons/fi'
+import React from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
+import { FiX } from "react-icons/fi"
 
-import { responsiveBreakpointDown } from '../../../utils'
+import { responsiveBreakpointDown } from "../../../utils"
 
 export const Toggle = ({ handler, active, children, ...rest }) => {
-    const handleClick = (event) => {
+    const handleClick = event => {
         event.preventDefault()
         handler()
     }
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = event => {
         // If spacebar wasn't pressed, ignore event
         if (event.which !== 32) {
             return
@@ -20,9 +20,15 @@ export const Toggle = ({ handler, active, children, ...rest }) => {
     }
 
     return (
-        <IconLink href="#" onClick={handleClick} onKeyDown={handleKeyDown} className={active && "active"} {...rest}>
+        <IconLink
+            href="#"
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+            className={active && "active"}
+            {...rest}
+        >
             {active ? <FiX /> : children}
-        </IconLink >
+        </IconLink>
     )
 }
 
@@ -47,11 +53,15 @@ const IconLink = styled.button`
     &:focus {
         background-color: ${props => props.theme.color.whiteGrey};
 
-        ${responsiveBreakpointDown('tablet', `background-color: white;`)}
+        ${responsiveBreakpointDown("tablet", `background-color: white;`)}
     }
 
     &.active {
-        ${props => responsiveBreakpointDown('tablet', `background-color: ${props.theme.color.whiteGrey};`)}
+        ${props =>
+            responsiveBreakpointDown(
+                "tablet",
+                `background-color: ${props.theme.color.whiteGrey};`
+            )}
     }
 
     svg {
@@ -60,18 +70,26 @@ const IconLink = styled.button`
         pointer-events: none;
     }
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         svg {
             stroke-width: 3px;
         }
-    `)}
+    `
+    )}
 
     /* Menu styles */
-    ${props => props.menu && `
+    ${props =>
+        props.menu &&
+        `
         display: none;
 
-        ${responsiveBreakpointDown('tablet', `
+        ${responsiveBreakpointDown(
+            "tablet",
+            `
             display: flex;
-        `)}
+        `
+        )}
     `}
 `

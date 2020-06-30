@@ -1,11 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-export const Divider = ({ maxWidth = '100%' }) => {
-
-    return (
-        <StyledDiv maxWidth={maxWidth} />
-    )
+export const Divider = ({ maxWidth = "100%" }) => {
+    return <StyledDiv maxWidth={maxWidth} />
 }
 
 const StyledDiv = styled.div`

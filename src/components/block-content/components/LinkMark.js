@@ -1,28 +1,34 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { Link } from 'gatsby'
-import { GoLinkExternal } from 'react-icons/go'
-import _ from 'lodash'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { Link } from "gatsby"
+import { GoLinkExternal } from "react-icons/go"
+import _ from "lodash"
 
-import { getPostSlug } from '../../../utils'
+import { getPostSlug } from "../../../utils"
 
 /**
  * LinkMark
  */
 export const LinkMark = ({ children, mark }) => {
     switch (mark._type) {
-        case 'internalLink':
+        case "internalLink":
             return (
                 <StyledLink>
                     <Link to={resolveInteralLink(mark.link)}>{children}</Link>
                 </StyledLink>
             )
 
-        case 'externalLink':
+        case "externalLink":
             return (
                 <StyledLink>
-                    <a href={mark.href} target="_blank" rel="noopener noreferrer">{children}</a>
+                    <a
+                        href={mark.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {children}
+                    </a>
                     <GoLinkExternal />
                 </StyledLink>
             )
@@ -34,22 +40,22 @@ export const LinkMark = ({ children, mark }) => {
 
 /**
  * ResolveInternalLink
- * 
+ *
  * @param {{_type: string, slug?: {current: string}, post?: {slug: { current: string}} }} link Link object
  * @returns {string} Link string for Gatsby Link component
  */
-const resolveInteralLink = (link) => {
-    if (!_.has(link, '_type')) return '#'
+const resolveInteralLink = link => {
+    if (!_.has(link, "_type")) return "#"
 
     switch (link._type) {
-        case 'post':
+        case "post":
             return getPostSlug(link)
 
-        case 'category':
+        case "category":
             return `/${link.slug.current}`
 
-        case 'about':
-            return '/about'
+        case "about":
+            return "/about"
 
         default:
             return
@@ -67,19 +73,18 @@ LinkMark.propTypes = {
         link: PropTypes.shape({
             _type: PropTypes.string,
             slug: PropTypes.shape({
-                current: PropTypes.string
+                current: PropTypes.string,
             }),
             category: PropTypes.shape({
                 slug: PropTypes.shape({
-                    current: PropTypes.string
-                })
-            })
+                    current: PropTypes.string,
+                }),
+            }),
         }),
         // External link
-        href: PropTypes.string
-    })
+        href: PropTypes.string,
+    }),
 }
-
 
 /**
  * Styles
@@ -96,7 +101,7 @@ const StyledLink = styled.span`
     }
 
     a::after {
-        content: '';
+        content: "";
         position: absolute;
         left: 0;
         bottom: 5px;
@@ -113,7 +118,7 @@ const StyledLink = styled.span`
             background-color: ${props => props.theme.color.black};
         }
     }
-    
+
     svg {
         height: 0.7em;
         margin-top: 0.3em;

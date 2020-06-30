@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { detect } from 'detect-browser'
+import { useEffect, useState } from "react"
+import { detect } from "detect-browser"
 
 export const useDetectBrowser = () => {
     const [browser, setBrowser] = useState(null)

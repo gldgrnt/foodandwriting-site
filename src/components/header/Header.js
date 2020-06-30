@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react"
-import styled from 'styled-components'
-import { FiMenu, FiSearch } from 'react-icons/fi'
+import styled from "styled-components"
+import { FiMenu, FiSearch } from "react-icons/fi"
 
-import { Logo, Toggle } from './components'
-import { SearchBarContainer } from '../search-bar'
-import { Navigation, NavigationDropdown } from '../navigation'
-import { GridContainer } from '../layout'
+import { Logo, Toggle } from "./components"
+import { SearchBarContainer } from "../search-bar"
+import { Navigation, NavigationDropdown } from "../navigation"
+import { GridContainer } from "../layout"
 import { responsiveBreakpointDown } from "../../utils"
 
 export const Header = () => {
-    const [dropdownState, setDropdownState] = useState({ isSearchOpen: false, isMenuOpen: false })
+    const [dropdownState, setDropdownState] = useState({
+        isSearchOpen: false,
+        isMenuOpen: false,
+    })
 
     const handleToggleClick = (toggling = null) => {
         if (toggling === null) {
             return
         }
-        let closing = toggling === 'isSearchOpen' ? 'isMenuOpen' : 'isSearchOpen'
+        let closing =
+            toggling === "isSearchOpen" ? "isMenuOpen" : "isSearchOpen"
         // Close menu if it's already open
-        if (dropdownState[toggling]) setDropdownState({ [toggling]: false });
+        if (dropdownState[toggling]) setDropdownState({ [toggling]: false })
         // Open menu
         else setDropdownState({ [toggling]: true, [closing]: false })
     }
@@ -25,13 +29,16 @@ export const Header = () => {
     // Set up click elsewhere event handler - call once via []
     useEffect(() => {
         // Close dropdown on area press
-        document.querySelectorAll('main, footer').forEach(area => {
-            area.addEventListener('click', () => setDropdownState({ isSearchOpen: false, isMenuOpen: false }))
+        document.querySelectorAll("main, footer").forEach(area => {
+            area.addEventListener("click", () =>
+                setDropdownState({ isSearchOpen: false, isMenuOpen: false })
+            )
         })
     }, [])
 
     // Conditionally render dropdowns
-    const isDropdownOpen = dropdownState.isSearchOpen || dropdownState.isMenuOpen
+    const isDropdownOpen =
+        dropdownState.isSearchOpen || dropdownState.isMenuOpen
     let activeDropdown = null
 
     // Pass close menu func down as prop
@@ -39,26 +46,32 @@ export const Header = () => {
         setDropdownState({ isSearchOpen: false, isMenuOpen: false })
     }
 
-    if (dropdownState.isSearchOpen) activeDropdown = <SearchBarContainer closeDropdown={closeDropdown} />
-    else if (dropdownState.isMenuOpen) activeDropdown = <NavigationDropdown closeDropdown={closeDropdown} />
+    if (dropdownState.isSearchOpen)
+        activeDropdown = <SearchBarContainer closeDropdown={closeDropdown} />
+    else if (dropdownState.isMenuOpen)
+        activeDropdown = <NavigationDropdown closeDropdown={closeDropdown} />
 
     // Add class to body and html tag when menu is open
     useEffect(() => {
         if (typeof window === undefined) {
             return
         }
-        const html = document.querySelector('html')
+        const html = document.querySelector("html")
 
         if (isDropdownOpen) {
-            html.setAttribute('scroll', html.scrollTop)
-            html.classList.add('menu-open')
+            html.setAttribute("scroll", html.scrollTop)
+            html.classList.add("menu-open")
         }
 
         if (!isDropdownOpen) {
-            const scroll = parseInt(html.getAttribute('scroll'))
+            const scroll = parseInt(html.getAttribute("scroll"))
 
-            if (scroll !== undefined && scroll !== null && window.innerWidth < 769) {
-                html.classList.remove('menu-open')
+            if (
+                scroll !== undefined &&
+                scroll !== null &&
+                window.innerWidth < 769
+            ) {
+                html.classList.remove("menu-open")
                 html.scrollTop = scroll
             }
         }
@@ -67,7 +80,11 @@ export const Header = () => {
     return (
         <StyledHeader>
             <HeaderUpperWrapper>
-                <GridContainer align="stretch" justify="space-between" removeMobilePadding={true}>
+                <GridContainer
+                    align="stretch"
+                    justify="space-between"
+                    removeMobilePadding={true}
+                >
                     <LogoWrapper>
                         <Logo />
                     </LogoWrapper>
@@ -77,27 +94,34 @@ export const Header = () => {
                     </NavigationWrapper>
 
                     <TogglesWrapper>
-                        <Toggle handler={() => handleToggleClick('isSearchOpen')} active={!!dropdownState.isSearchOpen} aria-label="Toggle search">
+                        <Toggle
+                            handler={() => handleToggleClick("isSearchOpen")}
+                            active={!!dropdownState.isSearchOpen}
+                            aria-label="Toggle search"
+                        >
                             <FiSearch />
                         </Toggle>
 
-                        <Toggle menu handler={() => handleToggleClick('isMenuOpen')} active={!!dropdownState.isMenuOpen} aria-label="Toggle menu">
+                        <Toggle
+                            menu
+                            handler={() => handleToggleClick("isMenuOpen")}
+                            active={!!dropdownState.isMenuOpen}
+                            aria-label="Toggle menu"
+                        >
                             <FiMenu />
                         </Toggle>
                     </TogglesWrapper>
-                </GridContainer >
+                </GridContainer>
             </HeaderUpperWrapper>
 
             <DropdownContainer dropdownState={dropdownState}>
-                {isDropdownOpen &&
+                {isDropdownOpen && (
                     <GridContainer>
-                        {activeDropdown &&
-                            <DropdownWrapper>
-                                {activeDropdown}
-                            </DropdownWrapper>
-                        }
+                        {activeDropdown && (
+                            <DropdownWrapper>{activeDropdown}</DropdownWrapper>
+                        )}
                     </GridContainer>
-                }
+                )}
             </DropdownContainer>
         </StyledHeader>
     )
@@ -112,9 +136,12 @@ const StyledHeader = styled.header`
 `
 
 const HeaderUpperWrapper = styled.div`
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.08);
-    `)}
+    `
+    )}
 `
 
 const LogoWrapper = styled.div`
@@ -123,11 +150,15 @@ const LogoWrapper = styled.div`
     justify-content: center;
     padding: 30px 0;
 
-    ${props => responsiveBreakpointDown('mobile', `
+    ${props =>
+        responsiveBreakpointDown(
+            "mobile",
+            `
         padding-top: 25px;
         padding-bottom: 25px;
         padding-left: ${props.theme.grid.spacing}px;
-    `)}
+    `
+        )}
 `
 
 const NavigationWrapper = styled.div`
@@ -135,13 +166,12 @@ const NavigationWrapper = styled.div`
     padding-right: 80px;
     padding-bottom: 4px;
 
-    ${responsiveBreakpointDown('desktop', `padding-right: 20px;`)}
-    ${responsiveBreakpointDown('tablet', `display: none;`)}
+    ${responsiveBreakpointDown("desktop", `padding-right: 20px;`)}
+    ${responsiveBreakpointDown("tablet", `display: none;`)}
 
     > * {
         height: 100%;
     }
-
 `
 
 const TogglesWrapper = styled.div`
@@ -152,10 +182,13 @@ const TogglesWrapper = styled.div`
         height: 100%;
     }
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         padding-left: 0;
         margin-right: 0;
-    `)}
+    `
+    )}
 `
 
 // Dropdown
@@ -168,8 +201,11 @@ const DropdownContainer = styled.div`
     box-shadow: 0px 20px 20px 0px #35353512;
 
     /* Hide menu if above tablet size but opened on mobile */
-    display: ${({ dropdownState }) => dropdownState.isSearchOpen && !dropdownState.isMenuOpen ? 'block;' : 'none;'}
-    ${responsiveBreakpointDown('tablet', 'display: block;')}
+    display: ${({ dropdownState }) =>
+            dropdownState.isSearchOpen && !dropdownState.isMenuOpen
+                ? "block;"
+                : "none;"}
+        ${responsiveBreakpointDown("tablet", "display: block;")};
 `
 
 const DropdownWrapper = styled.div`
@@ -180,13 +216,19 @@ const DropdownWrapper = styled.div`
     max-height: calc(100vh - 78px);
     overflow: hidden;
 
-    ${responsiveBreakpointDown('tablet', `
+    ${responsiveBreakpointDown(
+        "tablet",
+        `
         height: 100vh;
         max-height: 100vh; /** Fallback **/
         max-height: calc((var(--vh-dynamic, 1vh) * 100) - 68px);
-    `)}
+    `
+    )}
 
-    ${responsiveBreakpointDown('tablet', `
+    ${responsiveBreakpointDown(
+        "tablet",
+        `
         padding: 20px 0 15px;
-    `)}
+    `
+    )}
 `

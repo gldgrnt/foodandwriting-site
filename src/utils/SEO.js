@@ -5,14 +5,17 @@ import { useStaticQuery, graphql } from "gatsby"
 
 /**
  * Function to create a function that replaces variables within a string
- * 
- * @param {Array} replacementArray 
- * @returns {Function} Curried string replacement function with variables preset 
+ *
+ * @param {Array} replacementArray
+ * @returns {Function} Curried string replacement function with variables preset
  */
-const replaceVariables = (replacementArray) => {
-    return (str) => {
+const replaceVariables = replacementArray => {
+    return str => {
         let newStr = str
-        replacementArray.forEach(replacer => newStr = newStr.replace(replacer.value, replacer.replacement))
+        replacementArray.forEach(
+            replacer =>
+                (newStr = newStr.replace(replacer.value, replacer.replacement))
+        )
         return newStr
     }
 }
@@ -31,14 +34,14 @@ export const SEO = ({ description, lang, meta, title }) => {
 
     // Create string replacement function
     const replaceSiteVariables = replaceVariables([
-        { value: '%SITETITLE%', replacement: sanityConfig.siteTitle },
-        { value: '%PAGETITLE%', replacement: '%s' }
+        { value: "%SITETITLE%", replacement: sanityConfig.siteTitle },
+        { value: "%PAGETITLE%", replacement: "%s" },
     ])
 
     // Set up variables
     const titleTemplate = replaceSiteVariables(sanityConfig.titleTemplate)
-    const metaDescription = description || replaceSiteVariables(sanityConfig.siteDecsription)
-
+    const metaDescription =
+        description || replaceSiteVariables(sanityConfig.siteDecsription)
 
     return (
         <Helmet
@@ -78,12 +81,12 @@ export const SEO = ({ description, lang, meta, title }) => {
                 },
                 {
                     name: `twitter:site`,
-                    content: `@${sanityConfig.twitterHandle}`
+                    content: `@${sanityConfig.twitterHandle}`,
                 },
                 {
                     name: `twitter:creator`,
-                    content: `@${sanityConfig.twitterHandle}`
-                }
+                    content: `@${sanityConfig.twitterHandle}`,
+                },
             ].concat(meta)}
         />
     )

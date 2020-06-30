@@ -1,25 +1,26 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
+import React from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
+import { Link } from "gatsby"
 
-import { PageContext } from '../../context'
-import { SmallCaps, Button, PostMeta, Image } from '../../ui'
-import { responsiveBreakpointDown, parseReadyInString } from '../../../utils'
+import { PageContext } from "../../context"
+import { SmallCaps, Button, PostMeta, Image } from "../../ui"
+import { responsiveBreakpointDown, parseReadyInString } from "../../../utils"
 
 // Image sizes
 const imageSizes = [
     { width: 460, height: 620, mediaMin: 1600 },
     { width: 375, height: 510, mediaMin: 1200 },
     { width: 280, height: 380, mediaMin: 1000 },
-    { width: 420, height: 800, mediaMin: 768 }
+    { width: 420, height: 800, mediaMin: 768 },
 ]
 
 /**
  * Recipe Slider post component
  */
-export const RecipeSliderPost = ({ post: { title, fullSlug, _rawFeaturedImage, content } }) => {
-
+export const RecipeSliderPost = ({
+    post: { title, fullSlug, _rawFeaturedImage, content },
+}) => {
     const { serves, readyIn } = content[0]
     const humanReadyIn = parseReadyInString(readyIn)
 
@@ -27,17 +28,28 @@ export const RecipeSliderPost = ({ post: { title, fullSlug, _rawFeaturedImage, c
         <LinkWrapper to={fullSlug}>
             <Article>
                 <ImageWrapper>
-                    <Image fadeIn source={_rawFeaturedImage} sizes={imageSizes} />
+                    <Image
+                        fadeIn
+                        source={_rawFeaturedImage}
+                        sizes={imageSizes}
+                    />
                 </ImageWrapper>
 
                 <CaptionWrapper>
                     <PostMeta meta={[`Serves ${serves}`, humanReadyIn]} />
                     <Title>{title}</Title>
                     <PageContext.Consumer>
-                        {({ isMobile }) => (!isMobile
-                            ? <SmallCaps size="tiny" color="mediumGrey" link>View recipe</SmallCaps>
-                            : <Button secondary size="small">View recipe</Button>
-                        )}
+                        {({ isMobile }) =>
+                            !isMobile ? (
+                                <SmallCaps size="tiny" color="mediumGrey" link>
+                                    View recipe
+                                </SmallCaps>
+                            ) : (
+                                <Button secondary size="small">
+                                    View recipe
+                                </Button>
+                            )
+                        }
                     </PageContext.Consumer>
                 </CaptionWrapper>
             </Article>
@@ -53,10 +65,12 @@ RecipeSliderPost.prototypes = {
         title: PropTypes.string.isRequired,
         fullSlug: PropTypes.string.isRequired,
         _rawFeaturedImage: PropTypes.object.isRequired,
-        content: PropTypes.arrayOf(PropTypes.shape({
-            serves: PropTypes.string.isRequired,
-            readyIn: PropTypes.string.isRequried
-        })).isRequired
+        content: PropTypes.arrayOf(
+            PropTypes.shape({
+                serves: PropTypes.string.isRequired,
+                readyIn: PropTypes.string.isRequried,
+            })
+        ).isRequired,
     }).isRequired,
 }
 
@@ -66,7 +80,8 @@ RecipeSliderPost.prototypes = {
 const LinkWrapper = styled(Link)`
     text-decoration: none;
     outline: none;
-    max-width: ${props => (props.theme.grid.breakpoints.monitor.minScreenWidth / 3) - 120}px;
+    max-width: ${props =>
+        props.theme.grid.breakpoints.monitor.minScreenWidth / 3 - 120}px;
 
     &:hover,
     &:focus {
@@ -88,29 +103,45 @@ const LinkWrapper = styled(Link)`
         }
     }
 
-    ${props => responsiveBreakpointDown('desktop', `
-        max-width: ${(props.theme.grid.breakpoints.desktop.minScreenWidth / 3) - 60}px;
-    `)}
+    ${props =>
+        responsiveBreakpointDown(
+            "desktop",
+            `
+        max-width: ${props.theme.grid.breakpoints.desktop.minScreenWidth / 3 -
+            60}px;
+    `
+        )}
 
-    ${props => responsiveBreakpointDown('laptop', `
-        max-width: ${(props.theme.grid.breakpoints.laptop.minScreenWidth / 3) - 60}px;
-    `)}
+    ${props =>
+        responsiveBreakpointDown(
+            "laptop",
+            `
+        max-width: ${props.theme.grid.breakpoints.laptop.minScreenWidth / 3 -
+            60}px;
+    `
+        )}
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         max-width: none;
         width: calc(100% - 30px);
         margin: auto;
-    `)}
+    `
+    )}
 `
 
 const Article = styled.article`
     position: relative;
     width: 100%;
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         height: 100vh; /** Fallback **/
         height: calc((var(--vh, 1vh) * 100) - 68px);
-    `)}
+    `
+    )}
 `
 
 const ImageWrapper = styled.div`
@@ -119,11 +150,14 @@ const ImageWrapper = styled.div`
     margin-bottom: 20px;
     background: ${props => props.theme.color.whiteGrey};
     overflow: hidden;
-    
-    ${responsiveBreakpointDown('mobile', `height: 100%`)}
+
+    ${responsiveBreakpointDown("mobile", `height: 100%`)}
 
     &::after {
-        ${props => responsiveBreakpointDown('mobile', `
+        ${props =>
+            responsiveBreakpointDown(
+                "mobile",
+                `
             content: '';
             position: absolute;
             top: 0;
@@ -132,7 +166,8 @@ const ImageWrapper = styled.div`
             width: 100%;
             background: ${props.theme.color.blackOverlay};
             z-index: 1;
-        `)}
+        `
+            )}
     }
 
     > * {
@@ -145,7 +180,9 @@ const ImageWrapper = styled.div`
 `
 
 const CaptionWrapper = styled.div`
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         position: absolute;
         z-index: 2;
         top: 50%;
@@ -163,7 +200,8 @@ const CaptionWrapper = styled.div`
         > div {
             display: none;
         }
-    `)}
+    `
+    )}
 `
 
 const Title = styled.h3`
@@ -171,12 +209,20 @@ const Title = styled.h3`
     margin: 7px 0 5px;
     white-space: normal;
 
-    ${props => responsiveBreakpointDown('tablet', `
+    ${props =>
+        responsiveBreakpointDown(
+            "tablet",
+            `
         font-size: ${props.theme.font.size.regular};
-    `)}
+    `
+        )}
 
-    ${props => responsiveBreakpointDown('mobile', `
+    ${props =>
+        responsiveBreakpointDown(
+            "mobile",
+            `
         font-size: ${props.theme.font.size.giant};
         margin-bottom: 20px;
-    `)}
+    `
+        )}
 `

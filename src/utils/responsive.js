@@ -1,4 +1,4 @@
-import { themeVariables } from '../styles'
+import { themeVariables } from "../styles"
 
 // Responsive breakpoint down
 export const responsiveBreakpointDown = (breakpointName, styles) => {
@@ -6,8 +6,7 @@ export const responsiveBreakpointDown = (breakpointName, styles) => {
     // Try to get breakpoint value
     try {
         maxWidth = getBreakpoint(breakpointName).maxScreenWidth
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error)
     }
 
@@ -19,18 +18,18 @@ export const responsiveBreakpointDown = (breakpointName, styles) => {
 }
 
 export const responsiveStylesFromProp = (valueOrBreakpoint, styleName) => {
-    let styles = ''
+    let styles = ""
 
     switch (typeof valueOrBreakpoint) {
-
-        case 'string': {
+        case "string": {
             styles += `${styleName}: ${valueOrBreakpoint};`
             break
         }
 
-        case 'object': {
+        case "object": {
             for (const breakpointName in valueOrBreakpoint) {
-                styles += responsiveBreakpointDown(breakpointName,
+                styles += responsiveBreakpointDown(
+                    breakpointName,
                     `${styleName}: ${valueOrBreakpoint[breakpointName]};`
                 )
             }
@@ -45,7 +44,6 @@ export const responsiveStylesFromProp = (valueOrBreakpoint, styleName) => {
 }
 
 /* Get breakpoint variables from variables */
-const getBreakpoint = (breakpointName) => {
+const getBreakpoint = breakpointName => {
     return themeVariables.grid.breakpoints[breakpointName]
 }
-

@@ -1,9 +1,8 @@
-import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
-import styled from 'styled-components'
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import styled from "styled-components"
 
 export const MadeByWadada = () => {
-
     const { logo } = useStaticQuery(graphql`
         query {
             logo: file(relativePath: { eq: "wadada.svg" }) {
@@ -23,7 +22,9 @@ export const MadeByWadada = () => {
 const LinkWrapper = styled.a`
     display: inline-flex;
 
-    &, &:hover, &:focus {
+    &,
+    &:hover,
+    &:focus {
         text-decoration: none;
     }
 `

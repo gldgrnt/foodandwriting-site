@@ -1,3 +1,3 @@
-import { FawBlockContent } from './FawBlockContent'
+import { FawBlockContent } from "./FawBlockContent"
 
 export { FawBlockContent }

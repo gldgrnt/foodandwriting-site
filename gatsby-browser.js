@@ -5,4 +5,4 @@
  */
 
 // Import stylesheet
-require('./src/styles/external.css')
+require("./src/styles/external.css")

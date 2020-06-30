@@ -1,16 +1,19 @@
-import React from 'react'
-import { StaticQuery, graphql } from 'gatsby'
-import styled from 'styled-components'
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+import styled from "styled-components"
 
-import { SEO, responsiveBreakpointDown } from '../utils'
-import { FawBlockContent } from '../components/block-content'
-import { Page, Section, GridContainer } from '../components/layout'
+import { SEO, responsiveBreakpointDown } from "../utils"
+import { FawBlockContent } from "../components/block-content"
+import { Page, Section, GridContainer } from "../components/layout"
 
 /**
  * CookiesPage component
  */
-const CookiesPage = ({ data: { sanityCookies: { _rawContent, cookies } } }) => {
-
+const CookiesPage = ({
+    data: {
+        sanityCookies: { _rawContent, cookies },
+    },
+}) => {
     return (
         <>
             <SEO title="Cookies" />
@@ -30,13 +33,15 @@ const CookiesPage = ({ data: { sanityCookies: { _rawContent, cookies } } }) => {
                                         </TableRow>
                                     </thead>
                                     <tbody>
-                                        {cookies.map(({ type, name, purpose }) => (
-                                            <TableRow key={name}>
-                                                <td>{type}</td>
-                                                <td>{name}</td>
-                                                <td>{purpose}</td>
-                                            </TableRow>
-                                        ))}
+                                        {cookies.map(
+                                            ({ type, name, purpose }) => (
+                                                <TableRow key={name}>
+                                                    <td>{type}</td>
+                                                    <td>{name}</td>
+                                                    <td>{purpose}</td>
+                                                </TableRow>
+                                            )
+                                        )}
                                     </tbody>
                                 </table>
                             </TableWrapper>
@@ -49,11 +54,11 @@ const CookiesPage = ({ data: { sanityCookies: { _rawContent, cookies } } }) => {
 }
 
 export default () => (
-    <StaticQuery query={
-        graphql`
+    <StaticQuery
+        query={graphql`
             query CookiesPageQuery {
                 sanityCookies {
-                    _rawContent(resolveReferences: {maxDepth: 10})
+                    _rawContent(resolveReferences: { maxDepth: 10 })
                     cookies {
                         name
                         purpose
@@ -62,8 +67,7 @@ export default () => (
                     }
                 }
             }
-        `
-    }
+        `}
         render={data => <CookiesPage data={data} />}
     />
 )
@@ -81,17 +85,21 @@ const TableWrapper = styled.div`
     padding-top: 15px;
     max-width: 100%;
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         overflow: scroll;
     
         table {
             min-width: 500px;
         }
-    `)}
+    `
+    )}
 `
 
 const TableRow = styled.tr`
-    td, th {
+    td,
+    th {
         line-height: 1.7;
 
         &:not(:last-child) {

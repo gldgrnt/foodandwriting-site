@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import React from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
 
-import { SmallCaps, ScrollDown, Image } from '../ui'
-import { responsiveBreakpointDown } from '../../utils'
+import { SmallCaps, ScrollDown, Image } from "../ui"
+import { responsiveBreakpointDown } from "../../utils"
 
 // Image sizes
 const imageSizes = [
@@ -11,17 +11,15 @@ const imageSizes = [
     { width: 800, height: 780, mediaMin: 1200 },
     { width: 600, height: 650, mediaMin: 1000 },
     { width: 768, height: 900, mediaMin: 768 },
-    { width: 420, height: 530, mediaMin: 0 }
+    { width: 420, height: 530, mediaMin: 0 },
 ]
 
 /**
  * PostHero component
  */
 export const PostHero = ({ featuredImage, subtitle, title }) => {
-
-
     // Create tag to scroll to
-    const scrollId = 'hero'
+    const scrollId = "hero"
 
     return (
         <HeroWrapper id={scrollId}>
@@ -30,7 +28,9 @@ export const PostHero = ({ featuredImage, subtitle, title }) => {
             </ImageWrapper>
 
             <CaptionWrapper>
-                <SmallCaps size="regular" color="mediumGrey">{subtitle}</SmallCaps>
+                <SmallCaps size="regular" color="mediumGrey">
+                    {subtitle}
+                </SmallCaps>
                 <Title>{title}</Title>
 
                 <ScrollDown tagId={scrollId} />
@@ -45,7 +45,7 @@ export const PostHero = ({ featuredImage, subtitle, title }) => {
 PostHero.propTypes = {
     featuredImage: PropTypes.object.isRequired,
     subtitle: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
 }
 
 /**
@@ -58,9 +58,12 @@ const HeroWrapper = styled.div`
     display: flex;
     overflow: hidden;
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         height: calc(80vh - 65px);
-    `)}
+    `
+    )}
 
     & > * {
         flex-basis: 50%;
@@ -71,7 +74,9 @@ const ImageWrapper = styled.div`
     position: relative;
     background: ${props => props.theme.color.lightGreyOverlay};
 
-    ${responsiveBreakpointDown('tablet', `
+    ${responsiveBreakpointDown(
+        "tablet",
+        `
         position: absolute;
         top: 0;
         left: 0;
@@ -79,13 +84,18 @@ const ImageWrapper = styled.div`
         height: 100%;
         z-index: 0;
         flex-basis: auto;
-    `)}
+    `
+    )}
 
-    ${props => responsiveBreakpointDown('mobile', `
+    ${props =>
+        responsiveBreakpointDown(
+            "mobile",
+            `
         width: calc(100% - ${props.theme.grid.spacing * 2}px);
         left: 0;
         width: 100%;
-    `)}
+    `
+        )}
 
     > * {
         position: absolute !important;
@@ -106,7 +116,10 @@ const CaptionWrapper = styled.div`
     background: ${props => props.theme.color.whiteGrey};
     text-align: center;
 
-    ${props => responsiveBreakpointDown('tablet', `
+    ${props =>
+        responsiveBreakpointDown(
+            "tablet",
+            `
         position: relative;
         z-index: 2;
         flex-basis: 100%;
@@ -118,11 +131,15 @@ const CaptionWrapper = styled.div`
         > * {
             color: inherit !important;
         }
-    `)}
+    `
+        )}
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         padding: 60px 30px;
-    `)}
+    `
+    )}
 `
 
 const Title = styled.h1`

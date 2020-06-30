@@ -1,23 +1,29 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import React from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
 
-import { FawBlockContent } from '../block-content'
-import { GridContainer } from '../layout'
-import { getPostDate } from '../../utils'
-import { SignOff } from './SignOff'
+import { FawBlockContent } from "../block-content"
+import { GridContainer } from "../layout"
+import { getPostDate } from "../../utils"
+import { SignOff } from "./SignOff"
 
 /**
  * DefaultPostContent component
  */
-export const DefaultPostContent = ({ content, date, maxTextWidth = 'none' }) => {
-
-    const postDate = getPostDate(date, 'Do MMMM YYYY')
+export const DefaultPostContent = ({
+    content,
+    date,
+    maxTextWidth = "none",
+}) => {
+    const postDate = getPostDate(date, "Do MMMM YYYY")
 
     return (
         <GridContainer>
             <ContentWrapper maxTextWidth={maxTextWidth}>
-                <Date maxTextWidth={maxTextWidth} aria-label={`Posted on ${postDate.formatted}`}>
+                <Date
+                    maxTextWidth={maxTextWidth}
+                    aria-label={`Posted on ${postDate.formatted}`}
+                >
                     <time dateTime={postDate.raw}>{postDate.formatted}</time>
                 </Date>
                 <FawBlockContent content={content} />
@@ -33,7 +39,7 @@ export const DefaultPostContent = ({ content, date, maxTextWidth = 'none' }) => 
 DefaultPostContent.propTypes = {
     date: PropTypes.string.isRequired,
     content: PropTypes.array.isRequired,
-    maxTextWidth: PropTypes.string
+    maxTextWidth: PropTypes.string,
 }
 
 /**
@@ -51,7 +57,7 @@ const ContentWrapper = styled.article`
         flex-direction: column;
         align-items: center;
 
-        >  p {
+        > p {
             width: 100%;
             max-width: ${props => props.maxTextWidth};
 
@@ -63,8 +69,6 @@ const ContentWrapper = styled.article`
                 margin-top: -2px;
             }
         }
-
-
     }
 `
 
@@ -80,7 +84,7 @@ const Date = styled.time`
             margin-bottom: 10px;
         }
     }
-    
+
     time {
         font-weight: bold;
     }

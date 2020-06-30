@@ -1,11 +1,11 @@
-import { graphql } from 'gatsby'
+import { graphql } from "gatsby"
 
 /**
  * Large Fluid Image
  */
 export const largeFluidImageFragment = graphql`
     fragment LargeFluidImageFragment on SanityPost {
-        _rawFeaturedImage(resolveReferences: {maxDepth: 10})
+        _rawFeaturedImage(resolveReferences: { maxDepth: 10 })
         featuredImage {
             asset {
                 fluid(maxWidth: 500) {
@@ -21,7 +21,7 @@ export const largeFluidImageFragment = graphql`
  */
 export const mediumFluidImageFragment = graphql`
     fragment MediumFluidImageFragment on SanityPost {
-        _rawFeaturedImage(resolveReferences: {maxDepth: 10})
+        _rawFeaturedImage(resolveReferences: { maxDepth: 10 })
         featuredImage {
             asset {
                 fluid(maxWidth: 300) {
@@ -37,7 +37,7 @@ export const mediumFluidImageFragment = graphql`
  */
 export const smallFluidImageFragment = graphql`
     fragment SmallFluidImageFragment on SanityPost {
-        _rawFeaturedImage(resolveReferences: {maxDepth: 10})
+        _rawFeaturedImage(resolveReferences: { maxDepth: 10 })
         featuredImage {
             asset {
                 fluid(maxWidth: 150) {

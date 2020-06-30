@@ -1,12 +1,11 @@
-import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
-import styled from 'styled-components'
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import styled from "styled-components"
 
 /**
  * Sign off component
  */
 export const SignOff = ({ maxWidth }) => {
-
     const { logo, alt } = useStaticQuery(graphql`
         query {
             logo: file(relativePath: { eq: "fandw-reduced.svg" }) {

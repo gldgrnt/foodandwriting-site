@@ -1,5 +1,5 @@
 // In your gatsby-config.js file
-require('dotenv').config()
+require("dotenv").config()
 
 const algoliaQueries = require("./src/utils/algolia")
 
@@ -24,22 +24,22 @@ module.exports = {
                 background_color: `#111`,
                 theme_color: `#111`,
                 display: `minimal-ui`,
-                icon: 'src/images/favicon.png'
+                icon: "src/images/favicon.png",
             },
         },
         {
-            resolve: 'gatsby-source-sanity',
+            resolve: "gatsby-source-sanity",
             options: {
                 projectId: process.env.GATSBY_SANITY_PROJECT_ID,
                 dataset: process.env.GATSBY_SANITY_DATASET,
-                token: process.env.GATSBY_SANITY_READ_TOKEN
+                token: process.env.GATSBY_SANITY_READ_TOKEN,
             },
         },
         {
-            resolve: 'gatsby-plugin-styled-components',
+            resolve: "gatsby-plugin-styled-components",
             options: {
-                displayName: process.env.STYLED_COMPONENTS_DISPLAY_NAME
-            }
+                displayName: process.env.STYLED_COMPONENTS_DISPLAY_NAME,
+            },
         },
         {
             resolve: `gatsby-plugin-algolia`,
@@ -57,22 +57,22 @@ module.exports = {
             },
         },
         {
-            resolve: 'gatsby-plugin-gdpr-tracking',
+            resolve: "gatsby-plugin-gdpr-tracking",
             options: {
                 // debug: true,
                 googleAnalytics: {
-                    trackingId: 'UA-158593963-1',
+                    trackingId: "UA-158593963-1",
                     autoStart: false,
                     anonymize: true,
-                    controlCookieName: 'faw-allow-analytics',
+                    controlCookieName: "faw-allow-analytics",
                 },
                 // Defines the environments where the tracking should be available  - default is ["production"]
-                environments: ['production', 'development']
+                environments: ["production", "development"],
             },
         },
         {
             resolve: `gatsby-plugin-create-client-paths`,
             options: { prefixes: [`/preview/*`] },
-        }
+        },
     ],
 }

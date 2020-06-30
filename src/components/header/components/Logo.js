@@ -1,9 +1,8 @@
-import React from 'react'
-import { useStaticQuery, graphql, Link } from 'gatsby'
-import styled from 'styled-components'
+import React from "react"
+import { useStaticQuery, graphql, Link } from "gatsby"
+import styled from "styled-components"
 
 export const Logo = () => {
-
     const { logo, alt } = useStaticQuery(graphql`
         query {
             logo: file(relativePath: { eq: "fandw-std.svg" }) {

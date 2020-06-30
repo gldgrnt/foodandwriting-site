@@ -1,16 +1,19 @@
-import React from 'react'
-import { StaticQuery, graphql } from 'gatsby'
-import PropTypes from 'prop-types'
+import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+import PropTypes from "prop-types"
 
-import { SEO } from '../utils'
-import { Page, HalfImage } from '../components/layout'
-import { FawBlockContent } from '../components/block-content'
+import { SEO } from "../utils"
+import { Page, HalfImage } from "../components/layout"
+import { FawBlockContent } from "../components/block-content"
 
 /**
  * AboutPage component
  */
-const AboutPage = ({ data: { sanityAbout: { title, snippet, image, _rawContent } } }) => {
-
+const AboutPage = ({
+    data: {
+        sanityAbout: { title, snippet, image, _rawContent },
+    },
+}) => {
     return (
         <>
             <SEO title="About" description={snippet} />
@@ -25,8 +28,8 @@ const AboutPage = ({ data: { sanityAbout: { title, snippet, image, _rawContent }
 }
 
 export default () => (
-    <StaticQuery query={
-        graphql`
+    <StaticQuery
+        query={graphql`
             query AboutPageQuery {
                 sanityAbout {
                     title
@@ -38,15 +41,13 @@ export default () => (
                                 ...GatsbySanityImageFluid_noBase64
                             }
                         }
-                    }            
+                    }
                 }
-            } 
-        `
-    }
+            }
+        `}
         render={data => <AboutPage data={data} />}
     />
 )
-
 
 /**
  * PropTypes
@@ -55,6 +56,6 @@ AboutPage.propTypes = {
     data: PropTypes.shape({
         sanityAbout: PropTypes.shape({
             snippet: PropTypes.string.isRequired,
-        }).isRequired
-    }).isRequired
+        }).isRequired,
+    }).isRequired,
 }

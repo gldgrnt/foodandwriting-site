@@ -1,23 +1,29 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Img from 'gatsby-image/withIEPolyfill'
-import styled from 'styled-components'
+import React from "react"
+import PropTypes from "prop-types"
+import Img from "gatsby-image/withIEPolyfill"
+import styled from "styled-components"
 
-import { getFluidPropsFromId, responsiveBreakpointDown } from '../../../utils'
+import { getFluidPropsFromId, responsiveBreakpointDown } from "../../../utils"
 
 /**
  * FlexImagesType component
  */
 export const FlexImagesType = ({ node: { caption, images } }) => {
-    
     return (
         <FlexImagesWrapper>
             <ImagesWrapper count={images.length} spacing={30}>
                 {images.map(image => (
-                    <Img key={image._key} fluid={getFluidPropsFromId(image.asset.id)} alt={image.alt} loading="lazy" />
-                ))} 
+                    <Img
+                        key={image._key}
+                        fluid={getFluidPropsFromId(image.asset.id)}
+                        alt={image.alt}
+                        loading="lazy"
+                    />
+                ))}
             </ImagesWrapper>
-            <FlexImagesCaption count={images.length}>{caption}</FlexImagesCaption>
+            <FlexImagesCaption count={images.length}>
+                {caption}
+            </FlexImagesCaption>
         </FlexImagesWrapper>
     )
 }
@@ -28,14 +34,16 @@ export const FlexImagesType = ({ node: { caption, images } }) => {
 FlexImagesType.propTypes = {
     node: PropTypes.shape({
         caption: PropTypes.string,
-        images: PropTypes.arrayOf(PropTypes.shape({
-            _key: PropTypes.string.isRequired,
-            asset: PropTypes.shape({
-                id: PropTypes.string.isRequired,
-            }),
-            alt: PropTypes.string
-        }))
-    }).isRequired
+        images: PropTypes.arrayOf(
+            PropTypes.shape({
+                _key: PropTypes.string.isRequired,
+                asset: PropTypes.shape({
+                    id: PropTypes.string.isRequired,
+                }),
+                alt: PropTypes.string,
+            })
+        ),
+    }).isRequired,
 }
 
 /**
@@ -46,9 +54,12 @@ const FlexImagesWrapper = styled.div`
     padding: 70px 0 60px;
     width: 100%;
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         padding: 40px 0 30px;
-    `)}
+    `
+    )}
 `
 
 const ImagesWrapper = styled.div`
@@ -56,25 +67,34 @@ const ImagesWrapper = styled.div`
     justify-content: space-between;
     margin-bottom: 15px;
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         flex-wrap: wrap;
-    `)}
+    `
+    )}
 
     > * {
         width: 100%;
-        margin: ${props => props.count === 1 ? 'auto' : ''};
-        max-width: ${props => props.count === 1 ? '100%' :`calc((100% / ${props.count}) - ((${props.spacing}px * ${props.count}) - ${props.spacing}px ))`};
+        margin: ${props => (props.count === 1 ? "auto" : "")};
+        max-width: ${props =>
+            props.count === 1
+                ? "100%"
+                : `calc((100% / ${props.count}) - ((${props.spacing}px * ${props.count}) - ${props.spacing}px ))`};
 
-        ${responsiveBreakpointDown('mobile', `
+        ${responsiveBreakpointDown(
+            "mobile",
+            `
             max-width: none;
 
             &:nth-child(2) {
                 margin-top: 30px;
             }
-        `)}
+        `
+        )}
     }
 
-    img  {
+    img {
         object-fit: cover;
     }
 `

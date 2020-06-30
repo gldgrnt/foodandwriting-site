@@ -1,7 +1,6 @@
-import { getFluidPropsFromFeaturedImage } from '../image'
+import { getFluidPropsFromFeaturedImage } from "../image"
 
 export const transformAbout = ({ title, snippet, image, content }) => {
-
     const transformedImage = image
     image.asset.fluid = getFluidPropsFromFeaturedImage(image)
 
@@ -10,7 +9,7 @@ export const transformAbout = ({ title, snippet, image, content }) => {
             title,
             snippet,
             image: transformedImage,
-            _rawContent: content
-        }
+            _rawContent: content,
+        },
     }
 }

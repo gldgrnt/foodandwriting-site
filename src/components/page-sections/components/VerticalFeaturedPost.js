@@ -1,16 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { Link } from 'gatsby'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { Link } from "gatsby"
 
-import { SmallCaps, Image } from '../../ui'
-import { responsiveBreakpointDown } from '../../../utils'
+import { SmallCaps, Image } from "../../ui"
+import { responsiveBreakpointDown } from "../../../utils"
 
 /**
  * VerticalFeaturedPost component
  */
-export const VerticalFeaturedPost = ({ post: { title, fullSlug, _rawFeaturedImage, category: { singleName } } }) => {
-
+export const VerticalFeaturedPost = ({
+    post: {
+        title,
+        fullSlug,
+        _rawFeaturedImage,
+        category: { singleName },
+    },
+}) => {
     const imageSizes = [
         { width: 560, height: 500, mediaMin: 1600 },
         { width: 480, height: 420, mediaMin: 1200 },
@@ -23,12 +29,18 @@ export const VerticalFeaturedPost = ({ post: { title, fullSlug, _rawFeaturedImag
         <StyledLink to={fullSlug}>
             <Article>
                 <ImageWrapper>
-                    <Image fadeIn source={_rawFeaturedImage} sizes={imageSizes} />
+                    <Image
+                        fadeIn
+                        source={_rawFeaturedImage}
+                        sizes={imageSizes}
+                    />
                 </ImageWrapper>
 
                 <CaptionWrapper>
                     <CaptionTitle>{title}</CaptionTitle>
-                    <SmallCaps as="span" size="tiny" color="mediumGrey" link>View {singleName}</SmallCaps>
+                    <SmallCaps as="span" size="tiny" color="mediumGrey" link>
+                        View {singleName}
+                    </SmallCaps>
                 </CaptionWrapper>
             </Article>
         </StyledLink>
@@ -56,10 +68,10 @@ const StyledLink = styled(Link)`
     width: 560px;
     text-decoration: none;
     
-    ${responsiveBreakpointDown('desktop', `width: 480px;`)}
-    ${responsiveBreakpointDown('laptop', `width: 420px;`)}
-    ${responsiveBreakpointDown('tablet', `width: calc(50% - 30px);`)}
-    ${responsiveBreakpointDown('mobile', `width: 100%;`)}
+    ${responsiveBreakpointDown("desktop", `width: 480px;`)}
+    ${responsiveBreakpointDown("laptop", `width: 420px;`)}
+    ${responsiveBreakpointDown("tablet", `width: calc(50% - 30px);`)}
+    ${responsiveBreakpointDown("mobile", `width: 100%;`)}
     
     &:hover,
     &:focus {
@@ -106,29 +118,37 @@ const ImageWrapper = styled.div`
     height: 500px;
     overflow: hidden;
 
-    ${responsiveBreakpointDown('desktop', `height: 420px;`)}
-    ${responsiveBreakpointDown('laptop', `height: 360px;`)}
-    ${responsiveBreakpointDown('tablet', `height: 300px;`)}
-    ${responsiveBreakpointDown('mobile', `height: 360px;`)}
+    ${responsiveBreakpointDown("desktop", `height: 420px;`)}
+    ${responsiveBreakpointDown("laptop", `height: 360px;`)}
+    ${responsiveBreakpointDown("tablet", `height: 300px;`)}
+    ${responsiveBreakpointDown("mobile", `height: 360px;`)}
 `
 
 const CaptionWrapper = styled.div`
     padding: 25px 20px;
     text-align: center;
 
-    ${props => responsiveBreakpointDown('tablet', `
+    ${props =>
+        responsiveBreakpointDown(
+            "tablet",
+            `
         span {
             display: none;
         }
-    `)}
+    `
+        )}
 `
 
 const CaptionTitle = styled.h3`
     font-size: ${props => props.theme.font.size.medium};
     margin: 0 0 10px;
 
-    ${props => responsiveBreakpointDown('tablet', `
+    ${props =>
+        responsiveBreakpointDown(
+            "tablet",
+            `
         font-size: ${props.theme.font.size.increased};
         margin: 0;    
-    `)}
+    `
+        )}
 `

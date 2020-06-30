@@ -1,33 +1,30 @@
-import React from 'react'
-import BlockContent from '@sanity/block-content-to-react'
-import Proptypes from 'prop-types'
+import React from "react"
+import BlockContent from "@sanity/block-content-to-react"
+import Proptypes from "prop-types"
 
-import { FlexImagesType, LinkMark } from './components'
+import { FlexImagesType, LinkMark } from "./components"
 
 /**
  * BlockContent component
  */
 export const FawBlockContent = ({ content }) => {
-
     // Serializers
     const serializers = {
         types: {
-            flexImages: FlexImagesType
+            flexImages: FlexImagesType,
         },
         marks: {
             internalLink: LinkMark,
-            externalLink: LinkMark
-        }
+            externalLink: LinkMark,
+        },
     }
 
-    return (
-        <BlockContent blocks={content} serializers={serializers} />
-    )
+    return <BlockContent blocks={content} serializers={serializers} />
 }
 
 /**
  * PropTypes
  */
 FawBlockContent.propTypes = {
-    content: Proptypes.array.isRequired
+    content: Proptypes.array.isRequired,
 }

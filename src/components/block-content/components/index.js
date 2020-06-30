@@ -1,4 +1,4 @@
-import { FlexImagesType } from './FlexImagesType'
-import { LinkMark } from './LinkMark'
+import { FlexImagesType } from "./FlexImagesType"
+import { LinkMark } from "./LinkMark"
 
 export { FlexImagesType, LinkMark }

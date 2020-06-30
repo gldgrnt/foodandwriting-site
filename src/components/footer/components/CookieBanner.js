@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from "react"
+import styled from "styled-components"
 
-import { GridContainer } from '../../layout'
-import { Button } from '../../ui'
-import { responsiveBreakpointDown } from '../../../utils'
+import { GridContainer } from "../../layout"
+import { Button } from "../../ui"
+import { responsiveBreakpointDown } from "../../../utils"
 
 // Cookie name
-const cookieName = 'faw-allow-analytics'
+const cookieName = "faw-allow-analytics"
 
 export const CookieBanner = () => {
     // Initialise banner state
@@ -21,7 +21,7 @@ export const CookieBanner = () => {
     }, [])
 
     // Set cookie function
-    const setCookie = (hasConsented) => {
+    const setCookie = hasConsented => {
         // Set cookie
         document.cookie = `${cookieName}=${hasConsented};`
         // Start tracking
@@ -32,16 +32,26 @@ export const CookieBanner = () => {
         setHidden(true)
     }
 
-    return !hidden && (
-        <Banner >
-            <GridContainer>
-                <BannerContent>
-                    <Text>This site uses cookies. <br />Visit the <a href="/cookies">cookies page</a> for more info.</Text>
-                    <Button secondary onClick={() => setCookie(true)}>Allow cookies</Button>
-                    <Button secondary onClick={() => setCookie(false)}>Decline</Button>
-                </BannerContent>
-            </GridContainer>
-        </Banner>
+    return (
+        !hidden && (
+            <Banner>
+                <GridContainer>
+                    <BannerContent>
+                        <Text>
+                            This site uses cookies. <br />
+                            Visit the <a href="/cookies">cookies page</a> for
+                            more info.
+                        </Text>
+                        <Button secondary onClick={() => setCookie(true)}>
+                            Allow cookies
+                        </Button>
+                        <Button secondary onClick={() => setCookie(false)}>
+                            Decline
+                        </Button>
+                    </BannerContent>
+                </GridContainer>
+            </Banner>
+        )
     )
 }
 
@@ -60,9 +70,12 @@ const Banner = styled.div`
     br {
         display: none;
 
-        ${responsiveBreakpointDown('mobile', `
+        ${responsiveBreakpointDown(
+            "mobile",
+            `
             display: block;
-        `)}
+        `
+        )}
     }
 `
 
@@ -72,9 +85,12 @@ const BannerContent = styled.div`
     justify-content: center;
     align-items: center;
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         flex-wrap: wrap;
-    `)}
+    `
+    )}
 
     button {
         margin: 0 5px;
@@ -88,8 +104,11 @@ const BannerContent = styled.div`
 const Text = styled.p`
     margin: 0 25px 0 0;
 
-    ${responsiveBreakpointDown('mobile', `
+    ${responsiveBreakpointDown(
+        "mobile",
+        `
         flex-basis: 100%;
         margin: 0 0 15px;
-    `)}
+    `
+    )}
 `

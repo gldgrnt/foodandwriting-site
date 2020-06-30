@@ -1,23 +1,36 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
-import { PostArchive } from '../../components/page-sections'
-import { Section, GridContainer, GridRow, GridCol, Page } from '../../components/layout'
-import { SEO } from '../../utils'
-import { Button } from '../../components/ui'
+import { PostArchive } from "../../components/page-sections"
+import {
+    Section,
+    GridContainer,
+    GridRow,
+    GridCol,
+    Page,
+} from "../../components/layout"
+import { SEO } from "../../utils"
+import { Button } from "../../components/ui"
 
 /**
- * Category component 
+ * Category component
  */
-export const CategoryPage = ({ category: {title, seoDescription, viewAllName, categoryType}, posts, showButton, getMorePosts }) => {
-
+export const CategoryPage = ({
+    category: { title, seoDescription, viewAllName, categoryType },
+    posts,
+    showButton,
+    getMorePosts,
+}) => {
     return (
         <>
             <SEO description={seoDescription} title={title} />
-            
+
             <Page>
-                <Section spacingTop="2" spacingBottom={{'monitor': 3, 'tablet': 2}}>
+                <Section
+                    spacingTop="2"
+                    spacingBottom={{ monitor: 3, tablet: 2 }}
+                >
                     <GridContainer>
                         <GridRow>
                             <GridCol cols="4">
@@ -30,14 +43,16 @@ export const CategoryPage = ({ category: {title, seoDescription, viewAllName, ca
                 <Section spacingBottom="4">
                     <PostArchive posts={posts} categoryType={categoryType} />
                 </Section>
-                
-                { showButton &&
-                    <Section spacingTop="1"  spacingBottom="5">
+
+                {showButton && (
+                    <Section spacingTop="1" spacingBottom="5">
                         <GridContainer justify="center">
-                            <Button size="small" primary onClick={getMorePosts}>More {viewAllName}</Button>
+                            <Button size="small" primary onClick={getMorePosts}>
+                                More {viewAllName}
+                            </Button>
                         </GridContainer>
-                    </Section> 
-                }
+                    </Section>
+                )}
             </Page>
         </>
     )
@@ -51,16 +66,16 @@ CategoryPage.propTypes = {
         title: PropTypes.string.isRequired,
         seoDescription: PropTypes.string, // This is technically required but not yet
         viewAllName: PropTypes.string.isRequired,
-        categoryType: PropTypes.string.isRequired
+        categoryType: PropTypes.string.isRequired,
     }).isRequired,
     posts: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
     showButton: PropTypes.bool.isRequired,
-    getMorePosts: PropTypes.func.isRequired
+    getMorePosts: PropTypes.func.isRequired,
 }
 
 /**
  * Styles
  */
-const Title = styled.h1` 
+const Title = styled.h1`
     margin-bottom: 0;
 `

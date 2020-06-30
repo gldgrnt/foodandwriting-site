@@ -39,47 +39,48 @@ const postQuery = `
 
 /**
  * Flatten the post queries
- * 
+ *
  * @param {[]} arr array of posts
  * @returns {[]} Flattened array
  */
-const flattenRecipes = ( arr ) => (
+const flattenRecipes = arr =>
     // Map each post to a flatten object
-    arr.map( ({ _id, title, date, fullSlug, category, content, featuredImage}) => {
+    arr.map(
+        ({ _id, title, date, fullSlug, category, content, featuredImage }) => {
+            // Data shared by normal and recipe posts
+            const mainData = {
+                _id,
+                title,
+                date,
+                timestamp: new Date(date).getTime(),
+                fullSlug,
+                categoryName: category.singleName,
+                categoryType: category.categoryType,
+                featuredImage,
+            }
 
-        // Data shared by normal and recipe posts
-        const mainData = {
-            _id,
-            title,
-            date,
-            timestamp: new Date(date).getTime(),
-            fullSlug,
-            categoryName: category.singleName,
-            categoryType: category.categoryType,
-            featuredImage
+            // Flatten post objects based on category type
+            switch (category.categoryType) {
+                case "Normal":
+                    return {
+                        ...mainData,
+                    }
+
+                case "Recipe":
+                    let shoppingListItems = content[0].shoppingList.map(
+                        item => item.ingredient
+                    )
+
+                    return {
+                        ...mainData,
+                        shoppingList: shoppingListItems,
+                    }
+
+                default:
+                    return
+            }
         }
-
-        // Flatten post objects based on category type
-        switch (category.categoryType) { 
-            case 'Normal':
-                return {
-                    ...mainData,
-                }
-            
-            case 'Recipe':
-                let shoppingListItems = content[0].shoppingList.map( item => item.ingredient )
-                
-                return {
-                    ...mainData,
-                    shoppingList: shoppingListItems,
-                }
-
-            default:
-                return
-        }
-    })
-)
-
+    )
 
 /**
  *  Export algolia query
@@ -89,7 +90,7 @@ const algoliaQueries = [
     {
         query: postQuery,
         transformer: ({ data }) => flattenRecipes(data.algoliaPosts.nodes),
-        indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME
+        indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
     },
 ]
 

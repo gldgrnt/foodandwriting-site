@@ -1,10 +1,9 @@
-import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
-import styled from 'styled-components'
-import { SmallCaps } from '../../ui'
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import styled from "styled-components"
+import { SmallCaps } from "../../ui"
 
 export const Copyright = () => {
-
     const { logo, alt } = useStaticQuery(graphql`
         query {
             logo: file(relativePath: { eq: "fandw-reduced.svg" }) {
@@ -18,7 +17,9 @@ export const Copyright = () => {
 
     return (
         <CopyrightWrapper>
-            <SmallCaps size="small" color="black">&copy; 2020</SmallCaps>
+            <SmallCaps size="small" color="black">
+                &copy; 2020
+            </SmallCaps>
             <Image src={logo.publicURL} alt={alt.siteTitle} />
         </CopyrightWrapper>
     )

@@ -1,4 +1,4 @@
-import { graphql } from 'gatsby'
+import { graphql } from "gatsby"
 
 /**
  * Archive post fragment
@@ -15,7 +15,7 @@ export const PreviewPostFragment = graphql`
             categoryType
         }
         content {
-            ...on SanityRecipeContent  {
+            ... on SanityRecipeContent {
                 ...RecipePostContentFragment
             }
         }

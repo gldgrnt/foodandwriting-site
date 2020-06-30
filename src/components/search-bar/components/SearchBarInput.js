@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import { connectSearchBox } from 'react-instantsearch-dom'
+import React, { useState, useEffect, useCallback } from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
+import { connectSearchBox } from "react-instantsearch-dom"
 import { GrPowerReset } from "react-icons/gr"
 
-import { responsiveBreakpointDown } from '../../../utils'
+import { responsiveBreakpointDown } from "../../../utils"
 
 /**
  * Custom search box component (necessary to add debounce)
@@ -24,11 +24,12 @@ const CustomSearchBox = ({ currentRefinement, refine }) => {
         clearTimeout(timer)
 
         // Restart the timer on every input change
-        setTimer(setTimeout(() => {
-            refine(value)
-        }, 800))
+        setTimer(
+            setTimeout(() => {
+                refine(value)
+            }, 800)
+        )
         setQuery(value)
-
     }
 
     // Clear search bar
@@ -45,7 +46,11 @@ const CustomSearchBox = ({ currentRefinement, refine }) => {
                 placeholder="Search here"
                 aria-label="Search here"
             />
-            <button title="Clear search bar" aria-label="Clear search bar" onClick={clearSearch}>
+            <button
+                title="Clear search bar"
+                aria-label="Clear search bar"
+                onClick={clearSearch}
+            >
                 <GrPowerReset />
             </button>
         </>
@@ -57,31 +62,35 @@ const CustomSearchBox = ({ currentRefinement, refine }) => {
  */
 CustomSearchBox.propTypes = {
     currentRefinement: PropTypes.string.isRequired,
-    refine: PropTypes.func.isRequired
+    refine: PropTypes.func.isRequired,
 }
 
 /**
  * Main SearchBar component
  */
 export const SearchBarInput = ({ closeDropdown }) => {
-
     // Search on enter press
     const ConnectedCustomSearchBox = connectSearchBox(CustomSearchBox)
 
     // Create function that can be added and remove from window event listeners
-    const closeSearchDropdown = useCallback((event) => {
-        if (event.code !== 'Escape') return
+    const closeSearchDropdown = useCallback(
+        event => {
+            if (event.code !== "Escape") return
 
-        // Call close dropdown function prop
-        closeDropdown()
-    }, [closeDropdown])
+            // Call close dropdown function prop
+            closeDropdown()
+        },
+        [closeDropdown]
+    )
 
     // Allow dropdown to be closed by ESC key
     useEffect(() => {
-        window.addEventListener('keydown', closeSearchDropdown)
+        window.addEventListener("keydown", closeSearchDropdown)
 
         // Clean up by removing event listener
-        return () => { window.removeEventListener('keydown', closeSearchDropdown) }
+        return () => {
+            window.removeEventListener("keydown", closeSearchDropdown)
+        }
     }, [closeDropdown, closeSearchDropdown])
 
     return (
@@ -97,9 +106,8 @@ export const SearchBarInput = ({ closeDropdown }) => {
  * PropTypes
  */
 SearchBarInput.propTypes = {
-    closeDropdown: PropTypes.func.isRequired
+    closeDropdown: PropTypes.func.isRequired,
 }
-
 
 /**
  * Styles
@@ -112,10 +120,13 @@ const SearchBoxWrapper = styled.div`
     background: ${props => props.theme.color.yellow};
     margin: auto;
 
-    ${responsiveBreakpointDown('laptop', `
+    ${responsiveBreakpointDown(
+        "laptop",
+        `
         max-width: none;
         margin-bottom: 20px;
-    `)}
+    `
+    )}
 
     input {
         padding: 15px 20px;
@@ -132,9 +143,13 @@ const SearchBoxWrapper = styled.div`
             opacity: 1;
         }
 
-        ${props => responsiveBreakpointDown('mobile', `
+        ${props =>
+            responsiveBreakpointDown(
+                "mobile",
+                `
             font-size: ${props.theme.font.size.increased};
-        `)}
+        `
+            )}
     }
 
     input:placeholder-shown + button svg {

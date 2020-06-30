@@ -1,32 +1,38 @@
-import React, { useCallback } from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React, { useCallback } from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
-import { PageContext } from '../context'
-import { urlFor } from '../../utils'
+import { PageContext } from "../context"
+import { urlFor } from "../../utils"
 
 /**
  * Get the type of animation passed via props
- * 
- * @param {Object} props 
+ *
+ * @param {Object} props
  * @returns {String} returns a string from the related animation prop
  */
-const getAnimationType = (props) => {
+const getAnimationType = props => {
     switch (true) {
-        case props.fadeScaleIn: return 'fadeScaleIn'
-        case props.fadeIn: return 'fadeIn'
-        default: return
+        case props.fadeScaleIn:
+            return "fadeScaleIn"
+        case props.fadeIn:
+            return "fadeIn"
+        default:
+            return
     }
 }
 
 /**
  * Get the fallback size from the largest sized minimum media size
- * 
+ *
  * @param {Array} sizes Array of image sizes
  * @returns {Object} Object containing the dimensions of the largest minimum media size
  */
-const getFallbackSize = (sizes) => {
-    const maxMedia = Math.max.apply(null, sizes.map(size => size.mediaMin))
+const getFallbackSize = sizes => {
+    const maxMedia = Math.max.apply(
+        null,
+        sizes.map(size => size.mediaMin)
+    )
     const [fallbackSize] = sizes.filter(size => size.mediaMin === maxMedia)
 
     return fallbackSize
@@ -38,28 +44,70 @@ const getFallbackSize = (sizes) => {
 export const Image = ({ source, sizes, dpr = [1.5, 2], ...props }) => {
     // Variables
     const maxDpr = dpr.reduce((a, b) => Math.max(a, b))
-    const urlWithSize = useCallback(({ width, height }) => urlFor(source).size(width, height), [source])
-    const altText = source?.alt || ''
+    const urlWithSize = useCallback(
+        ({ width, height }) => urlFor(source).size(width, height),
+        [source]
+    )
+    const altText = source?.alt || ""
 
     return (
         <PageContext.Consumer>
             {({ browser }) => {
-                if (browser === null || browser.name === 'node') return <StyledImg src="" className="hidden" alt={altText} /> // Prerender empty image with alt
+                if (browser === null || browser.name === "node")
+                    return <StyledImg src="" className="hidden" alt={altText} /> // Prerender empty image with alt
 
-                if (!['safari', 'ios'].includes(browser.name)) {
+                if (!["safari", "ios"].includes(browser.name)) {
                     return (
                         <picture>
                             {sizes.map(size => (
                                 <source
-                                    key={size.mediaMin} media={`(min-width: ${size.mediaMin}px)`}
-                                    srcSet={`${urlWithSize(size).auto('format').url()}, ${dpr.map(dprValue => `${urlWithSize(size).dpr(dprValue).auto('format').url()} ${dprValue}x`).toString()}`} />
+                                    key={size.mediaMin}
+                                    media={`(min-width: ${size.mediaMin}px)`}
+                                    srcSet={`${urlWithSize(size)
+                                        .auto("format")
+                                        .url()}, ${dpr
+                                        .map(
+                                            dprValue =>
+                                                `${urlWithSize(size)
+                                                    .dpr(dprValue)
+                                                    .auto("format")
+                                                    .url()} ${dprValue}x`
+                                        )
+                                        .toString()}`}
+                                />
                             ))}
 
-                            <StyledImg src={urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(1).url()} className={getAnimationType(props)} alt={altText} loading="lazy" onLoad={(e) => { e.target.className += ' loaded'; e.target.onload = null }} />
+                            <StyledImg
+                                src={urlWithSize(getFallbackSize(sizes))
+                                    .format("jpg")
+                                    .dpr(1)
+                                    .url()}
+                                className={getAnimationType(props)}
+                                alt={altText}
+                                loading="lazy"
+                                onLoad={e => {
+                                    e.target.className += " loaded"
+                                    e.target.onload = null
+                                }}
+                            />
                         </picture>
                     )
                 } else {
-                    return <StyledImg src={urlWithSize(getFallbackSize(sizes)).format('jpg').dpr(maxDpr).url()} className={getAnimationType(props)} alt={altText} loading="lazy" onLoad={(e) => { e.target.className += ' loaded'; e.target.onload = null }} />
+                    return (
+                        <StyledImg
+                            src={urlWithSize(getFallbackSize(sizes))
+                                .format("jpg")
+                                .dpr(maxDpr)
+                                .url()}
+                            className={getAnimationType(props)}
+                            alt={altText}
+                            loading="lazy"
+                            onLoad={e => {
+                                e.target.className += " loaded"
+                                e.target.onload = null
+                            }}
+                        />
+                    )
                 }
             }}
         </PageContext.Consumer>
@@ -75,9 +123,9 @@ Image.propTypes = {
         PropTypes.shape({
             width: PropTypes.number.isRequired,
             height: PropTypes.number.isRequired,
-            mediaMin: PropTypes.number.isRequired
-        }).isRequired,
-    )
+            mediaMin: PropTypes.number.isRequired,
+        }).isRequired
+    ),
 }
 
 /**
@@ -97,9 +145,9 @@ const StyledImg = styled.img`
     }
 
     &.fadeScaleIn {
-    opacity: 0;
-    transform: scale(1.1);
-        
+        opacity: 0;
+        transform: scale(1.1);
+
         &.loaded {
             opacity: 1;
             transform: scale(1);

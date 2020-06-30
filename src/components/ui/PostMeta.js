@@ -1,22 +1,33 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
-import { SmallCaps } from './SmallCaps'
-import { getPostDate } from '../../utils' 
+import { SmallCaps } from "./SmallCaps"
+import { getPostDate } from "../../utils"
 
 /**
  * Post meta component
  */
 export const PostMeta = ({ date = false, meta = [] }) => {
-
     // Get date
     const postDate = date && getPostDate(date)
 
     return (
         <MetaWrapper>
-            { !!meta.length && meta.map( string => !!string && <SmallCaps key={string} size="small">{string}</SmallCaps> )}
-            { postDate && <SmallCaps as="time" size="small" datetime={postDate.raw}>{postDate.formatted}</SmallCaps>}
+            {!!meta.length &&
+                meta.map(
+                    string =>
+                        !!string && (
+                            <SmallCaps key={string} size="small">
+                                {string}
+                            </SmallCaps>
+                        )
+                )}
+            {postDate && (
+                <SmallCaps as="time" size="small" datetime={postDate.raw}>
+                    {postDate.formatted}
+                </SmallCaps>
+            )}
         </MetaWrapper>
     )
 }
@@ -26,9 +37,8 @@ export const PostMeta = ({ date = false, meta = [] }) => {
  */
 PostMeta.propTypes = {
     date: PropTypes.string,
-    meta: PropTypes.arrayOf(PropTypes.string.isRequired)
+    meta: PropTypes.arrayOf(PropTypes.string.isRequired),
 }
-
 
 /**
  * Styles
@@ -42,9 +52,9 @@ const MetaWrapper = styled.div`
         margin-left: 15px;
 
         &::before {
-            content: ' · ';
+            content: " · ";
             position: absolute;
-            left: -9px; 
+            left: -9px;
         }
     }
 `

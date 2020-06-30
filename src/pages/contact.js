@@ -1,17 +1,20 @@
-import React from 'react'
-import styled from 'styled-components'
-import { StaticQuery, graphql } from 'gatsby'
+import React from "react"
+import styled from "styled-components"
+import { StaticQuery, graphql } from "gatsby"
 // import PropTypes from 'prop-types'
 
-import { SEO } from '../utils'
-import { Page, Section, GridContainer } from '../components/layout'
-import { FawBlockContent } from '../components/block-content'
+import { SEO } from "../utils"
+import { Page, Section, GridContainer } from "../components/layout"
+import { FawBlockContent } from "../components/block-content"
 
 /**
  * ContactPage component
  */
-const ContactPage = ({ data: { sanityContact: { _rawContent } } }) => {
-
+const ContactPage = ({
+    data: {
+        sanityContact: { _rawContent },
+    },
+}) => {
     return (
         <>
             <SEO title="Contact" />
@@ -30,15 +33,14 @@ const ContactPage = ({ data: { sanityContact: { _rawContent } } }) => {
 }
 
 export default () => (
-    <StaticQuery query={
-        graphql`
+    <StaticQuery
+        query={graphql`
             query ContactPageQuery {
                 sanityContact {
-                    _rawContent(resolveReferences: {maxDepth: 10})
+                    _rawContent(resolveReferences: { maxDepth: 10 })
                 }
             }
-        `
-    }
+        `}
         render={data => <ContactPage data={data} />}
     />
 )

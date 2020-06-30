@@ -1,6 +1,6 @@
-import React from 'react'
-import { Router } from '@reach/router'
-import { Preview } from '../components/preview'
+import React from "react"
+import { Router } from "@reach/router"
+import { Preview } from "../components/preview"
 
 const PreviewPage = () => {
     return (

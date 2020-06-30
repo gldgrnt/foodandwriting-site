@@ -1,47 +1,225 @@
 import React from "react"
+import { StaticQuery, graphql } from "gatsby"
+import PropTypes from "prop-types"
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import { PageContext } from "../components/context"
+import { Page } from "../components/layout"
+import { SEO } from "../utils"
+import {
+    FeaturedPost,
+    RecipeSlider,
+    PostList,
+    FeaturedTopic,
+} from "../components/page-sections"
+import { GridContainer, GridRow, GridCol, Section } from "../components/layout"
 
-import { Logo, Instagram } from '../components/icons'
+/**
+ * IndexPage component
+ */
+const IndexPage = ({
+    data: { featured, recipes, blog, blogPosts, culture, culturePosts },
+}) => {
+    // Sort featured
+    const {
+        featuredRecipe,
+        featuredRecipeDescription,
+        featuredTopicTitle,
+        featuredTopicSubtitle,
+        featuredTopicPosts,
+    } = featured // Setup featured items
 
-const IndexPage = () => {
-    const categories = ['Recipes', 'Culture', 'Reviews', 'Blog'];
+    // Sort recipes
+    const recipePosts = recipes.nodes.filter(
+        ({ _id }) => _id !== featuredRecipe._id
+    ) // Remove featured post from recipe array if it's in there
+    const mobileRecipePosts = [featuredRecipe, ...recipePosts] // Add featured post to the slider on mobile if it's a recipe
 
     return (
-        <Layout>
-            <SEO title="Home" description="Website coming soon" />
-            <section>
-                <div className="caption">
-                    <Logo />
+        <>
+            <SEO title="Home" />
+            <Page>
+                {/* Featured post */}
+                <Section hideOnMobile={true}>
+                    <FeaturedPost
+                        post={featuredRecipe}
+                        description={featuredRecipeDescription}
+                    />
+                </Section>
 
-                    <hr />
+                {/* Post slider */}
+                <PageContext.Consumer>
+                    {({ isMobile }) => (
+                        <Section
+                            spacingTop={{ monitor: 3, tablet: 2, mobile: 0 }}
+                            spacingBottom={{ monitor: 4, tablet: 2, mobile: 0 }}
+                        >
+                            <RecipeSlider
+                                title={"Recipes"}
+                                posts={
+                                    isMobile ? mobileRecipePosts : recipePosts
+                                }
+                            />
+                        </Section>
+                    )}
+                </PageContext.Consumer>
 
-                    <h2>Website coming soon...</h2>
+                {/* Featured section */}
+                <Section
+                    spacingTop={{ monitor: 4, tablet: 3, mobile: 2 }}
+                    spacingBottom={{ monitor: 4, tablet: 3, mobile: 2 }}
+                    whiteGrey
+                >
+                    <FeaturedTopic
+                        title={featuredTopicTitle}
+                        subtitle={featuredTopicSubtitle}
+                        posts={featuredTopicPosts}
+                    />
+                </Section>
 
-                    <p className="bio">Making food look pretty on an old bathroom tile.</p>
+                {/* Horizontal post list section */}
+                <Section
+                    spacingTop={{ monitor: 4, tablet: 3 }}
+                    spacingBottom={{ monitor: 4, tablet: 3 }}
+                >
+                    <GridContainer>
+                        <GridRow>
+                            {/* Blog */}
+                            <GridCol cols={{ monitor: 4, laptop: 8 }}>
+                                <Section
+                                    as="div"
+                                    spacingBottom={{ laptop: 4, tablet: 3 }}
+                                >
+                                    <PostList
+                                        category={blog}
+                                        posts={blogPosts.nodes}
+                                    />
+                                </Section>
+                            </GridCol>
 
-                    <ul className="category-list">
-                        {categories.map((item, index) =>
-                            <li key={`${item}-${index}`} className="category">{item}</li>
-                        )}
-                    </ul>
-
-                    <ul className="icon-list">
-                        <a href="https://www.instagram.com/foodandwriting/" rel="noopener noreferrer" target="_blank">
-                            <Instagram />
-                        </a>
-                    </ul>
-                </div>
-            </section>
-
-
-            <section style={{ height: "100%" }}>
-                <Image />
-            </section>
-        </Layout >
+                            <GridCol cols={{ monitor: 4, laptop: 8 }}>
+                                <PostList
+                                    category={culture}
+                                    posts={culturePosts.nodes}
+                                />
+                            </GridCol>
+                        </GridRow>
+                    </GridContainer>
+                </Section>
+            </Page>
+        </>
     )
 }
 
-export default IndexPage
+/**
+ * GraphQL query
+ */
+export default () => (
+    <StaticQuery
+        query={graphql`
+            query {
+                # Featured items
+                featured: sanityHome {
+                    # Recipe
+                    featuredRecipe {
+                        ...PreviewPostFragment
+                        ...LargeFluidImageFragment
+                    }
+                    featuredRecipeDescription
+                    # Topic
+                    featuredTopicTitle
+                    featuredTopicSubtitle
+                    featuredTopicPosts {
+                        ...PreviewPostFragment
+                        ...MediumFluidImageFragment
+                    }
+                }
+                # Recipes
+                recipes: allSanityPost(
+                    filter: { category: { title: { eq: "Recipes" } } }
+                    limit: 7
+                    sort: { order: DESC, fields: date }
+                ) {
+                    nodes {
+                        ...PreviewPostFragment
+                        ...MediumFluidImageFragment
+                    }
+                }
+                # Blog
+                blog: sanityCategory(title: { eq: "Blog" }) {
+                    title
+                    slug {
+                        current
+                    }
+                    viewAllName
+                }
+                blogPosts: allSanityPost(
+                    limit: 3
+                    filter: { category: { title: { eq: "Blog" } } }
+                    sort: { order: DESC, fields: date }
+                ) {
+                    nodes {
+                        ...PreviewPostFragment
+                        ...SmallFluidImageFragment
+                    }
+                }
+                # Culture
+                culture: sanityCategory(title: { eq: "Culture" }) {
+                    title
+                    slug {
+                        current
+                    }
+                    viewAllName
+                }
+                culturePosts: allSanityPost(
+                    limit: 3
+                    filter: { category: { title: { eq: "Culture" } } }
+                    sort: { order: DESC, fields: date }
+                ) {
+                    nodes {
+                        ...PreviewPostFragment
+                        ...SmallFluidImageFragment
+                    }
+                }
+            }
+        `}
+        render={data => <IndexPage data={data} />}
+    />
+)
+
+/**
+ * PropTypes
+ */
+IndexPage.propTypes = {
+    data: PropTypes.shape({
+        recipes: PropTypes.shape({
+            nodes: PropTypes.arrayOf(PropTypes.object).isRequired,
+        }).isRequired,
+        featured: PropTypes.shape({
+            featuredRecipe: PropTypes.object.isRequired,
+            featuredRecipeDescription: PropTypes.string.isRequired,
+            featuredTopicTitle: PropTypes.string.isRequired,
+            featuredTopicSubtitle: PropTypes.string.isRequired,
+            featuredTopicPosts: PropTypes.array.isRequired,
+        }).isRequired,
+        blog: PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired,
+            }).isRequired,
+            viewAllName: PropTypes.string.isRequired,
+        }).isRequired,
+        blogPosts: PropTypes.shape({
+            nodes: PropTypes.arrayOf(PropTypes.object).isRequired,
+        }).isRequired,
+        culture: PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            slug: PropTypes.shape({
+                current: PropTypes.string.isRequired,
+            }).isRequired,
+            viewAllName: PropTypes.string.isRequired,
+        }).isRequired,
+        culturePosts: PropTypes.shape({
+            nodes: PropTypes.arrayOf(PropTypes.object).isRequired,
+        }).isRequired,
+    }).isRequired,
+}

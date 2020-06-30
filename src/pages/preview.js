@@ -4,7 +4,7 @@ import { Preview } from "../components/preview"
 
 const PreviewPage = () => {
     // Redirect if accessed incorrectly
-    if (window !== undefined && window.location.pathname !== '/preview/') {
+    if (typeof window !== undefined && window.location.pathname !== '/preview/') {
         window.location.pathname = '/'
     }
 

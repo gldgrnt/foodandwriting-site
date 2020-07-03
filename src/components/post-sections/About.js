@@ -78,11 +78,11 @@ const AboutLinkWrapper = styled(Link)`
     text-decoration: none;
 
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         flex-wrap: wrap;
     `
-    )}
+)}
 
     &:hover,
     &:focus {
@@ -103,18 +103,19 @@ const ImageWrapper = styled.div`
     overflow: hidden;
 
     ${responsiveBreakpointDown(
-        "tablet",
-        `
-        min-width: 250px;
+    "tablet",
     `
-    )}
+        min-width: 250px;
+        padding-top: 100%;
+    `
+)}
 
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         width: 100%;
     `
-    )}
+)}
 `
 
 const TextWrapper = styled.div`
@@ -125,18 +126,19 @@ const TextWrapper = styled.div`
     font-size: ${props => props.theme.font.size.increased};
 
     ${responsiveBreakpointDown(
-        "laptop",
-        `
+    "laptop",
+    `
         padding: 0 60px;
     `
-    )}
+)}
 
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
+        min-width: 250px;
         padding: 20px;
     `
-    )}
+)}
 
     > *:not(:last-child) {
         margin-bottom: 15px;
@@ -145,11 +147,11 @@ const TextWrapper = styled.div`
 
 const Snippet = styled.p`
     ${responsiveBreakpointDown(
-        "mobile",
-        `
+    "mobile",
+    `
         font-size: 90%;
     `
-    )}
+)}
 `
 
 /**

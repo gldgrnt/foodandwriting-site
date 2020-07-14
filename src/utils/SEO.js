@@ -3,6 +3,8 @@ import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
+import { urlFor } from '../utils'
+
 /**
  * Function to create a function that replaces variables within a string
  *
@@ -20,6 +22,21 @@ const replaceVariables = replacementArray => {
     }
 }
 
+const setMetaDefault = (metaArr, defaultsArr) => {
+    let newMetaArr = []
+    defaultsArr.forEach(({ attr, attrValue, content }) => {
+        // Check if meta prop already exists
+        if (metaArr.filter(item => item[attr] === attrValue).length) {
+            return
+        }
+
+        newMetaArr.push({ [attr]: attrValue, content })
+    })
+
+    // Add default items
+    return [...metaArr, ...newMetaArr]
+}
+
 export const SEO = ({ description, lang, meta, title }) => {
     const { sanityConfig } = useStaticQuery(graphql`
         query {
@@ -28,6 +45,7 @@ export const SEO = ({ description, lang, meta, title }) => {
                 siteTitle
                 titleTemplate
                 twitterHandle
+                _rawSocialMediaImage
             }
         }
     `)
@@ -42,6 +60,13 @@ export const SEO = ({ description, lang, meta, title }) => {
     const titleTemplate = replaceSiteVariables(sanityConfig.titleTemplate)
     const metaDescription =
         description || replaceSiteVariables(sanityConfig.siteDecsription)
+
+    // Setup meta
+    const defaultMetaImage = urlFor(sanityConfig._rawSocialMediaImage).size(1200, 700).fit("min")
+    const pageMeta = setMetaDefault(meta, [
+        { attr: 'property', attrValue: "og:image", content: defaultMetaImage },
+        { attr: 'name', attrValue: "twitter:image", content: defaultMetaImage },
+    ])
 
     return (
         <Helmet
@@ -87,7 +112,7 @@ export const SEO = ({ description, lang, meta, title }) => {
                     name: `twitter:creator`,
                     content: `@${sanityConfig.twitterHandle}`,
                 },
-            ].concat(meta)}
+            ].concat(pageMeta)}
         />
     )
 }

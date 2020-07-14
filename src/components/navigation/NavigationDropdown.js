@@ -67,6 +67,7 @@ const StyledDropdown = styled.div`
     position: relative;
     height: 100%;
     overflow: auto;
+    padding-top: 10px;
 
     > * {
         display: flex;
@@ -88,15 +89,7 @@ const StyledDropdown = styled.div`
             text-align: center;
             text-transform: uppercase;
             font-family: ${props => props.theme.font.family.sans};
-
-            &:not(.space-next) {
-                margin-bottom: 30px;
-            }
-
-            &.about-link {
-                position: relative;
-                order: 100;
-            }
+            margin-bottom: 25px;
 
             a {
                 display: inline-block;
@@ -119,11 +112,11 @@ const StyledDropdown = styled.div`
         align-items: center;
 
         ${responsiveBreakpointDown(
-            "mobile",
-            `
+    "mobile",
+    `
             display: none;
         `
-        )}
+)}
 
         svg {
             stroke-width: 3px;
@@ -138,7 +131,6 @@ const DropdownLower = styled.div`
     align-items: flex-start;
     width: 100%;
     flex-grow: 1;
-    padding-top: 40px;
 
     a {
         display: inline-flex;

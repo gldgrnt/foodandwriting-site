@@ -44,7 +44,7 @@ export default ({
     return (
         <>
             <SEO
-                title={`${title} recipe`}
+                title={title}
                 description={seoDescription}
                 meta={[
                     { property: "og:image", content: metaImage },
@@ -62,18 +62,18 @@ export default ({
 
                 <Section spacingTop={{ monitor: 4, tablet: 3 }}>
                     {// Default content
-                    _rawContent[0]._type === "defaultContent" && (
-                        <DefaultPostContent
-                            content={_rawContent[0].content}
-                            date={date}
-                            maxTextWidth={maxTextWidth}
-                        />
-                    )}
+                        _rawContent[0]._type === "defaultContent" && (
+                            <DefaultPostContent
+                                content={_rawContent[0].content}
+                                date={date}
+                                maxTextWidth={maxTextWidth}
+                            />
+                        )}
 
                     {// Recipe content
-                    _rawContent[0]._type === "recipeContent" && (
-                        <RecipePostContent content={_rawContent[0]} />
-                    )}
+                        _rawContent[0]._type === "recipeContent" && (
+                            <RecipePostContent content={_rawContent[0]} />
+                        )}
                 </Section>
 
                 <Section

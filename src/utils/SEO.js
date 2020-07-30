@@ -22,19 +22,18 @@ const replaceVariables = replacementArray => {
     }
 }
 
-const setMetaDefault = (metaArr, defaultsArr) => {
-    let newMetaArr = []
-    defaultsArr.forEach(({ attr, attrValue, content }) => {
-        // Check if meta prop already exists
-        if (metaArr.filter(item => item[attr] === attrValue).length) {
-            return
-        }
+const setMetaDefault = (pageMeta, defaultMeta) => {
+    // Shortcircuit for empty page meta
+    if (!pageMeta.length) {
+        return defaultMeta
+    }
 
-        newMetaArr.push({ [attr]: attrValue, content })
+    // Overwrite defaults
+    const metaArray = defaultMeta.map(defaultMetaItem => {
+        return pageMeta.filter(pageMetaItem => pageMetaItem.name === defaultMetaItem.name)[0] || defaultMetaItem
     })
 
-    // Add default items
-    return [...metaArr, ...newMetaArr]
+    return metaArray
 }
 
 export const SEO = ({ description, lang, meta, title }) => {
@@ -64,8 +63,8 @@ export const SEO = ({ description, lang, meta, title }) => {
     // Setup meta
     const defaultMetaImage = urlFor(sanityConfig._rawSocialMediaImage).size(1200, 700).fit("min")
     const pageMeta = setMetaDefault(meta, [
-        { attr: 'property', attrValue: "og:image", content: defaultMetaImage },
-        { attr: 'name', attrValue: "twitter:image", content: defaultMetaImage },
+        { name: 'image', property: "og:image", content: defaultMetaImage },
+        { name: "twitter:image", content: defaultMetaImage },
     ])
 
     return (
@@ -81,6 +80,7 @@ export const SEO = ({ description, lang, meta, title }) => {
                     content: metaDescription,
                 },
                 {
+                    name: 'title',
                     property: `og:title`,
                     content: title,
                 },

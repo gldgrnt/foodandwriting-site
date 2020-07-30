@@ -47,7 +47,7 @@ export default ({
                 title={title}
                 description={seoDescription}
                 meta={[
-                    { property: "og:image", content: metaImage },
+                    { name: 'image', property: "og:image", content: metaImage },
                     { name: "twitter:image", content: metaImage },
                 ]}
             />

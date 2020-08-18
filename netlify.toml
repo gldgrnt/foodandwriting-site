@@ -12,20 +12,20 @@
     targetPort = 9000
 
 [context.deploy-preview]
-  command = "npm run build && npm run noIndex"
+    command = "npm run build && npm run noIndex"
 
 [context.branch-deploy]
-  command = "npm run build && npm run noIndex"
+    command = "npm run build && npm run noIndex"
 
 [[headers]]
-  # Define which paths this specific [[headers]] block will cover.
-  for = "/*"
-    [headers.values]
-    Access-Control-Allow-Origin = "*"
+    # Define which paths this specific [[headers]] block will cover.
+    for = "/*"
+        [headers.values]
+        Access-Control-Allow-Origin = "*"
 
 # Build plugins
 [[plugins]]
-  package = "netlify-plugin-gatsby-cache"
+    package = "netlify-plugin-gatsby-cache"
 
 [[plugins]]
     package = "@netlify/plugin-sitemap"
